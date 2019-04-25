@@ -1,0 +1,26 @@
+# server info
+server:
+  port: 8088
+
+# spring config
+spring:
+  profiles:
+    active: "@profile.active@"
+
+# logging config
+logging:
+  path: logs
+  file:
+    max-history: 15
+    max-size: 20MB
+
+# mybatis-plus config
+mybatis-plus:
+  config-lacation: classpath:mybatis-config.xml
+  mapper-locations: classpath:mappers/*.xml
+  type-enums-package: com.carbybus.cove.domain.*
+  type-aliases-package: com.carbybus.cove.domain.*
+  global-config:
+    super-mapper-class: com.carbybus.infrastructure.component.BaseRepository
+
+
