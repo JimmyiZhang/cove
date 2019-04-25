@@ -20,11 +20,12 @@
 - 项目管理：提供基于dependencyManagement的依赖管理和profile的发布方式，灵活方便
 ---
 # 参考资料
+[effective java](https://jiapengcai.gitbooks.io/effective-java/content/)
+[HikariCP](http://brettwooldridge.github.io/HikariCP/)
+[apache commons](http://commons.apache.org/)
+[spring boot](https://docs.spring.io/spring-boot/docs/2.1.3.RELEASE/)
 [MyBatis](http://www.mybatis.org/mybatis-3/zh/index.html)
 [MyBatisPlus](https://mp.baomidou.com/)
 [crown](https://caratacus.github.io/)
-[apache commons](http://commons.apache.org/)
-[HikariCP](http://brettwooldridge.github.io/HikariCP/)
 [ShardingSphere](https://shardingsphere.apache.org/document/current/cn/overview/)
-[effective java](https://jiapengcai.gitbooks.io/effective-java/content/)
-[spring boot](https://docs.spring.io/spring-boot/docs/2.1.3.RELEASE/)
+
