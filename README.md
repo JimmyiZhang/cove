@@ -18,4 +18,13 @@
 - 服务层：提供基本CRUD操作，提供基于Lambda表达式的查询
 - 表现层：提供常用基类支持和统一异常拦截，以及swagger配置，异步日志和日志历史删除
 - 项目管理：提供基于dependencyManagement的依赖管理和profile的发布方式，灵活方便
-
+---
+# 参考资料
+[MyBatis](http://www.mybatis.org/mybatis-3/zh/index.html)
+[MyBatisPlus](https://mp.baomidou.com/)
+[crown](https://caratacus.github.io/)
+[apache commons](http://commons.apache.org/)
+[HikariCP](http://brettwooldridge.github.io/HikariCP/)
+[ShardingSphere](https://shardingsphere.apache.org/document/current/cn/overview/)
+[effective java](https://jiapengcai.gitbooks.io/effective-java/content/)
+[spring boot](https://docs.spring.io/spring-boot/docs/2.1.3.RELEASE/)
