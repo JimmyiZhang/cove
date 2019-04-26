@@ -1,9 +1,11 @@
 package com.carbybus.cove.test.sharding;
 
 import com.carbybus.cove.api.ApiApplication;
-import com.carbybus.cove.application.AccountApplication;
+import com.carbybus.cove.application.MessageApplication;
 import com.carbybus.cove.domain.entity.company.Account;
+import com.carbybus.cove.domain.entity.Message;
 import com.carbybus.cove.repository.AccountRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 // 读写分离测试
+@Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ApiApplication.class)
 public class ShardingSplittingTest {
@@ -20,7 +23,7 @@ public class ShardingSplittingTest {
     private AccountRepository accountRep;
 
     @Autowired
-    private AccountApplication accountApp;
+    private MessageApplication messageApp;
 
     @Test
     public void onlyWrite() {
@@ -68,9 +71,21 @@ public class ShardingSplittingTest {
                 .setUserName("USER_IT");
         System.out.println(account1.getId());
         // master
-        accountApp.create(account1);
+        accountRep.insert(account1);
         // master
         Account account2 = accountRep.selectById(account1.getId());
         Assert.notNull(account2, "账号");
+    }
+
+    @Test
+    public void masterOnly(){
+        log.debug("masterOnly test");
+
+        Message message1 = Message.create(1,1);
+        System.out.println(message1.getId());
+
+        // master
+        messageApp.create(message1);
+        Assert.notNull(message1, "消息");
     }
 }
