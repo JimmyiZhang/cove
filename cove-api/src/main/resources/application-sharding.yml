@@ -38,7 +38,7 @@ spring:
           table-strategy:
             standard:
               sharding-column: create_time
-              precise-algorithm-class-name: com.carbybus.cove.api.component.YearShardingAlgorithm
+              precise-algorithm-class-name: com.carbybus.infrastructure.sharding.YearShardingAlgorithm
       default-database-strategy:
         none:
           any:

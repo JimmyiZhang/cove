@@ -1,5 +1,6 @@
 package com.carbybus.cove.api.component;
 
+import com.carbybus.cove.domain.entity.company.EmployeeCategory;
 import com.carbybus.cove.domain.principal.UserPrincipal;
 import com.carbybus.infrastructure.component.ActionResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,11 @@ public class BaseController {
     protected UserPrincipal user;
 
     public BaseController() {
+        this.user = UserPrincipal.init()
+                .setUserCategory(EmployeeCategory.Captain)
+                .setUserId(1)
+                .setUserName("jimmy")
+                .setCompanyId(1);
     }
 
 
