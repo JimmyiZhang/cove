@@ -7,8 +7,11 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.carbybus.infrastructure.configuration.UniteJwtConfig;
 import com.carbybus.infrastructure.exception.BusinessException;
 import com.carbybus.infrastructure.exception.JwtTokenError;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -22,20 +25,15 @@ import java.util.UUID;
  * @date 2019-04-03
  */
 public class JwtUtils {
+    @Autowired
+    private static UniteJwtConfig config;
+
     /**
      * 工具类使用私有构造器覆盖公共构造器，防止公共构造器被调用
      * Sonar Code smell Major squid:S1118
      */
     private JwtUtils() {
     }
-
-    /**
-     * 密钥
-     */
-    private final static String TOKEN_SECRET = "7p9izREdj3cAAQR7HyDCoMDv9dDDtzQLbJ1ScicADAclc";
-    private final static String TOKEN_ISSUE = "carbybus";
-    private final static String TOKEN_SUBJECT = "user";
-    private final static String TOKEN_CLAIM = "id";
 
     /**
      * 生成Token
@@ -47,19 +45,24 @@ public class JwtUtils {
      * @date 2019-04-03
      */
     public static String create(String id) {
+        String tokenSecret = config.getTokenSecret();
+        if (StringUtils.isEmpty(tokenSecret)) {
+            throw new BusinessException(JwtTokenError.INVALID_SECRET);
+        }
+
         Date now = Date.from(Instant.now());
-        Date exp = Date.from(Instant.now().plus(30, ChronoUnit.DAYS));
+        Date exp = Date.from(Instant.now().plus(config.getTokenExpired(), ChronoUnit.MINUTES));
         String JwtId = UUID.randomUUID().toString();
         String token = StringConstants.EMPTY;
         try {
-            Algorithm algorithm = Algorithm.HMAC512(TOKEN_SECRET);
+            Algorithm algorithm = Algorithm.HMAC512(tokenSecret);
             token = JWT.create()
-                    .withIssuer(TOKEN_ISSUE)
+                    .withIssuer(config.getTokenIssue())
                     .withIssuedAt(now)
-                    .withSubject(TOKEN_SUBJECT)
+                    .withSubject(config.getTokenSubject())
                     .withExpiresAt(exp)
                     .withJWTId(JwtId)
-                    .withClaim(TOKEN_CLAIM, id)
+                    .withClaim(config.getTokenClaim(), id)
                     .sign(algorithm);
         } catch (JWTCreationException ex) {
             throw new BusinessException(JwtTokenError.CREATION_EXCEPTION, ex);
@@ -76,18 +79,23 @@ public class JwtUtils {
      * @date 2019-04-03
      */
     public static String decode(String token) {
+        String tokenSecret = config.getTokenSecret();
+        if (StringUtils.isEmpty(tokenSecret)) {
+            throw new BusinessException(JwtTokenError.INVALID_SECRET);
+        }
+
         String id = StringConstants.EMPTY;
         try {
-            Algorithm algorithm = Algorithm.HMAC512(TOKEN_SECRET);
+            Algorithm algorithm = Algorithm.HMAC512(tokenSecret);
             JWTVerifier verifier = JWT.require(algorithm)
-                    .withIssuer(TOKEN_ISSUE)
+                    .withIssuer(config.getTokenIssue())
                     .acceptExpiresAt(5)
                     .build();
 
             verifier.verify(token);
 
             DecodedJWT code = JWT.decode(token);
-            id = code.getClaim(TOKEN_CLAIM).asString();
+            id = code.getClaim(config.getTokenClaim()).asString();
         } catch (JWTDecodeException ex) {
             throw new BusinessException(JwtTokenError.DECODE_EXCEPTION, ex);
         } catch (JWTVerificationException ex) {
@@ -105,11 +113,16 @@ public class JwtUtils {
      * @date 2019-04-03
      */
     public static boolean verify(String token) {
+        String tokenSecret = config.getTokenSecret();
+        if (StringUtils.isEmpty(tokenSecret)) {
+            throw new BusinessException(JwtTokenError.INVALID_SECRET);
+        }
+
         boolean verify;
         try {
-            Algorithm algorithm = Algorithm.HMAC512(TOKEN_SECRET);
+            Algorithm algorithm = Algorithm.HMAC512(tokenSecret);
             JWTVerifier verifier = JWT.require(algorithm)
-                    .withIssuer(TOKEN_ISSUE)
+                    .withIssuer(config.getTokenIssue())
                     .acceptExpiresAt(5)
                     .build();
 

@@ -23,4 +23,15 @@ mybatis-plus:
   global-config:
     super-mapper-class: com.carbybus.infrastructure.component.BaseRepository
 
-
+# global config
+summer:
+  http-config:
+    cache-max-age: 600
+    cors-allowed-origins: *
+    cors-allowed-headers: GET,POST,PUT,DELETE
+  jwt-config:
+    token-expired: 10080
+    token-secret: 7p9izREdj3cAAQR7HyDCoMDv9dDDtzQLbJ1ScicADAclc
+    token-subject: user
+    token-issue: carbybus
+    token-claim: id

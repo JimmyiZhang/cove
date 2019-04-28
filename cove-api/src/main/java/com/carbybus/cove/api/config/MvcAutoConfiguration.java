@@ -1,11 +1,14 @@
 package com.carbybus.cove.api.config;
 
+import com.carbybus.infrastructure.configuration.UniteConfig;
+import com.carbybus.infrastructure.configuration.UniteHttpConfig;
 import com.carbybus.infrastructure.validator.CollectionValidator;
-import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -20,6 +23,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebMvc
 @ComponentScan({"com.carbybus.cove.*", "com.carbybus.infrastructure"})
 public class MvcAutoConfiguration implements WebMvcConfigurer {
+    @Autowired
+    private UniteConfig config;
 
     @Override
     public Validator getValidator() {
@@ -33,5 +38,16 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
 
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        UniteHttpConfig httpConfig = config.getHttpConfig();
+
+        registry.addMapping("/**")
+                .allowedMethods(httpConfig.getCorsAllowedMethods())
+                .allowedOrigins(httpConfig.getCorsAllowedOrigins())
+                .allowedHeaders(httpConfig.getCorsAllowedHeaders())
+                .allowCredentials(true);
     }
 }

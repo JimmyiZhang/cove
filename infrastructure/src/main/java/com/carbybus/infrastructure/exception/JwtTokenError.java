@@ -9,7 +9,8 @@ package com.carbybus.infrastructure.exception;
 public enum JwtTokenError implements BusinessError {
     CREATION_EXCEPTION(70, "生成TOKEN异常"),
     DECODE_EXCEPTION(71, "解码TOKEN异常"),
-    VERIFICATION_EXCEPTION(72, "验证TOKEN异常");
+    VERIFICATION_EXCEPTION(72, "验证TOKEN异常"),
+    INVALID_SECRET(73, "无效的TOKEN秘钥");
 
     /**
      * 枚举值

@@ -17,6 +17,11 @@ public class BusinessException extends RuntimeException {
     public BusinessException() {
     }
 
+    public BusinessException(BusinessError error){
+        this.code = error.getCode();
+        this.message = error.getMessage();
+    }
+
     public BusinessException(BusinessError error, Throwable cause) {
         super(cause);
         this.code = error.getCode();

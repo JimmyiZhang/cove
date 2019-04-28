@@ -33,3 +33,8 @@ HELP.md
 
 ### Project ###
 /cove-api/logs/
+/cove-api/target/
+/cove-application/target/
+/cove-repository/target/
+/cove-domain/target/
+
