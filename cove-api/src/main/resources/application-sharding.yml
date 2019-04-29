@@ -33,12 +33,6 @@ spring:
             inline:
               sharding-column: company_id
               algorithm-expression: employee_${company_id % 2}
-        message:
-          actual-data-nodes: ds.message_${2019..2020}
-          table-strategy:
-            standard:
-              sharding-column: create_time
-              precise-algorithm-class-name: com.carbybus.infrastructure.sharding.YearShardingAlgorithm
       default-database-strategy:
         none:
           any:

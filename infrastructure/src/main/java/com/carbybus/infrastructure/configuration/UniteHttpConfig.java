@@ -1,11 +1,8 @@
 package com.carbybus.infrastructure.configuration;
 
-import com.google.common.base.Splitter;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
-
-import java.util.List;
 
 /**
  * http配置
@@ -17,7 +14,12 @@ public class UniteHttpConfig {
     /**
      * 分隔符
      */
-    private final static String SEPARATOR = ",";
+    private final static String SEPARATOR_ALLOWED = ",";
+
+    /**
+     * 全部允许
+     */
+    private final static String WHOLE_ALLOWED = "*";
 
     /**
      * 缓存时间，默认10分钟
@@ -31,7 +33,7 @@ public class UniteHttpConfig {
      * 不含http://
      */
     @Setter
-    private String corsAllowedOrigins = "*";
+    private String corsAllowedOrigins;
 
     /**
      * 获取跨域请求域
@@ -43,26 +45,18 @@ public class UniteHttpConfig {
      * @date 2019-04-28
      */
     public String[] getCorsAllowedOrigins() {
-        if (StringUtils.isEmpty(corsAllowedOrigins)) {
-            return new String[]{"*"};
+        if (StringUtils.isEmpty(corsAllowedOrigins) || WHOLE_ALLOWED.equals(corsAllowedOrigins)) {
+            return new String[]{WHOLE_ALLOWED};
         }
 
-        List<String> origins = Splitter.on(SEPARATOR)
-                .trimResults()
-                .omitEmptyStrings()
-                .splitToList(this.corsAllowedOrigins);
-
-        String[] originsArr = new String[origins.size()];
-        origins.toArray(originsArr);
-
-        return originsArr;
+        return corsAllowedOrigins.split(SEPARATOR_ALLOWED);
     }
 
     /**
      * 跨域允许的头
      */
     @Setter
-    private String corsAllowedHeaders = "*";
+    private String corsAllowedHeaders;
 
     /**
      * 获取跨域请求头
@@ -73,23 +67,15 @@ public class UniteHttpConfig {
      * @date 2019-04-28
      */
     public String[] getCorsAllowedHeaders() {
-        if (StringUtils.isEmpty(corsAllowedHeaders)) {
+        if (StringUtils.isEmpty(corsAllowedHeaders) || WHOLE_ALLOWED.equals(corsAllowedHeaders)) {
             return new String[]{"*"};
         }
 
-        List<String> origins = Splitter.on(SEPARATOR)
-                .trimResults()
-                .omitEmptyStrings()
-                .splitToList(this.corsAllowedHeaders);
-
-        String[] originsArr = new String[origins.size()];
-        origins.toArray(originsArr);
-
-        return originsArr;
+        return corsAllowedHeaders.split(SEPARATOR_ALLOWED);
     }
 
     @Setter
-    private String corsAllowedMethods = "*";
+    private String corsAllowedMethods;
 
     /**
      * 获取跨域请求方法
@@ -100,18 +86,10 @@ public class UniteHttpConfig {
      * @date 2019-04-28
      */
     public String[] getCorsAllowedMethods() {
-        if (StringUtils.isEmpty(corsAllowedMethods)) {
+        if (StringUtils.isEmpty(corsAllowedMethods) || WHOLE_ALLOWED.equals(corsAllowedMethods)) {
             return new String[]{"*"};
         }
 
-        List<String> origins = Splitter.on(SEPARATOR)
-                .trimResults()
-                .omitEmptyStrings()
-                .splitToList(this.corsAllowedMethods);
-
-        String[] originsArr = new String[origins.size()];
-        origins.toArray(originsArr);
-
-        return originsArr;
+        return corsAllowedHeaders.split(SEPARATOR_ALLOWED);
     }
 }

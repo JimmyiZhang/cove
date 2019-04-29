@@ -147,18 +147,18 @@
 
     <profiles>
         <profile>
-            <id>sharding</id>
+            <id>develop</id>
             <properties>
-                <profile.active>sharding</profile.active>
+                <profile.active>develop</profile.active>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
         </profile>
         <profile>
-            <id>develop</id>
+            <id>release</id>
             <properties>
-                <profile.active>mysql</profile.active>
+                <profile.active>release</profile.active>
             </properties>
         </profile>
     </profiles>

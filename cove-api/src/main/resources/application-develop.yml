@@ -5,7 +5,7 @@ server:
 # spring datasource config
 spring:
   datasource:
-    url: jdbc:mysql://192.168.168.40:3307/cove_business?useSSL=false&allowMultiQueries=true&autoReconnect=true&failOverReadOnly=false&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://192.168.168.40:3307/cove_ms?useSSL=false&allowMultiQueries=true&autoReconnect=true&failOverReadOnly=false&useUnicode=true&characterEncoding=utf-8
     user-name: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver

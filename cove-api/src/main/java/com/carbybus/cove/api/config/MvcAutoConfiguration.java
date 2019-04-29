@@ -8,10 +8,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.config.annotation.*;
 
 /**
  * mvc 配置
@@ -49,5 +47,11 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
                 .allowedOrigins(httpConfig.getCorsAllowedOrigins())
                 .allowedHeaders(httpConfig.getCorsAllowedHeaders())
                 .allowCredentials(true);
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        HandlerInterceptor loggerInt = new LoggerInterceptor();
+        registry.addInterceptor(loggerInt).addPathPatterns("/**");
     }
 }

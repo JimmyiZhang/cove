@@ -1,0 +1,78 @@
+2019-04-29 09:57:59.725 ERROR 7424 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+An attempt was made to call the method com.google.common.collect.FluentIterable.concat(Ljava/lang/Iterable;Ljava/lang/Iterable;)Lcom/google/common/collect/FluentIterable; but it does not exist. Its class, com.google.common.collect.FluentIterable, is available from the following locations:
+
+    jar:file:/C:/Users/Jimmy/.m2/repository/com/google/guava/guava/18.0/guava-18.0.jar!/com/google/common/collect/FluentIterable.class
+
+It was loaded from the following location:
+
+    file:/C:/Users/Jimmy/.m2/repository/com/google/guava/guava/18.0/guava-18.0.jar
+
+
+Action:
+
+Correct the classpath of your application so that it contains a single, compatible version of com.google.common.collect.FluentIterable
+
+2019-04-29 10:19:53.099 ERROR 10408 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+An attempt was made to call the method com.google.common.collect.FluentIterable.concat(Ljava/lang/Iterable;Ljava/lang/Iterable;)Lcom/google/common/collect/FluentIterable; but it does not exist. Its class, com.google.common.collect.FluentIterable, is available from the following locations:
+
+    jar:file:/C:/Users/Jimmy/.m2/repository/com/google/guava/guava/18.0/guava-18.0.jar!/com/google/common/collect/FluentIterable.class
+
+It was loaded from the following location:
+
+    file:/C:/Users/Jimmy/.m2/repository/com/google/guava/guava/18.0/guava-18.0.jar
+
+
+Action:
+
+Correct the classpath of your application so that it contains a single, compatible version of com.google.common.collect.FluentIterable
+
+2019-04-29 10:22:46.067 ERROR 11184 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+An attempt was made to call the method com.google.common.collect.FluentIterable.concat(Ljava/lang/Iterable;Ljava/lang/Iterable;)Lcom/google/common/collect/FluentIterable; but it does not exist. Its class, com.google.common.collect.FluentIterable, is available from the following locations:
+
+    jar:file:/C:/Users/Jimmy/.m2/repository/com/google/guava/guava/18.0/guava-18.0.jar!/com/google/common/collect/FluentIterable.class
+
+It was loaded from the following location:
+
+    file:/C:/Users/Jimmy/.m2/repository/com/google/guava/guava/18.0/guava-18.0.jar
+
+
+Action:
+
+Correct the classpath of your application so that it contains a single, compatible version of com.google.common.collect.FluentIterable
+
+2019-04-29 10:39:36.816 ERROR 3648 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The dependencies of some of the beans in the application context form a cycle:
+
+┌─────┐
+|  myBatisPlusConfig defined in file [D:\Projects\Cove\cove-api\target\classes\com\carbybus\cove\api\config\MyBatisPlusConfig.class]
+└─────┘
+
+

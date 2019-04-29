@@ -2,7 +2,7 @@ package com.carbybus.cove.api.controller;
 
 import com.carbybus.cove.api.component.BaseController;
 import com.carbybus.cove.application.AccountApplication;
-import com.carbybus.cove.domain.principal.UserPrincipal;
+import com.carbybus.infrastructure.component.ActionResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,26 +13,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 账户控制器
+ * 用户控制器
  *
  * @author jimmy.zhang
  * @date 2019-02-26
  */
-@Api(tags = {"账户"})
+@Api(tags = {"用户"})
 @Validated
 @RestController
-@RequestMapping(value = "/accounts", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-public class AccountController extends BaseController {
+@RequestMapping(value = "/users", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+public class UserController extends BaseController {
     private AccountApplication accountApp;
 
     @Autowired
-    public AccountController(AccountApplication accountApp) {
+    public UserController(AccountApplication accountApp) {
         this.accountApp = accountApp;
     }
 
-    @ApiOperation(value = "获取当前用户", notes = "获取用户详细信息")
+    @ApiOperation(value = "当前用户", notes = "获取用户详细信息")
     @GetMapping(value = "/me")
-    public UserPrincipal me() {
-        return this.user;
+    public ActionResult me() {
+        return success(this.user);
     }
 }

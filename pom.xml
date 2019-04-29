@@ -28,7 +28,6 @@
         <commons-lang3.version>3.8.1</commons-lang3.version>
         <orika-core.version>1.5.4</orika-core.version>
         <mybatis-plus.version>3.1.0</mybatis-plus.version>
-        <sharding-jdbc.version>4.0.0-RC1</sharding-jdbc.version>
         <java-jwt.version>3.4.0</java-jwt.version>
         <springfox-swagger.version>2.9.2</springfox-swagger.version>
     </properties>
@@ -108,14 +107,6 @@
                 <version>${mybatis-plus.version}</version>
             </dependency>
             <!-- mybatis-plus end-->
-
-            <!-- sharding-jdbc -->
-            <dependency>
-                <groupId>org.apache.shardingsphere</groupId>
-                <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
-                <version>${sharding-jdbc.version}</version>
-            </dependency>
-            <!-- sharding-jdbc end -->
 
             <!-- JWT -->
             <dependency>
