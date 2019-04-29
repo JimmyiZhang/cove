@@ -1,6 +1,8 @@
 package com.carbybus.infrastructure.configuration;
 
 import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * jwt配置
@@ -9,6 +11,8 @@ import lombok.Data;
  * @ 2019-04-28
  */
 @Data
+@Configuration
+@ConfigurationProperties("summer.jwt-config")
 public class UniteJwtConfig {
     /**
      * Token过期时间，单位分钟

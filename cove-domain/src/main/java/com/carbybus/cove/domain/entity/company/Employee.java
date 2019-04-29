@@ -35,6 +35,16 @@ public class Employee extends DefaultEntity {
     private long companyId;
 
     /**
+     * 类别
+     */
+    private EmployeeCategory category;
+
+    /**
+     * 创建时间
+     */
+    private LocalDateTime createTime;
+
+    /**
      * 创建
      *
      * @param
@@ -46,7 +56,9 @@ public class Employee extends DefaultEntity {
         Employee employee = new Employee();
         employee.valueOf();
 
-        employee.setCompanyId(companyId);
+        employee.setCompanyId(companyId)
+                .setCategory(EmployeeCategory.Leader)
+                .setCreateTime(LocalDateTime.now());
         return employee;
     }
 }

@@ -1,17 +1,21 @@
 package com.carbybus.cove.domain.entity.company;
 
-import com.baomidou.mybatisplus.core.enums.IEnum;
+import com.baomidou.mybatisplus.annotation.EnumValue;
+import com.carbybus.infrastructure.component.BaseEnum;
 
 /**
- * 员工角色
+ * 员工类别
+ * @author jimmy.zhang
+ * @date 2019-04-29
  */
-public enum EmployeeCategory implements IEnum<Integer> {
+public enum EmployeeCategory implements BaseEnum {
     Leader(1, "管理者"),
     Captain(2, "车队长");
 
     /**
      * 枚举值
      */
+    @EnumValue
     private int value;
 
     /**

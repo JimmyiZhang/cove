@@ -16,8 +16,13 @@ import javax.servlet.http.HttpServletResponse;
 public class LoggerInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        String method = request.getMethod();
         String path = request.getRequestURI();
+        // todo: 可以记录日志
         log.debug("the request url is: {}", path);
+
+        // todo: 可以设置缓存
+        response.addHeader("Cache-Control", "max-age=60000");
 
         return true;
     }

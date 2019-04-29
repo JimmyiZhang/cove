@@ -1,7 +1,6 @@
 package com.carbybus.cove.test.infrastructure;
 
 import com.carbybus.cove.api.ApiApplication;
-import com.carbybus.infrastructure.configuration.UniteConfig;
 import com.carbybus.infrastructure.configuration.UniteHttpConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,25 +13,16 @@ import org.springframework.util.Assert;
 @SpringBootTest(classes = ApiApplication.class)
 public class UniteConfigTest {
     @Autowired
-    private UniteConfig config;
+    private UniteHttpConfig config;
+
 
     @Test
     public void httpConfig() {
-        Assert.notNull(config, "配置");
-        Assert.notNull(config.getHttpConfig(), "HTTP配置");
-
-        UniteHttpConfig httpConfig = config.getHttpConfig();
-        System.out.println(httpConfig.getCacheMaxAge());
-    }
-
-    @Test
-    public void httpConfigCorsAllowedOrigins() {
-        Assert.notNull(config, "配置");
-        Assert.notNull(config.getHttpConfig(), "HTTP配置");
-        String[] headers = config.getHttpConfig().getCorsAllowedHeaders();
-        String[] origins = config.getHttpConfig().getCorsAllowedOrigins();
+        Assert.notNull(config, "HTTP配置");
+        String[] headers = config.getCorsAllowedHeaders();
+        String[] origins = config.getCorsAllowedOrigins();
         // 默认*
-        String[] methods = config.getHttpConfig().getCorsAllowedMethods();
+        String[] methods = config.getCorsAllowedMethods();
 
         Assert.notNull(headers, "跨域");
         Assert.notNull(origins, "跨域");
