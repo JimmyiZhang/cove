@@ -1,6 +1,7 @@
 package com.carbybus.cove.api.config;
 
-import com.carbybus.cove.api.component.BaseEnumSerializer;
+import com.carbybus.infrastructure.serializer.BaseEnumDeserializer;
+import com.carbybus.infrastructure.serializer.BaseEnumSerializer;
 import com.carbybus.infrastructure.component.BaseEnum;
 import com.carbybus.infrastructure.configuration.UniteHttpConfig;
 import com.carbybus.infrastructure.validator.CollectionValidator;
@@ -9,13 +10,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -100,6 +99,7 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
 
         // BaseEnum类型
         simpleModule.addSerializer(BaseEnum.class, BaseEnumSerializer.instance);
+        simpleModule.addDeserializer(BaseEnum.class, BaseEnumDeserializer.instance);
         objectMapper.registerModule(simpleModule);
 
         jackson2Converter.setObjectMapper(objectMapper);

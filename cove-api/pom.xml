@@ -46,13 +46,6 @@
         </dependency>
         <!-- spring-boot end -->
 
-        <!-- mysql -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-        <!-- mysql end -->
-
         <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -79,19 +72,20 @@
         </dependency>
         <!-- orika end-->
 
+        <!-- h2 driver -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.197</version>
+        </dependency>
+        <!-- h2 driver-->
+
         <!-- mybatis-plus -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
         <!-- mybatis-plus end-->
-
-        <!-- sharding-jdbc -->
-        <dependency>
-            <groupId>org.apache.shardingsphere</groupId>
-            <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
-        </dependency>
-        <!-- sharding-jdbc end -->
 
         <!-- swagger -->
         <dependency>
@@ -136,7 +130,6 @@
                 <filtering>true</filtering>
                 <includes>
                     <include>mappers/**</include>
-                    <include>logback-spring.xml</include>
                     <include>mybatis-config.xml</include>
                     <include>application.yml</include>
                     <include>application-${profile.active}.yml</include>
@@ -147,13 +140,19 @@
 
     <profiles>
         <profile>
-            <id>develop</id>
+            <id>h2</id>
             <properties>
-                <profile.active>develop</profile.active>
+                <profile.active>h2</profile.active>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+        </profile>
+        <profile>
+            <id>develop</id>
+            <properties>
+                <profile.active>develop</profile.active>
+            </properties>
         </profile>
         <profile>
             <id>release</id>

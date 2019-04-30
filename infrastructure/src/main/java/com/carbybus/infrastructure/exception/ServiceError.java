@@ -1,15 +1,14 @@
 package com.carbybus.infrastructure.exception;
 
 /**
- * 验证错误
+ * 服务错误
  * 20-29
  * @author jimmy.zhang
  * @date 2019-03-29
  */
-public enum ConverterError implements BusinessError {
-    INVALID_ORIGIN(20, "无效的来源数据"),
-    INVALID_TARGET(21, "无效的目标数据"),
-    INVALID_CLASS_TYPE(22, "无效的类型类别");
+public enum ServiceError implements BusinessError {
+    NOT_FOUND(80, "无效页面"),
+    INNER_ERROR(81, "内部错误");
 
     /**
      * 枚举值
@@ -28,7 +27,7 @@ public enum ConverterError implements BusinessError {
      * @author: jimmy.zhang
      * @date: 2019-03-08
      */
-    ConverterError(final int code, final String message) {
+    ServiceError(final int code, final String message) {
         this.code = code;
         this.message = message;
     }

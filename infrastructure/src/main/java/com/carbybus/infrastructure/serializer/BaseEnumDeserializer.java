@@ -1,4 +1,4 @@
-package com.carbybus.cove.api.component;
+package com.carbybus.infrastructure.serializer;
 
 import com.carbybus.infrastructure.component.BaseEnum;
 import com.fasterxml.jackson.core.JsonParser;
@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.jsontype.TypeDeserializer;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 
 /**
  * 枚举类型转换器
@@ -28,14 +29,26 @@ public class BaseEnumDeserializer extends StdDeserializer<BaseEnum> {
     }
 
     @Override
-    public BaseEnum deserialize(JsonParser p, DeserializationContext context) throws IOException {
-        BaseEnum one = null;
+    public BaseEnum deserialize(JsonParser jp, DeserializationContext context) throws IOException {
+        String currentName = jp.currentName();
+        Object currentValue = jp.getCurrentValue();
 
-        int enumValue = p.getValueAsInt();
-        BaseEnum[] enums = (BaseEnum[]) this.handledType().getEnumConstants();
-        for (int i = 0; i < enums.length; i++) {
-            if (enums[i].getValue() == enumValue) {
-                one = enums[i];
+        BaseEnum one = null;
+        int enumValue = jp.getValueAsInt();
+
+        Field[] fields = currentValue.getClass().getDeclaredFields();
+        // 默认有field
+        for (int i = 0; i < fields.length; i++) {
+            if (fields[i].getName().equals(currentName)) {
+                Object[] enums = fields[i].getType().getEnumConstants();
+                // 默认有enum
+                for (int j = 0; j < enums.length; j++) {
+                    BaseEnum origin = (BaseEnum) enums[j];
+                    if (origin.getValue() == enumValue) {
+                        one = origin;
+                        break;
+                    }
+                }
                 break;
             }
         }

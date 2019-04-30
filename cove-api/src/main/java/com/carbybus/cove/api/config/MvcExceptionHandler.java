@@ -2,6 +2,7 @@ package com.carbybus.cove.api.config;
 
 import com.carbybus.infrastructure.component.ActionResult;
 import com.carbybus.infrastructure.exception.BusinessException;
+import com.carbybus.infrastructure.exception.ServiceError;
 import com.carbybus.infrastructure.exception.ValidatorError;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -62,6 +63,14 @@ public class MvcExceptionHandler {
     public ActionResult handleMethodArgumentException(BusinessException ex) {
         ActionResult result = new ActionResult();
         result.fail(ex.getCode(), ex.getMessage());
+        return result;
+    }
+
+    // todo：不同状态的错误信息设计
+    @ExceptionHandler(Exception.class)
+    public ActionResult handleMethodArgumentException(Exception ex) {
+        ActionResult result = new ActionResult();
+        result.fail(ServiceError.INNER_ERROR, ex.getMessage());
         return result;
     }
 }

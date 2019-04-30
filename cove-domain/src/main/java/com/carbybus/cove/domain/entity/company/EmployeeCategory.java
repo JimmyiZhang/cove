@@ -5,6 +5,7 @@ import com.carbybus.infrastructure.component.BaseEnum;
 
 /**
  * 员工类别
+ *
  * @author jimmy.zhang
  * @date 2019-04-29
  */

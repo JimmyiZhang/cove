@@ -37,4 +37,5 @@ HELP.md
 /cove-application/target/
 /cove-repository/target/
 /cove-domain/target/
+/infrastructure/target/
 
