@@ -18,19 +18,29 @@ import java.io.IOException;
 public class BaseEnumDeserializer extends StdDeserializer<BaseEnum> {
     public static final BaseEnumDeserializer instance = new BaseEnumDeserializer();
 
-    public BaseEnumDeserializer() {
+    protected BaseEnumDeserializer() {
         super(BaseEnum.class);
     }
 
     @Override
-    public Object getEmptyValue(DeserializationContext context) throws JsonMappingException {
+    public BaseEnum getEmptyValue(DeserializationContext context) throws JsonMappingException {
         return null;
     }
 
     @Override
     public BaseEnum deserialize(JsonParser p, DeserializationContext context) throws IOException {
-        return null;
-        // p.getValueAsInt()
+        BaseEnum one = null;
+
+        int enumValue = p.getValueAsInt();
+        BaseEnum[] enums = (BaseEnum[]) this.handledType().getEnumConstants();
+        for (int i = 0; i < enums.length; i++) {
+            if (enums[i].getValue() == enumValue) {
+                one = enums[i];
+                break;
+            }
+        }
+
+        return one;
     }
 
     @Override

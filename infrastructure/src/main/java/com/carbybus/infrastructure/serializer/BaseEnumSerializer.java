@@ -23,12 +23,8 @@ import java.lang.reflect.Type;
 public class BaseEnumSerializer extends StdSerializer<BaseEnum> {
     public static final BaseEnumSerializer instance = new BaseEnumSerializer();
 
-    public BaseEnumSerializer() {
+    protected BaseEnumSerializer() {
         super(BaseEnum.class);
-    }
-
-    public BaseEnumSerializer(Class<?> handledType) {
-        super(handledType, false);
     }
 
     @Override
