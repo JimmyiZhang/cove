@@ -21,6 +21,14 @@ spring:
     elideSetAutoCommits: true
     maintainTimeStats: false
 
+# logging config
+logging:
+  path: logs
+  file:
+    max-history: 15
+    max-size: 20MB
+  level.org: warn
+
 summer:
   http-config:
     cache-max-age: 600

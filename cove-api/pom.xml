@@ -130,6 +130,7 @@
                 <filtering>true</filtering>
                 <includes>
                     <include>mappers/**</include>
+                    <include>logback-spring.xml</include>
                     <include>mybatis-config.xml</include>
                     <include>application.yml</include>
                     <include>application-${profile.active}.yml</include>

@@ -7,8 +7,9 @@ package com.carbybus.infrastructure.exception;
  * @date 2019-03-29
  */
 public enum ServiceError implements BusinessError {
-    NOT_FOUND(80, "无效页面"),
-    INNER_ERROR(81, "内部错误");
+    BAD_REQUEST(80,"无效权限"),
+    NOT_FOUND(81, "无效页面"),
+    SERVER_ERROR(82, "内部错误");
 
     /**
      * 枚举值

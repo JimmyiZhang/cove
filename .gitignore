@@ -32,6 +32,7 @@ HELP.md
 /target/
 
 ### Project ###
+/logs/
 /cove-api/logs/
 /cove-api/target/
 /cove-application/target/

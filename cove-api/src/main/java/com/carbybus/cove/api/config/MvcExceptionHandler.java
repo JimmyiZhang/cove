@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import java.nio.file.AccessDeniedException;
 
 /**
  * 统一异常
@@ -66,11 +67,19 @@ public class MvcExceptionHandler {
         return result;
     }
 
-    // todo：不同状态的错误信息设计
-    @ExceptionHandler(Exception.class)
-    public ActionResult handleMethodArgumentException(Exception ex) {
+    // 权限异常
+    @ExceptionHandler(AccessDeniedException.class)
+    public ActionResult handleBadRequestException(Exception ex) {
         ActionResult result = new ActionResult();
-        result.fail(ServiceError.INNER_ERROR, ex.getMessage());
+        result.fail(ServiceError.BAD_REQUEST, ex.getMessage());
+        return result;
+    }
+
+    // 其他异常
+    @ExceptionHandler(Exception.class)
+    public ActionResult handleServerErrorException(Exception ex) {
+        ActionResult result = new ActionResult();
+        result.fail(ServiceError.SERVER_ERROR, ex.getMessage());
         return result;
     }
 }
