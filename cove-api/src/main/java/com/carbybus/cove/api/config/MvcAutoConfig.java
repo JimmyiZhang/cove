@@ -44,7 +44,7 @@ import java.util.List;
  */
 @Configuration
 @ComponentScan({"com.carbybus.cove.*", "com.carbybus.infrastructure"})
-public class MvcAutoConfiguration implements WebMvcConfigurer {
+public class MvcAutoConfig implements WebMvcConfigurer {
     @Autowired
     private UniteHttpConfig config;
 

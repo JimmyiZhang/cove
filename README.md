@@ -29,3 +29,8 @@
 [crown](https://caratacus.github.io/)
 [ShardingSphere](https://shardingsphere.apache.org/document/current/cn/overview/)
 
+# 基本约定
+- 应用层Application:
+- findByXXX从缓存中获取
+- getByXXX从存储中获取
+

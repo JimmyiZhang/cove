@@ -3,7 +3,6 @@ package com.carbybus.infrastructure.component;
 import com.carbybus.infrastructure.exception.BusinessError;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
-import lombok.Setter;
 
 /**
  * <p>
@@ -15,11 +14,14 @@ import lombok.Setter;
  * @author jimmy.zhang
  * @date 2019-02-26
  */
-@Getter
-@Setter
 public class ActionResult<T> {
+    @Getter
     private int code;
+
+    @Getter
     private String message;
+
+    @Getter
     private T data;
 
     /**

@@ -9,16 +9,21 @@ import com.carbybus.cove.repository.MessageRepository;
 import com.carbybus.infrastructure.component.ActionResult;
 import com.carbybus.infrastructure.component.impl.DefaultApplication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 
 /**
- * 公司应用
+ * 消息应用
  *
  * @author jimmy.zhang
  * @date 2019-04-19
  */
 @Service
+@CacheConfig(cacheNames = {"message"})
 public class MessageApplicationImpl extends DefaultApplication<MessageRepository, Message> implements MessageApplication {
     @Autowired
     private CompanyTrailerLoadingRepository loadingRep;
@@ -36,5 +41,32 @@ public class MessageApplicationImpl extends DefaultApplication<MessageRepository
         this.repository.insert(message);
         result.succeed();
         return result;
+    }
+
+    @Override
+    @Cacheable(key = "#id")
+    public Message findById(Long id) {
+        Message message = Message.create(10, 1);
+
+        System.out.println("从存储中获取数据");
+        return message;
+    }
+
+    @Override
+    @CachePut(key = "#id")
+    public Message updateById(Long id) {
+        Message message = Message.create(20, 2);
+
+        System.out.println("从存储中更新数据");
+        return message;
+    }
+
+    @Override
+    @CacheEvict(key = "#id")
+    public Message deleteById(Long id) {
+        Message message = Message.create(20, 2);
+
+        System.out.println("从存储中更新数据");
+        return message;
     }
 }

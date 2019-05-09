@@ -6,6 +6,8 @@ server:
 spring:
   profiles:
     active: "@profile.active@"
+  cache:
+    type: SIMPLE
 
 # logging config
 logging:

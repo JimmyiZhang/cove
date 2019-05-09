@@ -1,7 +1,6 @@
 package com.carbybus.cove.application;
 
 import com.carbybus.cove.domain.entity.Message;
-import com.carbybus.cove.domain.entity.company.Company;
 import com.carbybus.infrastructure.component.ActionResult;
 import com.carbybus.infrastructure.component.BaseApplication;
 
@@ -21,4 +20,10 @@ public interface MessageApplication extends BaseApplication<Message> {
      * @date 2019-04-19
      */
     ActionResult create(Message message);
+
+    Message findById(Long id);
+
+    Message updateById(Long id);
+
+    Message deleteById(Long id);
 }

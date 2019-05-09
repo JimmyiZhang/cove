@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.carbybus.infrastructure.component.BaseEntity;
 import com.carbybus.infrastructure.generator.KeyGeneratorBuilder;
 
+import java.io.Serializable;
+
 /**
  * <p>
  * 实体基类
@@ -18,7 +20,7 @@ import com.carbybus.infrastructure.generator.KeyGeneratorBuilder;
  * @author jimmy.zhang
  * @date 2019-02-26
  */
-public abstract class DefaultEntity implements BaseEntity<Long> {
+public abstract class DefaultEntity implements BaseEntity<Long>, Serializable {
     @TableId
     private Long id;
 
