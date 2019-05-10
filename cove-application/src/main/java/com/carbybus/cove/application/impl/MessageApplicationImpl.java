@@ -69,4 +69,11 @@ public class MessageApplicationImpl extends DefaultApplication<MessageRepository
         System.out.println("从存储中更新数据");
         return message;
     }
+
+    @Override
+    @Cacheable(key = "#name")
+    public Message findByName(String name) {
+        System.out.println("从存储中更新数据");
+        return Message.create(1, 1);
+    }
 }

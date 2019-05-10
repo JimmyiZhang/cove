@@ -1,7 +1,6 @@
 package com.carbybus.cove.api.config;
 
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -16,7 +15,6 @@ import org.springframework.context.annotation.Configuration;
  * @date 2019-05-08
  */
 @Configuration
-@EnableCaching(proxyTargetClass = true)
 @MapperScan(basePackages = "com.carbybus.infrastructure.caching")
 public class CachingConfig {
 

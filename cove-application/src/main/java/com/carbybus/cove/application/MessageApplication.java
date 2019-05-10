@@ -26,4 +26,6 @@ public interface MessageApplication extends BaseApplication<Message> {
     Message updateById(Long id);
 
     Message deleteById(Long id);
+
+    Message findByName(String name);
 }

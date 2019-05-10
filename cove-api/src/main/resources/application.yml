@@ -7,7 +7,12 @@ spring:
   profiles:
     active: "@profile.active@"
   cache:
-    type: SIMPLE
+    type: Redis
+    redis:
+      key-prefix: COVE
+  redis:
+    host: 127.0.0.1
+    port: 6379
 
 # logging config
 logging:

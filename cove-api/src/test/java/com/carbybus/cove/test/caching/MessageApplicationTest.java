@@ -67,4 +67,17 @@ public class MessageApplicationTest {
 
         Assert.isTrue(message1.equals(message2), "删除缓存");
     }
+
+    @Test
+    public void getCaching() {
+        String name = "jimmy";
+        System.out.println("findByName: 第一次获取");
+        // 注解获取
+        Message message1 = messageApp.findByName(name);
+
+        System.out.println("findByName: 第二次获取");
+        // 注解获取
+        Message message2 = messageApp.findByName(name);
+        Assert.isTrue(message1.equals(message2), "自定义Caching");
+    }
 }
