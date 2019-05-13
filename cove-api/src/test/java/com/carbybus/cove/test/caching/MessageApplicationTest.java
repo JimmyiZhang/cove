@@ -78,6 +78,18 @@ public class MessageApplicationTest {
         System.out.println("findByName: 第二次获取");
         // 注解获取
         Message message2 = messageApp.findByName(name);
-        Assert.isTrue(message1.equals(message2), "自定义Caching");
+        Assert.isTrue(message1.getResourceId() == message2.getResourceId(), "自定义Caching");
+    }
+
+    @Test
+    public void putCachingWithTtl() {
+        System.out.println("findByName: 自定义缓存获取");
+        // 注解获取
+        Message message1 = messageApp.findByName2("n2");
+
+        System.out.println("findByName: 默认缓存获取");
+        // 注解获取
+        Message message2 = messageApp.findByName1("n1");
+        Assert.isTrue(message1.getResourceId() == message2.getResourceId(), "自定义Caching");
     }
 }

@@ -7,7 +7,7 @@ spring:
   profiles:
     active: "@profile.active@"
   cache:
-    type: Redis
+    type: redis
     redis:
       key-prefix: COVE
   redis:
@@ -42,3 +42,6 @@ summer:
     token-subject: user
     token-issue: carbybus
     token-claim: id
+  redis-config:
+    expired-minutes: 60
+

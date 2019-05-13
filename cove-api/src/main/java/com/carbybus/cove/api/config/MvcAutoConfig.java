@@ -1,5 +1,6 @@
 package com.carbybus.cove.api.config;
 
+import com.carbybus.infrastructure.configuration.UniteJsonConfig;
 import com.carbybus.infrastructure.serializer.BaseEnumDeserializer;
 import com.carbybus.infrastructure.serializer.BaseEnumSerializer;
 import com.carbybus.infrastructure.component.BaseEnum;
@@ -46,7 +47,10 @@ import java.util.List;
 @ComponentScan({"com.carbybus.cove.*", "com.carbybus.infrastructure"})
 public class MvcAutoConfig implements WebMvcConfigurer {
     @Autowired
-    private UniteHttpConfig config;
+    private UniteHttpConfig httpConfig;
+
+    @Autowired
+    private UniteJsonConfig jsonConfig;
 
     @Override
     public Validator getValidator() {
@@ -65,10 +69,10 @@ public class MvcAutoConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .maxAge(config.getCorsMaxAge())
-                .allowedMethods(config.getCorsAllowedMethods())
-                .allowedOrigins(config.getCorsAllowedOrigins())
-                .allowedHeaders(config.getCorsAllowedHeaders())
+                .maxAge(httpConfig.getCorsMaxAge())
+                .allowedMethods(httpConfig.getCorsAllowedMethods())
+                .allowedOrigins(httpConfig.getCorsAllowedOrigins())
+                .allowedHeaders(httpConfig.getCorsAllowedHeaders())
                 .allowCredentials(true);
     }
 
@@ -82,28 +86,7 @@ public class MvcAutoConfig implements WebMvcConfigurer {
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         // jackson统一格式化
         MappingJackson2HttpMessageConverter jackson2Converter = new MappingJackson2HttpMessageConverter();
-        ObjectMapper objectMapper = jackson2Converter.getObjectMapper();
-
-        // 时间类型
-        JavaTimeModule timeModule = new JavaTimeModule();
-        timeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        timeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        timeModule.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        timeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        objectMapper
-                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-                .disable(MapperFeature.IGNORE_DUPLICATE_MODULE_REGISTRATIONS)
-                .registerModule(timeModule);
-
-        // Long类型
-        SimpleModule simpleModule = new SimpleModule();
-        simpleModule.addSerializer(Long.class, ToStringSerializer.instance);
-        simpleModule.addSerializer(Long.TYPE, ToStringSerializer.instance);
-
-        // BaseEnum类型
-        simpleModule.addSerializer(BaseEnum.class, BaseEnumSerializer.instance);
-        simpleModule.addDeserializer(BaseEnum.class, BaseEnumDeserializer.instance);
-        objectMapper.registerModule(simpleModule);
+        ObjectMapper objectMapper = jsonConfig.getObjectMapper();
 
         jackson2Converter.setObjectMapper(objectMapper);
         converters.add(0, jackson2Converter);

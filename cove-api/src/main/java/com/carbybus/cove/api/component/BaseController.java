@@ -34,7 +34,6 @@ public class BaseController {
                 .setCompanyId(1);
     }
 
-
     /**
      * 成功
      *

@@ -15,6 +15,9 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * 消息应用
@@ -75,5 +78,38 @@ public class MessageApplicationImpl extends DefaultApplication<MessageRepository
     public Message findByName(String name) {
         System.out.println("从存储中更新数据");
         return Message.create(1, 1);
+    }
+
+    @Override
+    @Cacheable(value = "message", key = "#name")
+    public Message findByName1(String name) {
+        System.out.println("从存储中更新数据");
+        return Message.create(1, 1);
+    }
+
+    @Override
+    @Cacheable(value = "message#100", key = "#name")
+    public Message findByName2(String name) {
+        System.out.println("从存储中更新数据");
+        return Message.create(1, 1);
+    }
+
+    @Override
+    public Message getOne(){
+        Message message = Message.create(1,1);
+        return message;
+    }
+
+    @Override
+    public List<Message> listAll(){
+        System.out.println("从存储中获取所有数据");
+        List<Message> messages = new ArrayList<>();
+
+        messages.add(Message.create(1,1));
+        messages.add(Message.create(1,2));
+        messages.add(Message.create(1,3));
+        messages.add(Message.create(1,4));
+
+        return messages;
     }
 }

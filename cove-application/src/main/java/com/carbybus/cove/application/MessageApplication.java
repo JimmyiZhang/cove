@@ -4,6 +4,8 @@ import com.carbybus.cove.domain.entity.Message;
 import com.carbybus.infrastructure.component.ActionResult;
 import com.carbybus.infrastructure.component.BaseApplication;
 
+import java.util.List;
+
 /**
  * 消息应用
  *
@@ -28,4 +30,12 @@ public interface MessageApplication extends BaseApplication<Message> {
     Message deleteById(Long id);
 
     Message findByName(String name);
+
+    Message findByName1(String name);
+
+    Message findByName2(String name);
+
+    Message getOne();
+
+    List<Message> listAll();
 }

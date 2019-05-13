@@ -2,6 +2,7 @@ package com.carbybus.cove.api.component;
 
 import com.carbybus.infrastructure.component.ActionResult;
 import com.carbybus.infrastructure.exception.ServiceError;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.web.servlet.error.AbstractErrorController;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.stereotype.Controller;
@@ -14,9 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 控制器错误
  * 处理非控制器异常
+ *
  * @author jimmy.zhang
  * @date 2019-05-07
  */
+@Slf4j
 @Controller
 @RequestMapping("/error")
 public class ErrorController extends AbstractErrorController {
@@ -42,6 +45,10 @@ public class ErrorController extends AbstractErrorController {
                 result.fail(ServiceError.SERVER_ERROR, response.getStatus());
                 break;
         }
+
+        String requestId = response.getHeader("Request-Id");
+        log.error("请求失败, Request-Id: {}", requestId);
+
         return result;
     }
 

@@ -5,9 +5,14 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.UUID;
 
 /**
  * 日志拦截器
+ * <p>
+ * 可以设置缓存
+ * response.addHeader("Cache-Control", "max-age=60000");
+ * </p>
  *
  * @author jimmy.zhang
  * @date 2019-04-29
@@ -18,12 +23,12 @@ public class LoggerInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String method = request.getMethod();
         String path = request.getRequestURI();
-        // todo: 可以记录日志
-        log.debug("the request url is: {}", path);
+        String requestId = UUID.randomUUID().toString();
+        log.debug("请求开始, RequestId: {}, Path: {}, method: {}",
+                requestId, path, method);
 
-        // todo: 可以设置缓存
-        response.addHeader("Cache-Control", "max-age=60000");
-
+        // 设置请求Id
+        response.addHeader("Request-Id", requestId);
         return true;
     }
 }
