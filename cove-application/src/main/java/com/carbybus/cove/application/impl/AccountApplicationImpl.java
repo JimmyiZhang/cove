@@ -3,9 +3,12 @@ package com.carbybus.cove.application.impl;
 import com.carbybus.cove.application.AccountApplication;
 import com.carbybus.cove.domain.entity.company.Account;
 import com.carbybus.cove.domain.exception.AccountError;
+import com.carbybus.cove.domain.view.UserLoginInput;
+import com.carbybus.cove.domain.view.UserLoginOutput;
 import com.carbybus.cove.repository.AccountRepository;
 import com.carbybus.infrastructure.component.ActionResult;
 import com.carbybus.infrastructure.component.impl.DefaultApplication;
+import com.carbybus.infrastructure.utils.JwtUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,5 +58,20 @@ public class AccountApplicationImpl extends DefaultApplication<AccountRepository
     @Override
     public Account getByName(String name) {
         return repository.selectByName(name);
+    }
+
+    @Override
+    public ActionResult login(UserLoginInput input) {
+        ActionResult result = ActionResult.OK;
+        UserLoginOutput output = new UserLoginOutput();
+        if (input.getUserName().equals("user") && input.getPassword().equals("123456")) {
+            String token = JwtUtils.create("user");
+            output.setToken(token);
+            result.succeed(output);
+        } else {
+            result.fail(AccountError.INVALID_NAME);
+        }
+
+        return result;
     }
 }

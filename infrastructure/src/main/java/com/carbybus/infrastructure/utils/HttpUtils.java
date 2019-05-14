@@ -21,6 +21,13 @@ import java.util.Map;
 @Log4j2
 public class HttpUtils {
     /**
+     * 工具类使用私有构造器覆盖公共构造器，防止公共构造器被调用
+     * Sonar Code smell Major squid:S1118
+     */
+    private HttpUtils() {
+    }
+
+    /**
      * 使用GET方法获取结果
      * 获取失败返回null
      *

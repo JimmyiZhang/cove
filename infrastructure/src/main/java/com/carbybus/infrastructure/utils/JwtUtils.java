@@ -12,6 +12,7 @@ import com.carbybus.infrastructure.exception.BusinessException;
 import com.carbybus.infrastructure.exception.JwtTokenError;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -24,9 +25,14 @@ import java.util.UUID;
  * @author jimmy.zhang
  * @date 2019-04-03
  */
+@Component
 public class JwtUtils {
-    @Autowired
     private static UniteJwtConfig config;
+
+    @Autowired
+    public JwtUtils(UniteJwtConfig config) {
+        JwtUtils.config = config;
+    }
 
     /**
      * 工具类使用私有构造器覆盖公共构造器，防止公共构造器被调用
