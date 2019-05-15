@@ -13,6 +13,8 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -38,7 +40,7 @@ import java.util.List;
  */
 @Configuration
 @ComponentScan({"com.carbybus.cove.*", "com.carbybus.infrastructure"})
-public class MvcAutoConfig implements WebMvcConfigurer {
+public class WebMvcConfig implements WebMvcConfigurer {
     @Autowired
     private UniteHttpConfig httpConfig;
 
@@ -71,8 +73,8 @@ public class MvcAutoConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        HandlerInterceptor loggerInt = new LoggerInterceptor();
-        registry.addInterceptor(loggerInt).addPathPatterns("/**");
+        HandlerInterceptor logInterceptor = new LoggerInterceptor();
+        registry.addInterceptor(logInterceptor).addPathPatterns("/**");
     }
 
     @Override

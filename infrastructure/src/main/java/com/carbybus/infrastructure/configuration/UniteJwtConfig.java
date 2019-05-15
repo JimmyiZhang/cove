@@ -39,4 +39,19 @@ public class UniteJwtConfig {
      * Token身份
      */
     private String tokenClaim = "id";
+
+    /**
+     * Token http header认证标识
+     */
+    private String tokenHeader = "Authorization";
+
+    /**
+     * Token http query认证标识
+     */
+    private String tokenQuery = "token";
+
+    /**
+     * Token Bearer认证标识
+     */
+    private String tokenBearer = "Bearer";
 }

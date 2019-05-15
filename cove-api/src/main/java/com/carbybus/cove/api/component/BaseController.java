@@ -1,13 +1,11 @@
 package com.carbybus.cove.api.component;
 
-import com.carbybus.cove.domain.entity.company.EmployeeCategory;
 import com.carbybus.cove.domain.principal.UserPrincipal;
 import com.carbybus.infrastructure.component.ActionResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,14 +22,19 @@ public class BaseController {
     @Autowired
     protected HttpServletResponse response;
 
-    protected UserPrincipal user;
+    private UserPrincipal user;
+
+    protected UserPrincipal getUser() {
+        if (this.user == null) {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String claim = auth.getName();
+            this.user = UserPrincipal.init().setUserName(claim);
+        }
+
+        return this.user;
+    }
 
     public BaseController() {
-        this.user = UserPrincipal.init()
-                .setUserCategory(EmployeeCategory.Captain)
-                .setUserId(1)
-                .setUserName("jimmy")
-                .setCompanyId(1);
     }
 
     /**
@@ -94,47 +97,5 @@ public class BaseController {
         result.fail(code, message, data);
 
         return result;
-    }
-
-    /**
-     * 通过名称获取 Bean
-     *
-     * @param name Bean 的名称
-     * @return 该名称的 Bean 的实例
-     * @author Liuyoushi
-     * @date 2019/4/8
-     */
-    protected Object getBean(String name) {
-        return getApplicationContext().getBean(name);
-    }
-
-    /**
-     * 通过类型获取 Bean
-     *
-     * @param clazz Bean 的类型
-     * @return 该类型的 Bean 的实例
-     * @author Liuyoushi
-     * @date 2019/4/8
-     */
-    protected <T> T getBean(Class<T> clazz) {
-        return getApplicationContext().getBean(clazz);
-    }
-
-    /**
-     * 通过名称和类型获取 Bean
-     *
-     * @param name  Bean 的名称
-     * @param clazz Bean 的类型
-     * @return Bean 的实例
-     * @author Liuyoushi
-     * @date 2019/4/8
-     */
-    protected <T> T getBean(String name, Class<T> clazz) {
-        return getApplicationContext().getBean(name, clazz);
-    }
-
-    protected ApplicationContext getApplicationContext() {
-        ServletContext sc = request.getSession().getServletContext();
-        return WebApplicationContextUtils.getWebApplicationContext(sc);
     }
 }

@@ -2,6 +2,7 @@ package com.carbybus.cove.application;
 
 import com.carbybus.cove.domain.entity.company.Account;
 import com.carbybus.cove.domain.view.UserLoginInput;
+import com.carbybus.cove.domain.view.UserRefreshInput;
 import com.carbybus.infrastructure.component.ActionResult;
 import com.carbybus.infrastructure.component.BaseApplication;
 
@@ -33,11 +34,20 @@ public interface AccountApplication extends BaseApplication<Account> {
     Account getByName(String name);
 
     /**
-    * 登录，并返回认证token
+    * 获取token，并返回认证token
     * @param
     * @return
     * @author jimmy.zhang
     * @date 2019-05-14
     */
-    ActionResult login(UserLoginInput input);
+    ActionResult accessToken(UserLoginInput input);
+
+    /**
+    * 刷新Token
+    * @param
+    * @return
+    * @author jimmy.zhang
+    * @date 2019-05-15
+    */
+    ActionResult refreshToken(UserRefreshInput input);
 }

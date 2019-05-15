@@ -5,10 +5,12 @@ import com.carbybus.cove.domain.entity.company.Account;
 import com.carbybus.cove.domain.exception.AccountError;
 import com.carbybus.cove.domain.view.UserLoginInput;
 import com.carbybus.cove.domain.view.UserLoginOutput;
+import com.carbybus.cove.domain.view.UserRefreshInput;
 import com.carbybus.cove.repository.AccountRepository;
 import com.carbybus.infrastructure.component.ActionResult;
 import com.carbybus.infrastructure.component.impl.DefaultApplication;
-import com.carbybus.infrastructure.utils.JwtUtils;
+import com.carbybus.infrastructure.jwt.JwtResult;
+import com.carbybus.infrastructure.jwt.JwtUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,14 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class AccountApplicationImpl extends DefaultApplication<AccountRepository, Account> implements AccountApplication {
-    /**
-     * 创建账号
-     *
-     * @param account 账号实体
-     * @return 创建账号的结果
-     * @author jimmy.zhang
-     * @date 2019-03-28
-     */
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ActionResult create(Account account) {
@@ -47,31 +41,41 @@ public class AccountApplicationImpl extends DefaultApplication<AccountRepository
         return result;
     }
 
-    /**
-     * 根据名称获取账号
-     *
-     * @param name 账号名称
-     * @return 对应名称的账号实体，没有返回 null
-     * @author Liuyoushi
-     * @date 2019-04-08
-     */
     @Override
     public Account getByName(String name) {
         return repository.selectByName(name);
     }
 
     @Override
-    public ActionResult login(UserLoginInput input) {
+    public ActionResult accessToken(UserLoginInput input) {
         ActionResult result = ActionResult.OK;
-        UserLoginOutput output = new UserLoginOutput();
+
         if (input.getUserName().equals("user") && input.getPassword().equals("123456")) {
-            String token = JwtUtils.create("user");
-            output.setToken(token);
+            JwtResult token = JwtUtils.create("user");
+
+            UserLoginOutput output = new UserLoginOutput();
+            output.setToken(token.getToken());
+            output.setExpire(token.getExpire());
+
             result.succeed(output);
         } else {
             result.fail(AccountError.INVALID_NAME);
         }
 
+        return result;
+    }
+
+    @Override
+    public ActionResult refreshToken(UserRefreshInput input) {
+        ActionResult result = ActionResult.OK;
+
+        JwtResult token = JwtUtils.refresh(input.getToken());
+
+        UserLoginOutput output = new UserLoginOutput();
+        output.setToken(token.getToken());
+        output.setExpire(token.getExpire());
+
+        result.succeed(output);
         return result;
     }
 }

@@ -1,4 +1,4 @@
-package com.carbybus.infrastructure.utils;
+package com.carbybus.infrastructure.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -10,6 +10,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.carbybus.infrastructure.configuration.UniteJwtConfig;
 import com.carbybus.infrastructure.exception.BusinessException;
 import com.carbybus.infrastructure.exception.JwtTokenError;
+import com.carbybus.infrastructure.utils.StringConstants;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -50,19 +51,21 @@ public class JwtUtils {
      * @author jimmy.zhang
      * @date 2019-04-03
      */
-    public static String create(String id) {
+    public static JwtResult create(String id) {
         String tokenSecret = config.getTokenSecret();
         if (StringUtils.isEmpty(tokenSecret)) {
             throw new BusinessException(JwtTokenError.INVALID_SECRET);
         }
 
         Date now = Date.from(Instant.now());
-        Date exp = Date.from(Instant.now().plus(config.getTokenExpired(), ChronoUnit.MINUTES));
+        int expMinutes = config.getTokenExpired();
+        Date exp = Date.from(Instant.now().plus(expMinutes, ChronoUnit.MINUTES));
         String JwtId = UUID.randomUUID().toString();
-        String token = StringConstants.EMPTY;
+
+        JwtResult result = new JwtResult();
         try {
             Algorithm algorithm = Algorithm.HMAC512(tokenSecret);
-            token = JWT.create()
+            String token = JWT.create()
                     .withIssuer(config.getTokenIssue())
                     .withIssuedAt(now)
                     .withSubject(config.getTokenSubject())
@@ -70,10 +73,12 @@ public class JwtUtils {
                     .withJWTId(JwtId)
                     .withClaim(config.getTokenClaim(), id)
                     .sign(algorithm);
+            result.setToken(token);
+            result.setExpire(expMinutes);
         } catch (JWTCreationException ex) {
             throw new BusinessException(JwtTokenError.CREATION_EXCEPTION, ex);
         }
-        return token;
+        return result;
     }
 
     /**
@@ -97,7 +102,6 @@ public class JwtUtils {
                     .withIssuer(config.getTokenIssue())
                     .acceptExpiresAt(5)
                     .build();
-
             verifier.verify(token);
 
             DecodedJWT code = JWT.decode(token);
@@ -138,5 +142,57 @@ public class JwtUtils {
             verify = false;
         }
         return verify;
+    }
+
+    /**
+     * 刷新
+     *
+     * @param
+     * @return
+     * @author jimmy.zhang
+     * @date 2019-05-15
+     */
+    public static JwtResult refresh(String token) {
+        String tokenSecret = config.getTokenSecret();
+        if (StringUtils.isEmpty(tokenSecret)) {
+            throw new BusinessException(JwtTokenError.INVALID_SECRET);
+        }
+
+        JwtResult result = new JwtResult();
+        try {
+            Algorithm algorithm = Algorithm.HMAC512(tokenSecret);
+            JWTVerifier verifier = JWT.require(algorithm)
+                    .withIssuer(config.getTokenIssue())
+                    .acceptExpiresAt(5)
+                    .build();
+
+            verifier.verify(token);
+            DecodedJWT code = JWT.decode(token);
+            String id = code.getClaim(config.getTokenClaim()).asString();
+
+            // 重新生成
+            Date now = Date.from(Instant.now());
+            int expMinutes = config.getTokenExpired() * 2;
+            Date exp = Date.from(Instant.now().plus(expMinutes, ChronoUnit.MINUTES));
+            String JwtId = UUID.randomUUID().toString();
+
+            String reToken = JWT.create()
+                    .withIssuer(config.getTokenIssue())
+                    .withIssuedAt(now)
+                    .withSubject(config.getTokenSubject())
+                    .withExpiresAt(exp)
+                    .withJWTId(JwtId)
+                    .withClaim(config.getTokenClaim(), id)
+                    .sign(algorithm);
+
+            result.setToken(reToken);
+            result.setExpire(expMinutes);
+        } catch (JWTDecodeException ex) {
+            throw new BusinessException(JwtTokenError.DECODE_EXCEPTION, ex);
+        } catch (JWTVerificationException ex) {
+            throw new BusinessException(JwtTokenError.VERIFICATION_EXCEPTION, ex);
+        }
+
+        return result;
     }
 }

@@ -1,6 +1,5 @@
 package com.carbybus.cove.domain.principal;
 
-import com.carbybus.cove.domain.entity.company.EmployeeCategory;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -18,11 +17,6 @@ public class UserPrincipal {
      * 用户编号
      */
     private long userId;
-
-    /**
-     * 用户类型
-     */
-    private EmployeeCategory userCategory;
 
     /**
      * 用户姓名

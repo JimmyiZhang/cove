@@ -5,4 +5,5 @@ import lombok.Data;
 @Data
 public class UserLoginOutput {
     private String token;
+    private Integer expire;
 }

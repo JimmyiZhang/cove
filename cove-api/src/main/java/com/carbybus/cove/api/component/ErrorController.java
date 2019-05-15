@@ -46,8 +46,8 @@ public class ErrorController extends AbstractErrorController {
                 break;
         }
 
-        String requestId = response.getHeader("Request-Id");
-        log.error("请求失败, Request-Id: {}", requestId);
+        String requestId = response.getHeader("Request-Code");
+        log.error("请求失败, Request Code: {}", requestId);
 
         return result;
     }

@@ -30,16 +30,4 @@ public class UserController extends BaseController {
     public UserController(AccountApplication accountApp) {
         this.accountApp = accountApp;
     }
-
-    @ApiOperation(value = "当前用户", notes = "获取用户详细信息")
-    @GetMapping(value = "/me")
-    public ActionResult me() {
-        return success(this.user);
-    }
-
-    @ApiOperation(value = "登录", notes = "登录并生成TOKEN")
-    @PostMapping(value = "/login")
-    public ActionResult login(@RequestBody @Valid UserLoginInput input) {
-        return accountApp.login(input);
-    }
 }

@@ -22,7 +22,7 @@ import java.nio.file.AccessDeniedException;
  */
 @ControllerAdvice
 @ResponseBody
-public class MvcExceptionHandler {
+public class WebExceptionHandler {
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ActionResult handleConstraintViolationException(ConstraintViolationException ex) {
