@@ -43,5 +43,5 @@ summer:
     token-issue: carbybus
     token-claim: id
   redis-config:
-    expired-minutes: 60
+    expired-minutes: 0
 
