@@ -21,6 +21,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private UniteJwtConfig jwtConfig;
 
+    @Autowired
+    private JwtUtils jwtUtils;
+
     // 获取jwt的token
     private String getJwtToken(HttpServletRequest request) {
         String authHeader = request.getHeader(jwtConfig.getTokenHeader());
@@ -44,7 +47,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
         log.info("jwt认证开始，token: {}", authToken);
-        String claim = JwtUtils.decode(authToken);
+        String claim = jwtUtils.decode(authToken);
 
         JwtAuthenticationToken jwtToken = new JwtAuthenticationToken(claim);
         jwtToken.setAuthenticated(true);

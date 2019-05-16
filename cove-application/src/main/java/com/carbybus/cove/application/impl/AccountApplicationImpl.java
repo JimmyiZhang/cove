@@ -11,6 +11,7 @@ import com.carbybus.infrastructure.component.ActionResult;
 import com.carbybus.infrastructure.component.impl.DefaultApplication;
 import com.carbybus.infrastructure.jwt.JwtResult;
 import com.carbybus.infrastructure.jwt.JwtUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,9 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class AccountApplicationImpl extends DefaultApplication<AccountRepository, Account> implements AccountApplication {
+    @Autowired
+    private JwtUtils jwtUtils;
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ActionResult create(Account account) {
@@ -51,7 +55,7 @@ public class AccountApplicationImpl extends DefaultApplication<AccountRepository
         ActionResult result = ActionResult.OK;
 
         if (input.getUserName().equals("user") && input.getPassword().equals("123456")) {
-            JwtResult token = JwtUtils.create("user");
+            JwtResult token = jwtUtils.create("user");
 
             UserLoginOutput output = new UserLoginOutput();
             output.setToken(token.getToken());
@@ -69,7 +73,7 @@ public class AccountApplicationImpl extends DefaultApplication<AccountRepository
     public ActionResult refreshToken(UserRefreshInput input) {
         ActionResult result = ActionResult.OK;
 
-        JwtResult token = JwtUtils.refresh(input.getToken());
+        JwtResult token = jwtUtils.refresh(input.getToken());
 
         UserLoginOutput output = new UserLoginOutput();
         output.setToken(token.getToken());

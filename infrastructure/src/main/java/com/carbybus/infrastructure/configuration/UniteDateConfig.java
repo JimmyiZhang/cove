@@ -18,10 +18,10 @@ public class UniteDateConfig {
     /**
      * 默认日期时间格式
      */
-    public String DEFAULT_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private String datetimeFormat = "yyyy-MM-dd HH:mm:ss";
 
     /**
      * 默认日期格式
      */
-    public String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
+    private String dateFormat = "yyyy-MM-dd";
 }

@@ -18,12 +18,12 @@ public class UniteHttpConfig {
     /**
      * 分隔符
      */
-    private final static String SEPARATOR_ALLOWED = ",";
+    private static final String SEPARATOR_ALLOWED = ",";
 
     /**
      * 全部允许
      */
-    private final static String WHOLE_ALLOWED = "*";
+    private static final String WHOLE_ALLOWED = "*";
 
     /**
      * 缓存时间，默认10分钟

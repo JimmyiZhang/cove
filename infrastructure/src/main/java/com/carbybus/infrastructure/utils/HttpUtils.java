@@ -20,6 +20,8 @@ import java.util.Map;
  */
 @Log4j2
 public class HttpUtils {
+    private static final String DEFAULT_CHARSET = "utf-8";
+
     /**
      * 工具类使用私有构造器覆盖公共构造器，防止公共构造器被调用
      * Sonar Code smell Major squid:S1118
@@ -38,18 +40,18 @@ public class HttpUtils {
      */
     public static String get(String url) {
         BufferedReader in = null;
-        StringBuffer result = null;
+        StringBuilder result;
         try {
             // url请求中如果有中文，要在接收方用相应字符转码
             URL uri = new URI(url).toURL();
             URLConnection connection = uri.openConnection();
             connection.setRequestProperty("Content-type", "text/html");
-            connection.setRequestProperty("Accept-Charset", "utf-8");
-            connection.setRequestProperty("contentType", "utf-8");
+            connection.setRequestProperty("Accept-Charset", DEFAULT_CHARSET);
+            connection.setRequestProperty("contentType", DEFAULT_CHARSET);
             connection.connect();
-            result = new StringBuffer();
+            result = new StringBuilder();
             // 读取URL的响应
-            in = new BufferedReader(new InputStreamReader(connection.getInputStream(), "utf-8"));
+            in = new BufferedReader(new InputStreamReader(connection.getInputStream(), DEFAULT_CHARSET));
             String line;
             while ((line = in.readLine()) != null) {
                 result.append(line);
@@ -95,7 +97,7 @@ public class HttpUtils {
             }
         }
 
-        return post(url, "", "utf-8");
+        return post(url, "", DEFAULT_CHARSET);
     }
 
     /**

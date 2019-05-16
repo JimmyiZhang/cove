@@ -1,9 +1,6 @@
 package com.carbybus.cove.domain.entity.coordinate;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
 
 /**
  * 坐标接口
@@ -19,5 +16,5 @@ public class Coordinate {
     /**
      * 纬度
      */
-    private double longtitude;
+    private double longitude;
 }

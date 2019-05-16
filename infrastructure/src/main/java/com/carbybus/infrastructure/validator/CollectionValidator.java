@@ -19,6 +19,7 @@ import java.util.Set;
  * @author Caratacus
  */
 public class CollectionValidator implements javax.validation.Validator {
+    private static final String NO_VALIDATOR_ERROR = "No target Validator set";
     private final javax.validation.Validator targetValidator = Validation.buildDefaultValidatorFactory().getValidator();
 
     //---------------------------------------------------------------------
@@ -27,7 +28,7 @@ public class CollectionValidator implements javax.validation.Validator {
 
     @Override
     public <T> Set<ConstraintViolation<T>> validate(T object, Class<?>... groups) {
-        Assert.state(this.targetValidator != null, "No target Validator set");
+        Assert.state(this.targetValidator != null, NO_VALIDATOR_ERROR);
         if (object instanceof Collection) {
             Set<ConstraintViolation<T>> constraintViolations = new HashSet<>();
             Collection collection = (Collection) object;
@@ -42,27 +43,27 @@ public class CollectionValidator implements javax.validation.Validator {
 
     @Override
     public <T> Set<ConstraintViolation<T>> validateProperty(T object, String propertyName, Class<?>... groups) {
-        Assert.state(this.targetValidator != null, "No target Validator set");
+        Assert.state(this.targetValidator != null, NO_VALIDATOR_ERROR);
         return this.targetValidator.validateProperty(object, propertyName, groups);
     }
 
     @Override
     public <T> Set<ConstraintViolation<T>> validateValue(
             Class<T> beanType, String propertyName, Object value, Class<?>... groups) {
-        Assert.state(this.targetValidator != null, "No target Validator set");
+        Assert.state(this.targetValidator != null, NO_VALIDATOR_ERROR);
         return this.targetValidator.validateValue(beanType, propertyName, value, groups);
     }
 
     @Override
     public BeanDescriptor getConstraintsForClass(Class<?> clazz) {
-        Assert.state(this.targetValidator != null, "No target Validator set");
+        Assert.state(this.targetValidator != null, NO_VALIDATOR_ERROR);
         return this.targetValidator.getConstraintsForClass(clazz);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public <T> T unwrap(Class<T> type) {
-        Assert.state(this.targetValidator != null, "No target Validator set");
+        Assert.state(this.targetValidator != null, NO_VALIDATOR_ERROR);
         try {
             return (type != null ? this.targetValidator.unwrap(type) : (T) this.targetValidator);
         } catch (ValidationException ex) {

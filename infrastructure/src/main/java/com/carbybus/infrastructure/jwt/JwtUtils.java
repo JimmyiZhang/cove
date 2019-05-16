@@ -28,12 +28,8 @@ import java.util.UUID;
  */
 @Component
 public class JwtUtils {
-    private static UniteJwtConfig config;
-
     @Autowired
-    public JwtUtils(UniteJwtConfig config) {
-        JwtUtils.config = config;
-    }
+    private  UniteJwtConfig config;
 
     /**
      * 工具类使用私有构造器覆盖公共构造器，防止公共构造器被调用
@@ -51,7 +47,7 @@ public class JwtUtils {
      * @author jimmy.zhang
      * @date 2019-04-03
      */
-    public static JwtResult create(String id) {
+    public JwtResult create(String id) {
         String tokenSecret = config.getTokenSecret();
         if (StringUtils.isEmpty(tokenSecret)) {
             throw new BusinessException(JwtTokenError.INVALID_SECRET);
@@ -60,7 +56,7 @@ public class JwtUtils {
         Date now = Date.from(Instant.now());
         int expMinutes = config.getTokenExpired();
         Date exp = Date.from(Instant.now().plus(expMinutes, ChronoUnit.MINUTES));
-        String JwtId = UUID.randomUUID().toString();
+        String jwtId = UUID.randomUUID().toString();
 
         JwtResult result = new JwtResult();
         try {
@@ -70,7 +66,7 @@ public class JwtUtils {
                     .withIssuedAt(now)
                     .withSubject(config.getTokenSubject())
                     .withExpiresAt(exp)
-                    .withJWTId(JwtId)
+                    .withJWTId(jwtId)
                     .withClaim(config.getTokenClaim(), id)
                     .sign(algorithm);
             result.setToken(token);
@@ -89,7 +85,7 @@ public class JwtUtils {
      * @author jimmy.zhang
      * @date 2019-04-03
      */
-    public static String decode(String token) {
+    public String decode(String token) {
         String tokenSecret = config.getTokenSecret();
         if (StringUtils.isEmpty(tokenSecret)) {
             throw new BusinessException(JwtTokenError.INVALID_SECRET);
@@ -122,7 +118,7 @@ public class JwtUtils {
      * @author jimmy.zhang
      * @date 2019-04-03
      */
-    public static boolean verify(String token) {
+    public boolean verify(String token) {
         String tokenSecret = config.getTokenSecret();
         if (StringUtils.isEmpty(tokenSecret)) {
             throw new BusinessException(JwtTokenError.INVALID_SECRET);
@@ -152,7 +148,7 @@ public class JwtUtils {
      * @author jimmy.zhang
      * @date 2019-05-15
      */
-    public static JwtResult refresh(String token) {
+    public JwtResult refresh(String token) {
         String tokenSecret = config.getTokenSecret();
         if (StringUtils.isEmpty(tokenSecret)) {
             throw new BusinessException(JwtTokenError.INVALID_SECRET);
@@ -174,14 +170,14 @@ public class JwtUtils {
             Date now = Date.from(Instant.now());
             int expMinutes = config.getTokenExpired() * 2;
             Date exp = Date.from(Instant.now().plus(expMinutes, ChronoUnit.MINUTES));
-            String JwtId = UUID.randomUUID().toString();
+            String jwtId = UUID.randomUUID().toString();
 
             String reToken = JWT.create()
                     .withIssuer(config.getTokenIssue())
                     .withIssuedAt(now)
                     .withSubject(config.getTokenSubject())
                     .withExpiresAt(exp)
-                    .withJWTId(JwtId)
+                    .withJWTId(jwtId)
                     .withClaim(config.getTokenClaim(), id)
                     .sign(algorithm);
 

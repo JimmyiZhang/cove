@@ -9,6 +9,8 @@ import java.util.concurrent.Callable;
 
 /**
  * 缓存工具类
+ * 仅支持Spring Boot方式的缓存
+ * 与注解保持一致
  *
  * @author jimmy.zhang
  * @date 2019-05-09
@@ -16,7 +18,7 @@ import java.util.concurrent.Callable;
 @Component
 public class CacheUtils {
     @Autowired
-    CacheManager cacheManager;
+    private CacheManager cacheManager;
 
     /**
      * 获取缓存
@@ -45,6 +47,7 @@ public class CacheUtils {
     /**
      * 获取缓存
      * 若缓存不存则获取数据并保存缓存
+     * 与@Cacheable(key = "#id")保持一致
      *
      * @param
      * @return
@@ -57,6 +60,7 @@ public class CacheUtils {
 
     /**
      * 更新缓存
+     * 与@CachePut(key = "#id")保持一致
      *
      * @param
      * @return
@@ -70,6 +74,7 @@ public class CacheUtils {
 
     /**
      * 删除缓存
+     * 与@CacheEvict(key = "#id")保持一致
      *
      * @param
      * @return

@@ -8,7 +8,7 @@ package com.carbybus.infrastructure.generator;
  * @date 2019-04-19
  */
 public class KeyGeneratorBuilder {
-    public final static KeyGeneratorBuilder INSTANCE = new KeyGeneratorBuilder();
+    public static final KeyGeneratorBuilder INSTANCE = new KeyGeneratorBuilder();
 
     private KeyGenerator generator;
 

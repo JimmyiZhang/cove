@@ -6,8 +6,8 @@ import com.baomidou.mybatisplus.core.enums.IEnum;
  * 设备连接状态
  */
 public enum DeviceLinkStatus implements IEnum<Integer> {
-    Online(1, "在线"),
-    Offline(2, "离线");
+    ON_LINE(1, "在线"),
+    OFF_LINE(2, "离线");
 
     /**
      * 枚举值

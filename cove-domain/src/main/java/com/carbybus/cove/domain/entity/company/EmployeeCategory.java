@@ -10,8 +10,8 @@ import com.carbybus.infrastructure.component.BaseEnum;
  * @date 2019-04-29
  */
 public enum EmployeeCategory implements BaseEnum {
-    Leader(1, "管理者"),
-    Captain(2, "车队长");
+    LEADER(1, "管理者"),
+    CAPTAIN(2, "车队长");
 
     /**
      * 枚举值

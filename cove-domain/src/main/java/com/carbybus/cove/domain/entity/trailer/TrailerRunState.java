@@ -6,9 +6,9 @@ import com.baomidou.mybatisplus.core.enums.IEnum;
  * 行驶状态
  */
 public enum TrailerRunState implements IEnum<Integer> {
-    Transiting(1, "在途"),
-    Idle(2, "闲置"),
-    Unknown(9, "未知");
+    TRANSITING(1, "在途"),
+    IDLE(2, "闲置"),
+    UNKOWN(9, "未知");
 
     /**
      * 枚举值

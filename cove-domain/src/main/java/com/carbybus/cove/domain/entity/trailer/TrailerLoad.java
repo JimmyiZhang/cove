@@ -2,7 +2,6 @@ package com.carbybus.cove.domain.entity.trailer;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.carbybus.cove.domain.entity.coordinate.Coordinate;
-import com.carbybus.cove.domain.entity.trailer.TrailerEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

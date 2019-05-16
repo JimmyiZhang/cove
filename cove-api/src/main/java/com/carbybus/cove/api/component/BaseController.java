@@ -34,9 +34,6 @@ public class BaseController {
         return this.user;
     }
 
-    public BaseController() {
-    }
-
     /**
      * 成功
      *

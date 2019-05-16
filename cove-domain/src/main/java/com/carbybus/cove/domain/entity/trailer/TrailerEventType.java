@@ -6,14 +6,14 @@ import com.baomidou.mybatisplus.core.enums.IEnum;
  * 车辆报警类型
  */
 public enum TrailerEventType implements IEnum<Integer> {
-    SpeedWarning(1, "超速预警"),
-    FuelWarning(2, "油量预警"),
-    AccidentWarning(3, "事故预警"),
-    DeviceWarning(4, "设备预警"),
-    StoppingEvent(5, "超长停车"),
-    FuelingEvent(6, "加油"),
-    LoadingEvent(7, "装车"),
-    UnloadingEvent(8, "交车");
+    SPEED_WARNING(1, "超速预警"),
+    FUEL_WARNING(2, "油量预警"),
+    ACCIDENT_WARNING(3, "事故预警"),
+    DEVICE_WARNING(4, "设备预警"),
+    STOPPING_EVENT(5, "超长停车"),
+    FUELING_EVENT(6, "加油"),
+    LOADING_EVENT(7, "装车"),
+    UNLOADING_EVENT(8, "交车");
 
     /**
      * 枚举值

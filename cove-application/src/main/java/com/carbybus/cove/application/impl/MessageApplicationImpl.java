@@ -49,66 +49,43 @@ public class MessageApplicationImpl extends DefaultApplication<MessageRepository
     @Override
     @Cacheable(key = "#id")
     public Message findById(Long id) {
-        Message message = Message.create(10, 1);
-
-        System.out.println("从存储中获取数据");
-        return message;
+        return Message.create(10, 1);
     }
 
     @Override
     @CachePut(key = "#id")
     public Message updateById(Long id) {
-        Message message = Message.create(20, 2);
-
-        System.out.println("从存储中更新数据");
-        return message;
+        return Message.create(20, 2);
     }
 
     @Override
     @CacheEvict(key = "#id")
-    public Message deleteById(Long id) {
-        Message message = Message.create(20, 2);
-
-        System.out.println("从存储中更新数据");
-        return message;
+    public void deleteById(Long id) {
+        Message.create(20, 2);
     }
 
     @Override
     @Cacheable(key = "#name")
     public Message findByName(String name) {
-        System.out.println("从存储中更新数据");
         return Message.create(1, 1);
     }
 
     @Override
-    @Cacheable(value = "message", key = "#name")
-    public Message findByName1(String name) {
-        System.out.println("从存储中更新数据");
-        return Message.create(1, 1);
-    }
-
-    @Override
-    @Cacheable(value = "message#100", key = "#name")
-    public Message findByName2(String name) {
-        System.out.println("从存储中更新数据");
-        return Message.create(1, 1);
-    }
-
-    @Override
-    public Message getOne(){
-        Message message = Message.create(1,1);
+    @Cacheable(value = "message#10", key = "#name")
+    public Message getOne(String name) {
+        Message message = Message.create(1, 1);
+        message.setReadStatus(true);
         return message;
     }
 
     @Override
-    public List<Message> listAll(){
-        System.out.println("从存储中获取所有数据");
+    public List<Message> listAll() {
         List<Message> messages = new ArrayList<>();
 
-        messages.add(Message.create(1,1));
-        messages.add(Message.create(1,2));
-        messages.add(Message.create(1,3));
-        messages.add(Message.create(1,4));
+        messages.add(Message.create(1, 1));
+        messages.add(Message.create(1, 2));
+        messages.add(Message.create(1, 3));
+        messages.add(Message.create(1, 4));
 
         return messages;
     }

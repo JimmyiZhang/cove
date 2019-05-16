@@ -6,8 +6,8 @@ import com.baomidou.mybatisplus.core.enums.IEnum;
  * 车辆油量类型
  */
 public enum TrailerFuelType implements IEnum<Integer> {
-    Increase(1, "加油"),
-    Decrease(2,"用油");
+    INCREASE(1, "加油"),
+    DECREASE(2,"用油");
 
     /**
      * 枚举值

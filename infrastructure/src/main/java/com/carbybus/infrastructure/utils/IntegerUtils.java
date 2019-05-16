@@ -8,8 +8,7 @@ package com.carbybus.infrastructure.utils;
  */
 public class IntegerUtils {
     /**
-     * 工具类使用私有构造器覆盖公共构造器，防止公共构造器被调用
-     * Sonar Code smell Major squid:S1118
+     * 私有构造器
      */
     private IntegerUtils() {
     }

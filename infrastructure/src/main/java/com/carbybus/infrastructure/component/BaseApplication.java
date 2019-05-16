@@ -15,12 +15,6 @@ import java.util.List;
  * 对外提供各种应用功能，
  * 对内调用领域完成业务逻辑
  *
- * <p>
- * todo: 思考
- * 1. 基本类型是否需要暴露出去，还是作为内部属性供公共方法使用
- * 2. 转化操作在Application中还是在controller中
- * </p>
- *
  * @author jimmy.zhang
  * @date 2019-03-27
  */

@@ -35,7 +35,7 @@ public class MessageController extends BaseController {
     @ApiOperation(value = "一条消息", notes = "获取一条消息")
     @GetMapping(value = "/one")
     public Message one() {
-        return messageApp.getOne();
+        return messageApp.getOne("name");
     }
 
     @ApiOperation(value = "所有消息", notes = "获取所有消息")

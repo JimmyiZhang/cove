@@ -27,15 +27,11 @@ public interface MessageApplication extends BaseApplication<Message> {
 
     Message updateById(Long id);
 
-    Message deleteById(Long id);
+    void deleteById(Long id);
 
     Message findByName(String name);
 
-    Message findByName1(String name);
-
-    Message findByName2(String name);
-
-    Message getOne();
+    Message getOne(String name);
 
     List<Message> listAll();
 }

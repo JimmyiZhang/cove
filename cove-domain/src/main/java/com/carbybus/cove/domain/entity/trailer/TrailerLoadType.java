@@ -6,8 +6,8 @@ import com.baomidou.mybatisplus.core.enums.IEnum;
  * 载重类型
  */
 public enum TrailerLoadType implements IEnum<Integer> {
-    Heavy(1, "重驶"),
-    Vacant(2, "空驶");
+    HEAVY(1, "重驶"),
+    VACANT(2, "空驶");
 
     /**
      * 枚举值

@@ -85,11 +85,11 @@ public class MessageApplicationTest {
     public void putCachingWithTtl() {
         System.out.println("findByName: 自定义缓存获取");
         // 注解获取
-        Message message1 = messageApp.findByName2("n2");
+        Message message1 = messageApp.getOne("n2");
 
         System.out.println("findByName: 默认缓存获取");
         // 注解获取
-        Message message2 = messageApp.findByName1("n1");
+        Message message2 = messageApp.getOne("n1");
         Assert.isTrue(message1.getResourceId() == message2.getResourceId(), "自定义Caching");
     }
 }

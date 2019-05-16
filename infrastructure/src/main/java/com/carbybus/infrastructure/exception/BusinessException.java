@@ -11,13 +11,15 @@ package com.carbybus.infrastructure.exception;
  * @date 2019-02-28
  */
 public class BusinessException extends RuntimeException {
-    private int code;
-    private String message;
+    private final int code;
+    private final String message;
 
-    public BusinessException() {
+    public BusinessException(int code, String message) {
+        this.code = code;
+        this.message = message;
     }
 
-    public BusinessException(BusinessError error){
+    public BusinessException(BusinessError error) {
         this.code = error.getCode();
         this.message = error.getMessage();
     }
@@ -36,9 +38,8 @@ public class BusinessException extends RuntimeException {
      * @author jimmy.zhang
      * @date 2019-03-29
      */
-    public void from(BusinessError error) {
-        this.code = error.getCode();
-        this.message = error.getMessage();
+    public static BusinessException from(BusinessError error) {
+        return new BusinessException(error);
     }
 
     public int getCode() {
@@ -52,7 +53,7 @@ public class BusinessException extends RuntimeException {
 
     @Override
     public String toString() {
-        return String.format("%s: code=&d, message=%s",
+        return String.format("%s: code=%d, message=%s",
                 this.getClass().getName(),
                 this.code,
                 this.message == null ? "无" : this.message);

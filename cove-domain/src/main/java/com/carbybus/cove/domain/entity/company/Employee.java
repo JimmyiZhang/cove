@@ -57,7 +57,6 @@ public class Employee extends DefaultEntity {
         employee.valueOf();
 
         employee.setCompanyId(companyId)
-                .setCategory(EmployeeCategory.Leader)
                 .setCreateTime(LocalDateTime.now());
         return employee;
     }

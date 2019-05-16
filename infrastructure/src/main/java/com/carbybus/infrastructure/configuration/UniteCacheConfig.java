@@ -18,5 +18,5 @@ public class UniteCacheConfig {
      * cache过期时间，单位分钟
      * 默认72小时
      */
-    private long expiredMinutes = 72 * 60;
+    private long expiredMinutes = 72 * 60L;
 }

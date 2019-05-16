@@ -26,7 +26,6 @@ public class KeyGeneratorBuilderTest {
         // 生成多个应该均匀分布，不会偶数多，奇数少
         for (int i = 0; i < 100; i++) {
             id = KeyGeneratorBuilder.INSTANCE.build();
-            Thread.currentThread().sleep(50);
             System.out.println(id);
         }
 

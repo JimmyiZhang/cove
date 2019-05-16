@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+
 @Data
 public class UserLoginInput {
     @NotEmpty(message = "用户名不能为空")

@@ -20,7 +20,7 @@ import java.io.Serializable;
  * @author jimmy.zhang
  * @date 2019-02-26
  */
-public abstract class DefaultEntity implements BaseEntity<Long>, Serializable {
+public abstract class DefaultEntity implements BaseEntity<Long> {
     @TableId
     private Long id;
 

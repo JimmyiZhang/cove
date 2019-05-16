@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.carbybus.infrastructure.component.impl.DefaultEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.time.Instant;
@@ -65,7 +64,7 @@ public class Message extends DefaultEntity {
         message.setReceiverId(receiverId)
                 .setResourceId(resourceId)
                 .setCreateTime(LocalDateTime.now())
-                .setReadTime(LocalDateTime.now());
+                .setReadTime(epoch);
 
         return message;
     }

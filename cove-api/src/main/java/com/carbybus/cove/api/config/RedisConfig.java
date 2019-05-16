@@ -18,7 +18,7 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import java.net.UnknownHostException;
+import java.time.Duration;
 
 /**
  * redis配置
@@ -30,14 +30,13 @@ import java.net.UnknownHostException;
 @Configuration
 public class RedisConfig {
     @Autowired
-    private UniteRedisConfig redisConfig;
+    private UniteRedisConfig config;
 
     @Autowired
     private UniteJsonConfig jsonConfig;
 
     @Bean("redisTemplate")
-    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory)
-            throws UnknownHostException {
+    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<Object, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionFactory);
 
@@ -45,6 +44,7 @@ public class RedisConfig {
         template.setHashKeySerializer(keySerializer());
         template.setValueSerializer(valueSerializer());
         template.setHashValueSerializer(valueSerializer());
+
         return template;
     }
 
@@ -52,16 +52,17 @@ public class RedisConfig {
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
         // 缓存配置对象
-        RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig();
-
-        redisCacheConfiguration = redisCacheConfiguration
+        Duration ttl = Duration.ofMinutes(config.getExpiredMinutes());
+        RedisCacheConfiguration rcConfig = RedisCacheConfiguration
+                .defaultCacheConfig()
+                .entryTtl(ttl)
                 .disableCachingNullValues()
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(keySerializer()))
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(valueSerializer()));
 
         return new BaseRedisCacheManager(
                 RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory),
-                redisCacheConfiguration);
+                rcConfig);
     }
 
     private RedisSerializer<String> keySerializer() {
@@ -71,7 +72,6 @@ public class RedisConfig {
     private RedisSerializer<Object> valueSerializer() {
         ObjectMapper objectMapper = jsonConfig.getObjectMapper();
 
-        GenericJackson2JsonRedisSerializer jsonRedisSerializer = new GenericJackson2JsonRedisSerializer(objectMapper);
-        return jsonRedisSerializer;
+        return new GenericJackson2JsonRedisSerializer(objectMapper);
     }
 }

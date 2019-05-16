@@ -3,8 +3,6 @@ package com.carbybus.cove.api.config;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -20,8 +18,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @MapperScan(basePackages = "com.carbybus.cove.repository")
 public class MyBatisPlusConfig {
-    private final static Logger logger = LoggerFactory.getLogger(MyBatisPlusConfig.class);
-
     /**
      * SQL自动分页插件
      */

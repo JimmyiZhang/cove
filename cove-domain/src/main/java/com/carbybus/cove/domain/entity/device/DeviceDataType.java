@@ -6,9 +6,9 @@ import com.baomidou.mybatisplus.core.enums.IEnum;
  * 设备数据类型
  */
 public enum DeviceDataType implements IEnum<Integer> {
-    Normal(1, "正常"),
-    VoltageLowAlerm(2, "欠压报警"),
-    PowerDownAlerm(3, "掉电报警");
+    NORMAL(1, "正常"),
+    VOLTAGE_LOW_ALERM(2, "欠压报警"),
+    POWER_DOWN_ALERM(3, "掉电报警");
 
     /**
      * 枚举值
