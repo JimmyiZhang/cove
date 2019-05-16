@@ -97,7 +97,7 @@ public class HttpUtils {
             }
         }
 
-        return post(url, "", DEFAULT_CHARSET);
+        return post(url, sb.toString(), DEFAULT_CHARSET);
     }
 
     /**
