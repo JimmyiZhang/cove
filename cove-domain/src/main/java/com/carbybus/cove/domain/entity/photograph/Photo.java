@@ -21,10 +21,10 @@ import java.time.LocalDateTime;
 @TableName(value = "photo")
 public class Photo extends DefaultEntity {
     private LocalDateTime takeTime;
-    private LocalDateTime uploadTime;
+    private LocalDateTime createTime;
     private Coordinate location;
     private String description;
-    private String tags;
+    private String tag;
 
     private Long ownerId;
 }

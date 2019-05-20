@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.carbybus.cove.repository.AccountRepository">
     <select id="selectByName" resultType="com.carbybus.cove.domain.entity.account.Account">
-        SELECT id, name, password, salt, create_time FROM `account`
+        SELECT id, name, password, salt, create_time FROM account
         WHERE name = #{name}
     </select>
 </mapper>

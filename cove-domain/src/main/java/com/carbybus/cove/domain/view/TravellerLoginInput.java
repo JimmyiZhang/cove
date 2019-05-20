@@ -1,6 +1,7 @@
 package com.carbybus.cove.domain.view;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -13,6 +14,7 @@ import javax.validation.constraints.Size;
  * @date 2019-05-20
  */
 @Data
+@Accessors(chain = true)
 public class TravellerLoginInput {
     @NotEmpty(message = "账号不能为空")
     @Size(min = 4, max = 32, message = "账号5-32个字符")
