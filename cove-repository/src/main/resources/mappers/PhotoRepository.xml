@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.carbybus.cove.repository.PhotoRepository">
+    <resultMap id="photoMap" type="com.carbybus.cove.domain.entity.photograph.Photo">
+        <id property="id" column="id"></id>
+        <result property="tag" column="tag"></result>
+        <result property="takeTime" column="take_time"></result>
+        <result property="createTime" column="create_time"></result>
+        <result property="description" column="description"></result>
+        <result property="ownerId" column="owner_id"></result>
+        <association property="location" javaType="com.carbybus.cove.domain.entity.coordinate.Coordinate">
+            <result property="latitude" column="latitude"></result>
+            <result property="longitude" column="longitude"></result>
+        </association>
+    </resultMap>
+</mapper>

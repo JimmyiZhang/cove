@@ -1,7 +1,9 @@
 package com.carbybus.cove.domain.entity.photograph;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.carbybus.cove.domain.entity.coordinate.Coordinate;
+import com.carbybus.cove.domain.principal.UserPrincipal;
 import com.carbybus.infrastructure.component.impl.DefaultEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,11 +22,27 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @TableName(value = "photo")
 public class Photo extends DefaultEntity {
+    private String tag;
     private LocalDateTime takeTime;
     private LocalDateTime createTime;
     private Coordinate location;
     private String description;
-    private String tag;
-
     private Long ownerId;
+
+    /**
+     * 创建
+     *
+     * @param
+     * @return
+     * @author jimmy.zhang
+     * @date 2019-05-20
+     */
+    public static Photo create(UserPrincipal user) {
+        Photo photo = new Photo();
+        photo.valueOf();
+
+        photo.setCreateTime(LocalDateTime.now())
+                .setOwnerId(user.getUserId());
+        return photo;
+    }
 }

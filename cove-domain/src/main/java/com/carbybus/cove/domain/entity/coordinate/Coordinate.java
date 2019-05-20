@@ -1,6 +1,7 @@
 package com.carbybus.cove.domain.entity.coordinate;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 坐标接口
@@ -9,14 +10,8 @@ import lombok.Data;
  * @author Jimmy.Zhang
  */
 @Data
+@Accessors(chain = true)
 public class Coordinate {
-    /**
-     * 经度
-     */
     private double latitude;
-
-    /**
-     * 纬度
-     */
     private double longitude;
 }

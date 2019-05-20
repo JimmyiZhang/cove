@@ -1,17 +1,20 @@
 package com.carbybus.cove.test.converter;
 
+import com.carbybus.cove.api.ApiApplication;
 import com.carbybus.cove.domain.converter.PhotoConverter;
 import com.carbybus.cove.domain.entity.photograph.Photo;
 import com.carbybus.cove.domain.principal.UserPrincipal;
 import com.carbybus.cove.domain.view.PhotoCreateInput;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Assert;
 
 import java.time.LocalDateTime;
 
 @RunWith(SpringRunner.class)
+@SpringBootTest(classes = ApiApplication.class)
 public class PhotoConverterTest {
     @Test
     public void convert() {

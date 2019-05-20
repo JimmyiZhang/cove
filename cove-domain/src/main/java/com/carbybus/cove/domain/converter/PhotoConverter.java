@@ -6,10 +6,10 @@ import com.carbybus.cove.domain.view.PhotoCreateInput;
 import com.carbybus.infrastructure.converter.DefaultConverter;
 
 /**
- * 用户转换器
+ * 照片转换器
  *
- * @author Liuyoushi
- * @date 2019/4/9
+ * @author jimmy.zhang
+ * @date 2019/5/20
  */
 public class PhotoConverter extends DefaultConverter {
     public static final PhotoConverter INSTANCE = new PhotoConverter();
