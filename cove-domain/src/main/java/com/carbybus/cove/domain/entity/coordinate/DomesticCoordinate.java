@@ -7,6 +7,7 @@ import lombok.experimental.Accessors;
 /**
  * 国内坐标
  * 前台显示
+ * @author Jimmy.Zhang
  */
 @Data
 @Accessors(chain = true)

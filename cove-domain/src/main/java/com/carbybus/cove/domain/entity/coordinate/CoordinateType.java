@@ -1,18 +1,22 @@
 package com.carbybus.cove.domain.entity.coordinate;
 
-import com.baomidou.mybatisplus.core.enums.IEnum;
+import com.baomidou.mybatisplus.annotation.EnumValue;
+import com.carbybus.infrastructure.component.BaseEnum;
 
 /**
  * 坐标类型
- * 支持wcg84和gcj02
+ * 仅支持wcg84和gcj02
+ *
+ * @author Jimmy.Zhang
  */
-public enum CoordinateType implements IEnum<Integer> {
+public enum CoordinateType implements BaseEnum {
     WGS84(1, "国际标准"),
     GCJ02(2, "中国标准");
 
     /**
      * 枚举值
      */
+    @EnumValue
     private int value;
 
     /**

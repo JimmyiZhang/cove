@@ -3,7 +3,7 @@ package com.carbybus.cove.domain.exception;
 import com.carbybus.infrastructure.exception.BusinessError;
 
 /**
- * 公司错误
+ * 消息错误
  *
  * @author jimmy.zhang
  * @date 2019-03-29

@@ -3,13 +3,13 @@ package com.carbybus.cove.domain.exception;
 import com.carbybus.infrastructure.exception.BusinessError;
 
 /**
- * 公司错误
+ * 用户错误
  *
  * @author jimmy.zhang
  * @date 2019-03-29
  */
-public enum CompanyError implements BusinessError {
-    EXISTED_ACCOUNT(10, "该公司已存在");
+public enum TravellerError implements BusinessError {
+    INVALID_USER(10, "无效的用户");
 
     /**
      * 枚举值
@@ -28,7 +28,7 @@ public enum CompanyError implements BusinessError {
      * @author jimmy.zhang
      * @date 2019-03-08
      */
-    CompanyError(final int code, final String message) {
+    TravellerError(final int code, final String message) {
         this.code = code;
         this.message = message;
     }

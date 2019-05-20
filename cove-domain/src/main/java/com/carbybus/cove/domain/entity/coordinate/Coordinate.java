@@ -5,6 +5,8 @@ import lombok.Data;
 /**
  * 坐标接口
  * 可用于计算距离，转换
+ *
+ * @author Jimmy.Zhang
  */
 @Data
 public class Coordinate {

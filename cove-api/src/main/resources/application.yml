@@ -39,7 +39,7 @@ summer:
   jwt-config:
     token-expired: 10080
     token-secret: 7p9izREdj3cAAQR7HyDCoMDv9dDDtzQLbJ1ScicADAclc
-    token-subject: user
+    token-subject: Traveller
     token-issue: carbybus
     token-claim: id
   redis-config:

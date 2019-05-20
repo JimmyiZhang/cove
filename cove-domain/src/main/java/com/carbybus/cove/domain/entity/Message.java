@@ -12,9 +12,9 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 /**
- * 消息
- * 包括预警消息
- * 一条预警，发给给相应的车队长和管理者
+ * 消息，留言
+ *
+ * @author Jimmy.Zhang
  */
 @Data
 @Accessors(chain = true)
@@ -27,10 +27,9 @@ public class Message extends DefaultEntity {
     private long receiverId;
 
     /**
-     * 时间来源
-     * 包括事件id
+     * 发送者
      */
-    private long resourceId;
+    private long senderId;
 
     /**
      * 是否已读
@@ -56,13 +55,13 @@ public class Message extends DefaultEntity {
      * @author jimmy.zhang
      * @date 2019-04-19
      */
-    public static Message create(long receiverId, long resourceId) {
+    public static Message create(long receiverId, long senderId) {
         LocalDateTime epoch = LocalDateTime.ofInstant(Instant.EPOCH, ZoneId.systemDefault());
 
         Message message = new Message();
         message.valueOf();
         message.setReceiverId(receiverId)
-                .setResourceId(resourceId)
+                .setSenderId(senderId)
                 .setCreateTime(LocalDateTime.now())
                 .setReadTime(epoch);
 

@@ -1,6 +1,7 @@
 package com.carbybus.cove.repository;
 
-import com.carbybus.cove.domain.entity.company.Account;
+
+import com.carbybus.cove.domain.entity.account.Account;
 import com.carbybus.infrastructure.component.BaseRepository;
 import org.springframework.stereotype.Repository;
 

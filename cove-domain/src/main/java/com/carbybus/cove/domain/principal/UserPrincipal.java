@@ -8,6 +8,8 @@ import lombok.experimental.Accessors;
  * 用户凭证
  * 获取当前用户使用
  * 通过缓存保存，以userId作为key值
+ *
+ * @author Jimmy.Zhang
  */
 @Data
 @Accessors(chain = true)
@@ -22,9 +24,4 @@ public class UserPrincipal {
      * 用户姓名
      */
     private String userName;
-
-    /**
-     * 所属公司
-     */
-    private long companyId;
 }

@@ -1,7 +1,7 @@
 package com.carbybus.cove.test.repository;
 
 import com.carbybus.cove.api.ApiApplication;
-import com.carbybus.cove.domain.entity.company.Account;
+import com.carbybus.cove.domain.entity.account.Account;
 import com.carbybus.cove.repository.AccountRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,10 +21,9 @@ public class RepositoryTest {
 
     @Before
     public void create() {
-        account = Account.create()
+        account = Account.create("User", "PASSWORD")
                 .setPassword("PASSWORD")
-                .setSalt("SALT")
-                .setUserName("USER");
+                .setSalt("SALT");
 
         System.out.println(account.getId());
     }
