@@ -13,4 +13,15 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface PhotoRepository extends BaseRepository<Photo> {
+    /**
+     * 插入数据
+     * 原生支持
+     *
+     * @param
+     * @return
+     * @author jimmy.zhang
+     * @date 2019-05-21
+     */
+    @Override
+    int insert(Photo entity);
 }
