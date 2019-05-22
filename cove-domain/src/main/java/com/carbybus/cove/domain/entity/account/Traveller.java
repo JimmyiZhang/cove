@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Accessors(chain = true)
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @TableName(value = "traveller")
 public class Traveller extends DefaultEntity {
     private String name;

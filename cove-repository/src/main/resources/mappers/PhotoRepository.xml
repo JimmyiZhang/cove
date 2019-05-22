@@ -15,7 +15,9 @@
     </resultMap>
 
     <insert id="insert">
-        INSERT INTO photo (id,tag,take_time,create_time,latitude,longitude,description,owner_id)
-        VALUES (#{tag},#{takeTime},#{createTime},#{location.latitude},#{location.longitude},#{description},#{ownerId});
+        INSERT INTO photo
+        (id,tag,url,take_time,create_time,latitude,longitude,description,owner_id)
+        VALUES
+        (#{id},#{tag},#{url},#{takeTime},#{createTime},#{location.latitude},#{location.longitude},#{description},#{ownerId});
     </insert>
 </mapper>

@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Accessors(chain = true)
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @TableName(value = "account")
 public class Account extends DefaultEntity {
     private String name;

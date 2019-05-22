@@ -1,10 +1,10 @@
 package com.carbybus.cove.domain.entity.photograph;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.carbybus.cove.domain.entity.coordinate.Coordinate;
 import com.carbybus.cove.domain.principal.UserPrincipal;
 import com.carbybus.infrastructure.component.impl.DefaultEntity;
+import com.carbybus.infrastructure.utils.StringConstants;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -19,10 +19,11 @@ import java.time.LocalDateTime;
  */
 @Data
 @Accessors(chain = true)
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @TableName(value = "photo")
 public class Photo extends DefaultEntity {
     private String tag;
+    private String url;
     private LocalDateTime takeTime;
     private LocalDateTime createTime;
     private Coordinate location;
@@ -42,7 +43,9 @@ public class Photo extends DefaultEntity {
         photo.valueOf();
 
         photo.setCreateTime(LocalDateTime.now())
-                .setOwnerId(user.getUserId());
+                .setOwnerId(user.getUserId())
+                .setTag(StringConstants.EMPTY)
+                .setDescription(StringConstants.EMPTY);
         return photo;
     }
 }

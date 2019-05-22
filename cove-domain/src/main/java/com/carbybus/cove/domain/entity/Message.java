@@ -18,7 +18,7 @@ import java.time.ZoneId;
  */
 @Data
 @Accessors(chain = true)
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @TableName(value = "message")
 public class Message extends DefaultEntity {
     /**
