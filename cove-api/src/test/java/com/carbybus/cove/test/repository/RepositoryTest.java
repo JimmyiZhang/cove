@@ -43,4 +43,23 @@ public class RepositoryTest {
 
         Assert.isTrue(count > 0, "更新测试");
     }
+
+    @Test
+    public void delete() {
+        int count = accountRep.deleteById(1L);
+
+        Assert.isTrue(count > 0, "删除操作");
+    }
+
+    @Test
+    public void custom() {
+        Account account = accountRep.selectByName("User");
+
+        Assert.notNull(account, "自定义查询");
+    }
+
+    @Test
+    public void select(){
+
+    }
 }
