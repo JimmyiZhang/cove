@@ -1,9 +1,10 @@
-package com.carbybus.cove.domain.entity.account;
+package com.carbybus.cove.domain.entity.user;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.carbybus.infrastructure.component.impl.DefaultEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -23,8 +24,9 @@ import java.time.LocalDateTime;
 @TableName(value = "account")
 public class Account extends DefaultEntity {
     private String name;
-    private String password;
+    private String secret;
     private String salt;
+    private UserStatus status;
     private LocalDateTime createTime;
 
     /**
@@ -44,8 +46,9 @@ public class Account extends DefaultEntity {
         String pass = generatePassword(password, salt);
         account.setCreateTime(LocalDateTime.now())
                 .setName(name)
+                .setStatus(UserStatus.ACTIVE)
                 .setSalt(salt)
-                .setPassword(pass);
+                .setSecret(pass);
 
         return account;
     }
@@ -58,9 +61,9 @@ public class Account extends DefaultEntity {
      * @author jimmy.zhang
      * @date 2019-05-20
      */
-    public boolean valid(String password) {
+    public boolean validate(String password) {
         String pass = generatePassword(password, this.getSalt());
-        return pass.equals(this.getPassword());
+        return pass.equals(this.getSecret());
     }
 
     /**

@@ -16,7 +16,7 @@
 CREATE DATABASE IF NOT EXISTS `cove_ms` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
 USE `cove_ms`;
 
--- 导出  表 cove_ms.account 结构
+-- 导出  表 cove_ms.user 结构
 CREATE TABLE IF NOT EXISTS `account` (
   `id` bigint(20) unsigned NOT NULL COMMENT '编号',
   `user_name` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '用户名',
@@ -81,8 +81,8 @@ CREATE TABLE IF NOT EXISTS `employee_1` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='员工';
 
 -- 数据导出被取消选择。
--- 导出  表 cove_ms.message 结构
-CREATE TABLE IF NOT EXISTS `message` (
+-- 导出  表 cove_ms.comment 结构
+CREATE TABLE IF NOT EXISTS `comment` (
   `id` bigint(20) unsigned NOT NULL COMMENT '编码',
   `receiver_id` bigint(20) unsigned NOT NULL COMMENT '接受者',
   `resource_id` bigint(20) unsigned NOT NULL COMMENT '来源',

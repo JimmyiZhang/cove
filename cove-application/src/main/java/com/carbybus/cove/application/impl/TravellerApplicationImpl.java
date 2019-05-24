@@ -1,13 +1,13 @@
 package com.carbybus.cove.application.impl;
 
 import com.carbybus.cove.application.TravellerApplication;
-import com.carbybus.cove.domain.entity.account.Account;
-import com.carbybus.cove.domain.entity.account.Traveller;
+import com.carbybus.cove.domain.entity.user.Account;
+import com.carbybus.cove.domain.entity.user.Traveller;
 import com.carbybus.cove.domain.exception.AccountError;
 import com.carbybus.cove.domain.exception.TravellerError;
-import com.carbybus.cove.domain.view.TravellerLoginInput;
-import com.carbybus.cove.domain.view.TravellerLoginOutput;
-import com.carbybus.cove.domain.view.TravellerSignupInput;
+import com.carbybus.cove.domain.view.UserLoginOutput;
+import com.carbybus.cove.domain.view.UserLoginInput;
+import com.carbybus.cove.domain.view.UserSignupInput;
 import com.carbybus.cove.repository.AccountRepository;
 import com.carbybus.cove.repository.TravellerRepository;
 import com.carbybus.infrastructure.component.ActionResult;
@@ -35,11 +35,11 @@ public class TravellerApplicationImpl extends DefaultApplication<TravellerReposi
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public ActionResult signup(TravellerSignupInput input) {
+    public ActionResult signup(UserSignupInput input) {
         ActionResult result = ActionResult.OK;
 
         // 检查是否存在
-        Account dbAccount = accountRep.selectByName(input.getEmail());
+        Account dbAccount = accountRep.selectByName(input.getAccount());
         if (dbAccount != null) {
             result.fail(AccountError.EXISTED_ACCOUNT);
             return result;
@@ -57,18 +57,18 @@ public class TravellerApplicationImpl extends DefaultApplication<TravellerReposi
     }
 
     @Override
-    public ActionResult login(TravellerLoginInput input) {
+    public ActionResult login(UserLoginInput input) {
         ActionResult result = ActionResult.OK;
 
         // 账号是否存在
-        Account dbAccount = accountRep.selectByName(input.getEmail());
+        Account dbAccount = accountRep.selectByName(input.getName());
         if (dbAccount == null) {
             result.fail(AccountError.INVALID_NAME);
             return result;
         }
 
         // 密码是否正确
-        boolean isLogin = dbAccount.valid(input.getPassword());
+        boolean isLogin = dbAccount.validate(input.getPassword());
         if (!isLogin) {
             result.fail(AccountError.INVALID_PASSWORD);
             return result;
@@ -84,7 +84,7 @@ public class TravellerApplicationImpl extends DefaultApplication<TravellerReposi
         // 生成token
         JwtResult jwt = jwtUtils.create(traveller.getId().toString());
 
-        TravellerLoginOutput output = new TravellerLoginOutput(jwt.getToken(), jwt.getExpire());
+        UserLoginOutput output = new UserLoginOutput(jwt.getToken(), jwt.getExpire());
         result.succeed(output);
 
         return result;

@@ -1,9 +1,9 @@
 package com.carbybus.cove.application;
 
 
-import com.carbybus.cove.domain.entity.account.Traveller;
-import com.carbybus.cove.domain.view.TravellerLoginInput;
-import com.carbybus.cove.domain.view.TravellerSignupInput;
+import com.carbybus.cove.domain.entity.user.Traveller;
+import com.carbybus.cove.domain.view.UserLoginInput;
+import com.carbybus.cove.domain.view.UserSignupInput;
 import com.carbybus.infrastructure.component.ActionResult;
 import com.carbybus.infrastructure.component.BaseApplication;
 
@@ -22,7 +22,7 @@ public interface TravellerApplication extends BaseApplication<Traveller> {
      * @author jimmy.zhang
      * @date 2019-03-28
      */
-    ActionResult signup(TravellerSignupInput input);
+    ActionResult signup(UserSignupInput input);
 
     /**
      * 登录
@@ -32,5 +32,5 @@ public interface TravellerApplication extends BaseApplication<Traveller> {
      * @author jimmy.zhang
      * @date 2019-05-14
      */
-    ActionResult login(TravellerLoginInput input);
+    ActionResult login(UserLoginInput input);
 }

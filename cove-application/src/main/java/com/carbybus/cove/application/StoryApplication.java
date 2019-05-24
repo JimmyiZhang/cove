@@ -1,8 +1,8 @@
 package com.carbybus.cove.application;
 
 
-import com.carbybus.cove.domain.entity.photograph.Photo;
-import com.carbybus.cove.domain.view.PhotoCreateInput;
+import com.carbybus.cove.domain.entity.journey.Story;
+import com.carbybus.cove.domain.view.StoryCreateInput;
 import com.carbybus.infrastructure.component.ActionResult;
 import com.carbybus.infrastructure.component.BaseApplication;
 
@@ -12,7 +12,7 @@ import com.carbybus.infrastructure.component.BaseApplication;
  * @author jimmy.zhang
  * @date 2019-03-28
  */
-public interface PhotoApplication extends BaseApplication<Photo> {
+public interface StoryApplication extends BaseApplication<Story> {
     /**
      * 创建
      *
@@ -21,5 +21,5 @@ public interface PhotoApplication extends BaseApplication<Photo> {
      * @author jimmy.zhang
      * @date 2019-03-28
      */
-    ActionResult create(PhotoCreateInput input);
+    ActionResult create(StoryCreateInput input);
 }

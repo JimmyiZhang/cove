@@ -1,7 +1,7 @@
 package com.carbybus.cove.domain.view;
 
-import com.carbybus.cove.domain.entity.account.Account;
-import com.carbybus.cove.domain.entity.account.Traveller;
+import com.carbybus.cove.domain.entity.user.Account;
+import com.carbybus.cove.domain.entity.user.Traveller;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -17,10 +17,10 @@ import javax.validation.constraints.Size;
  */
 @Data
 @Accessors(chain = true)
-public class TravellerSignupInput {
+public class UserSignupInput {
     @NotEmpty(message = "账号不能为空")
     @Size(min = 4, max = 32, message = "账号5-32个字符")
-    private String email;
+    private String account;
 
     @NotEmpty(message = "名称不能为空")
     @Size(min = 4, max = 32, message = "名称5-32个字符")
@@ -39,7 +39,7 @@ public class TravellerSignupInput {
      * @date 2019-05-20
      */
     public Account convertToAccount() {
-        return Account.create(this.email, this.password);
+        return Account.create(this.account, this.password);
     }
 
     /**

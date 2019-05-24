@@ -1,4 +1,4 @@
-package com.carbybus.cove.domain.entity.account;
+package com.carbybus.cove.domain.entity.user;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.carbybus.infrastructure.component.impl.DefaultEntity;
@@ -20,9 +20,9 @@ import java.time.LocalDateTime;
 @TableName(value = "traveller")
 public class Traveller extends DefaultEntity {
     private String name;
-
-    private String location;
-
+    private String avatar;
+    private String signature;
+    private UserGender gender;
     private LocalDateTime createTime;
 
     /**

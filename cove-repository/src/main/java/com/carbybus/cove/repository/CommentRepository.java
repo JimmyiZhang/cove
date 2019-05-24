@@ -1,6 +1,6 @@
 package com.carbybus.cove.repository;
 
-import com.carbybus.cove.domain.entity.Message;
+import com.carbybus.cove.domain.entity.comment.Comment;
 import com.carbybus.infrastructure.component.BaseRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
  * @date 2019-03-28
  */
 @Repository
-public interface MessageRepository extends BaseRepository<Message> {
+public interface CommentRepository extends BaseRepository<Comment> {
 
 }

@@ -1,7 +1,7 @@
 package com.carbybus.cove.repository;
 
 
-import com.carbybus.cove.domain.entity.photograph.Photo;
+import com.carbybus.cove.domain.entity.journey.Story;
 import com.carbybus.infrastructure.component.BaseRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
  * @date 2019-03-28
  */
 @Repository
-public interface PhotoRepository extends BaseRepository<Photo> {
+public interface StoryRepository extends BaseRepository<Story> {
     /**
      * 插入数据
      * 原生支持
@@ -23,5 +23,5 @@ public interface PhotoRepository extends BaseRepository<Photo> {
      * @date 2019-05-21
      */
     @Override
-    int insert(Photo entity);
+    int insert(Story entity);
 }

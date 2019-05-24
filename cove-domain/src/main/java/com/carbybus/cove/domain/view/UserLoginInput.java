@@ -15,10 +15,10 @@ import javax.validation.constraints.Size;
  */
 @Data
 @Accessors(chain = true)
-public class TravellerLoginInput {
+public class UserLoginInput {
     @NotEmpty(message = "账号不能为空")
     @Size(min = 4, max = 32, message = "账号5-32个字符")
-    private String email;
+    private String name;
 
     @NotEmpty(message = "密码不能为空")
     @Size(min = 4, max = 32, message = "密码5-32个字符")

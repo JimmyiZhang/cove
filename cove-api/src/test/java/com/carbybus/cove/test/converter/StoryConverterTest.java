@@ -2,9 +2,9 @@ package com.carbybus.cove.test.converter;
 
 import com.carbybus.cove.api.ApiApplication;
 import com.carbybus.cove.domain.converter.PhotoConverter;
-import com.carbybus.cove.domain.entity.photograph.Photo;
+import com.carbybus.cove.domain.entity.journey.Story;
 import com.carbybus.cove.domain.principal.UserPrincipal;
-import com.carbybus.cove.domain.view.PhotoCreateInput;
+import com.carbybus.cove.domain.view.StoryCreateInput;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,22 +15,22 @@ import java.time.LocalDateTime;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ApiApplication.class)
-public class PhotoConverterTest {
+public class StoryConverterTest {
     @Test
     public void convert() {
-        PhotoCreateInput input = new PhotoCreateInput();
+        StoryCreateInput input = new StoryCreateInput();
         input.setTakeTime(LocalDateTime.now())
                 .setDescription("TTTTTest")
                 .setLatitude(38.9989752835)
                 .setLongitude(117.6972198486)
-                .setTag("tianjin");
+                .setSubject("tianjin");
 
         UserPrincipal user = UserPrincipal.init();
         user.setUserId(1L);
 
-        Photo entity = PhotoConverter.INSTANCE.convertFrom(input, user);
+        Story entity = PhotoConverter.INSTANCE.convertFrom(input, user);
         System.out.println(entity);
-        Assert.notNull(entity, "照片装换");
-        Assert.notNull(entity.getLocation(), "照片坐标");
+        Assert.notNull(entity, "故事转化");
+        Assert.notNull(entity.getLocation(), "故事坐标");
     }
 }

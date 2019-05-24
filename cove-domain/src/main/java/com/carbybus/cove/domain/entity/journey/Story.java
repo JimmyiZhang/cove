@@ -1,4 +1,4 @@
-package com.carbybus.cove.domain.entity.photograph;
+package com.carbybus.cove.domain.entity.journey;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.carbybus.cove.domain.entity.coordinate.Coordinate;
@@ -20,14 +20,14 @@ import java.time.LocalDateTime;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@TableName(value = "photo")
-public class Photo extends DefaultEntity {
-    private String tag;
+@TableName(value = "story")
+public class Story extends DefaultEntity {
     private String url;
+    private String subject;
+    private String description;
+    private Coordinate location;
     private LocalDateTime takeTime;
     private LocalDateTime createTime;
-    private Coordinate location;
-    private String description;
     private Long ownerId;
 
     /**
@@ -38,14 +38,14 @@ public class Photo extends DefaultEntity {
      * @author jimmy.zhang
      * @date 2019-05-20
      */
-    public static Photo create(UserPrincipal user) {
-        Photo photo = new Photo();
-        photo.valueOf();
+    public static Story create(UserPrincipal user) {
+        Story story = new Story();
+        story.valueOf();
 
-        photo.setCreateTime(LocalDateTime.now())
+        story.setCreateTime(LocalDateTime.now())
                 .setOwnerId(user.getUserId())
-                .setTag(StringConstants.EMPTY)
+                .setSubject(StringConstants.EMPTY)
                 .setDescription(StringConstants.EMPTY);
-        return photo;
+        return story;
     }
 }

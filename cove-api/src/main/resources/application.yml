@@ -27,6 +27,8 @@ mybatis-plus:
   mapper-locations: classpath:mappers/*.xml
   type-enums-package: com.carbybus.cove.domain.*
   type-aliases-package: com.carbybus.cove.domain.*
+  configuration:
+    default-enum-type-handler: com.baomidou.mybatisplus.extension.handlers.EnumTypeHandler
   global-config:
     super-mapper-class: com.carbybus.infrastructure.component.BaseRepository
 

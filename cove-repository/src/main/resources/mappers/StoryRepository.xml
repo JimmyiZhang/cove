@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.carbybus.cove.repository.PhotoRepository">
-    <resultMap id="photoMap" type="com.carbybus.cove.domain.entity.photograph.Photo">
+<mapper namespace="com.carbybus.cove.repository.StoryRepository">
+    <resultMap id="photoMap" type="com.carbybus.cove.domain.entity.journey.Story">
         <id property="id" column="id"></id>
-        <result property="tag" column="tag"></result>
+        <result property="url" column="url"></result>
+        <result property="subject" column="subject"></result>
+        <result property="description" column="description"></result>
         <result property="takeTime" column="take_time"></result>
         <result property="createTime" column="create_time"></result>
-        <result property="description" column="description"></result>
         <result property="ownerId" column="owner_id"></result>
         <association property="location" javaType="com.carbybus.cove.domain.entity.coordinate.Coordinate">
             <result property="latitude" column="latitude"></result>
@@ -15,9 +16,9 @@
     </resultMap>
 
     <insert id="insert">
-        INSERT INTO photo
-        (id,tag,url,take_time,create_time,latitude,longitude,description,owner_id)
+        INSERT INTO story
+        (id,url,subject,description,take_time,create_time,latitude,longitude,owner_id)
         VALUES
-        (#{id},#{tag},#{url},#{takeTime},#{createTime},#{location.latitude},#{location.longitude},#{description},#{ownerId});
+        (#{id},#{url},#{subject},#{description},#{takeTime},#{createTime},#{location.latitude},#{location.longitude},#{ownerId});
     </insert>
 </mapper>

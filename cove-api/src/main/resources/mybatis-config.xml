@@ -7,8 +7,8 @@
         <setting name="cacheEnabled" value="true"/>
     </settings>
     <typeHandlers>
-        <typeHandler handler="org.apache.ibatis.type.LocalDateTimeTypeHandler" />
-        <typeHandler handler="org.apache.ibatis.type.LocalTimeTypeHandler" />
-        <typeHandler handler="org.apache.ibatis.type.LocalDateTypeHandler" />
+        <typeHandler handler="org.apache.ibatis.type.LocalDateTimeTypeHandler"/>
+        <typeHandler handler="org.apache.ibatis.type.LocalTimeTypeHandler"/>
+        <typeHandler handler="org.apache.ibatis.type.LocalDateTypeHandler"/>
     </typeHandlers>
 </configuration>

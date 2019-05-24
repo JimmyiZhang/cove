@@ -1,8 +1,8 @@
 package com.carbybus.cove.domain.converter;
 
-import com.carbybus.cove.domain.entity.photograph.Photo;
+import com.carbybus.cove.domain.entity.journey.Story;
 import com.carbybus.cove.domain.principal.UserPrincipal;
-import com.carbybus.cove.domain.view.PhotoCreateInput;
+import com.carbybus.cove.domain.view.StoryCreateInput;
 import com.carbybus.infrastructure.converter.DefaultConverter;
 
 /**
@@ -16,15 +16,15 @@ public class PhotoConverter extends DefaultConverter {
 
     private PhotoConverter() {
         super();
-        MAPPER_FACTORY.classMap(PhotoCreateInput.class, Photo.class)
+        MAPPER_FACTORY.classMap(StoryCreateInput.class, Story.class)
                 .field("latitude", "location.latitude")
                 .field("longitude", "location.longitude")
                 .byDefault()
                 .register();
     }
 
-    public Photo convertFrom(PhotoCreateInput input, UserPrincipal user) {
-        Photo out = super.convert(input, Photo.class);
+    public Story convertFrom(StoryCreateInput input, UserPrincipal user) {
+        Story out = super.convert(input, Story.class);
         out.setOwnerId(user.getUserId());
         return out;
     }

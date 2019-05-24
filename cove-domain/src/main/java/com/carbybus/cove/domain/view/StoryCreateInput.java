@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Accessors(chain = true)
-public class PhotoCreateInput {
+public class StoryCreateInput {
     @NotNull(message = "拍照时间不能为空")
     private LocalDateTime takeTime;
 
@@ -33,7 +33,7 @@ public class PhotoCreateInput {
     @Size(min = 1, max = 128, message = "描述最多128个字符")
     private String description;
 
-    @NotEmpty(message = "标签不能为空")
-    @Size(min = 1, max = 128, message = "标签最多128个字符")
-    private String tag;
+    @NotEmpty(message = "主题不能为空")
+    @Size(min = 1, max = 128, message = "主题最多128个字符")
+    private String subject;
 }

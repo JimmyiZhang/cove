@@ -8,8 +8,8 @@ import com.carbybus.infrastructure.exception.BusinessError;
  * @author jimmy.zhang
  * @date 2019-03-29
  */
-public enum MessageError implements BusinessError {
-    EXISTED_MESSAGE(10, "该消息已存在");
+public enum CommentError implements BusinessError {
+    LIMITED_COMMENT(10, "受限的评论");
 
     /**
      * 枚举值
@@ -23,12 +23,13 @@ public enum MessageError implements BusinessError {
 
     /**
      * 构造函数
+     *
      * @param
      * @return
      * @author jimmy.zhang
      * @date 2019-03-08
      */
-    MessageError(final int code, final String message) {
+    CommentError(final int code, final String message) {
         this.code = code;
         this.message = message;
     }
@@ -39,7 +40,7 @@ public enum MessageError implements BusinessError {
     }
 
     @Override
-    public String getMessage(){
+    public String getMessage() {
         return message;
     }
 }

@@ -1,7 +1,8 @@
 package com.carbybus.cove.test.repository;
 
 import com.carbybus.cove.api.ApiApplication;
-import com.carbybus.cove.domain.entity.account.Account;
+import com.carbybus.cove.domain.entity.user.Account;
+import com.carbybus.cove.domain.entity.user.UserStatus;
 import com.carbybus.cove.repository.AccountRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,16 +22,25 @@ public class RepositoryTest {
 
     @Before
     public void create() {
-        account = Account.create("User", "PASSWORD")
-                .setPassword("PASSWORD")
-                .setSalt("SALT");
-
+        account = Account.create("User", "PASSWORD");
+        account.setId(1L);
         System.out.println(account.getId());
     }
 
     @Test
     public void insert() {
         int count = accountRep.insert(account);
+
         Assert.isTrue(count > 0, "插入测试");
+    }
+
+    @Test
+    public void update() {
+        Account account = new Account();
+        account.setId(1L);
+        account.setStatus(UserStatus.DISABLED);
+        int count = accountRep.updateById(account);
+
+        Assert.isTrue(count > 0, "更新测试");
     }
 }

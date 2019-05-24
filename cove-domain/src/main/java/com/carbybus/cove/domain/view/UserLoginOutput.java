@@ -11,7 +11,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class TravellerLoginOutput {
+public class UserLoginOutput {
     private String token;
     private Integer expire;
 }

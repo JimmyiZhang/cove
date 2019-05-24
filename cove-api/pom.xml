@@ -153,19 +153,13 @@
 
     <profiles>
         <profile>
-            <id>h2</id>
-            <properties>
-                <profile.active>h2</profile.active>
-            </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
-        <profile>
             <id>develop</id>
             <properties>
                 <profile.active>develop</profile.active>
             </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
         </profile>
         <profile>
             <id>release</id>
