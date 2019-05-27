@@ -1,5 +1,7 @@
 package com.carbybus.cove.test.repository;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.carbybus.cove.api.ApiApplication;
 import com.carbybus.cove.domain.entity.user.Account;
 import com.carbybus.cove.domain.entity.user.UserStatus;
@@ -11,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Assert;
+
+import java.util.List;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ApiApplication.class)
@@ -59,7 +64,11 @@ public class RepositoryTest {
     }
 
     @Test
-    public void select(){
+    public void select() {
+        Wrapper<Account> query = new LambdaQueryWrapper<Account>()
+                .eq(Account::getName, "User");
 
+        List<Account> accounts = accountRep.selectList(query);
+        Assert.isTrue(accounts.size() == 1, "自定义查询条件");
     }
 }

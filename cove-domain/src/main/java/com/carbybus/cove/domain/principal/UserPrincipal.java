@@ -1,7 +1,6 @@
 package com.carbybus.cove.domain.principal;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
@@ -13,7 +12,6 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-@NoArgsConstructor(staticName = "init")
 public class UserPrincipal {
     /**
      * 用户编号
@@ -24,4 +22,19 @@ public class UserPrincipal {
      * 用户姓名
      */
     private String userName;
+
+    /**
+     * 初始化用户
+     *
+     * @param
+     * @return
+     * @author jimmy.zhang
+     * @date 2019-05-27
+     */
+    public static UserPrincipal init() {
+        UserPrincipal principal = new UserPrincipal();
+        principal.setUserId(1L);
+
+        return principal;
+    }
 }

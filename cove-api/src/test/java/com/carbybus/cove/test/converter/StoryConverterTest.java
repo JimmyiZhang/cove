@@ -1,7 +1,7 @@
 package com.carbybus.cove.test.converter;
 
 import com.carbybus.cove.api.ApiApplication;
-import com.carbybus.cove.domain.converter.PhotoConverter;
+import com.carbybus.cove.domain.converter.StoryConverter;
 import com.carbybus.cove.domain.entity.journey.Story;
 import com.carbybus.cove.domain.principal.UserPrincipal;
 import com.carbybus.cove.domain.view.StoryCreateInput;
@@ -28,7 +28,7 @@ public class StoryConverterTest {
         UserPrincipal user = UserPrincipal.init();
         user.setUserId(1L);
 
-        Story entity = PhotoConverter.INSTANCE.convertFrom(input, user);
+        Story entity = StoryConverter.INSTANCE.convertFrom(input, user);
         System.out.println(entity);
         Assert.notNull(entity, "故事转化");
         Assert.notNull(entity.getLocation(), "故事坐标");

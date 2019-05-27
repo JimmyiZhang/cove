@@ -12,6 +12,14 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class Coordinate {
-    private double latitude;
-    private double longitude;
+    private Double latitude;
+    private Double longitude;
+
+    public Coordinate() {
+    }
+
+    public Coordinate(Double latitude, Double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
 }

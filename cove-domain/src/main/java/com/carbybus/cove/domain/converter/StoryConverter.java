@@ -11,10 +11,10 @@ import com.carbybus.infrastructure.converter.DefaultConverter;
  * @author jimmy.zhang
  * @date 2019/5/20
  */
-public class PhotoConverter extends DefaultConverter {
-    public static final PhotoConverter INSTANCE = new PhotoConverter();
+public class StoryConverter extends DefaultConverter {
+    public static final StoryConverter INSTANCE = new StoryConverter();
 
-    private PhotoConverter() {
+    private StoryConverter() {
         super();
         MAPPER_FACTORY.classMap(StoryCreateInput.class, Story.class)
                 .field("latitude", "location.latitude")

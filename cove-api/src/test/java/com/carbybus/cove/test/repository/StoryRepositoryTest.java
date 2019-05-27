@@ -25,9 +25,7 @@ public class StoryRepositoryTest {
         UserPrincipal user = UserPrincipal.init();
         user.setUserId(1L);
 
-        Coordinate location = new Coordinate();
-        location.setLatitude(38.9989752835);
-        location.setLongitude(117.6972198486);
+        Coordinate location = new Coordinate(38.9989752835, 117.6972198486);
 
         Story story = Story.create(user);
         story.setDescription("TTTTTTest")
