@@ -42,6 +42,10 @@ public class DefaultConverter implements BaseConverter {
 
     public <O, T> List<T> convertAll(List<O> origins, Class<T> targetClass) {
         List<T> targets = new ArrayList<>();
+        if (origins == null) {
+            return targets;
+        }
+
         for (O origin : origins) {
             T target = convert(origin, targetClass);
             targets.add(target);

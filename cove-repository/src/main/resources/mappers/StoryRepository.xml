@@ -21,4 +21,35 @@
         VALUES
         (#{id},#{url},#{subject},#{description},#{takeTime},#{createTime},#{location.latitude},#{location.longitude},#{ownerId});
     </insert>
+
+    <select id="selectByName" resultMap="photoMap">
+        SELECT id,url,subject,description,take_time,latitude,longitude,owner_id
+        FROM story
+        <if test="name!=null">
+            WHERE description LIKE concat('%',#{name},'%')
+        </if>
+        LIMIT 0,#{size}
+    </select>
+
+    <select id="selectByNear" resultMap="photoMap">
+        SELECT id,url,subject,description,take_time,latitude,longitude,owner_id
+        FROM story
+        <if test="around!=null">
+            WHERE latitude &gt; #{around.minLatitude} and latitude &lt; #{around.maxLatitude}
+            and longitude &gt; #{around.minLongitude} and longitude &lt; #{around.maxLongitude}
+        </if>
+        LIMIT 0,#{size}
+    </select>
+
+    <select id="selectBySubject" resultMap="photoMap">
+        SELECT id,url,subject,description,take_time,latitude,longitude,owner_id
+        FROM story
+        <if test="subjects!=null">
+            WHERE subject IN
+            <foreach collection="subjects" item="item" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+        </if>
+        LIMIT 0,#{size}
+    </select>
 </mapper>

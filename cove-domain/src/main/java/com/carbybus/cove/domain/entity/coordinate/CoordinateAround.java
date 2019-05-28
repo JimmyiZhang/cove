@@ -12,17 +12,24 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class CoordinateAround {
-    private Coordinate southeast;
-    private Coordinate northwest;
+    private Double minLatitude;
+    private Double minLongitude;
+
+    private Double maxLatitude;
+    private Double maxLongitude;
+
 
     public CoordinateAround() {
     }
 
-    public CoordinateAround(Double southeastLatitude,
-                            Double southeastLongitude,
-                            Double northwestLatitude,
-                            Double northwestLongitude) {
-        this.southeast = new Coordinate(southeastLatitude, southeastLongitude);
-        this.northwest = new Coordinate(northwestLatitude, northwestLongitude);
+    public CoordinateAround(Double minLatitude,
+                            Double minLongitude,
+                            Double maxLatitude,
+                            Double maxLongitude) {
+        this.minLatitude = minLatitude;
+        this.minLongitude = minLongitude;
+
+        this.maxLatitude = maxLatitude;
+        this.maxLongitude = maxLongitude;
     }
 }

@@ -2,8 +2,10 @@ package com.carbybus.cove.test.application;
 
 import com.carbybus.cove.api.ApiApplication;
 import com.carbybus.cove.application.StoryApplication;
+import com.carbybus.cove.domain.entity.coordinate.CoordinateAround;
 import com.carbybus.cove.domain.principal.UserPrincipal;
 import com.carbybus.cove.domain.view.StoryCreateInput;
+import com.carbybus.cove.domain.view.StoryViewOutput;
 import com.carbybus.infrastructure.component.ActionResult;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Assert;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ApiApplication.class)
@@ -36,5 +39,49 @@ public class StoryApplicationTest {
         Assert.isTrue(result.isSuccess(), "创建成功");
     }
 
+    @Test
+    public void listByName() {
+        String name = "古都";
+        List<StoryViewOutput> views = storyApp.listByName(name);
 
+        for (StoryViewOutput view : views) {
+            System.out.println(view);
+        }
+        Assert.isTrue(views.size() > 0, "获取测试");
+    }
+
+    @Test
+    public void listByNullName() {
+        String name = null;
+        List<StoryViewOutput> views = storyApp.listByName(name);
+
+        for (StoryViewOutput view : views) {
+            System.out.println(view);
+        }
+        Assert.isTrue(views.size() > 0, "获取测试");
+    }
+
+    @Test
+    public void listByNear() {
+        CoordinateAround around = new CoordinateAround(
+                31.08, 117.78,
+                33.18, 119.78);
+        List<StoryViewOutput> views = storyApp.listByNear(around);
+
+        for (StoryViewOutput view : views) {
+            System.out.println(view);
+        }
+        Assert.isTrue(views.size() > 0, "获取测试");
+    }
+
+    @Test
+    public void listBySubject() {
+        String[] subjects = new String[]{"文化之旅","吃货"};
+        List<StoryViewOutput> views = storyApp.listBySubject(subjects);
+
+        for (StoryViewOutput view : views) {
+            System.out.println(view);
+        }
+        Assert.isTrue(views.size() > 0, "获取测试");
+    }
 }

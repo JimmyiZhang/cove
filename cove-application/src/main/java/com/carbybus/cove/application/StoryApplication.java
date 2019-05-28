@@ -57,5 +57,5 @@ public interface StoryApplication extends BaseApplication<Story> {
      * @author jimmy.zhang
      * @date 2019-05-27
      */
-    List<StoryViewOutput> listBySubject(String subject);
+    List<StoryViewOutput> listBySubject(String[] subjects);
 }
