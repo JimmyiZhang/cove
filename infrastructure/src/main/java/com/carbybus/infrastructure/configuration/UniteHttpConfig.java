@@ -79,7 +79,7 @@ public class UniteHttpConfig {
      */
     public String[] getCorsAllowedHeaders() {
         if (StringUtils.isEmpty(corsAllowedHeaders) || WHOLE_ALLOWED.equals(corsAllowedHeaders)) {
-            return new String[]{"*"};
+            return new String[]{WHOLE_ALLOWED};
         }
 
         return corsAllowedHeaders.split(SEPARATOR_ALLOWED);
@@ -98,9 +98,9 @@ public class UniteHttpConfig {
      */
     public String[] getCorsAllowedMethods() {
         if (StringUtils.isEmpty(corsAllowedMethods) || WHOLE_ALLOWED.equals(corsAllowedMethods)) {
-            return new String[]{"*"};
+            return new String[]{WHOLE_ALLOWED};
         }
 
-        return corsAllowedHeaders.split(SEPARATOR_ALLOWED);
+        return corsAllowedMethods.split(SEPARATOR_ALLOWED);
     }
 }

@@ -35,9 +35,8 @@ mybatis-plus:
 # global config
 summer:
   http-config:
-    cache-max-age: 600
+    cache-max-age: 3600
     cors-allowed-methods: GET,POST,PUT,DELETE,OPTIONS
-    cors-allowed-headers: Authorization
   jwt-config:
     token-expired: 10080
     token-secret: 7p9izREdj3cAAQR7HyDCoMDv9dDDtzQLbJ1ScicADAclc

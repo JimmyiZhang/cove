@@ -112,6 +112,12 @@
         <!-- swagger end-->
 
         <dependency>
+            <groupId>me.desair.tus</groupId>
+            <artifactId>tus-java-server</artifactId>
+            <version>1.0.0-2.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.carbybus</groupId>
             <artifactId>infrastructure</artifactId>
             <version>1.0-SNAPSHOT</version>
@@ -143,6 +149,7 @@
                 <filtering>true</filtering>
                 <includes>
                     <include>mappers/**</include>
+                    <include>logback-spring.xml</include>
                     <include>mybatis-config.xml</include>
                     <include>application.yml</include>
                     <include>application-${profile.active}.yml</include>
