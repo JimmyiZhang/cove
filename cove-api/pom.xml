@@ -112,12 +112,6 @@
         <!-- swagger end-->
 
         <dependency>
-            <groupId>me.desair.tus</groupId>
-            <artifactId>tus-java-server</artifactId>
-            <version>1.0.0-2.0</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.carbybus</groupId>
             <artifactId>infrastructure</artifactId>
             <version>1.0-SNAPSHOT</version>

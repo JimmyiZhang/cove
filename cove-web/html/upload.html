@@ -47,7 +47,7 @@ var uppy = Uppy.Core({
     }],
     browserBackButtonClose: true
 })
-.use(Uppy.Tus, {
+.use(Uppy.XHRUpload, {
     endpoint: 'http://localhost:8088/files/upload'
 });
 
