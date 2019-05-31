@@ -7,7 +7,6 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.carbybus.infrastructure.configuration.UniteJwtConfig;
 import com.carbybus.infrastructure.exception.BusinessException;
 import com.carbybus.infrastructure.exception.JwtTokenError;
 import com.carbybus.infrastructure.utils.StringConstants;

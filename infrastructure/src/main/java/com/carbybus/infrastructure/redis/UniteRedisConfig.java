@@ -1,4 +1,4 @@
-package com.carbybus.infrastructure.configuration;
+package com.carbybus.infrastructure.redis;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

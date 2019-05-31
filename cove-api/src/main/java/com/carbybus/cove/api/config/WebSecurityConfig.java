@@ -1,6 +1,6 @@
 package com.carbybus.cove.api.config;
 
-import com.carbybus.infrastructure.configuration.UniteJwtConfig;
+import com.carbybus.infrastructure.jwt.UniteJwtConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

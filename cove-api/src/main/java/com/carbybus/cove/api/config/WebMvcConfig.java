@@ -1,7 +1,7 @@
 package com.carbybus.cove.api.config;
 
-import com.carbybus.infrastructure.configuration.UniteHttpConfig;
-import com.carbybus.infrastructure.configuration.UniteJsonConfig;
+import com.carbybus.infrastructure.http.UniteHttpConfig;
+import com.carbybus.infrastructure.json.UniteJsonConfig;
 import com.carbybus.infrastructure.validator.CollectionValidator;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,7 +1,6 @@
 package com.carbybus.infrastructure.redis;
 
-import com.carbybus.infrastructure.configuration.UniteJsonConfig;
-import com.carbybus.infrastructure.configuration.UniteRedisConfig;
+import com.carbybus.infrastructure.json.UniteJsonConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

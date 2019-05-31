@@ -1,6 +1,6 @@
 package com.carbybus.infrastructure.component;
 
-import com.carbybus.infrastructure.serializer.BaseEnumDeserializer;
+import com.carbybus.infrastructure.json.BaseEnumDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /**

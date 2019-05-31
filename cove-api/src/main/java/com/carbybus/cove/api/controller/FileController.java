@@ -1,12 +1,21 @@
 package com.carbybus.cove.api.controller;
 
 import com.carbybus.cove.api.component.BaseController;
+import com.carbybus.infrastructure.component.ActionResult;
+import com.carbybus.infrastructure.file.UniteUploadConfig;
+import com.carbybus.infrastructure.file.UploadFileResult;
+import com.carbybus.infrastructure.file.UploadFileUtils;
 import io.swagger.annotations.Api;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 /**
  * 文件控制器
@@ -18,10 +27,19 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping(value = "/files")
 public class FileController extends BaseController {
+    @Autowired
+    private UniteUploadConfig uploadConfig;
+
     @RequestMapping(value = "upload", method = {RequestMethod.POST, RequestMethod.OPTIONS})
-    public void upload(@RequestParam(value = "file", required = false) MultipartFile[] files) {
+    public ActionResult upload(@RequestParam(value = "file", required = false) MultipartFile file,
+                               @RequestParam(value = "name", required = false) String name) throws IOException {
 
+        String fileName = StringUtils.isEmpty(name) ? file.getOriginalFilename() : name;
+        UploadFileResult result = UploadFileUtils.saveFile(uploadConfig.getUploadPath(), fileName, file.getInputStream());
 
-        System.out.println("ok");
+        result.setSize(file.getSize());
+        result.setType(file.getContentType());
+
+        return success(result);
     }
 }

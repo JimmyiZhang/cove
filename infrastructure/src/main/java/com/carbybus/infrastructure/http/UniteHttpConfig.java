@@ -1,4 +1,4 @@
-package com.carbybus.infrastructure.configuration;
+package com.carbybus.infrastructure.http;
 
 import lombok.Getter;
 import lombok.Setter;

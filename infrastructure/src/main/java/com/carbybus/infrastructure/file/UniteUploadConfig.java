@@ -1,4 +1,4 @@
-package com.carbybus.infrastructure.configuration;
+package com.carbybus.infrastructure.file;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -12,11 +12,10 @@ import org.springframework.context.annotation.Configuration;
  */
 @Data
 @Configuration
-@ConfigurationProperties("summer.cache-config")
-public class UniteCacheConfig {
+@ConfigurationProperties("summer.upload-config")
+public class UniteUploadConfig {
     /**
-     * cache过期时间，单位分钟
-     * 默认72小时
+     * 上传路径
      */
-    private long expiredMinutes = 72 * 60L;
+    private String uploadPath = "uploads";
 }

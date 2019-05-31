@@ -1,4 +1,4 @@
-package com.carbybus.infrastructure.utils;
+package com.carbybus.infrastructure.http;
 
 import lombok.extern.log4j.Log4j2;
 

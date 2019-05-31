@@ -1,6 +1,6 @@
 package utils;
 
-import com.carbybus.infrastructure.utils.HttpUtils;
+import com.carbybus.infrastructure.http.HttpUtils;
 import org.junit.Test;
 import org.springframework.util.Assert;
 

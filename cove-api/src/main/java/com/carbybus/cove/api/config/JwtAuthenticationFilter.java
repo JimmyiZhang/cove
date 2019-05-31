@@ -1,6 +1,6 @@
 package com.carbybus.cove.api.config;
 
-import com.carbybus.infrastructure.configuration.UniteJwtConfig;
+import com.carbybus.infrastructure.jwt.UniteJwtConfig;
 import com.carbybus.infrastructure.jwt.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

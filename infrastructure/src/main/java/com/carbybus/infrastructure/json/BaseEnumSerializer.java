@@ -1,4 +1,4 @@
-package com.carbybus.infrastructure.serializer;
+package com.carbybus.infrastructure.json;
 
 import com.carbybus.infrastructure.component.BaseEnum;
 import com.fasterxml.jackson.core.JsonGenerator;

@@ -39,21 +39,18 @@ var uppy = Uppy.Core({
         id: 'name',
         name: '名称',
         placeholder: '文件名称'
-    },
-    {
-        id: 'caption',
-        name: '描述',
-        placeholder: '一句话描述'
     }],
     browserBackButtonClose: true
 })
 .use(Uppy.XHRUpload, {
+    fieldName:'file',
     endpoint: 'http://localhost:8088/files/upload'
 });
 
 uppy.on("complete", (result) => {
     console.log('上传完成! 上传文件列表: ', result.successful);
 });
+
 
 
 

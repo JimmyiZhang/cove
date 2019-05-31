@@ -1,7 +1,7 @@
 package com.carbybus.cove.api.config;
 
-import com.carbybus.infrastructure.configuration.UniteJsonConfig;
-import com.carbybus.infrastructure.configuration.UniteRedisConfig;
+import com.carbybus.infrastructure.json.UniteJsonConfig;
+import com.carbybus.infrastructure.redis.UniteRedisConfig;
 import com.carbybus.infrastructure.redis.BaseRedisCacheManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;

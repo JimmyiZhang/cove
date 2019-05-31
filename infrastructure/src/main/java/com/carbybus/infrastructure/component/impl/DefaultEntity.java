@@ -4,8 +4,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.carbybus.infrastructure.component.BaseEntity;
 import com.carbybus.infrastructure.generator.KeyGeneratorBuilder;
 
-import java.io.Serializable;
-
 /**
  * <p>
  * 实体基类
