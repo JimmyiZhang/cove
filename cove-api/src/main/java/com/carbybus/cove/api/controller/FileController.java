@@ -8,6 +8,9 @@ import com.carbybus.infrastructure.file.UploadFileUtils;
 import io.swagger.annotations.Api;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,5 +44,17 @@ public class FileController extends BaseController {
         result.setType(file.getContentType());
 
         return success(result);
+    }
+
+    @RequestMapping(value = "download", method = RequestMethod.GET)
+    public ResponseEntity download(@RequestParam("name") String name) {
+        Resource resource = UploadFileUtils.loadFile(uploadConfig.getUploadPath(), name);
+
+        MediaType contentType = UploadFileUtils.getMediaType(name);
+        String headerValue = String.format("attachment; filename=\"%s\"", resource.getFilename());
+        return ResponseEntity.ok()
+                .contentType(contentType)
+                //.header(HttpHeaders.CONTENT_DISPOSITION, headerValue)
+                .body(resource);
     }
 }
