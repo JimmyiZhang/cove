@@ -1,59 +1,89 @@
 <!doctype html>
 <html lang="zh">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/style.css">
     <script type="text/javascript"
-            src="http://webapi.amap.com/maps?v=1.4.14&key=6b87d1d3817e5b1c59b8a646300c4b25"></script>
+        src="http://webapi.amap.com/maps?v=1.4.14&key=6b87d1d3817e5b1c59b8a646300c4b25"></script>
     <title>遇见世界</title>
 </head>
+
 <body>
-<header>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">发现世界</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">首页 <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">附近</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">发现</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav right">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">我的</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</header>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">发现世界</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">首页 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">附近</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">发现</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav right">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">我的</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
 
-<main role="main">
-    <div id="container"></div>
-</main>
+    <main role="main">
+        <div id="container"></div>
+    </main>
 
-<script src="/static/http/fetch.js" type="module"></script>
-<script src="/static/vue/vue.js"></script>
-<script>
-var map = new AMap.Map('container', {
-    resizeEnable: true,
-    center: [116.397428, 39.90923],
-    zoom: 11,
-});
+    <script src="/static/http/fetch.js" type="module"></script>
+    <script src="/static/vue/vue.js"></script>
+    <script>
+        AMap.plugin('AMap.ToolBar', function () {
+            var toolbar = new AMap.ToolBar();
+            map.addControl(toolbar)
+        });
+        AMap.plugin('AMap.Geolocation', function () {
+            geolocation = new AMap.Geolocation({
+                enableHighAccuracy: true,
+                timeout: 10000,
+                showMarker: false,
+                showCircle: false,
+            });
+            map.addControl(geolocation);
+            geolocation.getCurrentPosition();
+            AMap.event.addListener(geolocation, 'complete', geoComplete);
+        });
 
-AMap.plugin('AMap.ToolBar',function(){
-   var toolbar = new AMap.ToolBar();
-   map.addControl(toolbar)
-})
-</script>
+        var map = new AMap.Map('container', {
+            resizeEnable: true,
+            center: [116.397428, 39.90923],
+            zoom: 11,
+        });
+
+        var marker1 = new AMap.Marker({
+            map: map,
+            title:'测试',
+            label:'测试',
+            position: new AMap.LngLat(116.4591979980, 39.8865577059)
+        });
+
+        function geoComplete(result) {
+            map.center(result.position);
+        };
+
+
+
+
+    </script>
 </body>
+
 </html>
