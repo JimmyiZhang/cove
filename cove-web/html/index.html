@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/style.css">
-    <script type="text/javascript"
-        src="http://webapi.amap.com/maps?v=1.4.14&key=6b87d1d3817e5b1c59b8a646300c4b25"></script>
+    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.14&key=6b87d1d3817e5b1c59b8a646300c4b25"></script>
     <title>遇见世界</title>
 </head>
 
@@ -15,8 +14,7 @@
     <header>
         <nav class="navbar navbar-expand-md navbar-dark bg-dark">
             <a class="navbar-brand" href="#">发现世界</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -47,42 +45,84 @@
     <script src="/static/http/fetch.js" type="module"></script>
     <script src="/static/vue/vue.js"></script>
     <script>
-        AMap.plugin('AMap.ToolBar', function () {
+        AMap.plugin('AMap.ToolBar', function() {
             var toolbar = new AMap.ToolBar();
             map.addControl(toolbar)
         });
-        AMap.plugin('AMap.Geolocation', function () {
+        AMap.plugin('AMap.Geolocation', function() {
             geolocation = new AMap.Geolocation({
                 enableHighAccuracy: true,
                 timeout: 10000,
                 showMarker: false,
                 showCircle: false,
             });
-            map.addControl(geolocation);
             geolocation.getCurrentPosition();
-            AMap.event.addListener(geolocation, 'complete', geoComplete);
+            AMap.event.addListener(geolocation, 'complete', function(result) {
+                console.log('定位成功');
+                map.center(result.position);
+            });
+            AMap.event.addListener(geolocation, 'error', function(result) {
+                console.log('定位失败');
+            });
         });
 
         var map = new AMap.Map('container', {
             resizeEnable: true,
-            center: [116.397428, 39.90923],
             zoom: 11,
         });
 
-        var marker1 = new AMap.Marker({
+
+        var marker2 = new AMap.Marker({
+            icon: '/static/img/img2.png',
             map: map,
-            title:'测试',
-            label:'测试',
-            position: new AMap.LngLat(116.4591979980, 39.8865577059)
+            title: '天津塘沽金箍棒',
+            position: new AMap.LngLat(117.7044081688, 39.0223511513)
         });
 
-        function geoComplete(result) {
-            map.center(result.position);
-        };
+
+
+        var mrkContent3 = '<div class="marker"><img class="orange" src="/static/img/img3.png" /></div>';
+        var marker3 = new AMap.Marker({
+            content: mrkContent3,
+            map: map,
+            title: '国家海洋博物馆',
+            position: new AMap.LngLat(117.7947235107, 39.1066201166),
+        });
+        // 信息窗体的内容
+        var infoContent3 = [
+            '<div><img src="/static/img/img3.png">',
+            '<div><b>国家海洋博物馆</b>',
+            '中国天津市天津市滨海新区荣盛路</div></div>'
+        ];
+        // 创建 infoWindow 实例	
+        var infoWindow3 = new AMap.InfoWindow({
+            content: infoContent3.join("<br>"),
+            anchor: 'bottom-center',
+            offset: new AMap.Pixel(12, -24)
+        });
+        marker3.on('click', function() {
+            console.log('marker click')
+            infoWindow3.open(map, [117.7947235107, 39.1066201166]);
+        });
 
 
 
 
+
+        var content4 = '<div class="marker"><img class="yellow" src="/static/img/img4.png" /></div>';
+        var marker4 = new AMap.Marker({
+            content: content4,
+            map: map,
+            title: '遗鸥公园',
+            position: new AMap.LngLat(117.7877283096, 39.1365182243)
+        });
+        var content5 = '<div class="marker"><img class="green" src="/static/img/img5.png" /></div>';
+        var marker5 = new AMap.Marker({
+            content: content5,
+            map: map,
+            title: '妈祖文化园',
+            position: new AMap.LngLat(117.8444623947, 39.1079854504)
+        });
     </script>
 </body>
 

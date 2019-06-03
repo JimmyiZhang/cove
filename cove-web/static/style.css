@@ -1,1 +1,40 @@
-body,html,#container {width:100%;height:100%;margin:0px;position: fixed}
+body,
+html,
+#container {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    position: fixed
+}
+
+.marker {
+    width: 40px;
+    height: 40px;
+}
+
+.marker img.orange {
+    width: 100%;
+    height: auto;
+    padding: 2px;
+    background-color: orange;
+    border-radius: 50%;
+    box-shadow: 2px 3px 3px;
+}
+
+.marker img.yellow {
+    width: 100%;
+    height: auto;
+    padding: 2px;
+    background-color: yellow;
+    border-radius: 50%;
+    box-shadow: 2px 3px 3px;
+}
+
+.marker img.green {
+    width: 100%;
+    height: auto;
+    padding: 2px;
+    background-color: green;
+    border-radius: 50%;
+    box-shadow: 2px 3px 3px;
+}
