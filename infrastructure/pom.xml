@@ -52,11 +52,6 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.6</version>
-        </dependency>
         <!-- apache commons end-->
 
         <!-- orika -->
@@ -80,12 +75,18 @@
         </dependency>
         <!-- JWT end-->
 
-        <!-- thumbnailator -->
+        <!-- image -->
         <dependency>
             <groupId>net.coobird</groupId>
             <artifactId>thumbnailator</artifactId>
         </dependency>
-        <!-- thumbnailator end-->
+
+        <dependency>
+            <groupId>com.drewnoakes</groupId>
+            <artifactId>metadata-extractor</artifactId>
+            <version>2.11.0</version>
+        </dependency>
+        <!-- image end-->
 
         <dependency>
             <groupId>junit</groupId>

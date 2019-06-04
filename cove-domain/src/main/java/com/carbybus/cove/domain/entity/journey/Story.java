@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.carbybus.cove.domain.entity.coordinate.Coordinate;
 import com.carbybus.cove.domain.principal.UserPrincipal;
 import com.carbybus.infrastructure.component.impl.DefaultEntity;
+import com.carbybus.infrastructure.file.FileMetadata;
 import com.carbybus.infrastructure.utils.StringConstants;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -46,6 +47,32 @@ public class Story extends DefaultEntity {
                 .setOwnerId(user.getUserId())
                 .setSubject(StringConstants.EMPTY)
                 .setDescription(StringConstants.EMPTY);
+        return story;
+    }
+
+    /**
+     * 从文件创建故事
+     *
+     * @param
+     * @return
+     * @author jimmy.zhang
+     * @date 2019-06-04
+     */
+    public static Story fromFile(UserPrincipal user, FileMetadata file) {
+        Story story = new Story();
+        story.valueOf();
+
+        story.setCreateTime(LocalDateTime.now())
+                .setUrl(file.getUrl())
+                .setTakeTime(file.getToken())
+                .setOwnerId(user.getUserId())
+                .setSubject(StringConstants.EMPTY);
+
+        String description = String.format("来自：%s %s", file.getMake(), file.getModel());
+        story.setDescription(description);
+
+        Coordinate coordinate = new Coordinate(file.getLatitude(), file.getLongitude());
+        story.setLocation(coordinate);
         return story;
     }
 }

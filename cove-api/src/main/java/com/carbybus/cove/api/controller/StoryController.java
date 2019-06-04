@@ -1,17 +1,15 @@
 package com.carbybus.cove.api.controller;
 
 import com.carbybus.cove.api.component.BaseController;
+import com.carbybus.cove.application.StoryApplication;
+import com.carbybus.cove.domain.entity.coordinate.CoordinateAround;
+import com.carbybus.cove.domain.entity.journey.Story;
+import com.carbybus.cove.domain.view.StoryViewOutput;
 import com.carbybus.infrastructure.component.ActionResult;
-import com.carbybus.infrastructure.file.FileUtils;
-import com.carbybus.infrastructure.file.UniteUploadConfig;
-import com.carbybus.infrastructure.file.UploadFileResult;
-import com.carbybus.infrastructure.file.UploadFileUtils;
+import com.carbybus.infrastructure.file.*;
 import io.swagger.annotations.Api;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * 文件控制器
@@ -28,33 +27,34 @@ import java.io.IOException;
  */
 @Api(tags = {"上传"})
 @RestController
-@RequestMapping(value = "/file")
-public class FileController extends BaseController {
+@RequestMapping(value = "/story")
+public class StoryController extends BaseController {
     @Autowired
     private UniteUploadConfig uploadConfig;
 
-    @RequestMapping(value = "upload", method = {RequestMethod.POST, RequestMethod.OPTIONS})
+    @Autowired
+    private StoryApplication storyApp;
+
+    @RequestMapping(value = "cute", method = {RequestMethod.POST, RequestMethod.OPTIONS})
     public ActionResult upload(@RequestParam(value = "file", required = false) MultipartFile file,
                                @RequestParam(value = "name", required = false) String name) throws IOException {
-
+        // 上传文件
         String fileName = StringUtils.isEmpty(name) ? file.getOriginalFilename() : name;
         UploadFileResult result = UploadFileUtils.saveFile(uploadConfig.getUploadPath(), fileName, file.getInputStream());
 
+        // 保存故事
+        FileMetadata metadata = FileUtils.getFileMetadata(result);
+        Story story = Story.fromFile(this.getUser(), metadata);
+        storyApp.save(story);
+
         result.setSize(file.getSize());
         result.setType(file.getContentType());
-
         return success(result);
     }
 
-    @RequestMapping(value = "download", method = RequestMethod.GET)
-    public ResponseEntity download(@RequestParam("name") String name) {
-        Resource resource = UploadFileUtils.loadFile(uploadConfig.getUploadPath(), name);
-
-        MediaType contentType = FileUtils.getMediaType(name);
-        String headerValue = String.format("attachment; filename=\"%s\"", resource.getFilename());
-        return ResponseEntity.ok()
-                .contentType(contentType)
-                //.header(HttpHeaders.CONTENT_DISPOSITION, headerValue)
-                .body(resource);
+    @RequestMapping(value = "near", method = RequestMethod.GET)
+    public ActionResult near(CoordinateAround input) {
+        List<StoryViewOutput> output = storyApp.listByNear(input);
+        return success(output);
     }
 }

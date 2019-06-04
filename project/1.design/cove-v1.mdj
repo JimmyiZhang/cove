@@ -9961,7 +9961,7 @@
 											"top": 635,
 											"width": 154.7648162841797,
 											"height": 13,
-											"text": "+coordinate: Coordinate",
+											"text": "+baseCoordinate: Coordinate",
 											"horizontalAlignment": 0
 										},
 										{
@@ -10370,7 +10370,7 @@
 										"$ref": "AAAAAAFq5BlopQWGKpY="
 									},
 									"edgePosition": 1,
-									"text": "+coordinate"
+									"text": "+baseCoordinate"
 								},
 								{
 									"_type": "EdgeLabelView",
@@ -12430,7 +12430,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFq5AxlkP87vUE="
 							},
-							"name": "coordinate",
+							"name": "baseCoordinate",
 							"end1": {
 								"_type": "UMLAssociationEnd",
 								"_id": "AAAAAAFq5BlopQWD98s=",
@@ -12487,7 +12487,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFq5AxlkP87vUE="
 							},
-							"name": "coordinate",
+							"name": "baseCoordinate",
 							"type": {
 								"$ref": "AAAAAAFq5BEfkgG/fP4="
 							}

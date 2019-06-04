@@ -3,8 +3,6 @@ package com.carbybus.cove.api.component;
 import com.carbybus.cove.domain.principal.UserPrincipal;
 import com.carbybus.infrastructure.component.ActionResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,13 +23,18 @@ public class BaseController {
     private UserPrincipal user;
 
     protected UserPrincipal getUser() {
-        if (this.user == null) {
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            String claim = auth.getName();
-            this.user = UserPrincipal.init().setUserName(claim);
-        }
+        // todo: test
+        return UserPrincipal.init()
+                .setUserName("jimmy")
+                .setUserId(1L);
 
-        return this.user;
+//        if (this.user == null) {
+//            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//            String claim = auth.getName();
+//            this.user = UserPrincipal.init().setUserName(claim);
+//        }
+//
+//        return this.user;
     }
 
     /**
