@@ -17,6 +17,7 @@ public class FileMetadata implements BaseCoordinate {
     private Double longitude;
     private String make;
     private String model;
+    private String name;
     private String url;
     private LocalDateTime token;
 }

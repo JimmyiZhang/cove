@@ -167,6 +167,7 @@ public class FileUtils {
     public static FileMetadata getFileMetadata(UploadFileResult result) {
         FileMetadata meta = new FileMetadata();
         meta.setUrl(result.getUrl());
+        meta.setName(result.getName());
         try {
             Metadata fileMeta = ImageMetadataReader.readMetadata(result.getFullPath().toFile());
             GpsDirectory gpsDirectory = fileMeta.getFirstDirectoryOfType(GpsDirectory.class);

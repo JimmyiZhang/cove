@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @Data
 @Accessors(chain = true)
 public class StoryViewOutput {
+    private String name;
     private String url;
     private LocalDateTime takeTime;
     private Double latitude;

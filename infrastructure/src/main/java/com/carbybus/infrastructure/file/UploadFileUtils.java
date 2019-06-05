@@ -76,6 +76,7 @@ public class UploadFileUtils {
             // 保存缩略图
             Thumbnails.of(thumStream)
                     .size(60, 60)
+                    .keepAspectRatio(false)
                     .toFile(thumPath.toString());
         } catch (IOException ex) {
             log.error(FileError.CREATE_ERROR.toString(), ex);

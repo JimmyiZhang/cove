@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "story")
 public class Story extends DefaultEntity {
+    private String name;
     private String url;
     private String subject;
     private String description;
@@ -63,6 +64,7 @@ public class Story extends DefaultEntity {
         story.valueOf();
 
         story.setCreateTime(LocalDateTime.now())
+                .setName(file.getName())
                 .setUrl(file.getUrl())
                 .setTakeTime(file.getToken())
                 .setOwnerId(user.getUserId())
