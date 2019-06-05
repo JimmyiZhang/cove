@@ -26,6 +26,13 @@ spring:
       file-size-threshold: 1KB
       max-file-size: 10MB
       max-request-size: 20MB
+  h2:
+    console:
+      path: /h2
+      enabled: true
+      settings:
+        web-allow-others: true
+        trace: true
 
 # logging config
 logging:

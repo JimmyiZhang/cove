@@ -5,14 +5,10 @@ server:
 # spring config
 spring:
   datasource:
-    url: jdbc:h2:~/.h2/cove;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE;MODE=MySql;MVCC=TRUE
+    url: jdbc:h2:/usr/local/cove/data/cove;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE;MODE=MySql;MVCC=TRUE
     driver-class-name: org.h2.Driver
     user-name: root
     password: root
-  h2:
-    console:
-      path: /h2
-      enabled: true
 
   # servlet config
   servlet:
