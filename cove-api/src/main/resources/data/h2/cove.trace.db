@@ -561,3 +561,453 @@ CREATE TABLE story(
     OWNER_ID BIGINT NOT NULL,
    primary key(ID)
 ) [42001-195]
+2019-05-28 11:14:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Column "LOCATION" not found; SQL statement:
+SELECT  id,url,subject,description,location,take_time,create_time,owner_id  FROM story 
+ 
+ WHERE description LIKE ? limit ? [42122-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:150)
+	at org.h2.command.dml.Select.prepare(Select.java:858)
+	at org.h2.command.Parser.prepareCommand(Parser.java:283)
+	at org.h2.engine.Session.prepareLocal(Session.java:611)
+	at org.h2.engine.Session.prepareCommand(Session.java:549)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1247)
+	at org.h2.jdbc.JdbcPreparedStatement.<init>(JdbcPreparedStatement.java:76)
+	at org.h2.jdbc.JdbcConnection.prepareStatement(JdbcConnection.java:304)
+	at com.zaxxer.hikari.pool.ProxyConnection.prepareStatement(ProxyConnection.java:311)
+	at com.zaxxer.hikari.pool.HikariProxyConnection.prepareStatement(HikariProxyConnection.java)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.instantiateStatement(PreparedStatementHandler.java:86)
+	at org.apache.ibatis.executor.statement.BaseStatementHandler.prepare(BaseStatementHandler.java:88)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.prepare(RoutingStatementHandler.java:59)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.ibatis.plugin.Invocation.proceed(Invocation.java:49)
+	at com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor.intercept(PaginationInterceptor.java:182)
+	at org.apache.ibatis.plugin.Plugin.invoke(Plugin.java:61)
+	at com.sun.proxy.$Proxy138.prepare(Unknown Source)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.ibatis.plugin.Plugin.invoke(Plugin.java:63)
+	at com.sun.proxy.$Proxy138.prepare(Unknown Source)
+	at org.apache.ibatis.executor.SimpleExecutor.prepareStatement(SimpleExecutor.java:86)
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:62)
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:324)
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:156)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:109)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:83)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:148)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:141)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:433)
+	at com.sun.proxy.$Proxy100.selectList(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:230)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperMethod.executeForIPage(MybatisMapperMethod.java:125)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperMethod.execute(MybatisMapperMethod.java:94)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:61)
+	at com.sun.proxy.$Proxy113.selectPage(Unknown Source)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:343)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:198)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:139)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:212)
+	at com.sun.proxy.$Proxy114.selectPage(Unknown Source)
+	at com.carbybus.cove.application.impl.StoryApplicationImpl.listByName(StoryApplicationImpl.java:53)
+	at com.carbybus.cove.application.impl.StoryApplicationImpl$$FastClassBySpringCGLIB$$7612c284.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:684)
+	at com.carbybus.cove.application.impl.StoryApplicationImpl$$EnhancerBySpringCGLIB$$9c501dd4.listByName(<generated>)
+	at com.carbybus.cove.test.application.StoryApplicationTest.listByName(StoryApplicationTest.java:44)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestExecutionCallbacks.evaluate(RunBeforeTestExecutionCallbacks.java:74)
+	at org.springframework.test.context.junit4.statements.RunAfterTestExecutionCallbacks.evaluate(RunAfterTestExecutionCallbacks.java:84)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestMethodCallbacks.evaluate(RunBeforeTestMethodCallbacks.java:75)
+	at org.springframework.test.context.junit4.statements.RunAfterTestMethodCallbacks.evaluate(RunAfterTestMethodCallbacks.java:86)
+	at org.springframework.test.context.junit4.statements.SpringRepeat.evaluate(SpringRepeat.java:84)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:251)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:97)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:190)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:68)
+	at com.intellij.rt.execution.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:47)
+	at com.intellij.rt.execution.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:242)
+	at com.intellij.rt.execution.junit.JUnitStarter.main(JUnitStarter.java:70)
+2019-05-28 11:35:12 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT ID,URL,SUBJECT,DESCRIPTION,TAKE_TIME,LATITUDE,LONGITUDE,OWNER_ID
+        FROM STORY
+         
+            WHERE DESCRIPTION CONCAT[*]('%',?,'%')
+         
+        LIMIT 1,?
+        ORDER BY CREATE_TIME DESC "; SQL statement:
+SELECT id,url,subject,description,take_time,latitude,longitude,owner_id
+        FROM story
+         
+            WHERE description concat('%',?,'%')
+         
+        LIMIT 1,?
+        ORDER BY create_time DESC [42000-197]
+2019-05-28 11:35:59 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT ID,URL,SUBJECT,DESCRIPTION,TAKE_TIME,LATITUDE,LONGITUDE,OWNER_ID
+        FROM STORY
+         
+            WHERE DESCRIPTION LIKE CONCAT('%',?,'%')
+         
+        LIMIT 1,?
+        ORDER[*] BY CREATE_TIME DESC "; SQL statement:
+SELECT id,url,subject,description,take_time,latitude,longitude,owner_id
+        FROM story
+         
+            WHERE description LIKE concat('%',?,'%')
+         
+        LIMIT 1,?
+        ORDER BY create_time DESC [42000-197]
+2019-05-28 11:38:23 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "FROM STORY 
+WHERE[*] DESCRIPTION LIKE CONCAT('%',G,'%') 
+LIMIT 1,100 ORDER BY CREATE_TIME DESC "; expected "., (, USE, AS, RIGHT, LEFT, FULL, INNER, JOIN, CROSS, NATURAL, ,, SELECT"; SQL statement:
+FROM story 
+WHERE description LIKE concat('%',g,'%') 
+LIMIT 1,100 ORDER BY create_time DESC [42001-195]
+2019-05-28 11:38:33 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT ID,URL,SUBJECT,DESCRIPTION,TAKE_TIME,LATITUDE,LONGITUDE,OWNER_ID 
+FROM STORY 
+WHERE DESCRIPTION LIKE '' 
+LIMIT 1,100 ORDER[*] BY CREATE_TIME DESC "; SQL statement:
+SELECT id,url,subject,description,take_time,latitude,longitude,owner_id 
+FROM story 
+WHERE description LIKE '' 
+LIMIT 1,100 ORDER BY create_time DESC [42000-195]
+2019-05-28 11:38:45 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT ID,URL,SUBJECT,DESCRIPTION,TAKE_TIME,LATITUDE,LONGITUDE,OWNER_ID 
+FROM STORY 
+WHERE DESCRIPTION LIKE '' 
+LIMIT 1,100 ORDER[*] BY CREATE_TIME DESC "; SQL statement:
+SELECT id,url,subject,description,take_time,latitude,longitude,owner_id 
+FROM story 
+WHERE description LIKE '' 
+LIMIT 1,100 ORDER BY create_time DESC [42000-195]
+2019-05-28 11:39:14 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT *
+FROM STORY 
+WHERE DESCRIPTION LIKE '' 
+LIMIT 1,100 ORDER[*] BY CREATE_TIME DESC "; SQL statement:
+SELECT *
+FROM story 
+WHERE description LIKE '' 
+LIMIT 1,100 ORDER BY create_time DESC [42000-195]
+2019-05-28 11:39:24 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Schema "public" not found; SQL statement:
+SET SCHEMA "public" [90079-195]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.engine.Database.getSchema(Database.java:1755)
+	at org.h2.command.dml.Set.update(Set.java:408)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:101)
+	at org.h2.command.Command.executeUpdate(Command.java:260)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:193)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:165)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.onseven.dbvis.g.B.B.ā(Z:2186)
+	at com.onseven.dbvis.g.B.F$A.call(Z:1369)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2019-05-28 11:39:38 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Schema "public" not found; SQL statement:
+SET SCHEMA "public" [90079-195]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.engine.Database.getSchema(Database.java:1755)
+	at org.h2.command.dml.Set.update(Set.java:408)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:101)
+	at org.h2.command.Command.executeUpdate(Command.java:260)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:193)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:165)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.onseven.dbvis.g.B.B.ā(Z:2186)
+	at com.onseven.dbvis.g.B.F$A.call(Z:1369)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2019-05-28 11:39:44 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Schema "public" not found; SQL statement:
+SET SCHEMA "public" [90079-195]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.engine.Database.getSchema(Database.java:1755)
+	at org.h2.command.dml.Set.update(Set.java:408)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:101)
+	at org.h2.command.Command.executeUpdate(Command.java:260)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:193)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:165)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.onseven.dbvis.g.B.B.ā(Z:2186)
+	at com.onseven.dbvis.g.B.F$A.call(Z:1369)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2019-05-28 11:40:06 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT *
+FROM STORY 
+WHERE DESCRIPTION LIKE '' 
+LIMIT 1,100 
+ORDER[*] BY CREATE_TIME DESC "; SQL statement:
+SELECT *
+FROM story 
+WHERE description LIKE '' 
+LIMIT 1,100 
+ORDER BY create_time DESC [42000-195]
+2019-05-28 11:40:57 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT *
+FROM STORY 
+WHERE DESCRIPTION LIKE '%%' 
+LIMIT 0,100 
+ORDER[*] BY CREATE_TIME DESC "; SQL statement:
+SELECT *
+FROM story 
+WHERE description LIKE '%%' 
+LIMIT 0,100 
+ORDER BY create_time DESC [42000-195]
+2019-05-28 11:41:56 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT *
+FROM STORY 
+WHERE DESCRIPTION LIKE '%%' 
+LIMIT 0,100 
+ORDER[*] BY CREATE_TIME "; SQL statement:
+SELECT *
+FROM story 
+WHERE description LIKE '%%' 
+LIMIT 0,100 
+ORDER BY create_time [42000-195]
+2019-05-28 11:42:06 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT *
+FROM STORY 
+WHERE DESCRIPTION LIKE '%%' 
+LIMIT 0,100 
+ORDER[*] BY ID "; SQL statement:
+SELECT *
+FROM story 
+WHERE description LIKE '%%' 
+LIMIT 0,100 
+ORDER BY id [42000-195]
+2019-05-28 11:43:08 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT *
+FROM STORY 
+WHERE DESCRIPTION LIKE '%%' 
+LIMIT 0,100 
+ORDER[*] BY ID "; SQL statement:
+SELECT *
+FROM story 
+WHERE description LIKE '%%' 
+LIMIT 0,100 
+ORDER BY ID [42000-195]
+2019-05-28 11:43:14 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT *
+FROM STORY 
+WHERE DESCRIPTION LIKE '%%' 
+LIMIT 0,100 
+ORDER[*] BY ID ASC "; SQL statement:
+SELECT *
+FROM story 
+WHERE description LIKE '%%' 
+LIMIT 0,100 
+ORDER BY ID asc [42000-195]
+2019-05-28 11:43:19 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT *
+FROM STORY 
+WHERE DESCRIPTION LIKE '%%' 
+LIMIT 0,100 
+ORDER[*] BY ID DESC "; SQL statement:
+SELECT *
+FROM story 
+WHERE description LIKE '%%' 
+LIMIT 0,100 
+ORDER BY ID DESC [42000-195]
+2019-05-28 11:43:25 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT *
+FROM STORY 
+WHERE DESCRIPTION LIKE '%%' 
+LIMIT 0,100 
+ORDER[*] ID DESC "; SQL statement:
+SELECT *
+FROM story 
+WHERE description LIKE '%%' 
+LIMIT 0,100 
+ORDER ID DESC [42000-195]
+2019-05-28 11:43:35 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT *
+FROM STORY 
+WHERE DESCRIPTION LIKE '%%' 
+LIMIT 0,100 
+ORDER[*] BY ID DESC "; SQL statement:
+SELECT *
+FROM story 
+WHERE description LIKE '%%' 
+LIMIT 0,100 
+ORDER BY ID DESC [42000-195]
+2019-05-28 11:45:28 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT *
+FROM STORY 
+WHERE DESCRIPTION LIKE '%%' 
+LIMIT 0,100 
+ORDERBY[*] ID DESC "; SQL statement:
+SELECT *
+FROM story 
+WHERE description LIKE '%%' 
+LIMIT 0,100 
+ORDERBY ID DESC [42000-195]
+2019-05-28 11:45:36 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT *
+FROM STORY 
+WHERE DESCRIPTION LIKE '%%' 
+LIMIT 0,100 
+ORDER[*] ID DESC "; SQL statement:
+SELECT *
+FROM story 
+WHERE description LIKE '%%' 
+LIMIT 0,100 
+ORDER ID DESC [42000-195]
+2019-05-28 11:45:44 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT * FROM STORY WHERE DESCRIPTION LIKE '%%' LIMIT 0,100 ORDER[*] BY ID DESC "; SQL statement:
+SELECT * FROM story WHERE description LIKE '%%' LIMIT 0,100 ORDER by ID DESC [42000-195]
+2019-05-28 11:46:00 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT * FROM STORY WHERE DESCRIPTION LIKE '%%' LIMIT 0,100 ORDER[*] BY ID DESC "; SQL statement:
+SELECT * FROM story WHERE description LIKE '%%' LIMIT 0,100 ORDER by ID DESC [42000-195]
+2019-05-28 11:46:51 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT ID,CREATE_TIME FROM STORY WHERE DESCRIPTION LIKE '%%' LIMIT 0,100 ORDER[*] BY ID DESC "; SQL statement:
+SELECT id,create_time FROM story WHERE description LIKE '%%' LIMIT 0,100 ORDER BY id DESC [42000-195]
+2019-05-28 11:48:29 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Column "GU" not found; SQL statement:
+SELECT id,create_time FROM story WHERE description LIKE concat('%',gu,'%') LIMIT 0,100 [42122-195]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:147)
+	at org.h2.expression.Function.optimize(Function.java:2307)
+	at org.h2.expression.CompareLike.optimize(CompareLike.java:94)
+	at org.h2.command.dml.Select.prepare(Select.java:842)
+	at org.h2.command.Parser.prepareCommand(Parser.java:262)
+	at org.h2.engine.Session.prepareLocal(Session.java:573)
+	at org.h2.engine.Session.prepareCommand(Session.java:514)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1204)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:177)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:165)
+	at sun.reflect.GeneratedMethodAccessor55.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.onseven.dbvis.g.B.B.ā(Z:2186)
+	at com.onseven.dbvis.g.B.F$A.call(Z:1369)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2019-05-28 14:35:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Schema "public" not found; SQL statement:
+SELECT * FROM "public"."story" [90079-195]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.command.Parser.getSchema(Parser.java:682)
+	at org.h2.command.Parser.getSchema(Parser.java:688)
+	at org.h2.command.Parser.readTableFilter(Parser.java:1218)
+	at org.h2.command.Parser.parseSelectSimpleFromPart(Parser.java:1940)
+	at org.h2.command.Parser.parseSelectSimple(Parser.java:2089)
+	at org.h2.command.Parser.parseSelectSub(Parser.java:1934)
+	at org.h2.command.Parser.parseSelectUnion(Parser.java:1749)
+	at org.h2.command.Parser.parseSelect(Parser.java:1737)
+	at org.h2.command.Parser.parsePrepared(Parser.java:448)
+	at org.h2.command.Parser.parse(Parser.java:320)
+	at org.h2.command.Parser.parse(Parser.java:292)
+	at org.h2.command.Parser.prepareCommand(Parser.java:257)
+	at org.h2.engine.Session.prepareLocal(Session.java:573)
+	at org.h2.engine.Session.prepareCommand(Session.java:514)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1204)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:177)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:165)
+	at sun.reflect.GeneratedMethodAccessor55.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.onseven.dbvis.g.B.B.ā(Z:2186)
+	at com.onseven.dbvis.g.B.F$A.call(Z:1369)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2019-05-28 14:35:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Schema "public" not found; SQL statement:
+SELECT count(*) FROM "public"."story" [90079-195]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.command.Parser.getSchema(Parser.java:682)
+	at org.h2.command.Parser.getSchema(Parser.java:688)
+	at org.h2.command.Parser.readTableFilter(Parser.java:1218)
+	at org.h2.command.Parser.parseSelectSimpleFromPart(Parser.java:1940)
+	at org.h2.command.Parser.parseSelectSimple(Parser.java:2089)
+	at org.h2.command.Parser.parseSelectSub(Parser.java:1934)
+	at org.h2.command.Parser.parseSelectUnion(Parser.java:1749)
+	at org.h2.command.Parser.parseSelect(Parser.java:1737)
+	at org.h2.command.Parser.parsePrepared(Parser.java:448)
+	at org.h2.command.Parser.parse(Parser.java:320)
+	at org.h2.command.Parser.parse(Parser.java:292)
+	at org.h2.command.Parser.prepareCommand(Parser.java:257)
+	at org.h2.engine.Session.prepareLocal(Session.java:573)
+	at org.h2.engine.Session.prepareCommand(Session.java:514)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1204)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:177)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:165)
+	at sun.reflect.GeneratedMethodAccessor55.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.onseven.dbvis.g.B.B.ā(Z:2186)
+	at com.onseven.dbvis.g.B.F$A.call(Z:1369)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)

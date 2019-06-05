@@ -1,3 +1,4 @@
+com\carbybus\infrastructure\exception\FileError.class
 com\carbybus\infrastructure\exception\ValidatorError.class
 com\carbybus\infrastructure\json\UniteJsonConfig.class
 com\carbybus\infrastructure\generator\SnowflakeKeyGenerator$TimeService.class
@@ -11,6 +12,7 @@ com\carbybus\infrastructure\caching\CacheUtils.class
 com\carbybus\infrastructure\utils\IntegerUtils.class
 com\carbybus\infrastructure\caching\UniteCacheConfig.class
 com\carbybus\infrastructure\json\BaseEnumSerializer.class
+com\carbybus\infrastructure\file\UniteUploadConfig.class
 com\carbybus\infrastructure\generator\KeyGenerator.class
 com\carbybus\infrastructure\component\impl\DefaultEntity.class
 com\carbybus\infrastructure\coordinate\CoordinateUtils.class
@@ -19,6 +21,7 @@ com\carbybus\infrastructure\component\BaseEnum.class
 com\carbybus\infrastructure\file\FileUtils.class
 com\carbybus\infrastructure\utils\StringConstants.class
 com\carbybus\infrastructure\component\BaseApplication.class
+com\carbybus\infrastructure\utils\DateTimeUtils.class
 com\carbybus\infrastructure\jwt\JwtResult.class
 com\carbybus\infrastructure\generator\KeyGeneratorBuilder.class
 com\carbybus\infrastructure\redis\RedisUtils.class

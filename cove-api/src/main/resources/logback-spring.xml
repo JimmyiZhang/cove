@@ -93,6 +93,7 @@
 
     <springProfile name="release">
         <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
             <appender-ref ref="INFO_FILE_ASYNC_APPENDER"/>
             <appender-ref ref="ERROR_FILE_ASYNC_APPENDER"/>
         </root>
