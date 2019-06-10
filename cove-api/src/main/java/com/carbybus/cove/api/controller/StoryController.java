@@ -25,7 +25,7 @@ import java.util.List;
  * @author jimmy.zhang
  * @date 2019-02-26
  */
-@Api(tags = {"上传"})
+@Api(tags = {"故事"})
 @RestController
 @RequestMapping(value = "/story")
 public class StoryController extends BaseController {
