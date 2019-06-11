@@ -70,7 +70,7 @@ public class Story extends DefaultEntity {
                 .setOwnerId(user.getUserId())
                 .setSubject(StringConstants.EMPTY);
 
-        String description = String.format("来自：%s %s", file.getMake(), file.getModel());
+        String description = String.format("from: %s %s", file.getMake(), file.getModel());
         story.setDescription(description);
 
         Coordinate coordinate = new Coordinate(file.getLatitude(), file.getLongitude());

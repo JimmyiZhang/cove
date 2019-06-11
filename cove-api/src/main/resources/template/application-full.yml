@@ -1,0 +1,50 @@
+# server info
+server:
+  port: 8088
+
+# spring config
+spring:
+  # profile config
+  profiles:
+    active: "@profile.active@"
+
+  # servlet config
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 1KB
+      max-file-size: 10MB
+      max-request-size: 20MB
+
+# logging config
+logging:
+  path: logs
+  file:
+    max-history: 15
+    max-size: 20MB
+
+# mybatis-plus config
+mybatis-plus:
+  config-lacation: classpath:mybatis-config.xml
+  mapper-locations: classpath:mappers/*.xml
+  type-enums-package: com.carbybus.cove.domain.*
+  type-aliases-package: com.carbybus.cove.domain.*
+  configuration:
+    default-enum-type-handler: com.baomidou.mybatisplus.extension.handlers.EnumTypeHandler
+  global-config:
+    super-mapper-class: com.carbybus.infrastructure.component.BaseRepository
+
+# global config
+summer:
+  http-config:
+    cache-max-age: 3600
+    cors-allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+  jwt-config:
+    token-expired: 10080
+    token-secret: 7p9izREdj3cAAQR7HyDCoMDv9dDDtzQLbJ1ScicADAclc
+    token-subject: Traveller
+    token-issue: carbybus
+    token-claim: id
+  redis-config:
+    expired-minutes: 0
+

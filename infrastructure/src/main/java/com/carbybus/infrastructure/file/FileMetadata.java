@@ -20,4 +20,8 @@ public class FileMetadata implements BaseCoordinate {
     private String name;
     private String url;
     private LocalDateTime token;
+
+    public boolean isValid() {
+        return latitude != null && longitude != null;
+    }
 }

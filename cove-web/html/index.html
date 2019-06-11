@@ -151,7 +151,7 @@
                         var list = json.data;
                         for (var i = 0; i < list.length; i++) {
                             var story = list[i];
-                            story.url = story.url.replace('/\\/g', '/');
+                            story.url = story.url.replace('/', '\\');
 
                             var mrkContent = `<div class="marker"><img class="orange" src="http://localhost:8088/file/download?name=${story.url}" /></div>`;
                             var marker = new AMap.Marker({

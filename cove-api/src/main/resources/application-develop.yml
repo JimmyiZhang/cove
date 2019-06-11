@@ -9,7 +9,3 @@ spring:
     driver-class-name: org.h2.Driver
     user-name: root
     password: root
-  h2:
-    console:
-      path: /h2
-      enabled: true

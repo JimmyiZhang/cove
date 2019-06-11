@@ -2,6 +2,7 @@ package com.carbybus.cove.api.component;
 
 import com.carbybus.cove.domain.principal.UserPrincipal;
 import com.carbybus.infrastructure.component.ActionResult;
+import com.carbybus.infrastructure.exception.BusinessError;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
@@ -69,15 +70,14 @@ public class BaseController {
     /**
      * 失败
      *
-     * @param code    错误码
-     * @param message 错误消息
+     * @param error    错误
      * @return 携带错误码和错误消息的操作失败结果
      * @author jimmy.zhang
      * @date 2019-02-26
      */
-    public ActionResult failure(int code, String message) {
+    public ActionResult failure(BusinessError error) {
         ActionResult result = new ActionResult();
-        result.fail(code, message);
+        result.fail(error);
 
         return result;
     }
@@ -85,16 +85,16 @@ public class BaseController {
     /**
      * 失败
      *
-     * @param code    错误码
-     * @param message 错误消息
+     * @param error    错误
+
      * @param data    返回的数据
      * @return 携带错误码、错误消息和返回数据的操作失败结果
      * @author jimmy.zhang
      * @date 2019-02-26
      */
-    public <T> ActionResult<T> failure(int code, String message, T data) {
+    public <T> ActionResult<T> failure(BusinessError error, T data) {
         ActionResult<T> result = new ActionResult<>();
-        result.fail(code, message, data);
+        result.fail(error, data);
 
         return result;
     }
