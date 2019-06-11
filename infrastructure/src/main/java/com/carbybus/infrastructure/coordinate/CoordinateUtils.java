@@ -7,7 +7,7 @@ package com.carbybus.infrastructure.coordinate;
  * @date 2019-06-04
  */
 public class CoordinateUtils {
-    public static final double PI = 3.14159265358979324D;
+    private static final double PI = 3.14159265358979324D;
 
     /**
      * WGS84转GCJ02坐标
@@ -19,8 +19,11 @@ public class CoordinateUtils {
      */
     public static void Wgs84ToGcj02(BaseCoordinate baseCoordinate) {
         double[] deltas = delta(baseCoordinate.getLongitude(), baseCoordinate.getLatitude());
-        baseCoordinate.setLatitude(deltas[1] + baseCoordinate.getLongitude());
-        baseCoordinate.setLongitude(deltas[0] + baseCoordinate.getLatitude());
+        double longitude = deltas[0] + baseCoordinate.getLongitude();
+        double latitude = deltas[1] + baseCoordinate.getLatitude();
+
+        baseCoordinate.setLatitude(latitude);
+        baseCoordinate.setLongitude(longitude);
     }
 
     /**
@@ -33,8 +36,11 @@ public class CoordinateUtils {
      */
     public static void Gcj02ToWgs84(BaseCoordinate baseCoordinate) {
         double[] deltas = delta(baseCoordinate.getLongitude(), baseCoordinate.getLatitude());
-        baseCoordinate.setLatitude(baseCoordinate.getLongitude() - deltas[1]);
-        baseCoordinate.setLongitude(baseCoordinate.getLatitude() - deltas[0]);
+        double longitude = baseCoordinate.getLongitude() - deltas[0];
+        double latitude = baseCoordinate.getLatitude() - deltas[1];
+
+        baseCoordinate.setLatitude(latitude);
+        baseCoordinate.setLongitude(longitude);
 
     }
 
