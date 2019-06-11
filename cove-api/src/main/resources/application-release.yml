@@ -1,6 +1,6 @@
 # server info
 server:
-  port: 80
+  port: 8080
 
 # spring config
 spring:
@@ -20,7 +20,7 @@ spring:
 
 # logging config
 logging:
-  path: logs
+  path: ../logs
   file:
     max-history: 15
     max-size: 20MB
@@ -38,3 +38,5 @@ summer:
     token-claim: id
   redis-config:
     expired-minutes: 0
+  upload-config:
+    upload-path: /usr/local/cove/uploads
