@@ -7,6 +7,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" type="text/css" href="/asset/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/asset/uppy/uppy.min.css">
+    <link rel="stylesheet" type="text/css" href="/asset/photoviewer/photoviewer.min.css">
     <link rel="stylesheet" type="text/css" href="/asset/style.css">
     <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.14&key=6b87d1d3817e5b1c59b8a646300c4b25"></script>
     <title>发现世界</title>
@@ -40,6 +41,7 @@
     <script src="/asset/uppy/uppy.min.js"></script>
     <script src="/asset/uppy/uppy.zh_CN.min.js"></script>
     <script src="/asset/utils/coordtransform.js"></script>
+    <script src="/asset/photoviewer/photoviewer.js"></script>
 
     <script>
         AMap.plugin('AMap.ToolBar', function() {
@@ -130,7 +132,6 @@
 
         var stories = [];
         var photos = [];
-
         // 获取故事
         function loadStory() {
             let bounds = loadMapBounds();
@@ -179,7 +180,8 @@
                                     offset: new AMap.Pixel(12, -24)
                                 });
 
-                                info.open(map, [item.longitude, item.latitude]);
+                                // info.open(map, [item.longitude, item.latitude]);
+                                new PhotoViewer(photos, {index:0});
                             });
                         }
                     });
