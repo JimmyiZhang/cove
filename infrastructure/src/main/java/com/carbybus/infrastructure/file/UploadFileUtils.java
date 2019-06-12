@@ -8,10 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -104,8 +101,6 @@ public class UploadFileUtils {
     }
 
 
-
-
     /**
      * 获取文件
      *
@@ -114,14 +109,25 @@ public class UploadFileUtils {
      * @author jimmy.zhang
      * @date 2019-05-31
      */
-    public static Resource loadFile(String rootPath, String fileName) {
+    public static byte[] loadFile(String rootPath, String fileName) {
         Path filePath = Paths.get(rootPath).toAbsolutePath().resolve(fileName);
         try {
-            Resource resource = new UrlResource(filePath.toUri());
-            return resource;
-        } catch (MalformedURLException ex) {
+            FileInputStream fileStream = new FileInputStream(filePath.toFile());
+            byte[] fileByte = new byte[fileStream.available()];
+            fileStream.read(fileByte, 0, fileStream.available());
+
+            ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+            Thumbnails.of(fileStream)
+                    .size(800, 800)
+                    .toOutputStream(outStream);
+
+            return outStream.toByteArray();
+        } catch (FileNotFoundException ex) {
             log.error(FileError.NOT_FOUND.toString(), ex);
             throw new BusinessException(FileError.NOT_FOUND);
+        } catch (IOException ex) {
+            log.error(FileError.READ_ERROR.toString(), ex);
+            throw new BusinessException(FileError.READ_ERROR);
         }
     }
 }

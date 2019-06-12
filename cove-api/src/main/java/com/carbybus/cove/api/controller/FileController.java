@@ -47,14 +47,10 @@ public class FileController extends BaseController {
     }
 
     @RequestMapping(value = "download", method = RequestMethod.GET)
-    public ResponseEntity download(@RequestParam("name") String name) {
-        Resource resource = UploadFileUtils.loadFile(uploadConfig.getUploadPath(), name);
-
+    public byte[] download(@RequestParam("name") String name) {
         MediaType contentType = FileUtils.getMediaType(name);
-        String headerValue = String.format("attachment; filename=\"%s\"", resource.getFilename());
-        return ResponseEntity.ok()
-                .contentType(contentType)
-                //.header(HttpHeaders.CONTENT_DISPOSITION, headerValue)
-                .body(resource);
+        this.response.setHeader("Content-Type", contentType.getType());
+
+        return UploadFileUtils.loadFile(uploadConfig.getUploadPath(), name);
     }
 }
