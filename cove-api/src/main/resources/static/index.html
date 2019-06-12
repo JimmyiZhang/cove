@@ -22,7 +22,7 @@
         </a>
         <ul class="navbar-nav right">
             <li class="nav-item">
-                <a class="nav-link" href="javascript:openUpload();">上传</a>
+                <a class="nav-link active" href="javascript:openUpload();">上传</a>
             </li>
         </ul>
     </nav>
@@ -118,9 +118,10 @@
         uppy.on("complete", (result) => {
             console.log('上传完成!');
             if(result.successful[0].response.body.code > 0){
-                alert(result.successful[0].response.body);
+                uppy.info(result.successful[0].response.body.message);
+            } else {
+                document.getElementById("markUpload").style.display = "none";
             }
-            document.getElementById("markUpload").style.display = "none";
         });
 
         // 打开上传
@@ -182,7 +183,7 @@
                                 });
 
                                 // info.open(map, [item.longitude, item.latitude]);
-                                new PhotoViewer(photos, {index:0});
+                                new PhotoViewer(photos, {index:this.id});
                             });
                         }
                     });
