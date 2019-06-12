@@ -9,41 +9,42 @@
     <link rel="stylesheet" type="text/css" href="/asset/uppy/uppy.min.css">
     <link rel="stylesheet" type="text/css" href="/asset/photoviewer/photoviewer.min.css">
     <link rel="stylesheet" type="text/css" href="/asset/style.css">
-    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.14&key=6b87d1d3817e5b1c59b8a646300c4b25"></script>
+    <script type="text/javascript"
+            src="http://webapi.amap.com/maps?v=1.4.14&key=6b87d1d3817e5b1c59b8a646300c4b25"></script>
     <title>发现世界</title>
 </head>
 
 <body>
-    <header>
-        <nav class="navbar navbar-expand-md navbar-dark color-bg-first">
-            <a class="navbar-brand" href="#">
-                <img src="/asset/img/logo_40_40.png" />发现世界
-            </a>
-            <ul class="navbar-nav right">
-                <li class="nav-item">
-                    <a class="nav-link" href="javascript:openUpload();">上传</a>
-                </li>
-            </ul>
-        </nav>
-    </header>
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark color-bg-first">
+        <a class="navbar-brand" href="#">
+            <img src="/asset/img/logo_40_40.png"/>发现世界
+        </a>
+        <ul class="navbar-nav right">
+            <li class="nav-item">
+                <a class="nav-link" href="javascript:openUpload();">上传</a>
+            </li>
+        </ul>
+    </nav>
+</header>
 
-    <main role="main">
-        <div id="container"></div>
-    </main>
+<main role="main">
+    <div id="container"></div>
+</main>
 
-    <div class="mark" id="markUpload" style="display: none">
-        <div class="card-body" id="fileUpload">
-        </div>
-        <button class="btn text-right" onclick="closeUpload()">关闭</button>
+<div class="mark" id="markUpload" style="display: none">
+    <div class="card-body" id="fileUpload">
     </div>
+    <button class="btn text-right" onclick="closeUpload()">关闭</button>
+</div>
 
-    <script src="/asset/utils/fetch.js" type="module"></script>
-    <script src="/asset/uppy/uppy.min.js"></script>
-    <script src="/asset/uppy/uppy.zh_CN.min.js"></script>
-    <script src="/asset/utils/coordtransform.js"></script>
-    <script src="/asset/photoviewer/photoviewer.js"></script>
+<script src="/asset/utils/fetch.js" type="module"></script>
+<script src="/asset/uppy/uppy.min.js"></script>
+<script src="/asset/uppy/uppy.zh_CN.min.js"></script>
+<script src="/asset/utils/coordtransform.js"></script>
+<script src="/asset/photoviewer/photoviewer.js"></script>
 
-    <script>
+<script>
         AMap.plugin('AMap.ToolBar', function() {
             var toolbar = new AMap.ToolBar();
             map.addControl(toolbar)
@@ -155,7 +156,7 @@
                             photos.push({src:story.url,title:story.name});
 
                             var dot = story.url.lastIndexOf('.');
-                            story.icon = "uploads/"+story.url.substring(0,dot)+"_t"+story.url.substring(dot);
+                            story.icon = story.url.substring(0,dot)+"_t"+story.url.substring(dot);
                             // 坐标转换
                             var coordinate = coordtransform.wgs84togcj02(story.longitude, story.latitude);
                             story.longitude = coordinate[0];
@@ -189,7 +190,8 @@
         }
 
         map.on('moveend', loadStory);
-    </script>
+
+</script>
 
 </body>
 
