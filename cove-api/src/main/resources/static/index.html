@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" type="text/css" href="/asset/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/asset/style.css">
     <link rel="stylesheet" type="text/css" href="/asset/uppy/uppy.min.css">
@@ -36,6 +37,7 @@
     </div>
 
     <script src="/asset/http/fetch.js" type="module"></script>
+    <script src="/asset/utils/coordtransform.js"></script>
     <script src="/asset/uppy/uppy.min.js"></script>
     <script src="/asset/uppy/uppy.zh_CN.min.js"></script>
 
@@ -137,19 +139,23 @@
                 })
                 .then(function(response) {
                     response.json().then(function(json) {
+                        // 移除所有覆盖物
+                        map.clearMap();
                         var stories = json.data;
                         for (var i = 0; i < stories.length; i++) {
                             var story = stories[i];
                             story.url = story.url.replace('\\', '/');
                             var dot = story.url.lastIndexOf('.');
                             story.icon = story.url.substring(0,dot)+"_t"+story.url.substring(dot);
+                            // 坐标转换
+                            var coordinate = coordtransform.wgs84togcj02(story.longitude, story.latitude);
 
                             var mrkContent = `<div class="marker"><img class="orange" src="file/download?name=${story.icon}" /></div>`;
                             var marker = new AMap.Marker({
                                 content: mrkContent,
                                 map: map,
                                 title: story.name,
-                                position: new AMap.LngLat(story.longitude, story.latitude),
+                                position: new AMap.LngLat(coordinate[0], coordinate[1]),
                             });
                             marker.id = i;
                             marker.on('click', function() {
@@ -162,7 +168,6 @@
                                     anchor: 'bottom-center',
                                     offset: new AMap.Pixel(12, -24)
                                 });
-
 
                                 info.open(map, [item.longitude, item.latitude]);
                             });

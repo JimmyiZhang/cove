@@ -1,6 +1,7 @@
 /**
  * Created by Wandergis on 2015/7/8.
  * 提供了百度坐标（BD09）、国测局坐标（火星坐标，GCJ02）、和WGS84坐标系之间的转换
+ * http://wandergis.com/coordtransform/
  */
 //UMD魔法代码
 // if the module has no dependencies, the above pattern can be simplified to
