@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" type="text/css" href="/asset/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/asset/style.css">
     <link rel="stylesheet" type="text/css" href="/asset/uppy/uppy.min.css">
+    <link rel="stylesheet" type="text/css" href="/asset/style.css">
     <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.14&key=6b87d1d3817e5b1c59b8a646300c4b25"></script>
     <title>发现世界</title>
 </head>
@@ -36,10 +36,10 @@
         <button class="btn text-right" onclick="closeUpload()">关闭</button>
     </div>
 
-    <script src="/asset/http/fetch.js" type="module"></script>
-    <script src="/asset/utils/coordtransform.js"></script>
+    <script src="/asset/utils/fetch.js" type="module"></script>
     <script src="/asset/uppy/uppy.min.js"></script>
     <script src="/asset/uppy/uppy.zh_CN.min.js"></script>
+    <script src="/asset/utils/coordtransform.js"></script>
 
     <script>
         AMap.plugin('AMap.ToolBar', function() {
@@ -71,11 +71,14 @@
         // 获取范围
         function loadMapBounds() {
             var bounds = map.getBounds();
+            var min = coordtransform.gcj02towgs84(bounds.southwest.lng, bounds.southwest.lat);
+            var max = coordtransform.gcj02towgs84(bounds.northeast.lng, bounds.northeast.lat);
+
             return {
-                minLatitude: bounds.southwest.lat,
-                minLongitude: bounds.southwest.lng,
-                maxLatitude: bounds.northeast.lat,
-                maxLongitude: bounds.northeast.lng,
+                minLatitude: min[1],
+                minLongitude: min[0],
+                maxLatitude: max[1],
+                maxLongitude: max[0],
             }
         }
 
@@ -126,6 +129,8 @@
         }
 
         var stories = [];
+        var photos = [];
+
         // 获取故事
         function loadStory() {
             let bounds = loadMapBounds();
@@ -141,27 +146,32 @@
                     response.json().then(function(json) {
                         // 移除所有覆盖物
                         map.clearMap();
-                        var stories = json.data;
+                        stories = json.data;
+                        photos = [];
                         for (var i = 0; i < stories.length; i++) {
                             var story = stories[i];
-                            story.url = story.url.replace('\\', '/');
+                            story.url = "uploads/"+story.url.replace('\\', '/');
+                            photos.push({src:story.url,title:story.name});
+
                             var dot = story.url.lastIndexOf('.');
-                            story.icon = story.url.substring(0,dot)+"_t"+story.url.substring(dot);
+                            story.icon = "uploads/"+story.url.substring(0,dot)+"_t"+story.url.substring(dot);
                             // 坐标转换
                             var coordinate = coordtransform.wgs84togcj02(story.longitude, story.latitude);
+                            story.longitude = coordinate[0];
+                            story.latitude = coordinate[1];
 
-                            var mrkContent = `<div class="marker"><img class="orange" src="file/download?name=${story.icon}" /></div>`;
+                            var mrkContent = `<div class="marker"><img class="orange" src="${story.icon}" /></div>`;
                             var marker = new AMap.Marker({
                                 content: mrkContent,
                                 map: map,
                                 title: story.name,
-                                position: new AMap.LngLat(coordinate[0], coordinate[1]),
+                                position: new AMap.LngLat(story.longitude, story.latitude),
                             });
                             marker.id = i;
                             marker.on('click', function() {
                                 var item = stories[this.id];
                                 // 信息窗体的内容
-                                var content = `<div><img style='width:200px;height:100%;' src="file/download?name=${item.url}"><br><div>${item.description}</div></div>`;
+                                var content = `<div><img style='width:200px;height:100%;' src="${item.url}"><br><div>${item.description}</div></div>`;
                                 // 创建 infoWindow 实例
                                 var info = new AMap.InfoWindow({
                                     content: content,

@@ -15,12 +15,6 @@
     <name>api</name>
     <description>应用接口层</description>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-    </properties>
-
     <dependencies>
         <!-- spring-boot -->
         <dependency>
@@ -88,7 +82,6 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>1.4.197</version>
         </dependency>
         <!-- h2 driver-->
 

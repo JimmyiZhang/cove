@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * jwt配置
+ * 设置jwt相关参数
  *
  * @author jimmy.zhang
  * @ 2019-04-28
