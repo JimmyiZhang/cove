@@ -9,7 +9,8 @@ package com.carbybus.infrastructure.exception;
 public enum FileError implements BusinessError {
     NOT_FOUND(61, "文件未找到"),
     CREATE_ERROR(62, "创建失败"),
-    READ_ERROR(63, "读取失败");
+    READ_ERROR(63, "读取失败"),
+    WRITE_ERROR(64, "写失败");
 
     /**
      * 枚举值

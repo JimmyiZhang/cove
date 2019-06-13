@@ -5,11 +5,8 @@ import com.carbybus.infrastructure.exception.FileError;
 import net.coobird.thumbnailator.Thumbnails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 
 import java.io.*;
-import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -78,17 +75,6 @@ public class UploadFileUtils {
         } catch (IOException ex) {
             log.error(FileError.CREATE_ERROR.toString(), ex);
             throw new BusinessException(FileError.CREATE_ERROR);
-        } finally {
-            try {
-                if (oriStream != null) {
-                    oriStream.close();
-                }
-                if (thumStream != null) {
-                    thumStream.close();
-                }
-            } catch (IOException ex) {
-                log.warn(FileError.CREATE_ERROR.toString(), ex);
-            }
         }
 
         UploadFileResult result = new UploadFileResult();
@@ -99,7 +85,6 @@ public class UploadFileUtils {
         result.setUrl(realPath);
         return result;
     }
-
 
     /**
      * 获取文件
@@ -112,12 +97,8 @@ public class UploadFileUtils {
     public static byte[] loadFile(String rootPath, String fileName) {
         Path filePath = Paths.get(rootPath).toAbsolutePath().resolve(fileName);
         try {
-            FileInputStream fileStream = new FileInputStream(filePath.toFile());
-            byte[] fileByte = new byte[fileStream.available()];
-            fileStream.read(fileByte, 0, fileStream.available());
-
             ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-            Thumbnails.of(fileStream)
+            Thumbnails.of(filePath.toString())
                     .size(800, 800)
                     .toOutputStream(outStream);
 

@@ -9,9 +9,8 @@ import com.carbybus.infrastructure.file.UploadFileUtils;
 import io.swagger.annotations.Api;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * 文件控制器
@@ -47,10 +47,16 @@ public class FileController extends BaseController {
     }
 
     @RequestMapping(value = "download", method = RequestMethod.GET)
-    public byte[] download(@RequestParam("name") String name) {
+    public void download(@RequestParam("name") String name) throws IOException {
         MediaType contentType = FileUtils.getMediaType(name);
-        this.response.setHeader("Content-Type", contentType.getType());
+        // 设置内容类型为图片格式
+        this.response.setContentType(contentType.toString());
+        // 设置过期时间30天，30*24*60=43200
+        this.response.setHeader(HttpHeaders.CACHE_CONTROL,"max-age=43200");
 
-        return UploadFileUtils.loadFile(uploadConfig.getUploadPath(), name);
+        OutputStream body = response.getOutputStream();
+        byte[] byteFile = UploadFileUtils.loadFile(uploadConfig.getUploadPath(), name);
+        body.write(byteFile);
+        body.flush();
     }
 }

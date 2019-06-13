@@ -153,11 +153,12 @@
                         photos = [];
                         for (var i = 0; i < stories.length; i++) {
                             var story = stories[i];
-                            story.url = "uploads/"+story.url.replace('\\', '/');
+                            var dot = story.url.lastIndexOf('.');
+                            story.icon = "uploads/"+story.url.substring(0,dot)+"_t"+story.url.substring(dot);
+
+                            story.url = "file/download?name="+story.url.replace('\\', '/');
                             photos.push({src:story.url,title:story.name});
 
-                            var dot = story.url.lastIndexOf('.');
-                            story.icon = story.url.substring(0,dot)+"_t"+story.url.substring(dot);
                             // 坐标转换
                             var coordinate = coordtransform.wgs84togcj02(story.longitude, story.latitude);
                             story.longitude = coordinate[0];
