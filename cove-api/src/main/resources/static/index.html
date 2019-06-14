@@ -185,6 +185,22 @@
                                 image.src = item.url;
                                 var viewer = new Viewer(image, {
                                   navbar: false,
+                                  toolbar: {
+                                    zoomIn: 4,
+                                    zoomOut: 4,
+                                    oneToOne: 4,
+                                    reset: 4,
+                                    prev: 0,
+                                    play: {
+                                      show: 4,
+                                      size: 'large',
+                                    },
+                                    next: 0,
+                                    rotateLeft: 4,
+                                    rotateRight: 4,
+                                    flipHorizontal: 4,
+                                    flipVertical: 4,
+                                  },
                                   hidden: function () {
                                     viewer.destroy();
                                   },
