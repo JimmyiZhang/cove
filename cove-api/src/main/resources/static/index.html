@@ -7,7 +7,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" type="text/css" href="/asset/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/asset/uppy/uppy.min.css">
-    <link rel="stylesheet" type="text/css" href="/asset/photoviewer/photoviewer.min.css">
+    <link rel="stylesheet" type="text/css" href="/asset/viewer/viewer.min.css">
     <link rel="stylesheet" type="text/css" href="/asset/style.css">
     <script type="text/javascript"
             src="http://webapi.amap.com/maps?v=1.4.14&key=6b87d1d3817e5b1c59b8a646300c4b25"></script>
@@ -42,7 +42,7 @@
 <script src="/asset/uppy/uppy.min.js"></script>
 <script src="/asset/uppy/uppy.zh_CN.min.js"></script>
 <script src="/asset/utils/coordtransform.js"></script>
-<script src="/asset/photoviewer/photoviewer.js"></script>
+<script src="/asset/viewer/viewer.min.js"></script>
 
 <script>
         AMap.plugin('AMap.ToolBar', function() {
@@ -133,7 +133,6 @@
         }
 
         var stories = [];
-        var photos = [];
         // 获取故事
         function loadStory() {
             let bounds = loadMapBounds();
@@ -155,9 +154,7 @@
                             var story = stories[i];
                             var dot = story.url.lastIndexOf('.');
                             story.icon = "uploads/"+story.url.substring(0,dot)+"_t"+story.url.substring(dot);
-
                             story.url = "file/download?name="+story.url.replace('\\', '/');
-                            photos.push({src:story.url,title:story.name});
 
                             // 坐标转换
                             var coordinate = coordtransform.wgs84togcj02(story.longitude, story.latitude);
@@ -184,7 +181,15 @@
                                 });
 
                                 // info.open(map, [item.longitude, item.latitude]);
-                                new PhotoViewer(photos, {index:this.id});
+                                var image = new Image();
+                                image.src = item.url;
+                                var viewer = new Viewer(image, {
+                                  navbar: false,
+                                  hidden: function () {
+                                    viewer.destroy();
+                                  },
+                                });
+                                viewer.show();
                             });
                         }
                     });
