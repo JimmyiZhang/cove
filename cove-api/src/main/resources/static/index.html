@@ -16,15 +16,31 @@
 
 <body>
 <header>
-    <nav class="navbar navbar-expand-md navbar-dark color-bg-first">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top  color-bg-first">
         <a class="navbar-brand" href="#">
             <img src="/asset/img/logo_40_40.png"/>发现世界
         </a>
-        <ul class="navbar-nav right">
-            <li class="nav-item">
-                <a class="nav-link active" href="javascript:openUpload();">上传</a>
-            </li>
-        </ul>
+        <button class="navbar-toggler" type="button" onclick="toggleNavbar()">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">首页</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">附近</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav right">
+                <li class="nav-item">
+                    <a class="nav-link active" href="javascript:openUpload();">上传</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">登录</a>
+                </li>
+            </ul>
+        </div>
     </nav>
 </header>
 
@@ -51,7 +67,10 @@
             zoom: 11,
         });
         AMap.plugin('AMap.ToolBar', function() {
-            var toolbar = new AMap.ToolBar();
+            var toolbar = new AMap.ToolBar({
+                offset:new AMap.Pixel(0,80),
+                position:'LT'
+            });
             map.addControl(toolbar)
         });
         AMap.plugin('AMap.Geolocation', function() {
@@ -132,6 +151,11 @@
         }
         function closeUpload(){
             document.getElementById("markUpload").style.display = "none";
+        }
+        function toggleNavbar(){
+            var collapse = document.getElementById("navbarCollapse").style.display;
+            var collapse = (collapse=='block'?'none':'block');
+            document.getElementById("navbarCollapse").style.display = collapse;
         }
 
         var allStory = [];
