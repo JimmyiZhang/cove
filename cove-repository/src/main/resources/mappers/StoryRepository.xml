@@ -39,6 +39,7 @@
             WHERE latitude &gt; #{around.minLatitude} and latitude &lt; #{around.maxLatitude}
             and longitude &gt; #{around.minLongitude} and longitude &lt; #{around.maxLongitude}
         </if>
+        ORDER BY id DESC
         LIMIT 0,#{size}
     </select>
 

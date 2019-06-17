@@ -39,12 +39,17 @@
 </div>
 
 <script src="/asset/utils/fetch.js" type="module"></script>
+<script src="/asset/utils/lodash.min.js"></script>
 <script src="/asset/uppy/uppy.min.js"></script>
 <script src="/asset/uppy/uppy.zh_CN.min.js"></script>
 <script src="/asset/utils/coordtransform.js"></script>
 <script src="/asset/viewer/viewer.min.js"></script>
 
 <script>
+        var map = new AMap.Map('container', {
+            resizeEnable: true,
+            zoom: 11,
+        });
         AMap.plugin('AMap.ToolBar', function() {
             var toolbar = new AMap.ToolBar();
             map.addControl(toolbar)
@@ -53,7 +58,7 @@
             geolocation = new AMap.Geolocation({
                 enableHighAccuracy: true,
                 timeout: 10000,
-                showMarker: false,
+                showMarker: true,
                 showCircle: false,
             });
             geolocation.getCurrentPosition();
@@ -66,10 +71,7 @@
             });
         });
 
-        var map = new AMap.Map('container', {
-            resizeEnable: true,
-            zoom: 11,
-        });
+
 
         // 获取范围
         function loadMapBounds() {
@@ -132,7 +134,7 @@
             document.getElementById("markUpload").style.display = "none";
         }
 
-        var stories = [];
+        var allStory = [];
         // 获取故事
         function loadStory() {
             let bounds = loadMapBounds();
@@ -147,11 +149,15 @@
                 .then(function(response) {
                     response.json().then(function(json) {
                         // 移除所有覆盖物
-                        map.clearMap();
-                        stories = json.data;
+                        var stories = json.data;
                         photos = [];
-                        for (var i = 0; i < stories.length; i++) {
+                        for (var i = stories.length-1; i >= 0; i--) {
                             var story = stories[i];
+                            // 查找是否存在
+                            if(_.find(allStory, function(s){return s.id==story.id})){
+                                continue;
+                            }
+
                             var dot = story.url.lastIndexOf('.');
                             story.icon = "uploads/"+story.url.substring(0,dot)+"_t"+story.url.substring(dot);
                             story.url = "file/download?name="+story.url.replace('\\', '/');
@@ -160,8 +166,10 @@
                             var coordinate = coordtransform.wgs84togcj02(story.longitude, story.latitude);
                             story.longitude = coordinate[0];
                             story.latitude = coordinate[1];
+                            allStory.push(story);
 
-                            var mrkContent = `<div class="marker"><img class="orange" src="${story.icon}" /></div>`;
+                            var className = i<10?"prior":"usual";
+                            var mrkContent = `<div class="marker"><img class="${className}" src="${story.icon}" /></div>`;
                             var marker = new AMap.Marker({
                                 content: mrkContent,
                                 map: map,
@@ -213,6 +221,7 @@
         }
 
         map.on('moveend', loadStory);
+
 
 </script>
 

@@ -62,29 +62,20 @@
     height: 40px;
 }
 
-.marker img.orange {
+.marker img.usual {
     width: 100%;
     height: auto;
     padding: 2px;
-    background-color: orange;
+    background-color: #fff;
     border-radius: 50%;
     box-shadow: 2px 3px 3px;
 }
 
-.marker img.yellow {
+.marker img.prior {
     width: 100%;
     height: auto;
     padding: 2px;
-    background-color: yellow;
-    border-radius: 50%;
-    box-shadow: 2px 3px 3px;
-}
-
-.marker img.green {
-    width: 100%;
-    height: auto;
-    padding: 2px;
-    background-color: green;
+    background-color: #f00;
     border-radius: 50%;
     box-shadow: 2px 3px 3px;
 }
