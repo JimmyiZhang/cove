@@ -1,15 +1,18 @@
 package com.carbybus.infrastructure.exception;
 
 /**
- * 验证错误
- * 20-29
+ * 网络异常
+ * 包括邮件
+ *
  * @author jimmy.zhang
- * @date 2019-03-29
+ * @date 2019-05-31
  */
-public enum ConverterError implements BusinessError {
-    INVALID_ORIGIN(120, "无效的来源数据"),
-    INVALID_TARGET(121, "无效的目标数据"),
-    INVALID_CLASS_TYPE(122, "无效的类型类别");
+public enum NetworkError implements BusinessError {
+    MAIL_CONFIG_ERROR(701, "邮件配置错误"),
+    MAIL_TO_ERROR(702, "无效的收件人"),
+    MAIL_FROM_ERROR(703, "无效的发件人"),
+    MAIL_CONTENT_ERROR(704, "邮件内容无效"),
+    MAIL_SEND_ERROR(705, "邮件发送失败");
 
     /**
      * 枚举值
@@ -28,7 +31,7 @@ public enum ConverterError implements BusinessError {
      * @author: jimmy.zhang
      * @date: 2019-03-08
      */
-    ConverterError(final int code, final String message) {
+    NetworkError(final int code, final String message) {
         this.code = code;
         this.message = message;
     }
@@ -43,4 +46,3 @@ public enum ConverterError implements BusinessError {
         return message;
     }
 }
-

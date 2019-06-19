@@ -45,7 +45,7 @@ public class Account extends DefaultEntity {
         String pass = generatePassword(password, salt);
         account.setCreateTime(LocalDateTime.now())
                 .setName(name)
-                .setStatus(UserStatus.ACTIVE)
+                .setStatus(UserStatus.UNACTIVED)
                 .setSalt(salt)
                 .setSecret(pass);
 

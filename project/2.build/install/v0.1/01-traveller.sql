@@ -1,0 +1,2 @@
+ALTER TABLE traveller ADD status VARCHAR(256) NOT NULL DEFAULT('');
+ALTER TABLE traveller DROP COLUMN signature;

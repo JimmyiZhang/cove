@@ -25,7 +25,7 @@ import javax.validation.Valid;
 @Api(tags = {"用户"})
 @Validated
 @RestController
-@RequestMapping(value = "/users", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class UserController extends BaseController {
     private TravellerApplication travellerApp;
 

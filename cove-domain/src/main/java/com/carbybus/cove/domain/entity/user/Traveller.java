@@ -2,6 +2,7 @@ package com.carbybus.cove.domain.entity.user;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.carbybus.infrastructure.component.impl.DefaultEntity;
+import com.carbybus.infrastructure.utils.StringConstants;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -21,7 +22,7 @@ import java.time.LocalDateTime;
 public class Traveller extends DefaultEntity {
     private String name;
     private String avatar;
-    private String signature;
+    private String status;
     private UserGender gender;
     private LocalDateTime createTime;
 
@@ -37,6 +38,8 @@ public class Traveller extends DefaultEntity {
         Traveller traveller = new Traveller();
         traveller.valueOf();
         traveller.setCreateTime(LocalDateTime.now())
+                .setStatus(StringConstants.EMPTY)
+                .setGender(UserGender.NONE)
                 .setName(name);
 
         return traveller;

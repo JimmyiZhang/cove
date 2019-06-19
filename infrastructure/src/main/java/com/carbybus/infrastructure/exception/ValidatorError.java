@@ -11,12 +11,12 @@ public enum ValidatorError implements BusinessError {
     /**
      * 规则
      */
-    CONSTRAINT_VIOLATION(10, "无效的验证规则"),
+    CONSTRAINT_VIOLATION(100, "无效的验证规则"),
 
     /**
      * 参数
      */
-    METHOD_ARGUMENT(11, "无效的参数");
+    METHOD_ARGUMENT(101, "无效的参数");
 
     /**
      * 枚举值
