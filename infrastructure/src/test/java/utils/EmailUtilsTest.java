@@ -12,20 +12,14 @@ import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
-@RunWith(MockitoJUnitRunner.class)
 public class EmailUtilsTest {
-    @Mock
-    private UniteEmailConfig config = new UniteEmailConfig();
-
     @Autowired
     private EmailUtils utils;
-
-    @Before
-    public void before() {
-        utils = Mockito.mock(EmailUtils.class);
-    }
 
     @Test
     public void send() {

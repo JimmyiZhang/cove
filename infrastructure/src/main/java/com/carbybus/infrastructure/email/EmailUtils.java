@@ -7,6 +7,7 @@ import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.mail.internet.InternetAddress;
 
@@ -17,6 +18,7 @@ import javax.mail.internet.InternetAddress;
  * @date 2019-06-19
  */
 @Slf4j
+@Component
 public class EmailUtils {
     @Autowired
     private UniteEmailConfig emailConfig;
@@ -24,7 +26,7 @@ public class EmailUtils {
     private Email email;
     private ActionResult result;
 
-    private EmailUtils() {
+    public EmailUtils() {
         emailConfig.check();
 
         this.email = new SimpleEmail();
@@ -34,11 +36,6 @@ public class EmailUtils {
         email.setSSLOnConnect(emailConfig.getSslConnect());
 
         result = ActionResult.OK;
-    }
-
-    public static EmailUtils create() {
-        EmailUtils utils = new EmailUtils();
-        return utils;
     }
 
     public EmailUtils to(final String... emails) {
