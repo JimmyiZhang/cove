@@ -32,7 +32,7 @@ mybatis-plus:
   configuration:
     default-enum-type-handler: com.baomidou.mybatisplus.extension.handlers.EnumTypeHandler
   global-config:
-    super-mapper-class: com.carbybus.infrastructure.component.BaseRepository
+    super-mapper-class: BaseRepository
 
 # global config
 summer:

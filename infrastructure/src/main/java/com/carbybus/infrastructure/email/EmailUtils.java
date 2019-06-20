@@ -26,7 +26,7 @@ public class EmailUtils {
     private Email email;
     private ActionResult result;
 
-    public EmailUtils() {
+    private EmailUtils() {
         emailConfig.check();
 
         this.email = new SimpleEmail();
@@ -36,6 +36,10 @@ public class EmailUtils {
         email.setSSLOnConnect(emailConfig.getSslConnect());
 
         result = ActionResult.OK;
+    }
+
+    public static EmailUtils create(){
+        return new EmailUtils();
     }
 
     public EmailUtils to(final String... emails) {

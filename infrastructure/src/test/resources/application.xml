@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="email" class="com.carbybus.infrastructure.email.UniteEmailConfig">
+        <property name="hostName" value="smtp.163.com"></property>
+        <property name="hostPort" value="465"></property>
+        <property name="sslConnect" value="true"></property>
+        <property name="fromUser" value="jimmy.zhang"></property>
+        <property name="userName" value="jimmymzhang@163.com"></property>
+        <property name="userPassword" value="43z58j70m36~"></property>
+    </bean>
+</beans>

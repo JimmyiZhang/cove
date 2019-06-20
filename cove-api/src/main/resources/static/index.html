@@ -20,10 +20,16 @@
         <a class="navbar-brand" href="#">
             <img src="/asset/img/logo_40_40.png"/>发现世界
         </a>
-        <button class="navbar-toggler" type="button" onclick="toggleNavbar()">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-toggler">
+
+            <ul class="navbar-nav right">
+                <li class="nav-item">
+                    <a class="nav-link active" href="javascript:openUpload();">上传</a>
+                </li>
+
+            </ul>
+        </div>
+        <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="#">首页</a>
@@ -49,13 +55,17 @@
 </main>
 
 <div class="mark" id="markUpload" style="display: none">
-    <div class="card-body" id="fileUpload">
+    <div class="mark-body" id="fileUpload">
     </div>
-    <button class="btn text-right" onclick="closeUpload()">关闭</button>
+    <div class="mark-footer">
+        <button class="btn btn-sm text-right" onclick="clearUpload()">重置</button>
+        <button class="btn btn-sm text-right" onclick="closeUpload()">关闭</button>
+    </div>
 </div>
 
 <script src="/asset/utils/fetch.js" type="module"></script>
 <script src="/asset/utils/lodash.min.js"></script>
+<script src="/asset/utils/moment.min.js"></script>
 <script src="/asset/uppy/uppy.min.js"></script>
 <script src="/asset/uppy/uppy.zh_CN.min.js"></script>
 <script src="/asset/utils/coordtransform.js"></script>
@@ -141,7 +151,8 @@
             if(result.successful[0].response.body.code > 0){
                 uppy.info(result.successful[0].response.body.message);
             } else {
-                document.getElementById("markUpload").style.display = "none";
+                clearUpload();
+                closeUpload();
             }
         });
 
@@ -152,10 +163,8 @@
         function closeUpload(){
             document.getElementById("markUpload").style.display = "none";
         }
-        function toggleNavbar(){
-            var collapse = document.getElementById("navbarCollapse").style.display;
-            var collapse = (collapse=='block'?'none':'block');
-            document.getElementById("navbarCollapse").style.display = collapse;
+        function clearUpload(){
+            uppy.reset();
         }
 
         var allStory = [];
@@ -175,8 +184,10 @@
                         // 移除所有覆盖物
                         var stories = json.data;
                         photos = [];
+                        var now = moment().subtract(1,'d');
                         for (var i = stories.length-1; i >= 0; i--) {
                             var story = stories[i];
+
                             // 查找是否存在
                             if(_.find(allStory, function(s){return s.id==story.id})){
                                 continue;
@@ -192,7 +203,12 @@
                             story.latitude = coordinate[1];
                             allStory.push(story);
 
-                            var className = i<10?"prior":"usual";
+                            // 优先显示
+                            var className = 'usual';
+                            if(moment(story.takeTime, "YYYY-MM-DD HH:mm:ss").isAfter(now)){
+                                className = 'prior';
+                            }
+
                             var mrkContent = `<div class="marker"><img class="${className}" src="${story.icon}" /></div>`;
                             var marker = new AMap.Marker({
                                 content: mrkContent,
@@ -245,8 +261,6 @@
         }
 
         map.on('moveend', loadStory);
-
-
 </script>
 
 </body>

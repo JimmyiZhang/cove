@@ -1,9 +1,5 @@
 package com.carbybus.cove.domain.view;
 
-import com.carbybus.cove.domain.entity.coordinate.Coordinate;
-import com.carbybus.cove.domain.entity.journey.Story;
-import com.carbybus.cove.domain.principal.UserPrincipal;
-import com.carbybus.infrastructure.converter.DefaultConverter;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
