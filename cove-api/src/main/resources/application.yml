@@ -69,7 +69,7 @@ summer:
     host-name: smtp.163.com
     host-port: 465
     ssl-connect: true
-    from-user: jimmymzhang
+    from-user: jimmymzhang@163.com
     user-name: jimmymzhang@163.com
     user-password: 43z58j70m36~
 
