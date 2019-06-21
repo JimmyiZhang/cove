@@ -3,13 +3,16 @@ package com.carbybus.infrastructure.email;
 import com.carbybus.infrastructure.component.ActionResult;
 import com.carbybus.infrastructure.exception.NetworkError;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.mail.Email;
-import org.apache.commons.mail.EmailException;
-import org.apache.commons.mail.SimpleEmail;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.mail.MailProperties;
+import org.springframework.boot.autoconfigure.mail.MailSenderAutoConfiguration;
+import org.springframework.mail.MailException;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
-import javax.mail.internet.InternetAddress;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 
 /**
  * 发送邮件工具类
@@ -21,39 +24,32 @@ import javax.mail.internet.InternetAddress;
 @Component
 public class EmailUtils {
     @Autowired
-    private UniteEmailConfig emailConfig;
+    private JavaMailSender sender;
 
-    private Email email;
+    @Autowired
+    MailProperties config;
+
     private ActionResult result;
+    private MimeMessage mail;
+    private MimeMessageHelper helper;
 
-    public EmailUtils build(){
-        emailConfig.check();
-
-        this.email = new SimpleEmail();
-        email.setHostName(emailConfig.getHostName());
-        email.setSmtpPort(emailConfig.getHostPort());
-        email.setAuthentication(emailConfig.getUserName(), emailConfig.getUserPassword());
-        email.setSSLOnConnect(emailConfig.getSslConnect());
-
+    public EmailUtils build() {
         result = ActionResult.OK;
-        return this;
-    }
-
-    public EmailUtils to(final String... emails) {
+        mail = sender.createMimeMessage();
         try {
-            this.email.addTo(emails);
-        } catch (EmailException ex) {
-            log.error(NetworkError.MAIL_TO_ERROR.getMessage(), ex);
-            result.fail(NetworkError.MAIL_TO_ERROR);
+            helper = new MimeMessageHelper(mail, true);
+            helper.setFrom(config.getUsername());
+        } catch (MessagingException ex) {
+            log.error(NetworkError.MAIL_SEND_ERROR.getMessage(), ex);
+            result.fail(NetworkError.MAIL_SEND_ERROR);
         }
-
         return this;
     }
 
-    public EmailUtils from(String email) {
+    public EmailUtils to(String... toUsers) {
         try {
-            this.email.setFrom(email);
-        } catch (EmailException ex) {
+            helper.setTo(toUsers);
+        } catch (MessagingException ex) {
             log.error(NetworkError.MAIL_TO_ERROR.getMessage(), ex);
             result.fail(NetworkError.MAIL_TO_ERROR);
         }
@@ -61,29 +57,30 @@ public class EmailUtils {
     }
 
     public EmailUtils subject(String subject) {
-        this.email.setSubject(subject);
+        try {
+            helper.setSubject(subject);
+        } catch (MessagingException ex) {
+            log.error(NetworkError.MAIL_SUBJECT_ERROR.getMessage(), ex);
+            result.fail(NetworkError.MAIL_SUBJECT_ERROR);
+        }
         return this;
     }
 
-    public EmailUtils message(String message) {
+    public EmailUtils text(String text) {
         try {
-            this.email.setMsg(message);
-        } catch (EmailException ex) {
+            helper.setText(text);
+        } catch (MessagingException ex) {
             log.error(NetworkError.MAIL_CONTENT_ERROR.getMessage(), ex);
             result.fail(NetworkError.MAIL_CONTENT_ERROR);
         }
+
         return this;
     }
 
     public ActionResult send() {
         try {
-            InternetAddress fromAddress = this.email.getFromAddress();
-            if (fromAddress == null) {
-                this.email.setFrom(emailConfig.getFromUser());
-            }
-            String messageID = this.email.send();
-            result.succeed(messageID);
-        } catch (EmailException ex) {
+            sender.send(mail);
+        } catch (MailException ex) {
             log.error(NetworkError.MAIL_SEND_ERROR.getMessage(), ex);
             result.fail(NetworkError.MAIL_SEND_ERROR);
         }

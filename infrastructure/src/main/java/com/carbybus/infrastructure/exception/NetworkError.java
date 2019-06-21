@@ -8,9 +8,9 @@ package com.carbybus.infrastructure.exception;
  * @date 2019-05-31
  */
 public enum NetworkError implements BusinessError {
-    MAIL_CONFIG_ERROR(701, "邮件配置错误"),
-    MAIL_TO_ERROR(702, "无效的收件人"),
-    MAIL_FROM_ERROR(703, "无效的发件人"),
+    MAIL_SUBJECT_ERROR(701, "无效的主题"),
+    MAIL_FROM_ERROR(702, "无效的发件人"),
+    MAIL_TO_ERROR(703, "无效的收件人"),
     MAIL_CONTENT_ERROR(704, "邮件内容无效"),
     MAIL_SEND_ERROR(705, "邮件发送失败");
 

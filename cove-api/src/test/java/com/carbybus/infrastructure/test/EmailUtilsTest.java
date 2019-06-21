@@ -22,7 +22,7 @@ public class EmailUtilsTest {
         ActionResult result = utils.build()
                 .to("43587036@qq.com")
                 .subject("test")
-                .message("test")
+                .text("test")
                 .send();
 
         Assert.isTrue(result.isSuccess(), "send email");
