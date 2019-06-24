@@ -33,4 +33,5 @@ public interface TravellerApplication extends BaseApplication<Traveller> {
      * @date 2019-05-14
      */
     ActionResult login(UserLoginInput input);
+
 }

@@ -1,17 +1,21 @@
 package com.carbybus.cove.application.impl;
 
+import com.carbybus.cove.application.MailApplication;
 import com.carbybus.cove.application.TravellerApplication;
 import com.carbybus.cove.domain.entity.user.Account;
+import com.carbybus.cove.domain.entity.user.AccountActivation;
 import com.carbybus.cove.domain.entity.user.Traveller;
 import com.carbybus.cove.domain.exception.AccountError;
 import com.carbybus.cove.domain.exception.TravellerError;
-import com.carbybus.cove.domain.view.UserLoginOutput;
 import com.carbybus.cove.domain.view.UserLoginInput;
+import com.carbybus.cove.domain.view.UserLoginOutput;
 import com.carbybus.cove.domain.view.UserSignupInput;
+import com.carbybus.cove.repository.AccountActivationRepository;
 import com.carbybus.cove.repository.AccountRepository;
 import com.carbybus.cove.repository.TravellerRepository;
 import com.carbybus.infrastructure.component.ActionResult;
 import com.carbybus.infrastructure.component.impl.DefaultApplication;
+import com.carbybus.infrastructure.email.EmailUtils;
 import com.carbybus.infrastructure.jwt.JwtResult;
 import com.carbybus.infrastructure.jwt.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +33,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class TravellerApplicationImpl extends DefaultApplication<TravellerRepository, Traveller> implements TravellerApplication {
     @Autowired
     private JwtUtils jwtUtils;
+    @Autowired
+    private EmailUtils emailUtils;
+    @Autowired
+    private MailApplication mailApp;
 
     @Autowired
     private AccountRepository accountRep;
+    @Autowired
+    private AccountActivationRepository AccountActivationRep;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -52,6 +62,14 @@ public class TravellerApplicationImpl extends DefaultApplication<TravellerReposi
         // 保存数据
         repository.insert(traveller);
         accountRep.insert(account);
+
+        // 保存激活码
+        AccountActivation activation = AccountActivation.create(traveller.getId());
+        AccountActivationRep.insert(activation);
+
+        // 发送邮件
+        mailApp.sendActivateMail(input.getAccount(), activation.getUserCode());
+
         result.succeed();
         return result;
     }

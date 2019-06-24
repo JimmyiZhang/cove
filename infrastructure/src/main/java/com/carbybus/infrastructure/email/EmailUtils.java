@@ -5,7 +5,6 @@ import com.carbybus.infrastructure.exception.NetworkError;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
-import org.springframework.boot.autoconfigure.mail.MailSenderAutoConfiguration;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -69,6 +68,17 @@ public class EmailUtils {
     public EmailUtils text(String text) {
         try {
             helper.setText(text);
+        } catch (MessagingException ex) {
+            log.error(NetworkError.MAIL_CONTENT_ERROR.getMessage(), ex);
+            result.fail(NetworkError.MAIL_CONTENT_ERROR);
+        }
+
+        return this;
+    }
+
+    public EmailUtils html(String text) {
+        try {
+            helper.setText(text, true);
         } catch (MessagingException ex) {
             log.error(NetworkError.MAIL_CONTENT_ERROR.getMessage(), ex);
             result.fail(NetworkError.MAIL_CONTENT_ERROR);

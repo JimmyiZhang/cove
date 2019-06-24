@@ -27,6 +27,7 @@ public class Account extends DefaultEntity {
     private String salt;
     private UserStatus status;
     private LocalDateTime createTime;
+    private LocalDateTime expiredTime;
 
     /**
      * 创建
@@ -43,7 +44,11 @@ public class Account extends DefaultEntity {
 
         String salt = RandomStringUtils.randomAlphanumeric(32);
         String pass = generatePassword(password, salt);
-        account.setCreateTime(LocalDateTime.now())
+
+        LocalDateTime createTime = LocalDateTime.now();
+        LocalDateTime expiredTime = createTime.plusDays(7L);
+        account.setCreateTime(createTime)
+                .setExpiredTime(expiredTime)
                 .setName(name)
                 .setStatus(UserStatus.UNACTIVED)
                 .setSalt(salt)
@@ -62,7 +67,7 @@ public class Account extends DefaultEntity {
      */
     public boolean validate(String password) {
         String pass = generatePassword(password, this.getSalt());
-        return pass.equals(this.getSecret());
+        return pass.equals(this.getSecret()) && this.getExpiredTime().isAfter(LocalDateTime.now());
     }
 
     /**

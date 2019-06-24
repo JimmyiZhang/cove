@@ -78,3 +78,9 @@ summer:
   redis-config:
     expired-minutes: 0
 
+# project config
+autumn:
+  account-activation:
+    active-days: 7
+    active-url: localhost:8080/user/active?code=
+
