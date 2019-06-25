@@ -25,14 +25,15 @@ public class AccountActivation extends DefaultEntity {
     private LocalDateTime createTime;
     private LocalDateTime expiredTime;
 
-    /** 
-    * 创建用户激活实体 
-    * @param  
-    * @return  
-    * @author jimmy.zhang 
-    * @date 2019-06-24 
-    */ 
-    public static AccountActivation create(Long userId){
+    /**
+     * 创建用户激活实体
+     *
+     * @param
+     * @return
+     * @author jimmy.zhang
+     * @date 2019-06-24
+     */
+    public static AccountActivation create(Long userId) {
         AccountActivation ua = new AccountActivation();
         ua.valueOf();
 
@@ -49,5 +50,17 @@ public class AccountActivation extends DefaultEntity {
                 .setUserCode(code);
 
         return ua;
+    }
+
+    /**
+     * 是否有效
+     *
+     * @param
+     * @return
+     * @author jimmy.zhang
+     * @date 2019-06-25
+     */
+    public boolean isValid() {
+        return this.expiredTime.isAfter(LocalDateTime.now());
     }
 }

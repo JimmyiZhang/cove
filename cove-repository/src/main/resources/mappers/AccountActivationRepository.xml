@@ -3,6 +3,6 @@
 <mapper namespace="com.carbybus.cove.repository.AccountActivationRepository">
     <select id="selectByCode" resultType="com.carbybus.cove.domain.entity.user.AccountActivation">
         SELECT id, user_id, user_code, create_time, expired_time FROM account_activation
-        WHERE name = #{name}
+        WHERE user_code = #{code}
     </select>
 </mapper>

@@ -5,8 +5,10 @@ import com.carbybus.cove.application.TravellerApplication;
 import com.carbybus.cove.domain.entity.user.Account;
 import com.carbybus.cove.domain.entity.user.AccountActivation;
 import com.carbybus.cove.domain.entity.user.Traveller;
+import com.carbybus.cove.domain.entity.user.UserStatus;
 import com.carbybus.cove.domain.exception.AccountError;
 import com.carbybus.cove.domain.exception.TravellerError;
+import com.carbybus.cove.domain.view.UserActiveInput;
 import com.carbybus.cove.domain.view.UserLoginInput;
 import com.carbybus.cove.domain.view.UserLoginOutput;
 import com.carbybus.cove.domain.view.UserSignupInput;
@@ -105,6 +107,40 @@ public class TravellerApplicationImpl extends DefaultApplication<TravellerReposi
         UserLoginOutput output = new UserLoginOutput(jwt.getToken(), jwt.getExpire());
         result.succeed(output);
 
+        return result;
+    }
+
+    @Override
+    public ActionResult active(UserActiveInput input) {
+        ActionResult result = ActionResult.OK;
+
+        // 查询激活信息
+        AccountActivation activation = AccountActivationRep.selectByCode(input.getCode());
+        // 无效
+        if (activation == null) {
+            result.fail(AccountError.INVALID_ACTIVATION);
+            return result;
+        }
+
+        // 过期
+        if (!activation.isValid()) {
+            result.fail(AccountError.EXPIRED_ACTIVATION);
+            return result;
+        }
+
+        // 查询是否激活
+        Account account = accountRep.selectById(activation.getUserId());
+        if (account != null && account.getStatus().equals(UserStatus.ACTIVE)) {
+            result.fail(AccountError.USED_ACTIVATION);
+            return result;
+        }
+
+        // 激活用户
+        Account entity = new Account()
+                .setStatus(UserStatus.ACTIVE);
+        entity.setId(activation.getUserId());
+
+        accountRep.updateById(entity);
         return result;
     }
 }

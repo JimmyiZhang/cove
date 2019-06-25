@@ -18,7 +18,9 @@ public class MailApplicationImpl implements MailApplication {
     private AccountActivationConfig activeConfig;
 
     @Autowired
-    public MailApplicationImpl(EmailUtils utils) {
+    public MailApplicationImpl(EmailUtils utils,
+                               AccountActivationConfig activeConfig) {
+        this.activeConfig = activeConfig;
         this.mailUtils = utils;
     }
 
@@ -28,17 +30,20 @@ public class MailApplicationImpl implements MailApplication {
         String activeDays = activeConfig.getActiveDays().toString();
         String activeUrl = activeConfig.buildActiveUrl(code);
 
+
         StringBuilder mailContent = new StringBuilder()
                 .append("您好：<br>")
-                .append("欢迎您使用发现世界，您的账号尚未激活，请在 ")
+                .append("欢迎您使用发现世界，您的账号尚未激活，请在<b>")
                 .append(activeDays)
-                .append(" 天内激活账号，否则您的账号将无法使用。<br>")
-                .append("<br>")
-                .append("激活地址如下：")
+                .append("</b>天内激活账号，否则您的账号将无法使用。点击激活：<br><br>")
+                .append("<a href='")
                 .append(activeUrl)
-                .append("<br>")
+                .append("'>")
+                .append(activeUrl)
+                .append("</a><br><br><br><br>")
                 .append("有任何问题和需求请联系我，祝你使用愉快<br>")
-                .append("遇见世界 发现生活");
+                .append("遇见世界 发现生活<br>")
+                .append("jimmy.zhang");
 
         // 发送邮件
         mailUtils.build()

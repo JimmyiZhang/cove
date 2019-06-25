@@ -2,6 +2,7 @@ package com.carbybus.cove.api.controller;
 
 import com.carbybus.cove.api.component.BaseController;
 import com.carbybus.cove.application.TravellerApplication;
+import com.carbybus.cove.domain.view.UserActiveInput;
 import com.carbybus.cove.domain.view.UserLoginInput;
 import com.carbybus.cove.domain.view.UserSignupInput;
 import com.carbybus.infrastructure.component.ActionResult;
@@ -44,5 +45,11 @@ public class UserController extends BaseController {
     @GetMapping(value = "signup")
     public ActionResult signup(@Valid UserSignupInput input) {
         return travellerApp.signup(input);
+    }
+
+    @ApiOperation(value = "激活", notes = "激活")
+    @GetMapping(value = "active")
+    public ActionResult active(UserActiveInput input){
+        return travellerApp.active(input);
     }
 }

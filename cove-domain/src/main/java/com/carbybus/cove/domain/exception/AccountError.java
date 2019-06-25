@@ -11,7 +11,11 @@ import com.carbybus.infrastructure.exception.BusinessError;
 public enum AccountError implements BusinessError {
     EXISTED_ACCOUNT(10, "该账号已存在"),
     INVALID_NAME(11, "无效的账号"),
-    INVALID_PASSWORD(12, "无效的密码");
+    INVALID_PASSWORD(12, "无效的密码"),
+
+    INVALID_ACTIVATION(20, "无效的激活码"),
+    EXPIRED_ACTIVATION(21, "激活码已过期"),
+    USED_ACTIVATION(22, "账号已激活");
 
     /**
      * 枚举值
@@ -25,6 +29,7 @@ public enum AccountError implements BusinessError {
 
     /**
      * 构造函数
+     *
      * @param
      * @return
      * @author jimmy.zhang
@@ -41,7 +46,7 @@ public enum AccountError implements BusinessError {
     }
 
     @Override
-    public String getMessage(){
+    public String getMessage() {
         return message;
     }
 }
