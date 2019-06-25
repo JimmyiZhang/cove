@@ -1077,3 +1077,11 @@ SELECT count(*) FROM "public"."account" [90079-195]
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:748)
+2019-06-25 09:26:25 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "TRAILER" not found; SQL statement:
+select * from trailer [42102-195]
+2019-06-25 09:56:59 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT * FROM TRAVELLER
+SELECT[*] * FROM ACCOUNT "; SQL statement:
+select * from traveller
+select * from account [42000-195]
