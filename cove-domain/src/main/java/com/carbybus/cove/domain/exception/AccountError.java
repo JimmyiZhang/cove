@@ -12,6 +12,7 @@ public enum AccountError implements BusinessError {
     EXISTED_ACCOUNT(10, "该账号已存在"),
     INVALID_NAME(11, "无效的账号"),
     INVALID_PASSWORD(12, "无效的密码"),
+    INVALID_STATUS(13, "无效的状态"),
 
     INVALID_ACTIVATION(20, "无效的激活码"),
     EXPIRED_ACTIVATION(21, "激活码已过期"),

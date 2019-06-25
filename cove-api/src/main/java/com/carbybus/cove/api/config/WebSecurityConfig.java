@@ -40,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 // 认证配置
                 .authorizeRequests()
-                .antMatchers("/admin/**").authenticated()
+                .antMatchers("/member/**").authenticated()
                 .anyRequest().permitAll()
                 .and()
 

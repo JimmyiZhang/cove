@@ -52,7 +52,7 @@ public class FileController extends BaseController {
         // 设置内容类型为图片格式
         this.response.setContentType(contentType.toString());
         // 设置过期时间30天，30*24*60=43200
-        this.response.setHeader(HttpHeaders.CACHE_CONTROL,"max-age=43200");
+        this.response.setHeader(HttpHeaders.CACHE_CONTROL, "max-age=43200");
 
         OutputStream body = response.getOutputStream();
         byte[] byteFile = UploadFileUtils.loadFile(uploadConfig.getUploadPath(), name);

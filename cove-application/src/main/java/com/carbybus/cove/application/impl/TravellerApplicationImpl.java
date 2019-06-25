@@ -24,6 +24,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 
 /**
  * 旅行者应用
@@ -94,6 +96,12 @@ public class TravellerApplicationImpl extends DefaultApplication<TravellerReposi
             return result;
         }
 
+        // 状态无效或已过期
+        if (!dbAccount.isValid()) {
+            result.fail(AccountError.INVALID_STATUS);
+            return result;
+        }
+
         // 用户是否存在
         Traveller traveller = repository.selectById(dbAccount.getId());
         if (traveller == null) {
@@ -136,8 +144,10 @@ public class TravellerApplicationImpl extends DefaultApplication<TravellerReposi
         }
 
         // 激活用户
+        LocalDateTime expiredTime = LocalDateTime.of(2099, 12, 31, 0, 0, 0);
         Account entity = new Account()
-                .setStatus(UserStatus.ACTIVE);
+                .setStatus(UserStatus.ACTIVE)
+                .setExpiredTime(expiredTime);
         entity.setId(activation.getUserId());
 
         accountRep.updateById(entity);

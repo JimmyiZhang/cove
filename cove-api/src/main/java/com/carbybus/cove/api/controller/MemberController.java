@@ -21,24 +21,39 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * 文件控制器
+ * 会员控制器
  *
  * @author jimmy.zhang
  * @date 2019-02-26
  */
-@Api(tags = {"故事"})
+@Api(tags = {"会员"})
 @RestController
-@RequestMapping(value = "/story")
-public class StoryController extends BaseController {
+@RequestMapping(value = "/member")
+public class MemberController extends BaseController {
     @Autowired
     private UniteUploadConfig uploadConfig;
 
     @Autowired
     private StoryApplication storyApp;
 
-    @RequestMapping(value = "near", method = RequestMethod.GET)
-    public ActionResult near(CoordinateAround input) {
-        List<StoryViewOutput> output = storyApp.listByNear(input);
-        return success(output);
+    @RequestMapping(value = "upload", method = {RequestMethod.POST, RequestMethod.OPTIONS})
+    public ActionResult upload(@RequestParam(value = "file", required = false) MultipartFile file,
+                               @RequestParam(value = "name", required = false) String name) throws IOException {
+        // 上传文件
+        String fileName = StringUtils.isEmpty(name) ? file.getOriginalFilename() : name;
+        UploadFileResult result = UploadFileUtils.saveFile(uploadConfig.getUploadPath(), fileName, file.getInputStream());
+
+        // 保存故事
+        FileMetadata metadata = FileUtils.getFileMetadata(result);
+        if (!metadata.isValid()) {
+            return failure(StoryError.INVALID_COORDINATE);
+        }
+
+        Story story = Story.fromFile(this.getUser(), metadata);
+        storyApp.save(story);
+
+        result.setSize(file.getSize());
+        result.setType(file.getContentType());
+        return success(result);
     }
 }

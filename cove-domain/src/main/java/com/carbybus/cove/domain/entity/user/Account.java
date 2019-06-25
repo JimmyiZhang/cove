@@ -71,6 +71,19 @@ public class Account extends DefaultEntity {
     }
 
     /**
+     * 是否有效
+     *
+     * @param
+     * @return
+     * @author jimmy.zhang
+     * @date 2019-06-25
+     */
+    public boolean isValid() {
+        return this.status.equals(UserStatus.DISABLED) == false &&
+                this.expiredTime.isAfter(LocalDateTime.now());
+    }
+
+    /**
      * 生成密码
      *
      * @param password 原密码
