@@ -11,34 +11,38 @@
 </head>
 
 <body>
-<div class="container">
+<div class="container" id="app">
     <div class="justify-content-center">
         <div class="user-card">
             <div class="text-center">
                 发现世界
             </div>
-            <div class="justify-content-center form-container">
+            <div class="justify-content-center form-container" >
                     <div class="input-group mb-3">
                         <div class="input-group-append">
                             <span class="input-group-text"></span>
                         </div>
-                        <input type="text" class="form-control input-user" placeholder="邮箱">
+                        <input type="text" class="form-control input-user" name="user-account" placeholder="邮箱" autocomplete="off"
+                            v-model="input.account">
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-append">
                             <span class="input-group-text"></span>
                         </div>
-                        <input type="text" class="form-control input-user" placeholder="名字">
+                        <input type="text" class="form-control input-user" name="user-name" placeholder="名字" autocomplete="off"
+                            v-model="input.name">
                     </div>
                     <div class="input-group mb-2">
                         <div class="input-group-append">
                             <span class="input-group-text"></span>
                         </div>
-                        <input type="password" name="" class="form-control input-pass" placeholder="密码">
+                        <input type="password" name="" class="form-control input-pass" name="user-password" placeholder="密码" autocomplete="off"
+                               v-model="input.password">
                     </div>
             </div>
             <div class="justify-content-center mt-3 login-container">
-                <button type="button" name="button" class="btn login-btn">登录</button>
+                <button type="button" name="button" class="btn login-btn"
+                    v-on:click="signup">登录</button>
             </div>
             <div class="mt-4">
                 <div class="text-right">
@@ -51,9 +55,36 @@
 
 <script src="/asset/utils/fetch.js" type="module"></script>
 <script src="/asset/utils/lodash.min.js"></script>
+<script src="/asset/utils/vue.min.js"></script>
 <script src="/asset/cove-app.js"></script>
 <script>
+var app = new Vue({
+  el: '#app',
+  data: {
+    input:{
+        account:'',
+        name:'',
+        password:''
+    }
+  },
+  methods:{
+    signup: function(){
+        var that = this;
+        cove.app.send({
+            url: '/user/signup',
+            method: 'POST',
+            data: that.input,
+            onSuccess: function(res){
+                if(res.code == 0){
 
+                } else {
+
+                }
+            }
+        });
+    }
+  }
+})
 </script>
 </body>
 </html>

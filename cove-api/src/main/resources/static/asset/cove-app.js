@@ -14,6 +14,7 @@
     * }
     */
     exports.send = function(option) {
+        var body='';
         switch(option.method){
             case 'GET':
                 if(option.url.indexOf('?')==-1){
@@ -23,13 +24,33 @@
                     option.url = option.url + key + "=" + option.data[key] + "&";
                 });
             break;
+            case 'POST':
+                body = JSON.stringify(option.data);
+            break;
         }
 
-        fetch(option.url, {mode: 'cors'})
+        var authorization='';
+
+
+        fetch(option.url, {
+                mode: 'cors',
+                body: body,
+                method: option.method,
+                headers: {
+                  'Authorization': authorization,
+                  'Content-Type': 'application/json'
+                }
+            })
             .then(function(response) {
                 response.json().then(function(json) {
-                    option.onSuccess(json);
+                if(option.onSuccess) {
+                    option.onSuccess(json);}
                 });
+            })
+            .catch(function(error){
+            if(option.onError){
+            option.onError(error);
+            }
             });
     };
 

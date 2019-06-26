@@ -22,17 +22,20 @@
                         <div class="input-group-append">
                             <span class="input-group-text"></span>
                         </div>
-                        <input type="text" class="form-control input-user" placeholder="邮箱">
+                        <input type="text" class="form-control input-user" name="user-name" placeholder="邮箱" autocomplete="off"
+                            v-model="name">
                     </div>
                     <div class="input-group mb-2">
                         <div class="input-group-append">
                             <span class="input-group-text"></span>
                         </div>
-                        <input type="password" class="form-control input-pass" placeholder="密码">
+                        <input type="password" class="form-control input-pass" name="user-password" placeholder="密码" autocomplete="off"
+                            v-model="password">
                     </div>
             </div>
             <div class="justify-content-center mt-3 login-container">
-                <button type="button" name="button" class="btn login-btn">登录</button>
+                <button type="button" name="button" class="btn login-btn"
+                    v-on:click="login">登录</button>
             </div>
             <div class="mt-4">
                 <div class="text-right">
@@ -45,8 +48,35 @@
 
 <script src="/asset/utils/fetch.js" type="module"></script>
 <script src="/asset/utils/lodash.min.js"></script>
+<script src="/asset/utils/vue.min.js"></script>
 <script src="/asset/cove-app.js"></script>
 <script>
+var app = new Vue({
+  el: '#app',
+  data: {
+    input:{
+        name:'',
+        password:''
+    }
+  },
+  methods:{
+    login: function(){
+        var that = this;
+        cove.app.send({
+            url: '/user/login',
+            method: 'POST',
+            data: that.input,
+            onSuccess: function(res){
+                if(res.code == 0){
+
+                } else {
+
+                }
+            }
+        });
+    }
+  }
+})
 
 </script>
 </body>
