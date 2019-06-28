@@ -4,17 +4,17 @@
     // 输出对象
     var exports = {};
 
-    // 发送数据
-    /* 参数说明
+    /* 发送数据
+    * 参数说明
     * option = {
     *    url:'',
-    *    method: '',
+    *    method: 'GET',
     *    data:{},
     *    onSuccess:function(json){}
     * }
     */
     exports.send = function(option) {
-        var body='';
+        var body = '';
         switch(option.method){
             case 'GET':
                 if(option.url.indexOf('?')==-1){
@@ -30,7 +30,6 @@
         }
 
         var authorization='';
-
 
         fetch(option.url, {
                 mode: 'cors',
@@ -53,6 +52,22 @@
             }
             });
     };
+
+    /* 延迟
+    * 参数说明
+    * option = {
+    *    onAction: function(){},
+    *    delay: 10
+    * }
+    */
+    exports.delay = function(option){
+        setTimeout(option.onAction, delay*1000);
+    }
+
+    // 去登录
+    exports.toLogin = function(){
+        window.location.href = 'login.html';
+    }
 
     if(!window.cove) window.cove={};
     window.cove.app = exports;
