@@ -79,7 +79,6 @@ var app = new Vue({
             onSuccess: function(res){
                 if(res.code == 0){
                     spop('注册成功，请登录', 'success');
-                    setTimeout()
                     cove.app.delay({
                         onAction: function(){
                             cove.app.toLogin();

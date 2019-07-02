@@ -6,12 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" type="text/css" href="/asset/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/asset/spop/spop.min.css">
     <link rel="stylesheet" type="text/css" href="/asset/style.css">
     <title>发现世界</title>
 </head>
 
 <body>
-<div class="container">
+<div class="container" id="app">
     <div class="justify-content-center">
         <div class="user-card">
             <div class="text-center">
@@ -23,14 +24,14 @@
                             <span class="input-group-text"></span>
                         </div>
                         <input type="text" class="form-control input-user" name="user-name" placeholder="邮箱" autocomplete="off"
-                            v-model="name">
+                            v-model="input.name">
                     </div>
                     <div class="input-group mb-2">
                         <div class="input-group-append">
                             <span class="input-group-text"></span>
                         </div>
                         <input type="password" class="form-control input-pass" name="user-password" placeholder="密码" autocomplete="off"
-                            v-model="password">
+                            v-model="input.password">
                     </div>
             </div>
             <div class="justify-content-center mt-3 login-container">
@@ -49,6 +50,7 @@
 <script src="/asset/utils/fetch.js" type="module"></script>
 <script src="/asset/utils/lodash.min.js"></script>
 <script src="/asset/vue/vue.min.js"></script>
+<script src="/asset/spop/spop.min.js"></script>
 <script src="/asset/cove-app.js"></script>
 <script>
 var app = new Vue({
@@ -68,9 +70,15 @@ var app = new Vue({
             data: that.input,
             onSuccess: function(res){
                 if(res.code == 0){
-
+                    spop('登录成功，转入主页', 'success');
+                    cove.app.delay({
+                        onAction: function(){
+                            cove.app.toHome();
+                        },
+                        delay:3
+                    });
                 } else {
-
+                    spop(res.message, 'error');
                 }
             }
         });

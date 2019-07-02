@@ -34,8 +34,8 @@ public class UserController extends BaseController {
     }
 
     @ApiOperation(value = "登录", notes = "登录并获取TOKEN")
-    @GetMapping(value = "login")
-    public ActionResult login(@Valid UserLoginInput input) {
+    @PostMapping(value = "login")
+    public ActionResult login(@RequestBody @Valid UserLoginInput input) {
         return travellerApp.login(input);
     }
 

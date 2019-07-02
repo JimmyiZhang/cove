@@ -69,6 +69,11 @@
         window.location.href = 'login.html';
     }
 
+    // 去首页
+    exports.toHome = function(){
+        window.location.href='index.html';
+    }
+
     if(!window.cove) window.cove={};
     window.cove.app = exports;
 })();

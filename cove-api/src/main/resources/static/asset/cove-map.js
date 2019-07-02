@@ -5,8 +5,8 @@
     var exports = {};
 
     // 初始化地图
-    exports.initMap = function(id) {
-        map = new AMap.Map(id, {
+    exports.initMap = function(option) {
+        map = new AMap.Map(option.id, {
             resizeEnable: true,
             zoom: 11,
         });
@@ -34,6 +34,7 @@
             });
         });
 
+        map.on('moveend', option.onMove);
         return map;
     };
 
@@ -79,11 +80,6 @@
         });
 
         // info.open(map, [item.longitude, item.latitude]);
-    }
-
-    // 移动
-    exports.onMove = function(fn){
-        map.on('moveend', fn);
     }
 
     if(!window.cove) window.cove={};

@@ -75,8 +75,9 @@
 <script src="/asset/cove-file.js"></script>
 <script src="/asset/cove-app.js"></script>
 <script>
-    cove.map.initMap('container');
-    cove.map.onMove(loadStory);
+    cove.map.initMap({
+        id: 'container',
+        onMove: loadStory});
 
     cove.file.initUpload({
         id: 'fileUpload',
@@ -146,11 +147,13 @@
             longitude: story.longitude,
             latitude: story.latitude,
             onClick:function(){
-                cove.file.initViewer(story.url)
+                cove.file
+                .initViewer(story.url)
                 .show();
             }
         });
     }
+
 
 </script>
 

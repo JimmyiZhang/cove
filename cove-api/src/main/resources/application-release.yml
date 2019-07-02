@@ -40,3 +40,9 @@ summer:
     expired-minutes: 0
   upload-config:
     upload-path: /usr/local/cove/uploads
+
+# project config
+autumn:
+  account-activation:
+    active-days: 7
+    active-url: http://www.gotravelling.top/user/active?code=
