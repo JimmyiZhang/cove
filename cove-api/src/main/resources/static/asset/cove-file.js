@@ -8,7 +8,7 @@
     // 初始化地图
     exports.initUpload = function(option) {
         // 上传
-        var uppy = Uppy.Core({
+        uppy = Uppy.Core({
                 debug: true,
                 autoProceed: false,
                 restrictions: {
@@ -41,6 +41,11 @@
             option.onComplete(result.successful[0].response.body);
         });
     };
+
+    // 清除
+    exports.clearUpload = function() {
+        uppy.reset();
+    }
 
     // 获取缩略图
     exports.getThumbnail  = function(url){

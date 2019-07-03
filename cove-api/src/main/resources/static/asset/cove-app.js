@@ -29,16 +29,16 @@
             break;
         }
 
-        var authorization='';
+        var authorization = '';
 
         fetch(option.url, {
-                mode: 'cors',
-                body: body,
                 method: option.method,
+                mode: 'cors',
                 headers: {
                   'Authorization': authorization,
                   'Content-Type': 'application/json'
                 }
+                body: body
             })
             .then(function(response) {
                 response.json().then(function(json) {
@@ -47,9 +47,9 @@
                 });
             })
             .catch(function(error){
-            if(option.onError){
-            option.onError(error);
-            }
+                if(option.onError){
+                    option.onError(error);
+                }
             });
     };
 
