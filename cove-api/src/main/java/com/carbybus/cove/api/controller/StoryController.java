@@ -5,6 +5,7 @@ import com.carbybus.cove.application.StoryApplication;
 import com.carbybus.cove.domain.entity.coordinate.CoordinateAround;
 import com.carbybus.cove.domain.entity.journey.Story;
 import com.carbybus.cove.domain.exception.StoryError;
+import com.carbybus.cove.domain.principal.UserPrincipal;
 import com.carbybus.cove.domain.view.StoryViewOutput;
 import com.carbybus.infrastructure.component.ActionResult;
 import com.carbybus.infrastructure.file.*;

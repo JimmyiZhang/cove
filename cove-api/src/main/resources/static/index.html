@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="/asset/viewer/viewer.min.css">
     <link rel="stylesheet" type="text/css" href="/asset/style.css">
     <script type="text/javascript"
-            src="http://webapi.amap.com/maps?v=1.4.14&key=6b87d1d3817e5b1c59b8a646300c4b25"></script>
+            src="https://webapi.amap.com/maps?v=1.4.14&key=6b87d1d3817e5b1c59b8a646300c4b25"></script>
     <title>发现世界</title>
 </head>
 
@@ -66,14 +66,15 @@
 <script src="/asset/utils/fetch.js" type="module"></script>
 <script src="/asset/utils/lodash.min.js"></script>
 <script src="/asset/utils/moment.min.js"></script>
-<script src="/asset/uppy/uppy.min.js"></script>
+<script src="/asset/uppy/uppy.js"></script>
 <script src="/asset/uppy/uppy.zh_CN.min.js"></script>
 <script src="/asset/utils/coordtransform.js"></script>
 <script src="/asset/viewer/viewer.min.js"></script>
 
+<script src="/asset/cove-app.js"></script>
 <script src="/asset/cove-map.js"></script>
 <script src="/asset/cove-file.js"></script>
-<script src="/asset/cove-app.js"></script>
+
 <script>
     cove.map.initMap({
         id: 'container',
@@ -81,9 +82,9 @@
 
     cove.file.initUpload({
         id: 'fileUpload',
-        endpoint: 'story/cute',
-        onComplete: function(result){
-            console.log('上传完成!');
+        endpoint: '/member/upload',
+        onSuccess: function(result){
+
             if(result.code > 0){
                 uppy.info(result.message);
             } else {
@@ -153,8 +154,6 @@
             }
         });
     }
-
-
 </script>
 
 </body>

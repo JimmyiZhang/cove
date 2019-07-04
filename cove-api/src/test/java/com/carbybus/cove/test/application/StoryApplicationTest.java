@@ -25,7 +25,7 @@ public class StoryApplicationTest {
 
     @Test
     public void create() {
-        UserPrincipal user = UserPrincipal.init();
+        UserPrincipal user = UserPrincipal.init(1L,"jimmy");
 
         StoryCreateInput input = new StoryCreateInput();
         input.setSubject("文化之旅")

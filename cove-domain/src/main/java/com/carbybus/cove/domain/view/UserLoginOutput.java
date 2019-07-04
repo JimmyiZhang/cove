@@ -14,4 +14,5 @@ import lombok.Data;
 public class UserLoginOutput {
     private String token;
     private Integer expire;
+    private String avatar;
 }

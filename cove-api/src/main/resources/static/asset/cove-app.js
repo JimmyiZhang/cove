@@ -1,5 +1,37 @@
 (function() {
-    var uppy;
+
+    // 保存本地存储
+    var setStorage = function(key,val){
+        var value = JSON.stringify(val);
+        window.localStorage.setItem(key,value);
+    }
+
+    // 获取本地存储
+    var getStorage=function(key){
+        var value = window.localStorage.getItem(key);
+        if(value){
+            return JSON.parse(value);
+        }
+        return null;
+    }
+
+    // 更新本地存储
+    var putStorage=function(key,item,val){
+            var value = window.localStorage.getItem(key);
+            if(value){
+                var json= JSON.parse(value);
+                json[item]=val;
+
+                value = JSON.stringify(json);
+                window.localStorage.setItem(key,value);
+            }
+        }
+
+    // 删除本地存储
+    var removeStorage=function(key){
+        window.localStorage.removeItem(key);
+    }
+
 
     // 输出对象
     var exports = {};
@@ -14,7 +46,16 @@
     * }
     */
     exports.send = function(option) {
-        var body = '';
+        var user = getUser();
+        var data = {
+            method: option.method,
+            mode: 'cors',
+            headers: {
+              'Authorization': user.token,
+              'Content-Type': 'application/json'
+            }
+        }
+
         switch(option.method){
             case 'GET':
                 if(option.url.indexOf('?')==-1){
@@ -25,21 +66,11 @@
                 });
             break;
             case 'POST':
-                body = JSON.stringify(option.data);
+                data.body = JSON.stringify(option.data);
             break;
         }
 
-        var authorization = '';
-
-        fetch(option.url, {
-                method: option.method,
-                mode: 'cors',
-                headers: {
-                  'Authorization': authorization,
-                  'Content-Type': 'application/json'
-                }
-                body: body
-            })
+        fetch(option.url, data)
             .then(function(response) {
                 response.json().then(function(json) {
                 if(option.onSuccess) {
@@ -62,6 +93,22 @@
     */
     exports.delay = function(option){
         setTimeout(option.onAction, delay*1000);
+    }
+
+    // 登录
+    exports.login = function(token,redirect){
+        setStorage('user.token',token);
+        if(redirect){
+            setTimeout(function(){
+                window.location.href='index.html';
+            }, 3000);
+        }
+    }
+
+    // 获取用户
+    exports.getUser = function(){
+        var user = getStorage('user.token') || {token:''};
+        return user;
     }
 
     // 去登录

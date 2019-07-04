@@ -1,8 +1,11 @@
 package com.carbybus.cove.api.component;
 
+import com.carbybus.cove.application.UserApplication;
 import com.carbybus.cove.domain.principal.UserPrincipal;
 import com.carbybus.infrastructure.component.ActionResult;
 import com.carbybus.infrastructure.exception.BusinessError;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,11 +20,16 @@ import javax.servlet.http.HttpServletResponse;
  * @date 2019-02-26
  */
 public class BaseController {
+    protected final Logger log = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     protected HttpServletRequest request;
 
     @Autowired
     protected HttpServletResponse response;
+
+    @Autowired
+    private UserApplication userApp;
 
     private UserPrincipal user;
 
@@ -29,7 +37,11 @@ public class BaseController {
         if (this.user == null) {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             String claim = auth.getName();
-            this.user = UserPrincipal.init().setUserName(claim);
+            log.info("the user authentication is : {}", claim);
+
+            Long userId = Long.parseLong(claim);
+            // 获取用户信息
+            this.user = userApp.getPrincipal(userId);
         }
 
         return this.user;

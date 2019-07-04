@@ -65,9 +65,9 @@ public class Account extends DefaultEntity {
      * @author jimmy.zhang
      * @date 2019-05-20
      */
-    public boolean validate(String password) {
+    public boolean checkPassword(String password) {
         String pass = generatePassword(password, this.getSalt());
-        return pass.equals(this.getSecret()) && this.getExpiredTime().isAfter(LocalDateTime.now());
+        return pass.equals(this.getSecret());
     }
 
     /**
@@ -78,7 +78,7 @@ public class Account extends DefaultEntity {
      * @author jimmy.zhang
      * @date 2019-06-25
      */
-    public boolean isValid() {
+    public boolean checkStatus() {
         return this.status.equals(UserStatus.DISABLED) == false &&
                 this.expiredTime.isAfter(LocalDateTime.now());
     }

@@ -71,12 +71,7 @@ var app = new Vue({
             onSuccess: function(res){
                 if(res.code == 0){
                     spop('登录成功，转入主页', 'success');
-                    cove.app.delay({
-                        onAction: function(){
-                            cove.app.toHome();
-                        },
-                        delay:3
-                    });
+                    cove.app.login(res.data, true);
                 } else {
                     spop(res.message, 'error');
                 }

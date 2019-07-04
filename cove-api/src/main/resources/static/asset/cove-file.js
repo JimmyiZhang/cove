@@ -1,6 +1,7 @@
 (function() {
     var uppy;
     var viewer;
+    var user;
 
     // 输出对象
     var exports = {};
@@ -34,11 +35,24 @@
             })
             .use(Uppy.XHRUpload, {
                 fieldName: 'file',
+                headers: {
+                    'Authorization': `Bearer ${cove.app.getUser().token}`
+                },
                 endpoint: option.endpoint
             });
 
         uppy.on("complete", (result) => {
-            option.onComplete(result.successful[0].response.body);
+            console.log("upload complete")
+        });
+
+        uppy.on("upload-success", (file, response) => {
+            console.log('upload success');
+            if(option.onSuccess){
+                option.onSuccess(response.body);
+            }
+        });
+        uppy.on("upload-error", (file, error, response) => {
+            console.log("upload error");
         });
     };
 

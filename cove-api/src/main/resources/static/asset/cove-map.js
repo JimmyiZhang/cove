@@ -12,18 +12,20 @@
         });
         AMap.plugin('AMap.ToolBar', function() {
             var toolbar = new AMap.ToolBar({
-                offset:new AMap.Pixel(0,80),
-                position:'LT'
+                offset: new AMap.Pixel(0,80),
+                position: 'LT'
             });
             map.addControl(toolbar)
         });
         AMap.plugin('AMap.Geolocation', function() {
-            geolocation = new AMap.Geolocation({
+            var geolocation = new AMap.Geolocation({
                 enableHighAccuracy: true,
                 timeout: 10000,
                 showMarker: true,
                 showCircle: false,
+                zoomToAccuracy: true
             });
+
             geolocation.getCurrentPosition();
             AMap.event.addListener(geolocation, 'complete', function(result) {
                 console.log('定位成功');

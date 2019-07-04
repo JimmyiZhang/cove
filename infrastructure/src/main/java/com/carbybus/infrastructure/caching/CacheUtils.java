@@ -1,6 +1,7 @@
 package com.carbybus.infrastructure.caching;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
@@ -29,7 +30,12 @@ public class CacheUtils {
      * @date 2019-05-09
      */
     public Object get(final String name, final Object key) {
-        return cacheManager.getCache(name).get(key).get();
+        Cache.ValueWrapper vw = cacheManager.getCache(name).get(key);
+        if (vw != null) {
+            return vw.get();
+        }
+
+        return null;
     }
 
     /**

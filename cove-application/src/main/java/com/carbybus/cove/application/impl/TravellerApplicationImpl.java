@@ -47,8 +47,8 @@ public class TravellerApplicationImpl extends DefaultApplication<TravellerReposi
     @Autowired
     private AccountActivationRepository AccountActivationRep;
 
-    @Transactional(rollbackFor = Exception.class)
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ActionResult signup(UserSignupInput input) {
         ActionResult result = ActionResult.OK;
 
@@ -89,16 +89,16 @@ public class TravellerApplicationImpl extends DefaultApplication<TravellerReposi
             return result;
         }
 
-        // 密码是否正确
-        boolean isLogin = dbAccount.validate(input.getPassword());
-        if (!isLogin) {
-            result.fail(AccountError.INVALID_PASSWORD);
+        // 状态无效或已过期
+        if (!dbAccount.checkStatus()) {
+            result.fail(AccountError.INVALID_STATUS);
             return result;
         }
 
-        // 状态无效或已过期
-        if (!dbAccount.isValid()) {
-            result.fail(AccountError.INVALID_STATUS);
+        // 密码是否正确
+        boolean isLogin = dbAccount.checkPassword(input.getPassword());
+        if (!isLogin) {
+            result.fail(AccountError.INVALID_PASSWORD);
             return result;
         }
 
@@ -112,13 +112,14 @@ public class TravellerApplicationImpl extends DefaultApplication<TravellerReposi
         // 生成token
         JwtResult jwt = jwtUtils.create(traveller.getId().toString());
 
-        UserLoginOutput output = new UserLoginOutput(jwt.getToken(), jwt.getExpire());
+        UserLoginOutput output = new UserLoginOutput(jwt.getToken(), jwt.getExpire(), traveller.getAvatar());
         result.succeed(output);
 
         return result;
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ActionResult active(UserActiveInput input) {
         ActionResult result = ActionResult.OK;
 
