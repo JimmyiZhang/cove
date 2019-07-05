@@ -7,6 +7,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" type="text/css" href="/asset/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/asset/spop/spop.min.css">
+    <link rel="stylesheet" type="text/css" href="/asset/font-awesome/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/asset/style.css">
     <title>发现世界</title>
 </head>
@@ -19,24 +20,30 @@
                 发现世界
             </div>
             <div class="justify-content-center form-container">
-                    <div class="input-group mb-3">
-                        <div class="input-group-append">
-                            <span class="input-group-text"></span>
-                        </div>
-                        <input type="text" class="form-control input-user" name="user-name" placeholder="邮箱" autocomplete="off"
-                            v-model="input.name">
+                <div class="input-group mb-3">
+                    <div class="input-group-append">
+                            <span class="input-group-text">
+                                <i class="fa fa-envelope"></i>
+                            </span>
                     </div>
-                    <div class="input-group mb-2">
-                        <div class="input-group-append">
-                            <span class="input-group-text"></span>
-                        </div>
-                        <input type="password" class="form-control input-pass" name="user-password" placeholder="密码" autocomplete="off"
-                            v-model="input.password">
+                    <input type="text" class="form-control input-user" name="user-name"
+                           placeholder="邮箱" autocomplete="off" v-model="input.name">
+                </div>
+                <div class="input-group mb-2">
+                    <div class="input-group-append">
+                        <span class="input-group-text">
+                            <i class="fa fa-asterisk"></i>
+                        </span>
                     </div>
+                    <input type="password" class="form-control input-pass" name="user-password" placeholder="密码"
+                           autocomplete="off"
+                           v-model="input.password">
+                </div>
             </div>
             <div class="justify-content-center mt-3 login-container">
                 <button type="button" name="button" class="btn login-btn"
-                    v-on:click="login">登录</button>
+                        v-on:click="login">登录
+                </button>
             </div>
             <div class="mt-4">
                 <div class="text-right">
@@ -80,6 +87,7 @@ var app = new Vue({
     }
   }
 })
+
 
 </script>
 </body>
