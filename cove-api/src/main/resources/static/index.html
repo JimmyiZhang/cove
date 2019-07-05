@@ -15,18 +15,20 @@
 </head>
 
 <body>
-<header>
+<div id="app">
     <nav class="navbar navbar-expand-md navbar-dark fixed-top  color-bg-first">
         <a class="navbar-brand" href="#">
             <img src="/asset/img/logo_40_40.png"/>发现世界
         </a>
         <div class="navbar-toggler">
-
             <ul class="navbar-nav right">
                 <li class="nav-item">
-                    <a class="nav-link active" href="javascript:openUpload();">上传</a>
+                    <a class="nav-link active" href="#" v-show="user.login"
+                       v-on:click="openUpload">上传</a>
                 </li>
-
+                <li class="nav-item" v-show="!user.login">
+                    <a class="nav-link active" href="login.html">登录</a>
+                </li>
             </ul>
         </div>
         <div class="collapse navbar-collapse">
@@ -35,40 +37,45 @@
                     <a class="nav-link" href="#">首页</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">附近</a>
+                    <a class="nav-link" href="#">探索</a>
                 </li>
             </ul>
             <ul class="navbar-nav right">
-                <li class="nav-item">
-                    <a class="nav-link active" href="javascript:openUpload();">上传</a>
+                <li class="nav-item" v-show="!user.login">
+                    <a class="nav-link active" href="login.html">登录</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="login.html">登录</a>
+                    <a class="nav-link active" href="#" v-show="user.login"
+                       v-on:click="openUpload">上传</a>
+                </li>
+                <li class="nav-item">
+                    <img class="navbar-brand avatar" v-bind:src="user.avatar" v-show="user.login" />
                 </li>
             </ul>
         </div>
     </nav>
-</header>
 
-<main role="main">
     <div id="container"></div>
-</main>
 
-<div class="mark upload" id="markUpload">
-    <div class="mark-body" id="fileUpload">
-    </div>
-    <div class="mark-footer">
-        <button class="btn btn-sm text-right" onclick="clearUpload()">重置</button>
-        <button class="btn btn-sm text-right" onclick="closeUpload()">关闭</button>
+    <div class="mark upload" v-show="upload.open">
+        <div class="mark-body" id="fileUpload">
+        </div>
+        <div class="mark-footer">
+            <button class="btn btn-sm text-right"
+                    v-on:click="clearUpload">重置</button>
+            <button class="btn btn-sm text-right"
+                    v-on:click="closeUpload">关闭</button>
+        </div>
     </div>
 </div>
 
 <script src="/asset/utils/fetch.js" type="module"></script>
 <script src="/asset/utils/lodash.min.js"></script>
 <script src="/asset/utils/moment.min.js"></script>
-<script src="/asset/uppy/uppy.js"></script>
-<script src="/asset/uppy/uppy.zh_CN.min.js"></script>
 <script src="/asset/utils/coordtransform.js"></script>
+<script src="/asset/vue/vue.min.js"></script>
+<script src="/asset/uppy/uppy.min.js"></script>
+<script src="/asset/uppy/uppy.zh_CN.min.js"></script>
 <script src="/asset/viewer/viewer.min.js"></script>
 
 <script src="/asset/cove-app.js"></script>
@@ -76,84 +83,99 @@
 <script src="/asset/cove-file.js"></script>
 
 <script>
-    cove.map.initMap({
-        id: 'container',
-        onMove: loadStory});
+    var app = new Vue({
+      el: '#app',
+      data: {
+        upload:{
+          open:false
+        },
+        user:{
+           login:false
+        },
+        allStory : []
+      },
+      methods:{
+        init: function(){
+            var that = this;
+            cove.map.initMap({
+                id: 'container',
+                onMove: that.loadStory
+            });
 
-    cove.file.initUpload({
-        id: 'fileUpload',
-        endpoint: '/member/upload',
-        onSuccess: function(result){
-
-            if(result.code > 0){
-                uppy.info(result.message);
-            } else {
-                clearUpload();
-                closeUpload();
-            }
-        }
-    });
-
-    // 打开上传
-    function openUpload() {
-        document.getElementById("markUpload").style.display = "block";
-    }
-    function closeUpload(){
-        document.getElementById("markUpload").style.display = "none";
-    }
-    function clearUpload(){
-        cove.file.clearUpload();
-    }
-
-    var allStory = [];
-    // 获取故事
-    function loadStory() {
-        let bounds = cove.map.getBounds();
-        cove.app.send({
-            url: '/story/near',
-            method:'GET',
-            data: bounds,
-            onSuccess: function(json){
-                var stories = json.data;
-                var now = moment().subtract(1,'d');
-                for (var i = stories.length-1; i >= 0; i--) {
-	                var story = stories[i];
-	                // 查找是否存在
-                    if(_.find(allStory, function(s){return s.id==story.id})){
-                        continue;
+            cove.file.initUpload({
+                id: 'fileUpload',
+                endpoint: '/member/upload',
+                onSuccess: function(result){
+                    if(result.code > 0){
+                        uppy.info(result.message);
+                    } else {
+                        clearUpload();
+                        closeUpload();
                     }
+                }
+            });
 
-                    processStory(story);
-	            }
-            }
-        });
-    }
+            that.user = cove.app.getUser();
+        },
+        loadStory:function(){
+            var that = this;
+            let bounds = cove.map.getBounds();
+            cove.app.send({
+                url: '/story/near',
+                method:'GET',
+                data: bounds,
+                onSuccess: function(json){
+                    var stories = json.data;
+                    var now = moment().subtract(1,'d');
+                    for (var i = stories.length-1; i >= 0; i--) {
+                        var story = stories[i];
+                        // 查找是否存在
+                        if(_.find(that.allStory, function(s){return s.id==story.id})){
+                            continue;
+                        }
 
-    // 处理故事
-    function processStory(story){
-        story.icon = cove.file.getThumbnail(story.url);
-        story.url = cove.file.getOrnament(story.url);
+                        that.processStory(story);
+                        that.allStory.push(story);
+                    }
+                }
+            });
+        },
+        processStory:function(story){
+            story.icon = cove.file.getThumbnail(story.url);
+            story.url = cove.file.getOrnament(story.url);
 
-        // 坐标转换
-        cove.map.transformCoordinate(story);
-        allStory.push(story);
+            // 坐标转换
+            cove.map.transformCoordinate(story);
 
-        // 优先显示
-        var now = moment().subtract(1,'d');
-        var className = moment(story.takeTime, "YYYY-MM-DD HH:mm:ss").isAfter(now)?'prior':'usual';
-        cove.map.addMarker({
-            className:className,
-            icon:story.icon,
-            title:story.name,
-            longitude: story.longitude,
-            latitude: story.latitude,
-            onClick:function(){
-                cove.file
-                .initViewer(story.url)
-                .show();
-            }
-        });
-    }
+            // 优先显示
+            var now = moment().subtract(1,'d');
+            var className = moment(story.takeTime, "YYYY-MM-DD HH:mm:ss").isAfter(now)?'prior':'usual';
+            cove.map.addMarker({
+                className:className,
+                icon:story.icon,
+                title:story.name,
+                longitude: story.longitude,
+                latitude: story.latitude,
+                onClick:function(){
+                    cove.file
+                    .initViewer(story.url)
+                    .show();
+                }
+            });
+        },
+        openUpload:function(){
+            this.upload.open=true;
+        },
+        closeUpload:function(){
+            this.upload.open=false;
+        },
+        clearUpload:function(){
+            cove.file.clearUpload();
+        }
+      }
+    })
+
+    app.init();
 </script>
 
 </body>

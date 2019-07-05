@@ -46,7 +46,7 @@
     * }
     */
     exports.send = function(option) {
-        var user = getUser();
+        var user = this.getUser();
         var data = {
             method: option.method,
             mode: 'cors',
@@ -96,18 +96,24 @@
     }
 
     // 登录
-    exports.login = function(token,redirect){
-        setStorage('user.token',token);
+    exports.login = function(user,redirect){
+        user.login=true;
+        setStorage('user.token',user);
         if(redirect){
             setTimeout(function(){
                 window.location.href='index.html';
             }, 3000);
         }
     }
+    // 退出
+    exports.logout = function(){
+        removeStorage('user.token');
+    }
 
     // 获取用户
     exports.getUser = function(){
         var user = getStorage('user.token') || {token:''};
+        user.avatar = user.avatar || '/asset/img/icon_header.png';
         return user;
     }
 

@@ -2,6 +2,9 @@
 .navbar{
     padding:0 .5rem;
 }
+.navbar-nav .avatar{
+    width:30px;
+}
 
 .mark {
   position: absolute;
@@ -85,7 +88,6 @@
 .upload{
     margin-top:50px;
     max-width:100%;
-    display:none
 }
 
 /*登录*/

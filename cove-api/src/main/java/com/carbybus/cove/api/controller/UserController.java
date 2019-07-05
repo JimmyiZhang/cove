@@ -46,8 +46,8 @@ public class UserController extends BaseController {
     }
 
     @ApiOperation(value = "激活", notes = "激活")
-    @PostMapping(value = "active")
-    public ActionResult active(@RequestBody @Valid UserActiveInput input){
+    @GetMapping(value = "active")
+    public ActionResult active(@Valid UserActiveInput input){
         return travellerApp.active(input);
     }
 }
