@@ -25,7 +25,7 @@ public class StoryConverterTest {
                 .setLongitude(117.6972198486)
                 .setSubject("tianjin");
 
-        UserPrincipal user = UserPrincipal.init();
+        UserPrincipal user = UserPrincipal.init(1L,"jimmy");
         user.setUserId(1L);
 
         Story entity = StoryConverter.INSTANCE.convertFrom(input, user);

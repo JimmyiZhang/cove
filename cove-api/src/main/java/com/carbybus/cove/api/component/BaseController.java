@@ -1,9 +1,14 @@
 package com.carbybus.cove.api.component;
 
+import com.carbybus.cove.application.UserApplication;
 import com.carbybus.cove.domain.principal.UserPrincipal;
 import com.carbybus.infrastructure.component.ActionResult;
 import com.carbybus.infrastructure.exception.BusinessError;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,27 +20,31 @@ import javax.servlet.http.HttpServletResponse;
  * @date 2019-02-26
  */
 public class BaseController {
+    protected final Logger log = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     protected HttpServletRequest request;
 
     @Autowired
     protected HttpServletResponse response;
 
+    @Autowired
+    private UserApplication userApp;
+
     private UserPrincipal user;
 
     protected UserPrincipal getUser() {
-        // todo: test
-        return UserPrincipal.init()
-                .setUserName("jimmy")
-                .setUserId(1L);
+        if (this.user == null) {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String claim = auth.getName();
+            log.info("the user authentication is : {}", claim);
 
-//        if (this.user == null) {
-//            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//            String claim = auth.getName();
-//            this.user = UserPrincipal.init().setUserName(claim);
-//        }
-//
-//        return this.user;
+            Long userId = Long.parseLong(claim);
+            // 获取用户信息
+            this.user = userApp.getPrincipal(userId);
+        }
+
+        return this.user;
     }
 
     /**
@@ -70,7 +79,7 @@ public class BaseController {
     /**
      * 失败
      *
-     * @param error    错误
+     * @param error 错误
      * @return 携带错误码和错误消息的操作失败结果
      * @author jimmy.zhang
      * @date 2019-02-26
@@ -85,9 +94,8 @@ public class BaseController {
     /**
      * 失败
      *
-     * @param error    错误
-
-     * @param data    返回的数据
+     * @param error 错误
+     * @param data  返回的数据
      * @return 携带错误码、错误消息和返回数据的操作失败结果
      * @author jimmy.zhang
      * @date 2019-02-26

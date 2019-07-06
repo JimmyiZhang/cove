@@ -8,17 +8,6 @@ spring:
   profiles:
     active: "@profile.active@"
 
-  # cache config
-  cache:
-    type: redis
-    redis:
-      key-prefix: COVE
-
-  # redis config
-  redis:
-    host: 127.0.0.1
-    port: 6379
-
   # servlet config
   servlet:
     multipart:
@@ -37,14 +26,6 @@ spring:
       mail.smtp.user: jimmymzhang@163.com
       mail.smtp.auth: true
       mail.smtp.ssl.enable: true
-
-  h2:
-    console:
-      path: /h2
-      enabled: true
-      settings:
-        web-allow-others: true
-        trace: true
 
 # logging config
 logging:
@@ -76,5 +57,11 @@ summer:
     token-issue: carbybus
     token-claim: id
   redis-config:
-    expired-minutes: 0
+    expired-minutes: 60
+
+# project config
+autumn:
+  account-activation:
+    active-days: 7
+    active-url: localhost:8080/user/active?code=
 

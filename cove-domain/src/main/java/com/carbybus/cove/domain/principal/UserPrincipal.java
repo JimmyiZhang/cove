@@ -16,12 +16,21 @@ public class UserPrincipal {
     /**
      * 用户编号
      */
-    private long userId;
+    private Long userId;
 
     /**
      * 用户姓名
      */
     private String userName;
+
+    /**
+     * 头像
+     * @param
+     * @return
+     * @author jimmy.zhang
+     * @date 2019-07-04
+     */
+    private String userAvatar;
 
     /**
      * 初始化用户
@@ -31,10 +40,10 @@ public class UserPrincipal {
      * @author jimmy.zhang
      * @date 2019-05-27
      */
-    public static UserPrincipal init() {
-        UserPrincipal principal = new UserPrincipal();
-        principal.setUserId(1L);
-
+    public static UserPrincipal init(Long userId, String userName) {
+        UserPrincipal principal = new UserPrincipal()
+                .setUserId(userId)
+                .setUserName(userName);
         return principal;
     }
 }

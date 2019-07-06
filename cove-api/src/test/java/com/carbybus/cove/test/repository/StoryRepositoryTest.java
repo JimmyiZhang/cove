@@ -22,7 +22,7 @@ public class StoryRepositoryTest {
 
     @Test
     public void insert() {
-        UserPrincipal user = UserPrincipal.init();
+        UserPrincipal user = UserPrincipal.init(1L, "jimmy");
         user.setUserId(1L);
 
         Coordinate location = new Coordinate(38.9989752835, 117.6972198486);

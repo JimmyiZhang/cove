@@ -1,10 +1,11 @@
 package com.carbybus.cove.api.config;
 
 import com.carbybus.infrastructure.json.UniteJsonConfig;
-import com.carbybus.infrastructure.redis.UniteRedisConfig;
 import com.carbybus.infrastructure.redis.BaseRedisCacheManager;
+import com.carbybus.infrastructure.redis.UniteRedisConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -50,6 +51,7 @@ public class RedisConfig {
 
     @Primary
     @Bean
+    @ConditionalOnProperty(prefix = "spring.cache", name = "type", havingValue = "REDIS")
     public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
         // 缓存配置对象
         Duration ttl = Duration.ofMinutes(config.getExpiredMinutes());
@@ -71,7 +73,6 @@ public class RedisConfig {
 
     private RedisSerializer<Object> valueSerializer() {
         ObjectMapper objectMapper = jsonConfig.getObjectMapper();
-
         return new GenericJackson2JsonRedisSerializer(objectMapper);
     }
 }

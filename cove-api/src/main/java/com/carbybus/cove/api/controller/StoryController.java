@@ -5,6 +5,7 @@ import com.carbybus.cove.application.StoryApplication;
 import com.carbybus.cove.domain.entity.coordinate.CoordinateAround;
 import com.carbybus.cove.domain.entity.journey.Story;
 import com.carbybus.cove.domain.exception.StoryError;
+import com.carbybus.cove.domain.principal.UserPrincipal;
 import com.carbybus.cove.domain.view.StoryViewOutput;
 import com.carbybus.infrastructure.component.ActionResult;
 import com.carbybus.infrastructure.file.*;
@@ -35,27 +36,6 @@ public class StoryController extends BaseController {
 
     @Autowired
     private StoryApplication storyApp;
-
-    @RequestMapping(value = "cute", method = {RequestMethod.POST, RequestMethod.OPTIONS})
-    public ActionResult upload(@RequestParam(value = "file", required = false) MultipartFile file,
-                               @RequestParam(value = "name", required = false) String name) throws IOException {
-        // 上传文件
-        String fileName = StringUtils.isEmpty(name) ? file.getOriginalFilename() : name;
-        UploadFileResult result = UploadFileUtils.saveFile(uploadConfig.getUploadPath(), fileName, file.getInputStream());
-
-        // 保存故事
-        FileMetadata metadata = FileUtils.getFileMetadata(result);
-        if (!metadata.isValid()) {
-            return failure(StoryError.INVALID_COORDINATE);
-        }
-
-        Story story = Story.fromFile(this.getUser(), metadata);
-        storyApp.save(story);
-
-        result.setSize(file.getSize());
-        result.setType(file.getContentType());
-        return success(result);
-    }
 
     @RequestMapping(value = "near", method = RequestMethod.GET)
     public ActionResult near(CoordinateAround input) {

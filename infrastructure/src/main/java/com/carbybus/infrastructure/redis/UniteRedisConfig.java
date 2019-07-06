@@ -18,7 +18,7 @@ public class UniteRedisConfig {
      * 过期时间，单位分钟
      * 默认无过期
      */
-    private long expiredMinutes = 0;
+    private long expiredMinutes = 30 * 24 * 60;
 
     /**
      * 分组分隔符
