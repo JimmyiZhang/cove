@@ -1,6 +1,7 @@
 package com.carbybus.infrastructure.jwt;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * jwt输入结果
@@ -9,8 +10,11 @@ import lombok.Data;
  * @author jimmy.zhang
  * @date 2019-05-15
  */
-@Data
+@AllArgsConstructor
 public class JwtResult {
+    @Getter
     private String token;
+
+    @Getter
     private Integer expire;
 }

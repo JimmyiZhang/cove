@@ -28,14 +28,8 @@ import java.util.UUID;
 @Component
 public class JwtUtils {
     @Autowired
-    private  UniteJwtConfig config;
+    private UniteJwtConfig config;
 
-    /**
-     * 工具类使用私有构造器覆盖公共构造器，防止公共构造器被调用
-     * Sonar Code smell Major squid:S1118
-     */
-    private JwtUtils() {
-    }
 
     /**
      * 生成Token
@@ -57,7 +51,7 @@ public class JwtUtils {
         Date exp = Date.from(Instant.now().plus(expMinutes, ChronoUnit.MINUTES));
         String jwtId = UUID.randomUUID().toString();
 
-        JwtResult result = new JwtResult();
+        JwtResult result;
         try {
             Algorithm algorithm = Algorithm.HMAC512(tokenSecret);
             String token = JWT.create()
@@ -68,8 +62,8 @@ public class JwtUtils {
                     .withJWTId(jwtId)
                     .withClaim(config.getTokenClaim(), id)
                     .sign(algorithm);
-            result.setToken(token);
-            result.setExpire(expMinutes);
+
+            result = new JwtResult(token, expMinutes);
         } catch (JWTCreationException ex) {
             throw new BusinessException(JwtTokenError.CREATION_EXCEPTION, ex);
         }
@@ -153,7 +147,7 @@ public class JwtUtils {
             throw new BusinessException(JwtTokenError.INVALID_SECRET);
         }
 
-        JwtResult result = new JwtResult();
+        JwtResult result = null;
         try {
             Algorithm algorithm = Algorithm.HMAC512(tokenSecret);
             JWTVerifier verifier = JWT.require(algorithm)
@@ -180,8 +174,7 @@ public class JwtUtils {
                     .withClaim(config.getTokenClaim(), id)
                     .sign(algorithm);
 
-            result.setToken(reToken);
-            result.setExpire(expMinutes);
+            result = new JwtResult(reToken, expMinutes);
         } catch (JWTDecodeException ex) {
             throw new BusinessException(JwtTokenError.DECODE_EXCEPTION, ex);
         } catch (JWTVerificationException ex) {

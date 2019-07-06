@@ -1,4 +1,4 @@
-package utils;
+package com.carbybus.infrastructure.utils;
 
 import com.carbybus.infrastructure.http.HttpUtils;
 import org.junit.Test;

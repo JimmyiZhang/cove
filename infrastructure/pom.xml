@@ -98,13 +98,5 @@
             <version>2.11.0</version>
         </dependency>
         <!-- image end-->
-
-        <!-- email -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-email</artifactId>
-            <version>1.5</version>
-        </dependency>
-        <!-- email end -->
     </dependencies>
 </project>

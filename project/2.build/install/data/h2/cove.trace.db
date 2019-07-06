@@ -631,7 +631,7 @@ SELECT  id,url,subject,description,location,take_time,create_time,owner_id  FROM
 	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
 	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:684)
 	at com.carbybus.cove.application.impl.StoryApplicationImpl$$EnhancerBySpringCGLIB$$9c501dd4.listByName(<generated>)
-	at com.carbybus.cove.test.application.StoryApplicationTest.listByName(StoryApplicationTest.java:44)
+	at StoryApplicationTest.listByName(StoryApplicationTest.java:44)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)

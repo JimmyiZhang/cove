@@ -1,4 +1,4 @@
-package generator;
+package com.carbybus.infrastructure.generator;
 
 import com.carbybus.infrastructure.generator.KeyGeneratorBuilder;
 import org.junit.Test;
