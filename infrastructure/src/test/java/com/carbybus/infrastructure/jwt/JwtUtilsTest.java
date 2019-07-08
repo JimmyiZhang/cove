@@ -3,6 +3,7 @@ package com.carbybus.infrastructure.jwt;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
@@ -11,10 +12,12 @@ import org.springframework.util.Assert;
 @ContextConfiguration(classes = UniteJwtConfig.class)
 public class JwtUtilsTest {
     @Autowired
-    JwtUtils utils;
+    ApplicationContext context;
 
     @Test
     public void create() {
+        JwtUtils utils = context.getBean(JwtUtils.class);
+
         JwtResult result = utils.create("1");
 
         String token = result.getToken();
