@@ -7,10 +7,10 @@ package com.carbybus.infrastructure.exception;
  * @date 2019-05-31
  */
 public enum FileError implements BusinessError {
-    NOT_FOUND(601, "文件未找到"),
-    CREATE_ERROR(602, "创建失败"),
-    READ_ERROR(603, "读取失败"),
-    WRITE_ERROR(604, "写失败");
+    NOT_FOUND(300, "文件未找到"),
+    CREATE_ERROR(301, "创建失败"),
+    READ_ERROR(302, "读取失败"),
+    WRITE_ERROR(303, "写失败");
 
     /**
      * 枚举值

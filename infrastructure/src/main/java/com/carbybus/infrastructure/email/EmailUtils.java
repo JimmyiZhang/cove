@@ -4,6 +4,7 @@ import com.carbybus.infrastructure.component.ActionResult;
 import com.carbybus.infrastructure.exception.NetworkError;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -23,7 +24,7 @@ import javax.mail.internet.MimeMessage;
 @Component
 public class EmailUtils {
     @Autowired
-    private JavaMailSender sender;
+    JavaMailSender sender;
 
     @Autowired
     MailProperties config;

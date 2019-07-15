@@ -1,3 +1,16 @@
+# spring config
+spring:
+  # 发送邮件配置
+  mail:
+    user-name: jimmymzhang@163.com
+    password: 43z58j70m36~
+    host: smtp.163.com
+    port: 465
+    properties:
+      mail.smtp.user: jimmymzhang@163.com
+      mail.smtp.auth: true
+      mail.smtp.ssl.enable: true
+
 # global config
 summer:
   http-config:
@@ -10,5 +23,4 @@ summer:
     token-issue: carbybus
     token-claim: id
   redis-config:
-    expired-minutes: 0
-
+    expired-minutes: 4320
