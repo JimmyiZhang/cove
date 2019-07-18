@@ -34,6 +34,12 @@ logging:
     max-history: 15
     max-size: 20MB
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,beans,env,trace
+
 # mybatis-plus config
 mybatis-plus:
   config-lacation: classpath:mybatis-config.xml

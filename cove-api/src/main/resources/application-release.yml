@@ -28,13 +28,18 @@ spring:
       mail.smtp.auth: true
       mail.smtp.ssl.enable: true
 
-
 # logging config
 logging:
   path: ../logs
   file:
     max-history: 15
     max-size: 20MB
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,trace
 
 # global config
 summer:

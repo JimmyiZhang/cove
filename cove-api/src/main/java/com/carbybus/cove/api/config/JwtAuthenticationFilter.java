@@ -1,7 +1,8 @@
 package com.carbybus.cove.api.config;
 
-import com.carbybus.infrastructure.jwt.UniteJwtConfig;
+import com.carbybus.infrastructure.jwt.JwtClaim;
 import com.carbybus.infrastructure.jwt.JwtUtils;
+import com.carbybus.infrastructure.jwt.UniteJwtConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,11 +48,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
         log.info("jwt认证开始，token: {}", authToken);
-        String claim = jwtUtils.decode(authToken);
 
-        JwtAuthenticationToken jwtToken = new JwtAuthenticationToken(claim);
-        jwtToken.setAuthenticated(true);
-        SecurityContextHolder.getContext().setAuthentication(jwtToken);
-        chain.doFilter(request, response);
+        JwtClaim claim = jwtUtils.decode(authToken);
+
+        if (claim.getSuccess()) {
+            JwtAuthenticationToken jwtToken = new JwtAuthenticationToken(claim.getClaim());
+            jwtToken.setAuthenticated(true);
+            SecurityContextHolder.getContext().setAuthentication(jwtToken);
+            chain.doFilter(request, response);
+        }
     }
 }

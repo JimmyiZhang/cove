@@ -9,7 +9,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.carbybus.infrastructure.exception.BusinessException;
 import com.carbybus.infrastructure.exception.JwtTokenError;
-import com.carbybus.infrastructure.utils.StringConstants;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,6 +26,7 @@ import java.util.UUID;
  * @date 2019-04-03
  */
 @Component
+@Slf4j
 public class JwtUtils {
     @Autowired
     private UniteJwtConfig config;
@@ -78,13 +79,13 @@ public class JwtUtils {
      * @author jimmy.zhang
      * @date 2019-04-03
      */
-    public String decode(String token) {
+    public JwtClaim decode(String token) {
         String tokenSecret = config.getTokenSecret();
         if (StringUtils.isEmpty(tokenSecret)) {
             throw new BusinessException(JwtTokenError.INVALID_SECRET);
         }
 
-        String id = StringConstants.EMPTY;
+        JwtClaim claim;
         try {
             Algorithm algorithm = Algorithm.HMAC512(tokenSecret);
             JWTVerifier verifier = JWT.require(algorithm)
@@ -94,13 +95,15 @@ public class JwtUtils {
             verifier.verify(token);
 
             DecodedJWT code = JWT.decode(token);
-            id = code.getClaim(config.getTokenClaim()).asString();
+            String id = code.getClaim(config.getTokenClaim()).asString();
+            claim = new JwtClaim(true, id);
         } catch (JWTDecodeException ex) {
             throw new BusinessException(JwtTokenError.DECODE_EXCEPTION, ex);
         } catch (JWTVerificationException ex) {
-            throw new BusinessException(JwtTokenError.VERIFICATION_EXCEPTION, ex);
+            log.info("JWT 认证过期：{}", token);
+            claim = new JwtClaim(false, JwtTokenError.VERIFICATION_EXCEPTION.getMessage());
         }
-        return id;
+        return claim;
     }
 
     /**
