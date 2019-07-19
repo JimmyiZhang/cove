@@ -1,5 +1,6 @@
 (function() {
 
+    // ==================本地工具BEGIN====================
     // 保存本地存储
     var setStorage = function(key,val){
         var value = JSON.stringify(val);
@@ -31,6 +32,20 @@
     var removeStorage=function(key){
         window.localStorage.removeItem(key);
     }
+    // ==================本地工具END======================
+
+
+    // ==================公共工具START======================
+    var utils = {};
+    utils.getUrlQuery=function(name){
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return unescape(r[2]);
+        }
+        return null;
+    }
+    // =================公共工具END===================
 
 
     // 输出对象
@@ -51,7 +66,7 @@
             method: option.method,
             mode: 'cors',
             headers: {
-              'Authorization': user.token,
+              'Authorization': 'Bearer ' + user.token,
               'Content-Type': 'application/json'
             }
         }
@@ -64,6 +79,7 @@
                 Object.keys(option.data).forEach(function(key) {
                     option.url = option.url + key + "=" + option.data[key] + "&";
                 });
+                option.url = option.url.substr(0,option.url.length-1);
             break;
             case 'POST':
                 data.body = JSON.stringify(option.data);
@@ -105,6 +121,7 @@
             }, 3000);
         }
     }
+
     // 退出
     exports.logout = function(){
         removeStorage('user.token');
@@ -129,6 +146,7 @@
 
     if(!window.cove) window.cove={};
     window.cove.app = exports;
+    window.cove.utils = utils;
 })();
 
 

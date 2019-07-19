@@ -69,5 +69,5 @@ summer:
 autumn:
   account-activation:
     active-days: 7
-    active-url: localhost:8080/user/active?code=
+    active-url: localhost:8080/active.html?code=
 
