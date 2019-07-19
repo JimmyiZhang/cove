@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" type="image/x-icon" href="/asset/img/logo_40_40.png">
+    <link rel="stylesheet" type="text/css" href="/asset/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/asset/uppy/uppy.min.css">
+    <link rel="stylesheet" type="text/css" href="/asset/viewer/viewer.min.css">
+    <link rel="stylesheet" type="text/css" href="/asset/style.css">
+    <script type="text/javascript"
+            src="https://webapi.amap.com/maps?v=1.4.14&key=6b87d1d3817e5b1c59b8a646300c4b25"></script>
+    <title>发现世界-发现</title>
+</head>
+
+<body>
+<div id="app">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top color-bg-first">
+        <a class="navbar-brand" href="#">
+            <img src="/asset/img/logo_40_40.png"/>发现世界
+        </a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">发现</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">探索</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav right">
+                <li class="nav-item" v-show="game.status=='off'">
+                    <a class="nav-link active" href="#"
+                       v-on:click="begin">开始</a>
+                </li>
+                <li class="nav-item" v-show="game.status=='on'">
+                    <a class="nav-link active" href="#"
+                       v-on:click="end">结束</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="container"></div>
+</div>
+
+<script src="/asset/utils/fetch.js" type="module"></script>
+<script src="/asset/utils/lodash.min.js"></script>
+<script src="/asset/vue/vue.min.js"></script>
+
+<script src="/asset/cove-app.js"></script>
+<script src="/asset/cove-map.js"></script>
+<script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        game:{
+            status:'off'
+        },
+        map:null
+      },
+      methods:{
+        init: function(){
+            this.map = new AMap.Map('container', {
+                resizeEnable: false,
+                zoomEnable: false,
+                zoom: 18,
+                layers: [new AMap.TileLayer.Satellite()],
+            });
+        },
+        begin:function(){
+            this.game.status='on';
+
+            // 随机坐标
+            var bounds = this.map.getBounds();
+            this.map.setLimitBounds(bounds);
+
+        },
+        end:function(){
+            this.game.status='off';
+            this.map.clearLimitBounds();
+        }
+      }
+    })
+
+    app.init();
+
+</script>
+
+</body>
+
+</html>
