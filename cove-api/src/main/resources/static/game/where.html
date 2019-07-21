@@ -10,83 +10,171 @@
     <link rel="stylesheet" type="text/css" href="/asset/viewer/viewer.min.css">
     <link rel="stylesheet" type="text/css" href="/asset/style.css">
     <script type="text/javascript"
-            src="https://webapi.amap.com/maps?v=1.4.14&key=6b87d1d3817e5b1c59b8a646300c4b25"></script>
+        src="https://webapi.amap.com/maps?v=1.4.14&key=6b87d1d3817e5b1c59b8a646300c4b25"></script>
     <title>发现世界-发现</title>
 </head>
 
 <body>
-<div id="app">
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top color-bg-first">
-        <a class="navbar-brand" href="#">
-            <img src="/asset/img/logo_40_40.png"/>发现世界
-        </a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">发现</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">探索</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav right">
-                <li class="nav-item" v-show="game.status=='off'">
-                    <a class="nav-link active" href="#"
-                       v-on:click="begin">开始</a>
-                </li>
-                <li class="nav-item" v-show="game.status=='on'">
-                    <a class="nav-link active" href="#"
-                       v-on:click="end">结束</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <div id="app">
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top color-bg-first">
+            <a class="navbar-brand" href="#">
+                <img src="/asset/img/logo_40_40.png" />发现世界
+            </a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">发现</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">探索</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav right">
+                    <li class="nav-item" v-show="game.status=='off'">
+                        <a class="nav-link active" href="#" v-on:click="begin">开始</a>
+                    </li>
+                    <li class="nav-item" v-show="game.status=='on'">
+                        <a class="nav-link active" href="#" v-on:click="end">结束</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
 
-    <div id="container"></div>
-</div>
+        <div id="container"></div>
+    </div>
 
-<script src="/asset/utils/fetch.js" type="module"></script>
-<script src="/asset/utils/lodash.min.js"></script>
-<script src="/asset/vue/vue.min.js"></script>
+    <script src="/asset/utils/fetch.js" type="module"></script>
+    <script src="/asset/utils/lodash.min.js"></script>
+    <script src="/asset/vue/vue.min.js"></script>
 
-<script src="/asset/cove-app.js"></script>
-<script src="/asset/cove-map.js"></script>
-<script>
-    var app = new Vue({
-      el: '#app',
-      data: {
-        game:{
-            status:'off'
-        },
-        map:null
-      },
-      methods:{
-        init: function(){
-            this.map = new AMap.Map('container', {
-                resizeEnable: false,
-                zoomEnable: false,
-                zoom: 18,
-                layers: [new AMap.TileLayer.Satellite()],
-            });
-        },
-        begin:function(){
-            this.game.status='on';
+    <script src="/asset/cove-app.js"></script>
+    <script src="/asset/cove-map.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                game: {
+                    status: 'off',
+                    center: [],
+                    map: null,
+                    marker: null
+                },
+                config: {
+                    maxLng: 0.4,
+                    maxLat: 0.2,
+                    maxZoom: 12,
+                    defaultZoom: 4,
+                }
+            },
+            methods: {
+                init: function () {
+                    this.game.map = new AMap.Map('container', {
+                        resizeEnable: false,
+                        zoom: this.config.defaultZoom,
+                        layers: [new AMap.TileLayer.Satellite()],
+                    });
+                },
+                zoomEvent: function () {
+                    var zoom = this.game.map.getZoom();
+                    if (zoom < this.config.maxZoom) {
+                        this.game.map.setZoom(this.config.maxZoom);
+                        console.log('exceed max zoom level');
+                    }
+                },
+                moveEvent: function () {
+                    if (this.game.status == 'off') return;
 
-            // 随机坐标
-            var bounds = this.map.getBounds();
-            this.map.setLimitBounds(bounds);
+                    var center = { lng: 0, lat: 0 };
 
-        },
-        end:function(){
-            this.game.status='off';
-            this.map.clearLimitBounds();
-        }
-      }
-    })
+                    var location = {
+                        lat: this.game.map.getCenter().getLat(),
+                        lng: this.game.map.getCenter().getLng()
+                    };
+                    var appoint = this.game.center;
 
-    app.init();
+                    // 超过最小纬度
+                    var minLat = appoint.lat - location.lat;
+                    if (minLat > this.config.maxLat) {
+                        center.lat = appoint.lat - this.config.maxLat;
+                    }
+                    // 超过最大纬度
+                    var maxLat = location.lat - appoint.lat;
+                    if (maxLat > this.config.maxLat) {
+                        center.lat = appoint.lat + this.config.maxLat;
+                    }
 
-</script>
+                    // 超过最小经度
+                    var minLng = appoint.lng - location.lng;
+                    if (minLng > this.config.maxLng) {
+                        center.lng = appoint.lng - this.config.maxLng;
+                    }
+                    // 超过最大经度
+                    var maxLng = location.lng - appoint.lng;
+                    if (maxLng > this.config.maxLng) {
+                        center.lng = appoint.lng + this.config.maxLng;
+                    }
+
+                    if (center.lat || center.lng) {
+                        center.lat = center.lat || location.lat;
+                        center.lng = center.lng || location.lng;
+                        var center = new AMap.LngLat(center.lng, center.lat);    
+                        this.game.map.setCenter(center);
+                        console.log('exceed move bound');
+                    }
+                },
+                seedCenter: function () {
+                    var lng = cove.utils.getRandomNumber(8000, 13000) / 100.01;
+                    var lat = cove.utils.getRandomNumber(2000, 5000) / 100.01;
+                    console.log(`longitute:${lng},latitude:${lat}`);
+
+                    // 中心位置
+                    var center = new AMap.LngLat(lng, lat);
+                    this.game.map.setCenter(center);
+                    this.game.center = { lng: lng, lat: lat };
+
+                    // 设置标记
+                    this.game.marker = new AMap.Marker({
+                        position: new AMap.LngLat(lng, lat),
+                        offset: new AMap.Pixel(-13, -30)
+                    });
+                    this.game.marker.setMap(this.game.map);
+                },
+                begin: function () {
+                    var that = this;
+
+                    that.game.map.setZoom(that.config.maxZoom);
+
+                    // 锁定缩放，只能缩小不能放大
+                    that.game.map.on("zoomend", that.zoomEvent);
+
+                    // 锁定移动，固定范围
+                    that.game.map.on("moveend", that.moveEvent);
+
+                    // 随机坐标
+                    that.seedCenter();
+                    that.game.status = 'on';
+                },
+                end: function () {
+                    var that = this;
+                    that.game.status = 'off';
+
+                    // 清除标记
+                    if (that.game.marker) {
+                        that.game.marker.setMap(null);
+                        that.game.marker = null;
+                    }
+
+                    // 恢复缩放
+                    that.game.map.off("zoomend", that.zoomEvent);
+                    that.game.map.off("moveend", that.moveEvent);
+                    that.game.map.setZoom(that.config.defaultZoom);
+                }
+            }
+        })
+
+        app.init();
+
+    </script>
 
 </body>
 
