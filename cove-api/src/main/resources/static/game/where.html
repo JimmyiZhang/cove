@@ -60,10 +60,10 @@
                     marker: null
                 },
                 config: {
-                    maxLng: 0.4,
-                    maxLat: 0.2,
-                    maxZoom: 12,
-                    defaultZoom: 4,
+                    maxLng: 0.02,
+                    maxLat: 0.01,
+                    maxZoom: 17,
+                    defaultZoom: 6,
                 }
             },
             methods: {
@@ -72,6 +72,25 @@
                         resizeEnable: false,
                         zoom: this.config.defaultZoom,
                         layers: [new AMap.TileLayer.Satellite()],
+                    });
+                    var map = this.game.map;
+                    AMap.plugin('AMap.Geolocation', function() {
+                        var geolocation = new AMap.Geolocation({
+                            enableHighAccuracy: true,
+                            timeout: 10000,
+                            showMarker: true,
+                            showCircle: false,
+                            zoomToAccuracy: true
+                        });
+
+                        geolocation.getCurrentPosition();
+                        AMap.event.addListener(geolocation, 'complete', function(result) {
+                            console.log('定位成功');
+                            map.setCenter(result.position);
+                        });
+                        AMap.event.addListener(geolocation, 'error', function(result) {
+                            console.log('定位失败');
+                        });
                     });
                 },
                 zoomEvent: function () {
@@ -123,8 +142,11 @@
                     }
                 },
                 seedCenter: function () {
-                    var lng = cove.utils.getRandomNumber(8000, 13000) / 100.01;
-                    var lat = cove.utils.getRandomNumber(2000, 5000) / 100.01;
+                    var meLng = this.game.map.getCenter().getLng()*10000;
+                    var meLat = this.game.map.getCenter().getLat()*10000;
+
+                    var lng = cove.utils.getRandomNumber(meLng - 1000, meLng + 1000)/10000.01;
+                    var lat = cove.utils.getRandomNumber(meLat - 500, meLat + 500)/10000.01;
                     console.log(`longitute:${lng},latitude:${lat}`);
 
                     // 中心位置
