@@ -6,11 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" type="image/x-icon" href="/asset/img/logo_40_40.png">
     <link rel="stylesheet" type="text/css" href="/asset/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/asset/uppy/uppy.min.css">
-    <link rel="stylesheet" type="text/css" href="/asset/viewer/viewer.min.css">
+    <link rel="stylesheet" type="text/css" href="/asset/font-awesome/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/asset/style.css">
-    <script type="text/javascript"
-        src="https://webapi.amap.com/maps?v=1.4.14&key=6b87d1d3817e5b1c59b8a646300c4b25"></script>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.14&key=6b87d1d3817e5b1c59b8a646300c4b25"></script>
     <title>发现世界-发现</title>
 </head>
 
@@ -29,18 +27,23 @@
                         <a class="nav-link" href="#">探索</a>
                     </li>
                 </ul>
-                <ul class="navbar-nav right">
-                    <li class="nav-item" v-show="game.status=='off'">
-                        <a class="nav-link active" href="#" v-on:click="begin">开始</a>
-                    </li>
-                    <li class="nav-item" v-show="game.status=='on'">
-                        <a class="nav-link active" href="#" v-on:click="end">结束</a>
-                    </li>
-                </ul>
             </div>
         </nav>
 
         <div id="container"></div>
+
+        <div class="map-card">
+            <div class="map-card-item">
+                <a class="item" href="javascript:void(0)" v-show="game.status=='off'" v-on:click="begin">
+                    <i class="fa fa-chevron-circle-right fa-lg"></i><span class="name">开始</span></a>
+                <a class="item" href="javascript:void(0)" v-show="game.status=='on'" v-on:click="verify">
+                    <i class="fa fa-globe fa-lg"></i><span class="name">验证</span></a>
+                <a class="item" href="javascript:void(0)" v-show="game.status=='on'||game.status=='of'" v-on:click="end">
+                    <i class="fa fa-check-circle fa-lg"></i><span class="name">完成</span></a>
+                <a class="item" href="javascript:void(0)" v-show="game.status=='on'" v-on:click="backStart">
+                    <i class="fa fa-circle-o-notch fa-lg"></i><span class="name">起点</span></a>
+            </div>
+        </div>
     </div>
 
     <script src="/asset/utils/fetch.js" type="module"></script>
@@ -55,9 +58,10 @@
             data: {
                 game: {
                     status: 'off',
-                    center: [],
                     map: null,
-                    marker: null
+                    center: [],
+                    answer: [],
+                    answerMarker: null
                 },
                 config: {
                     maxLng: 0.02,
@@ -67,7 +71,7 @@
                 }
             },
             methods: {
-                init: function () {
+                init: function() {
                     this.game.map = new AMap.Map('container', {
                         resizeEnable: false,
                         zoom: this.config.defaultZoom,
@@ -93,17 +97,109 @@
                         });
                     });
                 },
-                zoomEvent: function () {
+                addMarker: function(point, label) {
+                    var labels = {
+                        target: {
+                            icon: '/asset/img/ico_map_target.png',
+                            label: '目标点'
+                        },
+                        answer: {
+                            icon: '/asset/img/ico_map_answer.png',
+                            label: '我的点'
+                        },
+                        default: {
+                            icon: '/asset/img/ico_map_target.png',
+                            label: ''
+                        }
+                    }
+
+                    var pl = labels[label] || labels.default;
+                    var marker = new AMap.Marker({
+                        icon: pl.icon,
+                        position: new AMap.LngLat(point.lng, point.lat),
+                        anchor: 'bottom-center',
+                        offset: new AMap.Pixel(0, 6)
+                    });
+                    marker.setLabel({
+                        offset: new AMap.Pixel(40, 10),
+                        content: `<div class='info'>${pl.label}</div>`,
+                    });
+                    marker.setMap(this.game.map);
+                    return marker;
+                },
+                addPolyline: function(point1, point2) {
+                    var p1 = new AMap.LngLat(point1.lng, point1.lat);
+                    var p2 = new AMap.LngLat(point2.lng, point2.lat);
+
+                    var line = new AMap.Polyline({
+                        strokeColor: '#ff0000',
+                        strokeStyle: 'dashed',
+                        path: [p1, p2]
+                    });
+                    this.game.map.add([line]);
+
+                    // 计算距离
+                    this.addDistance(point1, point2);
+                    return line;
+                },
+                addDistance: function(point1, point2) {
+                    var p1 = new AMap.LngLat(point1.lng, point1.lat);
+                    var p2 = new AMap.LngLat(point2.lng, point2.lat);
+
+                    var distance = Math.round(p1.distance(p2));
+                    var position = p1.divideBy(2).add(p2.divideBy(2));
+
+                    var aparts = [{
+                        min: 0,
+                        max: 500,
+                        txt: '一步之遥'
+                    }, {
+                        min: 500,
+                        max: 5000,
+                        txt: '近在咫尺'
+                    }, {
+                        min: 5000,
+                        max: 50000,
+                        txt: '目力所及'
+                    }, {
+                        min: 50000,
+                        max: 500000,
+                        txt: '千里之外'
+                    }, {
+                        min: 0,
+                        max: 500000000,
+                        txt: '相距'
+                    }];
+
+                    var apart = _.find(aparts, function(item) {
+                        return distance > item.min && distance < item.max
+                    });
+
+                    new AMap.Text({
+                        text: `${apart.txt}: ${distance}米`,
+                        map: this.game.map,
+                        position: position,
+                        style: {
+                            'background-color': '#29b6f6',
+                            'border-color': '#e1f5fe',
+                            'font-size': '12px'
+                        }
+                    });
+                },
+                zoomEvent: function() {
                     var zoom = this.game.map.getZoom();
                     if (zoom < this.config.maxZoom) {
                         this.game.map.setZoom(this.config.maxZoom);
                         console.log('exceed max zoom level');
                     }
                 },
-                moveEvent: function () {
+                moveEvent: function() {
                     if (this.game.status == 'off') return;
 
-                    var center = { lng: 0, lat: 0 };
+                    var center = {
+                        lng: 0,
+                        lat: 0
+                    };
 
                     var location = {
                         lat: this.game.map.getCenter().getLat(),
@@ -114,56 +210,77 @@
                     // 超过最小纬度
                     var minLat = appoint.lat - location.lat;
                     if (minLat > this.config.maxLat) {
-                        center.lat = appoint.lat - this.config.maxLat;
+                        center.lat = location.lat + minLat - this.config.maxLat + 0.0001;
                     }
                     // 超过最大纬度
                     var maxLat = location.lat - appoint.lat;
                     if (maxLat > this.config.maxLat) {
-                        center.lat = appoint.lat + this.config.maxLat;
+                        center.lat = location.lat - maxLat + this.config.maxLat - 0.0001;
                     }
 
                     // 超过最小经度
                     var minLng = appoint.lng - location.lng;
                     if (minLng > this.config.maxLng) {
-                        center.lng = appoint.lng - this.config.maxLng;
+                        center.lng = location.lng + minLng - this.config.maxLng + 0.0001;
                     }
                     // 超过最大经度
                     var maxLng = location.lng - appoint.lng;
                     if (maxLng > this.config.maxLng) {
-                        center.lng = appoint.lng + this.config.maxLng;
+                        center.lng = location.lng - maxLng + this.config.maxLng - 0.0001;
                     }
 
                     if (center.lat || center.lng) {
                         center.lat = center.lat || location.lat;
                         center.lng = center.lng || location.lng;
-                        var center = new AMap.LngLat(center.lng, center.lat);    
+                        var center = new AMap.LngLat(center.lng, center.lat);
                         this.game.map.setCenter(center);
                         console.log('exceed move bound');
                     }
                 },
-                seedCenter: function () {
-                    var meLng = this.game.map.getCenter().getLng()*10000;
-                    var meLat = this.game.map.getCenter().getLat()*10000;
+                clickEvent: function(e) {
+                    if (this.game.answerMarker) {
+                        this.game.map.remove(this.game.answerMarker);
+                        this.game.answerMarker = null;
+                    }
 
-                    var lng = cove.utils.getRandomNumber(meLng - 1000, meLng + 1000)/10000.01;
-                    var lat = cove.utils.getRandomNumber(meLat - 500, meLat + 500)/10000.01;
-                    console.log(`longitute:${lng},latitude:${lat}`);
+                    this.game.answer = {
+                        lng: e.lnglat.getLng(),
+                        lat: e.lnglat.getLat()
+                    };
+                    this.game.answerMarker = this.addMarker(this.game.answer, 'answer');
+                    console.log(`answer point is: ${this.game.answer.lng},${this.game.answer.lat} `);
+                },
+                seedCenter: function() {
+                    var times = 10000.01;
+                    var range = 0.01 * times;
+                    var meLng = this.game.map.getCenter().getLng() * times;
+                    var meLat = this.game.map.getCenter().getLat() * times;
+
+                    var lng = cove.utils.getRandomNumber(meLng - range, meLng + range) / times;
+                    var lat = cove.utils.getRandomNumber(meLat - range * 0.5, meLat + range * 0.5) / times;
+                    console.log(`seed point : ${lng},${lat}`);
 
                     // 中心位置
                     var center = new AMap.LngLat(lng, lat);
                     this.game.map.setCenter(center);
-                    this.game.center = { lng: lng, lat: lat };
+                    this.game.center = {
+                        lng: lng,
+                        lat: lat
+                    };
 
                     // 设置标记
-                    this.game.marker = new AMap.Marker({
-                        position: new AMap.LngLat(lng, lat),
-                        offset: new AMap.Pixel(-13, -30)
-                    });
-                    this.game.marker.setMap(this.game.map);
+                    this.addMarker(this.game.center, 'target');
                 },
-                begin: function () {
+                // 回到起点
+                backStart: function() {
+                    var center = this.game.center;
+                    var appoint = new AMap.LngLat(center.lng, center.lat);
+                    this.game.map.setCenter(appoint);
+                },
+                // 开始游戏
+                begin: function() {
                     var that = this;
-
+                    that.game.map.clearMap();
                     that.game.map.setZoom(that.config.maxZoom);
 
                     // 锁定缩放，只能缩小不能放大
@@ -174,28 +291,45 @@
 
                     // 随机坐标
                     that.seedCenter();
+                    that.game.answer = null;
+                    this.game.line = null;
                     that.game.status = 'on';
                 },
-                end: function () {
-                    var that = this;
-                    that.game.status = 'off';
+                // 开始验证
+                verify: function() {
+                    this.game.status = 'of';
 
                     // 清除标记
-                    if (that.game.marker) {
-                        that.game.marker.setMap(null);
-                        that.game.marker = null;
-                    }
+                    this.game.map.clearMap();
 
                     // 恢复缩放
-                    that.game.map.off("zoomend", that.zoomEvent);
-                    that.game.map.off("moveend", that.moveEvent);
-                    that.game.map.setZoom(that.config.defaultZoom);
+                    this.game.map.off("zoomend", this.zoomEvent);
+                    this.game.map.off("moveend", this.moveEvent);
+                    this.game.map.setZoom(this.config.defaultZoom);
+
+                    // 点击事件
+                    this.game.map.on("click", this.clickEvent);
+                },
+                end: function() {
+                    if (this.game.status == 'on') {
+                        this.verify();
+                    }
+                    this.game.status = 'off';
+
+                    // 恢复点击
+                    this.game.map.off("click", this.clickEvent);
+
+                    // 显示起始点和验证点
+                    if (this.game.center && this.game.answer) {
+                        this.addMarker(this.game.center, 'target');
+                        this.addPolyline(this.game.center, this.game.answer);
+                        this.game.map.setFitView([this.game.marker, this.game.answer]);
+                    }
                 }
             }
         })
 
         app.init();
-
     </script>
 
 </body>
