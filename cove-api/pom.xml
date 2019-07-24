@@ -145,7 +145,7 @@
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
-                <filtering>true</filtering>
+                <filtering>false</filtering>
                 <includes>
                     <include>mappers/**</include>
                     <include>static/**</include>

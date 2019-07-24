@@ -79,25 +79,83 @@
 }
 
 .map-card-item {
-    padding: 12px 12px;
+    padding: 12px 12px 32px 12px;
     background: #fff;
     border-radius: 3px;
 }
 
 .map-card-item .item {
     float: left;
-    padding: 0px 10px 12px 10px;
+    padding: 0px 10px 0px 10px;
     font-size: 14px;
     vertical-align: middle;
     cursor: pointer;
     overflow: visible;
     zoom: 1;
     color: #5f6477;
-    line-height: 18px;
+}
+
+.map-card-item .divided {
+    border-left: 1px dotted #ccc;
 }
 
 .map-card-item .item .name {
     padding: 5px;
+}
+
+.map-guide {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    z-index: 1999;
+    border-radius: 1px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, .15)
+}
+
+.map-guide-item {
+    padding: 2px 2px;
+    background: #ff0;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.map-search {
+    position: fixed;
+    width: 240px;
+    top: 65px;
+    left: 15px;
+    z-index: 1999;
+    border-radius: 1px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, .15)
+}
+
+.map-search-item {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 100%;
+}
+
+.map-search-item input {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 0px solid #ced4da;
+    border-radius: .25rem;
+}
+
+.map-search-item .append {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    color: #01AE88;
 }
 
 .amap-marker-label {

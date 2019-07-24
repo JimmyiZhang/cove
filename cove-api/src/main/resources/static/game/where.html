@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="/asset/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/asset/font-awesome/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/asset/style.css">
-    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.14&key=6b87d1d3817e5b1c59b8a646300c4b25"></script>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.14&key=6b87d1d3817e5b1c59b8a646300c4b25&plugin=AMap.Autocomplete,AMap.PlaceSearch"></script>
     <title>发现世界-发现</title>
 </head>
 
@@ -20,7 +20,7 @@
             </a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="/index.html">首页</a>
                     </li>
                     <li class="nav-item active">
@@ -32,16 +32,31 @@
 
         <div id="container"></div>
 
+        <div class="map-search">
+            <div class="map-search-item">
+                <input type="text" id="citySearch" placeholder="搜索城市，位置">
+                <div class="append">
+                    <i class="fa fa-search"></i>
+                </div>
+            </div>
+        </div>
+
         <div class="map-card">
             <div class="map-card-item">
                 <a class="item" href="javascript:void(0)" v-show="game.status=='off'" v-on:click="begin">
-                    <i class="fa fa-chevron-circle-right fa-lg"></i><span class="name">开始</span></a>
+                    <i class="fa fa-chevron-circle-right fa-lg"></i><span class="name">开始探索</span></a>
                 <a class="item" href="javascript:void(0)" v-show="game.status=='on'" v-on:click="verify">
-                    <i class="fa fa-globe fa-lg"></i><span class="name">验证</span></a>
+                    <i class="fa fa-globe fa-lg"></i><span class="name">验证位置</span></a>
                 <a class="item" href="javascript:void(0)" v-show="game.status=='on'||game.status=='of'" v-on:click="end">
-                    <i class="fa fa-check-circle fa-lg"></i><span class="name">完成</span></a>
-                <a class="item" href="javascript:void(0)" v-show="game.status=='on'" v-on:click="backStart">
-                    <i class="fa fa-circle-o-notch fa-lg"></i><span class="name">起点</span></a>
+                    <i class="fa fa-check-circle fa-lg"></i><span class="name">查看结果</span></a>
+                <a class="item divided" href="javascript:void(0)" v-show="game.status=='on'" v-on:click="backStart">
+                    <i class="fa fa-circle-o-notch fa-lg"></i><span class="name">回到起点</span></a>
+            </div>
+        </div>
+
+        <div class="map-guide">
+            <div class="map-guide-item">
+                >> {{game.guide}}
             </div>
         </div>
     </div>
@@ -58,6 +73,7 @@
             data: {
                 game: {
                     status: 'off',
+                    guide: '',
                     map: null,
                     center: [],
                     answer: [],
@@ -68,10 +84,56 @@
                     maxLat: 0.01,
                     maxZoom: 17,
                     defaultZoom: 6,
+                },
+                dict: {
+                    labels: {
+                        target: {
+                            icon: '/asset/img/ico_map_target.png',
+                            label: '目标点'
+                        },
+                        answer: {
+                            icon: '/asset/img/ico_map_answer.png',
+                            label: '我的点'
+                        },
+                        default: {
+                            icon: '/asset/img/ico_map_target.png',
+                            label: ''
+                        }
+                    },
+                    aparts: [{
+                        min: 0,
+                        max: 500,
+                        txt: '一步之遥'
+                    }, {
+                        min: 500,
+                        max: 5000,
+                        txt: '近在咫尺'
+                    }, {
+                        min: 5000,
+                        max: 50000,
+                        txt: '目力所及'
+                    }, {
+                        min: 50000,
+                        max: 500000,
+                        txt: '千里之外'
+                    }, {
+                        min: 0,
+                        max: 500000000,
+                        txt: '相距'
+                    }],
+                    guides: {
+                        off: '点击开始探索，将随机生成一个#目标点',
+                        on: '查看#目标点周围，确认后点击验证位置',
+                        of: '选择确认位置，点击查看结果即可显示最终结果'
+                    }
                 }
             },
             methods: {
                 init: function() {
+                    this.initMap();
+                    this.initSearch();
+                },
+                initMap: function() {
                     this.game.map = new AMap.Map('container', {
                         resizeEnable: false,
                         zoom: this.config.defaultZoom,
@@ -96,24 +158,28 @@
                             console.log('定位失败');
                         });
                     });
+                    this.addGuide();
+                },
+                initSearch: function() {
+                    var that = this;
+                    var autoSearch = new AMap.Autocomplete({
+                        input: "citySearch"
+                    });
+                    AMap.event.addListener(autoSearch, "select", function(e) {
+                        if (e.poi.location) {
+                            that.game.map.setCenter(e.poi.location);
+                        } else {
+                            that.game.map.setCity(e.poi.adcode);
+                        }
+
+                        that.game.map.setZoom(12);
+                    });
+                },
+                addGuide: function() {
+                    this.game.guide = this.dict.guides[this.game.status];
                 },
                 addMarker: function(point, label) {
-                    var labels = {
-                        target: {
-                            icon: '/asset/img/ico_map_target.png',
-                            label: '目标点'
-                        },
-                        answer: {
-                            icon: '/asset/img/ico_map_answer.png',
-                            label: '我的点'
-                        },
-                        default: {
-                            icon: '/asset/img/ico_map_target.png',
-                            label: ''
-                        }
-                    }
-
-                    var pl = labels[label] || labels.default;
+                    var pl = this.dict.labels[label] || this.dict.default;
                     var marker = new AMap.Marker({
                         icon: pl.icon,
                         position: new AMap.LngLat(point.lng, point.lat),
@@ -149,29 +215,7 @@
                     var distance = Math.round(p1.distance(p2));
                     var position = p1.divideBy(2).add(p2.divideBy(2));
 
-                    var aparts = [{
-                        min: 0,
-                        max: 500,
-                        txt: '一步之遥'
-                    }, {
-                        min: 500,
-                        max: 5000,
-                        txt: '近在咫尺'
-                    }, {
-                        min: 5000,
-                        max: 50000,
-                        txt: '目力所及'
-                    }, {
-                        min: 50000,
-                        max: 500000,
-                        txt: '千里之外'
-                    }, {
-                        min: 0,
-                        max: 500000000,
-                        txt: '相距'
-                    }];
-
-                    var apart = _.find(aparts, function(item) {
+                    var apart = _.find(this.dict.aparts, function(item) {
                         return distance > item.min && distance < item.max
                     });
 
@@ -294,10 +338,12 @@
                     that.game.answer = null;
                     this.game.line = null;
                     that.game.status = 'on';
+                    this.addGuide();
                 },
                 // 开始验证
                 verify: function() {
                     this.game.status = 'of';
+                    this.addGuide();
 
                     // 清除标记
                     this.game.map.clearMap();
@@ -315,6 +361,7 @@
                         this.verify();
                     }
                     this.game.status = 'off';
+                    this.addGuide();
 
                     // 恢复点击
                     this.game.map.off("click", this.clickEvent);
@@ -323,7 +370,9 @@
                     if (this.game.center && this.game.answer) {
                         this.addMarker(this.game.center, 'target');
                         this.addPolyline(this.game.center, this.game.answer);
-                        this.game.map.setFitView([this.game.marker, this.game.answer]);
+
+
+                        this.game.map.setFitView([this.game.center, this.game.answer]);
                     }
                 }
             }
