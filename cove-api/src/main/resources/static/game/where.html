@@ -43,13 +43,24 @@
 
         <div class="map-card">
             <div class="map-card-item">
+                <a class="item" href="javascript:void(0)" v-show="game.status=='off'" v-on:click="chooseLevel">
+                    <span class="name">简单</span></a>
+                <a class="item" href="javascript:void(0)" v-show="game.status=='off'" v-on:click="chooseLevel">
+                    <span class="name">一般</span></a>
+                <a class="item" href="javascript:void(0)" v-show="game.status=='off'" v-on:click="chooseLevel">
+                    <span class="name">困难</span></a>
+                <a class="item" href="javascript:void(0)" v-show="game.status=='off'" v-on:click="chooseLevel">
+                    <span class="name">挑战</span></a>
+
+                <a class="item divided-post" href="javascript:void(0)" v-show="game.status=='off'" v-on:click="chooseLevel">
+                    <i class="fa fa-chevron-circle-left fa-lg"></i><span class="name">简单</span></a>
                 <a class="item" href="javascript:void(0)" v-show="game.status=='off'" v-on:click="begin">
                     <i class="fa fa-chevron-circle-right fa-lg"></i><span class="name">开始探索</span></a>
                 <a class="item" href="javascript:void(0)" v-show="game.status=='on'" v-on:click="verify">
                     <i class="fa fa-globe fa-lg"></i><span class="name">验证位置</span></a>
                 <a class="item" href="javascript:void(0)" v-show="game.status=='on'||game.status=='of'" v-on:click="end">
                     <i class="fa fa-check-circle fa-lg"></i><span class="name">查看结果</span></a>
-                <a class="item divided" href="javascript:void(0)" v-show="game.status=='on'" v-on:click="backStart">
+                <a class="item divided-prep" href="javascript:void(0)" v-show="game.status=='on'" v-on:click="backStart">
                     <i class="fa fa-circle-o-notch fa-lg"></i><span class="name">回到起点</span></a>
             </div>
         </div>
@@ -314,6 +325,9 @@
 
                     // 设置标记
                     this.addMarker(this.game.center, 'target');
+                },
+                chooseLevel: function() {
+
                 },
                 // 回到起点
                 backStart: function() {

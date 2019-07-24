@@ -95,8 +95,12 @@
     color: #5f6477;
 }
 
-.map-card-item .divided {
+.map-card-item .divided-prep {
     border-left: 1px dotted #ccc;
+}
+
+.map-card-item .divided-post {
+    border-right: 1px dotted #ccc;
 }
 
 .map-card-item .item .name {
