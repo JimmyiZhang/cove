@@ -29,6 +29,7 @@ public class StoryApplicationTest {
 
         StoryCreateInput input = new StoryCreateInput();
         input.setSubject("文化之旅")
+                .setName("文化之旅")
                 .setUrl("http://www.carbycar.com.cn")
                 .setDescription("六国古都")
                 .setLatitude(32.0849016635)

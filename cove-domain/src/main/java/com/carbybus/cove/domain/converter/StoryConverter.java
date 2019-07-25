@@ -6,6 +6,7 @@ import com.carbybus.cove.domain.view.StoryCreateInput;
 import com.carbybus.cove.domain.view.StoryViewOutput;
 import com.carbybus.infrastructure.converter.DefaultConverter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +37,7 @@ public class StoryConverter extends DefaultConverter {
     public Story convertFrom(StoryCreateInput input, UserPrincipal user) {
         Story out = super.convert(input, Story.class);
         out.setOwnerId(user.getUserId());
+        out.setCreateTime(LocalDateTime.now());
         return out;
     }
 

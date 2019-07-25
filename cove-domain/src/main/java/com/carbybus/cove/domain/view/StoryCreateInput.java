@@ -39,4 +39,8 @@ public class StoryCreateInput {
     @NotEmpty(message = "主题不能为空")
     @Size(min = 1, max = 128, message = "主题最多128个字符")
     private String subject;
+
+    @NotEmpty(message = "名称不能为空")
+    @Size(min = 1, max = 36, message = "名称最多36个字符")
+    private String name;
 }
