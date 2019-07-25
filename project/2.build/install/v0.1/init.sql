@@ -1,13 +1,68 @@
-CREATE TABLE city(
-    id BIGINT NOT NULL,
-    name varchar(36) NOT NULL,
-    title varchar(128) NOT NULL,
-    type int NOT NULL,
-    latitude DOUBLE NOT NULL,
-    longitude DOUBLE NOT NULL,
+CREATE TABLE ACCOUNT(
+    ID BIGINT NOT NULL,
+    NAME VARCHAR(36) NOT NULL,
+    SALT VARCHAR(256) NOT NULL,
+    CREATE_TIME DATETIME NOT NULL,
+    SECRET VARCHAR(256) NOT NULL,
+    STATUS INT NOT NULL,
+    EXPIRED_TIME TIMESTAMP DEFAULT '2000-1-1 0:00:00' NOT NULL,
     primary key(id)
 );
 
+CREATE TABLE ACCOUNT_ACTIVATION(
+    ID BIGINT NOT NULL,
+    USER_ID BIGINT NOT NULL,
+    USER_CODE VARCHAR(256) NOT NULL,
+    CREATE_TIME DATETIME NOT NULL,
+    EXPIRED_TIME TIMESTAMP DEFAULT '2000-1-1 0:00:00' NOT NULL,
+    primary key(id)
+);
+
+CREATE TABLE COMMENT(
+    ID BIGINT NOT NULL,
+    STORY_ID BIGINT NOT NULL,
+    OWNER_ID BIGINT NOT NULL,
+    COMMENT VARCHAR(256) NOT NULL,
+    CREATE_TIME DATETIME NOT NULL,
+    primary key(id)
+);
+
+CREATE TABLE CITY(
+    ID BIGINT NOT NULL,
+    NAME VARCHAR(36) NOT NULL,
+    TITLE VARCHAR(128) NOT NULL,
+    TYPE INT NOT NULL,
+    LATITUDE DOUBLE NOT NULL,
+    LONGITUDE DOUBLE NOT NULL,
+    primary key(id)
+);
+
+CREATE TABLE STORY(
+    ID BIGINT NOT NULL,
+    URL VARCHAR(1024) NOT NULL,
+    SUBJECT VARCHAR(256) NOT NULL,
+    DESCRIPTION VARCHAR(256) NOT NULL,
+    LATITUDE DOUBLE DEFAULT 0 NOT NULL,
+    LONGITUDE DOUBLE DEFAULT 0 NOT NULL,
+    TAKE_TIME DATETIME NOT NULL,
+    CREATE_TIME DATETIME NOT NULL,
+    OWNER_ID BIGINT NOT NULL,
+    NAME VARCHAR(128) DEFAULT '' NOT NULL,
+    primary key(id)
+);
+
+CREATE TABLE TRAVELLER(
+    ID BIGINT NOT NULL,
+    NAME VARCHAR(36) NOT NULL,
+    CREATE_TIME DATETIME NOT NULL,
+    AVATAR VARCHAR(256) NOT NULL,
+    GENDER BIT DEFAULT 0 NOT NULL,
+    STATUS VARCHAR(256) DEFAULT '' NOT NULL,
+    primary key (id)
+);
+
+
+insert into city(id,name,title,type,latitude,longitude) values (100000,'中国','中国',0,34.539189,108.927847);
 insert into city(id,name,title,type,latitude,longitude) values (110000,'北京市','北京市',1,39.904989,116.405285);
 insert into city(id,name,title,type,latitude,longitude) values (110100,'北京市','北京市 北京市',2,39.904989,116.405285);
 insert into city(id,name,title,type,latitude,longitude) values (110101,'东城区','北京市 北京市 东城区',3,39.917544,116.418757);
@@ -1439,11 +1494,11 @@ insert into city(id,name,title,type,latitude,longitude) values (370112,'历城�
 insert into city(id,name,title,type,latitude,longitude) values (370113,'长清区','山东省 济南市 长清区',3,36.561049,116.74588);
 insert into city(id,name,title,type,latitude,longitude) values (370114,'章丘区','山东省 济南市 章丘区',3,36.71209,117.54069);
 insert into city(id,name,title,type,latitude,longitude) values (370115,'济阳区','山东省 济南市 济阳区',3,36.976772,117.176035);
+insert into city(id,name,title,type,latitude,longitude) values (370116,'莱芜区','山东省 济南市 莱芜区',3,36.213662,117.678351);
+insert into city(id,name,title,type,latitude,longitude) values (370117,'钢城区','山东省 济南市 钢城区',3,36.058038,117.82033);
 insert into city(id,name,title,type,latitude,longitude) values (370124,'平阴县','山东省 济南市 平阴县',3,36.286923,116.455054);
 insert into city(id,name,title,type,latitude,longitude) values (370126,'商河县','山东省 济南市 商河县',3,37.310544,117.156369);
 insert into city(id,name,title,type,latitude,longitude) values (370171,'济南高新技术产业开发区','山东省 济南市 济南高新技术产业开发区',3,-1,-1);
-insert into city(id,name,title,type,latitude,longitude) values (370116,'莱芜区','山东省 济南市 莱芜区',3,36.213662,117.678351);
-insert into city(id,name,title,type,latitude,longitude) values (370117,'钢城区','山东省 济南市 钢城区',3,36.058038,117.82033);
 insert into city(id,name,title,type,latitude,longitude) values (370200,'青岛市','山东省 青岛市',2,36.082982,120.355173);
 insert into city(id,name,title,type,latitude,longitude) values (370202,'市南区','山东省 青岛市 市南区',3,36.070892,120.395966);
 insert into city(id,name,title,type,latitude,longitude) values (370203,'市北区','山东省 青岛市 市北区',3,36.083819,120.355026);
@@ -3376,12 +3431,13 @@ insert into city(id,name,title,type,latitude,longitude) values (659001,'石河�
 insert into city(id,name,title,type,latitude,longitude) values (659002,'阿拉尔市','新疆维吾尔自治区 阿拉尔市',3,40.541914,81.285884);
 insert into city(id,name,title,type,latitude,longitude) values (659003,'图木舒克市','新疆维吾尔自治区 图木舒克市',3,39.867316,79.077978);
 insert into city(id,name,title,type,latitude,longitude) values (659004,'五家渠市','新疆维吾尔自治区 五家渠市',3,44.167401,87.526884);
-insert into city(id,name,title,type,latitude,longitude) values (659006,'铁门关市','新疆维吾尔自治区 铁门关市',3,41.827251,85.501218);
 insert into city(id,name,title,type,latitude,longitude) values (659005,'北屯市','新疆维吾尔自治区 北屯市',3,47.353177,87.824932);
+insert into city(id,name,title,type,latitude,longitude) values (659006,'铁门关市','新疆维吾尔自治区 铁门关市',3,41.827251,85.501218);
 insert into city(id,name,title,type,latitude,longitude) values (659007,'双河市','新疆维吾尔自治区 双河市',3,44.840524,82.353656);
 insert into city(id,name,title,type,latitude,longitude) values (659008,'可克达拉市','新疆维吾尔自治区 可克达拉市',3,43.6832,80.63579);
 insert into city(id,name,title,type,latitude,longitude) values (659009,'昆玉市','新疆维吾尔自治区 昆玉市',3,37.207994,79.287372);
-insert into city(id,name,title,type,latitude,longitude) values (900000,'港澳台','港澳台','900000',-1,-1);
+insert into city(id,name,title,type,latitude,longitude) values (900000,'港澳台','港澳台',900000,-1,-1);
 insert into city(id,name,title,type,latitude,longitude) values (900100,'香港','港澳台 香港',2,22.320048,114.173355);
 insert into city(id,name,title,type,latitude,longitude) values (900200,'澳门','港澳台 澳门',2,22.198951,113.54909);
 insert into city(id,name,title,type,latitude,longitude) values (900300,'台湾','港澳台 台湾',2,25.044332,121.509062);
+

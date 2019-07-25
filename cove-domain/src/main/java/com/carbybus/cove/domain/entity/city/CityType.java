@@ -11,6 +11,7 @@ import com.carbybus.infrastructure.component.BaseEnum;
  * @date 2019-07-24
  */
 public enum CityType implements BaseEnum {
+    COUNTRY(0,"国"),
     PROVINCE(1, "省"),
     CITY(2, "市"),
     DISTRICT(3, "区");

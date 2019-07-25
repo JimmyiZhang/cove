@@ -10,7 +10,12 @@ public class CacheConstants {
     /**
      * 用户凭证
      **/
-    public static final String USER_PRINCIPAL = "USER_PRINCIPAL";
+    public static final String USER_PRINCIPAL = "USER_PRINCIPAL_";
+
+    /**
+     * 探索城市
+     **/
+    public static final String DISCOVERY_CITY = "DISCOVERY_CITY_";
 
     private CacheConstants() {
     }

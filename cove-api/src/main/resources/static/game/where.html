@@ -111,7 +111,7 @@
                             label: ''
                         }
                     },
-                    aparts: [{
+                    distances: [{
                         min: 0,
                         max: 500,
                         txt: '一步之遥'
@@ -226,7 +226,7 @@
                     var distance = Math.round(p1.distance(p2));
                     var position = p1.divideBy(2).add(p2.divideBy(2));
 
-                    var apart = _.find(this.dict.aparts, function(item) {
+                    var apart = _.find(this.dict.distances, function(item) {
                         return distance > item.min && distance < item.max
                     });
 

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 /**
- * 凭证控制器
+ * 用户控制器
  *
  * @author jimmy.zhang
  * @date 2019-02-26
@@ -24,7 +24,7 @@ import javax.validation.Valid;
 @Api(tags = {"用户"})
 @Validated
 @RestController
-@RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/user")
 public class UserController extends BaseController {
     private TravellerApplication travellerApp;
 

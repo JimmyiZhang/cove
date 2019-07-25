@@ -1,8 +1,10 @@
 package com.carbybus.cove.domain.view;
 
+import com.carbybus.cove.domain.entity.discovery.DiscoveryLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 
 /**
  * 探索输入
@@ -15,5 +17,9 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class DiscoveryInput {
-    private String level;
+    @NotNull(message = "游戏难度不能为空")
+    private DiscoveryLevel level;
+
+    private Double latitude;
+    private Double longitude;
 }

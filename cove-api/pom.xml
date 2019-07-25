@@ -82,12 +82,12 @@
         </dependency>
         <!-- orika end-->
 
-        <!-- h2 driver -->
+        <!-- sqlite driver -->
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
         </dependency>
-        <!-- h2 driver-->
+        <!-- sqlite driver-->
 
         <!-- mybatis-plus -->
         <dependency>
@@ -145,7 +145,7 @@
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
-                <filtering>false</filtering>
+                <filtering>true</filtering>
                 <includes>
                     <include>mappers/**</include>
                     <include>static/**</include>

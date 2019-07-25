@@ -15,7 +15,6 @@ import lombok.experimental.Accessors;
  * @date 2019-07-24
  */
 @Data
-@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "city")
 public class City extends DefaultEntity {

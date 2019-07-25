@@ -33,7 +33,7 @@
         <commons-lang3.version>3.9</commons-lang3.version>
         <orika-core.version>1.5.4</orika-core.version>
         <mybatis-plus.version>3.1.1</mybatis-plus.version>
-        <h2.version>1.4.197</h2.version>
+        <sqlite.version>3.28.0</sqlite.version>
         <java-jwt.version>3.8.1</java-jwt.version>
         <springfox-swagger.version>2.9.2</springfox-swagger.version>
         <thumbnailator.version>0.4.8</thumbnailator.version>
@@ -152,13 +152,13 @@
             </dependency>
             <!-- mybatis-plus end-->
 
-            <!-- h2 driver-->
+            <!-- sqlite- driver-->
             <dependency>
-                <groupId>com.h2database</groupId>
-                <artifactId>h2</artifactId>
-                <version>${h2.version}</version>
+                <groupId>org.xerial</groupId>
+                <artifactId>sqlite-jdbc</artifactId>
+                <version>${sqlite.version}</version>
             </dependency>
-            <!-- h2 driver end-->
+            <!-- sqlite- driver end-->
 
             <!-- JWT -->
             <dependency>

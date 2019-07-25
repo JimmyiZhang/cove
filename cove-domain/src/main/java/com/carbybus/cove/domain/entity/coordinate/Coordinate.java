@@ -10,7 +10,6 @@ import lombok.experimental.Accessors;
  * @author Jimmy.Zhang
  */
 @Data
-@Accessors(chain = true)
 public class Coordinate {
     public final static Coordinate EMPTY = new Coordinate(-1D, -1D);
 
