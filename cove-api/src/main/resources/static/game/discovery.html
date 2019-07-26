@@ -7,9 +7,10 @@
     <link rel="shortcut icon" type="image/x-icon" href="/asset/img/logo_40_40.png">
     <link rel="stylesheet" type="text/css" href="/asset/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/asset/font-awesome/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/asset/spop/spop.min.css">
     <link rel="stylesheet" type="text/css" href="/asset/style.css">
     <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.14&key=6b87d1d3817e5b1c59b8a646300c4b25&plugin=AMap.Autocomplete,AMap.PlaceSearch"></script>
-    <title>发现世界-发现</title>
+    <title>发现世界-探索频道</title>
 </head>
 
 <body>
@@ -43,31 +44,33 @@
 
         <div class="map-card">
             <div class="map-card-item">
-                <a class="item" href="javascript:void(0)" v-show="game.status=='off'" v-on:click="chooseLevel">
-                    <span class="name">简单</span></a>
-                <a class="item" href="javascript:void(0)" v-show="game.status=='off'" v-on:click="chooseLevel">
-                    <span class="name">一般</span></a>
-                <a class="item" href="javascript:void(0)" v-show="game.status=='off'" v-on:click="chooseLevel">
-                    <span class="name">困难</span></a>
-                <a class="item" href="javascript:void(0)" v-show="game.status=='off'" v-on:click="chooseLevel">
-                    <span class="name">挑战</span></a>
+                <a class="item" href="javascript:void(0)" v-for="l in dict.levels" v-bind:title="l.title" v-show="game.status=='choose'" v-on:click="confirmLevel(l)">
+                    <span class="name">{{l.name}}</span></a>
 
                 <a class="item divided-post" href="javascript:void(0)" v-show="game.status=='off'" v-on:click="chooseLevel">
-                    <i class="fa fa-chevron-circle-left fa-lg"></i><span class="name">简单</span></a>
+                    <i class="fa fa-chevron-circle-left fa-lg"></i><span class="name">{{game.level.name}}</span></a>
+
                 <a class="item" href="javascript:void(0)" v-show="game.status=='off'" v-on:click="begin">
-                    <i class="fa fa-chevron-circle-right fa-lg"></i><span class="name">开始探索</span></a>
+                    <i class="fa fa-play fa-lg"></i><span class="name">开始探索</span></a>
                 <a class="item" href="javascript:void(0)" v-show="game.status=='on'" v-on:click="verify">
                     <i class="fa fa-globe fa-lg"></i><span class="name">验证位置</span></a>
-                <a class="item" href="javascript:void(0)" v-show="game.status=='on'||game.status=='of'" v-on:click="end">
+                <a class="item" href="javascript:void(0)" v-show="game.status=='confirm'" v-on:click="end">
                     <i class="fa fa-check-circle fa-lg"></i><span class="name">查看结果</span></a>
-                <a class="item divided-prep" href="javascript:void(0)" v-show="game.status=='on'" v-on:click="backStart">
-                    <i class="fa fa-circle-o-notch fa-lg"></i><span class="name">回到起点</span></a>
+                <a class="item" href="javascript:void(0)" v-show="game.status=='on'" v-on:click="finish">
+                    <i class="fa fa-stop fa-lg"></i><span class="name">结束探索</span></a>
             </div>
         </div>
 
         <div class="map-guide">
             <div class="map-guide-item">
-                >> {{game.guide}}
+                >> {{dict.states[game.status].guide}}
+            </div>
+        </div>
+
+        <div class="map-location" v-show="game.status=='on'">
+            <div class="map-location-item">
+                <a class="item" href="javascript:void(0)" v-on:click="backStart">
+                    <i class="fa fa-bullseye fa-lg"></i></a>
             </div>
         </div>
     </div>
@@ -75,7 +78,7 @@
     <script src="/asset/utils/fetch.js" type="module"></script>
     <script src="/asset/utils/lodash.min.js"></script>
     <script src="/asset/vue/vue.min.js"></script>
-
+    <script src="/asset/spop/spop.min.js"></script>
     <script src="/asset/cove-app.js"></script>
     <script src="/asset/cove-map.js"></script>
     <script>
@@ -84,19 +87,38 @@
             data: {
                 game: {
                     status: 'off',
-                    guide: '',
+                    level: {},
                     map: null,
                     center: [],
                     answer: [],
-                    answerMarker: null
+                    answerMarker: null,
+                    // 起点
+                    origin:{}
                 },
                 config: {
                     maxLng: 0.02,
                     maxLat: 0.01,
-                    maxZoom: 17,
-                    defaultZoom: 6,
+                    findZoom: 17,
+                    viewZoom: 6,
                 },
                 dict: {
+                    levels: [{
+                        value: 'easy',
+                        name: '简单',
+                        title: '所在地附近随机生成目标点'
+                    }, {
+                        value: 'general',
+                        name: '一般',
+                        title: '所在地大范围随机生成目标点'
+                    }, {
+                        value: 'hard',
+                        name: '困难',
+                        title: '全国城市范围随机生成目标点'
+                    }, {
+                        value: 'expert',
+                        name: '专家',
+                        title: '全国所有范围随机生成目标点'
+                    }],
                     labels: {
                         target: {
                             icon: '/asset/img/ico_map_target.png',
@@ -132,22 +154,38 @@
                         max: 500000000,
                         txt: '相距'
                     }],
-                    guides: {
-                        off: '点击开始探索，将随机生成一个#目标点',
-                        on: '查看#目标点周围，确认后点击验证位置',
-                        of: '选择确认位置，点击查看结果即可显示最终结果'
+                    states: {
+                        off: {
+                            name: '待命',
+                            guide: '点击开始探索，将随机生成一个#目标点'
+                        },
+                        choose: {
+                            name: '选级',
+                            guide: '请选择合适的游戏级别'
+                        },
+                        on: {
+                            name: '开始',
+                            guide: '查看#目标点周围，确认后点击验证位置'
+                        },
+                        confirm: {
+                            name: '确认',
+                            guide: '选择确认位置，点击查看结果即可显示最终结果'
+                        }
                     }
                 }
             },
             methods: {
                 init: function() {
+                    this.game.level = this.dict.levels[0];
                     this.initMap();
                     this.initSearch();
-                },
+                 },
+                // 初始化地图
                 initMap: function() {
-                    this.game.map = new AMap.Map('container', {
+                    var that = this;
+                    that.game.map = new AMap.Map('container', {
                         resizeEnable: false,
-                        zoom: this.config.defaultZoom,
+                        zoom: this.config.viewZoom,
                         layers: [new AMap.TileLayer.Satellite()],
                     });
                     var map = this.game.map;
@@ -164,13 +202,16 @@
                         AMap.event.addListener(geolocation, 'complete', function(result) {
                             console.log('定位成功');
                             map.setCenter(result.position);
+                            that.game.origin.lng = result.position.getLng();
+                            that.game.origin.lat = result.position.getLat();
+                            that.confirmCenter();
                         });
                         AMap.event.addListener(geolocation, 'error', function(result) {
                             console.log('定位失败');
                         });
                     });
-                    this.addGuide();
                 },
+                // 初始化搜索
                 initSearch: function() {
                     var that = this;
                     var autoSearch = new AMap.Autocomplete({
@@ -185,9 +226,6 @@
 
                         that.game.map.setZoom(12);
                     });
-                },
-                addGuide: function() {
-                    this.game.guide = this.dict.guides[this.game.status];
                 },
                 addMarker: function(point, label) {
                     var pl = this.dict.labels[label] || this.dict.default;
@@ -241,15 +279,18 @@
                         }
                     });
                 },
+                // 缩放事件
                 zoomEvent: function() {
                     var zoom = this.game.map.getZoom();
-                    if (zoom < this.config.maxZoom) {
-                        this.game.map.setZoom(this.config.maxZoom);
+                    if (zoom < this.config.findZoom) {
+                        this.game.map.setZoom(this.config.findZoom);
                         console.log('exceed max zoom level');
+                        spop('超过最大可见级别', 'warning');
                     }
                 },
+                // 移动事件
                 moveEvent: function() {
-                    if (this.game.status == 'off') return;
+                    if (this.game.status != 'on') return;
 
                     var center = {
                         lng: 0,
@@ -290,8 +331,10 @@
                         var center = new AMap.LngLat(center.lng, center.lat);
                         this.game.map.setCenter(center);
                         console.log('exceed move bound');
+                        spop('超过最大可见范围', 'warning');
                     }
                 },
+                // 点击事件
                 clickEvent: function(e) {
                     if (this.game.answerMarker) {
                         this.game.map.remove(this.game.answerMarker);
@@ -305,29 +348,58 @@
                     this.game.answerMarker = this.addMarker(this.game.answer, 'answer');
                     console.log(`answer point is: ${this.game.answer.lng},${this.game.answer.lat} `);
                 },
-                seedCenter: function() {
-                    var times = 10000.01;
-                    var range = 0.01 * times;
-                    var meLng = this.game.map.getCenter().getLng() * times;
-                    var meLat = this.game.map.getCenter().getLat() * times;
-
-                    var lng = cove.utils.getRandomNumber(meLng - range, meLng + range) / times;
-                    var lat = cove.utils.getRandomNumber(meLat - range * 0.5, meLat + range * 0.5) / times;
-                    console.log(`seed point : ${lng},${lat}`);
-
+                // 标记中心点，移动到中心
+                markCenter:function(){
                     // 中心位置
-                    var center = new AMap.LngLat(lng, lat);
+                    var center = new AMap.LngLat(this.game.center.lng, this.game.center.lat);
                     this.game.map.setCenter(center);
-                    this.game.center = {
-                        lng: lng,
-                        lat: lat
-                    };
 
                     // 设置标记
                     this.addMarker(this.game.center, 'target');
                 },
                 chooseLevel: function() {
+                    this.game.status = 'choose';
+                },
+                confirmLevel: function(level) {
+                    var that = this;
 
+                    if(level){
+                        that.game.status = 'off';
+                        that.game.level = level;
+                        return;
+                    }
+                },
+                // 确认中心点，不移动
+                confirmCenter: function(fn) {
+                    var that =  this;
+                    var input = {
+                        level: that.game.level.value.toUpperCase(),
+                        latitude: that.game.origin.lat,
+                        longitude: that.game.origin.lng
+                    };
+
+                    cove.app.send({
+                        url: '/discovery/place',
+                        method: 'GET',
+                        data: input,
+                        onSuccess: function(res) {
+                            if (res.code == 0) {
+                                var place = res.data;
+                                that.game.center = {
+                                    lng: place.longitude,
+                                    lat: place.latitude
+                                };
+                                that.config.maxLng = place.longitudeLimit;
+                                that.config.maxLat = place.latitudeLimit;
+                                that.config.viewZoom = place.viewZoom;
+                                that.config.findZoom = place.findZoom;
+
+                                if(fn) fn();
+                            } else {
+                                spop(res.message, 'error');
+                            }
+                        }
+                    });
                 },
                 // 回到起点
                 backStart: function() {
@@ -338,26 +410,26 @@
                 // 开始游戏
                 begin: function() {
                     var that = this;
+
+                    that.game.answer = null;
+                    this.game.line = null;
                     that.game.map.clearMap();
-                    that.game.map.setZoom(that.config.maxZoom);
+
+                    that.confirmCenter(function(){
+                        that.markCenter();
+                        that.game.map.setZoom(that.config.findZoom);
+                        that.game.status = 'on';
+                    });
 
                     // 锁定缩放，只能缩小不能放大
                     that.game.map.on("zoomend", that.zoomEvent);
 
                     // 锁定移动，固定范围
                     that.game.map.on("moveend", that.moveEvent);
-
-                    // 随机坐标
-                    that.seedCenter();
-                    that.game.answer = null;
-                    this.game.line = null;
-                    that.game.status = 'on';
-                    this.addGuide();
                 },
                 // 开始验证
                 verify: function() {
-                    this.game.status = 'of';
-                    this.addGuide();
+                    this.game.status = 'confirm';
 
                     // 清除标记
                     this.game.map.clearMap();
@@ -365,7 +437,7 @@
                     // 恢复缩放
                     this.game.map.off("zoomend", this.zoomEvent);
                     this.game.map.off("moveend", this.moveEvent);
-                    this.game.map.setZoom(this.config.defaultZoom);
+                    this.game.map.setZoom(this.config.viewZoom);
 
                     // 点击事件
                     this.game.map.on("click", this.clickEvent);
@@ -375,7 +447,6 @@
                         this.verify();
                     }
                     this.game.status = 'off';
-                    this.addGuide();
 
                     // 恢复点击
                     this.game.map.off("click", this.clickEvent);
@@ -384,10 +455,16 @@
                     if (this.game.center && this.game.answer) {
                         this.addMarker(this.game.center, 'target');
                         this.addPolyline(this.game.center, this.game.answer);
-
-
                         this.game.map.setFitView([this.game.center, this.game.answer]);
                     }
+                },
+                finish: function() {
+                    this.game.status = 'off';
+                    this.game.map.clearMap();
+                    this.game.map.off("zoomend", this.zoomEvent);
+                    this.game.map.off("moveend", this.moveEvent);
+                    this.game.map.setZoom(this.config.viewZoom);
+                    this.game.map.off("click", this.clickEvent);
                 }
             }
         })

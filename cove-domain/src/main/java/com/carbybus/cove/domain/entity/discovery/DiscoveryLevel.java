@@ -18,7 +18,7 @@ import com.carbybus.infrastructure.component.BaseEnum;
  */
 public enum DiscoveryLevel implements BaseEnum {
     // 起点坐标一定区域内
-    EASY(1, 0.004, 0.01, 12, 17, "简单"),
+    EASY(1, 0.05, 0.01, 12, 17, "简单"),
 
     // 起点坐标一定区域内
     GENERAL(2, 0.1, 0.02, 10, 16, "一般"),
@@ -27,7 +27,7 @@ public enum DiscoveryLevel implements BaseEnum {
     HARD(3, 0.2, 0.02, 5, 16, "困难"),
 
     // 全国所有区域
-    EXPERT(4, 20, 0.02, 5, 15, "专家");
+    EXPERT(4, 20, 0.04, 5, 15, "专家");
 
     /**
      * 枚举值
