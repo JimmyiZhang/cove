@@ -3,7 +3,7 @@ spring:
   # datasource config
   datasource:
     url: jdbc:sqlite:c:/users/jimmy/cove.db
-    driver-class-name: org.sqlite.SQLiteDataSource
+    driver-class-name: org.sqlite.JDBC
     user-name:
     password:
 

@@ -24,6 +24,13 @@ import java.nio.file.AccessDeniedException;
 @ResponseBody
 public class WebExceptionHandler {
 
+    /** 
+    * 截获验证异常
+    * @param  
+    * @return  
+    * @author jimmy.zhang 
+    * @date 2019-07-26 
+    */ 
     @ExceptionHandler(ConstraintViolationException.class)
     public ActionResult handleConstraintViolationException(ConstraintViolationException ex) {
         ConstraintViolation violation = ex.getConstraintViolations().stream()
@@ -42,6 +49,13 @@ public class WebExceptionHandler {
         return result;
     }
 
+    /** 
+    * 截获验证异常 
+    * @param  
+    * @return  
+    * @author jimmy.zhang 
+    * @date 2019-07-26 
+    */ 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ActionResult handleMethodArgumentException(MethodArgumentNotValidException ex) {
         FieldError error = ex.getBindingResult().getFieldErrors().stream()
@@ -60,6 +74,13 @@ public class WebExceptionHandler {
         return result;
     }
 
+    /** 
+    * 截获统一的应用异常 
+    * @param  
+    * @return  
+    * @author jimmy.zhang 
+    * @date 2019-07-26 
+    */ 
     @ExceptionHandler(BusinessException.class)
     public ActionResult handleMethodArgumentException(BusinessException ex) {
         ActionResult result = new ActionResult();
@@ -67,7 +88,13 @@ public class WebExceptionHandler {
         return result;
     }
 
-    // 权限异常
+    /** 
+    * 截获权限异常 
+    * @param  
+    * @return  
+    * @author jimmy.zhang 
+    * @date 2019-07-26 
+    */ 
     @ExceptionHandler(AccessDeniedException.class)
     public ActionResult handleBadRequestException(Exception ex) {
         ActionResult result = new ActionResult();
@@ -75,7 +102,13 @@ public class WebExceptionHandler {
         return result;
     }
 
-    // 其他异常
+    /** 
+    * 截获其他异常
+    * @param  
+    * @return  
+    * @author jimmy.zhang 
+    * @date 2019-07-26 
+    */ 
     @ExceptionHandler(Exception.class)
     public ActionResult handleServerErrorException(Exception ex) {
         ActionResult result = new ActionResult();

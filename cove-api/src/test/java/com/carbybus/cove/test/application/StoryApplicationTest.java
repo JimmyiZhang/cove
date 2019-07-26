@@ -65,8 +65,8 @@ public class StoryApplicationTest {
     @Test
     public void listByNear() {
         CoordinateAround around = new CoordinateAround(
-                31.08, 117.78,
-                33.18, 119.78);
+                31.08, 110.78,
+                43.18, 119.78);
         List<StoryViewOutput> views = storyApp.listByNear(around);
 
         for (StoryViewOutput view : views) {
