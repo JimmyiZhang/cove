@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" type="image/x-icon" href="/asset/img/logo_40_40.png">
     <link rel="stylesheet" type="text/css" href="/asset/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/asset/font-awesome/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/asset/spop/spop.min.css">
     <link rel="stylesheet" type="text/css" href="/asset/style.css">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.14&key=6b87d1d3817e5b1c59b8a646300c4b25&plugin=AMap.Autocomplete,AMap.PlaceSearch"></script>
     <title>发现世界-探索频道</title>
 </head>
@@ -255,6 +255,8 @@
 
                     // 计算距离
                     this.addDistance(point1, point2);
+                    this.game.map.setFitView([p1, p2]);
+
                     return line;
                 },
                 addDistance: function(point1, point2) {
@@ -455,7 +457,6 @@
                     if (this.game.center && this.game.answer) {
                         this.addMarker(this.game.center, 'target');
                         this.addPolyline(this.game.center, this.game.answer);
-                        this.game.map.setFitView([this.game.center, this.game.answer]);
                     }
                 },
                 finish: function() {
