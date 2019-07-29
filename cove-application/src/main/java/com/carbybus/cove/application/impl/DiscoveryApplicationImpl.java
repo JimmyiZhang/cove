@@ -47,12 +47,6 @@ public class DiscoveryApplicationImpl implements DiscoveryApplication {
         switch (input.getLevel()) {
             // 全国城市
             case HARD:
-                List<City> countries = this.listCity(CityType.COUNTRY);
-                City country = countries.get(0);
-
-                input.setLatitude(country.getLocation().getLatitude());
-                input.setLongitude(country.getLocation().getLongitude());
-                break;
             case EXPERT:
                 List<City> cities = this.listCity(CityType.CITY);
                 int index = RandomUtils.nextInt(0, cities.size());

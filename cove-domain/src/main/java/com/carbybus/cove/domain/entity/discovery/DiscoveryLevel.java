@@ -27,7 +27,7 @@ public enum DiscoveryLevel implements BaseEnum {
     HARD(3, 0.2, 0.02, 5, 16, "困难"),
 
     // 全国所有区域
-    EXPERT(4, 20, 0.04, 5, 15, "专家");
+    EXPERT(4, 1, 0.04, 5, 15, "专家");
 
     /**
      * 枚举值
