@@ -153,5 +153,3 @@
     window.cove.app = exports;
     window.cove.utils = utils;
 })();
-
-//

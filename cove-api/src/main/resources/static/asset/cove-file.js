@@ -21,7 +21,7 @@
             })
             .use(Uppy.Dashboard, {
                 inline: true,
-                target: '#'+option.id,
+                target: '#' + option.id,
                 replaceTargetContent: true,
                 showProgressDetails: true,
                 note: '只允许上传图片, 最多10个文件，最大10M',
@@ -47,7 +47,7 @@
 
         uppy.on("upload-success", (file, response) => {
             console.log('upload success');
-            if(option.onSuccess){
+            if (option.onSuccess) {
                 option.onSuccess(response.body);
             }
         });
@@ -62,48 +62,46 @@
     }
 
     // 获取缩略图
-    exports.getThumbnail  = function(url){
+    exports.getThumbnail = function(url) {
         var dot = url.lastIndexOf('.');
-        return 'uploads/'+url.substring(0,dot)+"_t"+url.substring(dot);
+        return 'uploads/' + url.substring(0, dot) + "_t" + url.substring(dot);
     }
 
     // 获取装饰图
-    exports.getOrnament = function(url){
-        return "file/download?name="+url.replace('\\', '/');
+    exports.getOrnament = function(url) {
+        return "file/download?name=" + url.replace('\\', '/');
     }
 
     // 初始化显示
     exports.initViewer = function(url) {
         var image = new Image();
-    	image.src = url;
+        image.src = url;
 
         viewer = new Viewer(image, {
-          navbar: false,
-          toolbar: {
-        	zoomIn: 4,
-        	zoomOut: 4,
-        	oneToOne: 4,
-        	reset: 4,
-        	prev: 0,
-        	play: {
-        	  show: 4,
-        	  size: 'large',
-        	},
-        	next: 0,
-        	rotateLeft: 4,
-        	rotateRight: 4,
-        	flipHorizontal: 4,
-        	flipVertical: 4,
-          },
-          hidden: function () {
-        	viewer.destroy();
-          },
+            navbar: false,
+            toolbar: {
+                zoomIn: 4,
+                zoomOut: 4,
+                oneToOne: 4,
+                reset: 4,
+                prev: 0,
+                play: {
+                    show: 4,
+                    size: 'large',
+                },
+                next: 0,
+                rotateLeft: 4,
+                rotateRight: 4,
+                flipHorizontal: 4,
+                flipVertical: 4,
+            },
+            hidden: function() {
+                viewer.destroy();
+            },
         });
         return viewer;
     }
 
-    if(!window.cove) window.cove={};
+    if (!window.cove) window.cove = {};
     window.cove.file = exports;
 })();
-
-
