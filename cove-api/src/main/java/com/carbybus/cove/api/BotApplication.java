@@ -5,6 +5,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 
 /**
  * 启动类
+ * 提供DispatcherServlet的web.xml或者Servlet初始类
  *
  * @author jimmy.zhang
  * @date 2019/4/19
