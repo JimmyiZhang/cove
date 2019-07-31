@@ -24,13 +24,10 @@
         </rollingPolicy>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>DEBUG</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
         </filter>
     </appender>
 
-    <appender name="INFO_FILE_APPENDER"
-              class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="INFO_FILE_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <encoder>
             <pattern>${FILE_LOG_PATTERN}</pattern>
             <charset>UTF-8</charset>
@@ -82,17 +79,16 @@
         <appender-ref ref="ERROR_FILE_APPENDER"/>
     </appender>
 
-    <springProfile name="!release">
+    <springProfile name="develop">
         <root level="DEBUG">
             <appender-ref ref="CONSOLE"/>
             <appender-ref ref="DEBUG_FILE_ASYNC_APPENDER"/>
-            <appender-ref ref="INFO_FILE_ASYNC_APPENDER"/>
-            <appender-ref ref="ERROR_FILE_ASYNC_APPENDER"/>
         </root>
     </springProfile>
 
     <springProfile name="release">
-        <root level="INFO">
+        <root level="DEBUG">
+            <appender-ref ref="DEBUG_FILE_ASYNC_APPENDER"/>
             <appender-ref ref="INFO_FILE_ASYNC_APPENDER"/>
             <appender-ref ref="ERROR_FILE_ASYNC_APPENDER"/>
         </root>

@@ -4,6 +4,7 @@ import com.carbybus.infrastructure.component.ActionResult;
 import com.carbybus.infrastructure.exception.BusinessException;
 import com.carbybus.infrastructure.exception.ServiceError;
 import com.carbybus.infrastructure.exception.ValidatorError;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -22,15 +23,17 @@ import java.nio.file.AccessDeniedException;
  */
 @ControllerAdvice
 @ResponseBody
+@Slf4j
 public class WebExceptionHandler {
 
-    /** 
-    * 截获验证异常
-    * @param  
-    * @return  
-    * @author jimmy.zhang 
-    * @date 2019-07-26 
-    */ 
+    /**
+     * 截获验证异常
+     *
+     * @param
+     * @return
+     * @author jimmy.zhang
+     * @date 2019-07-26
+     */
     @ExceptionHandler(ConstraintViolationException.class)
     public ActionResult handleConstraintViolationException(ConstraintViolationException ex) {
         ConstraintViolation violation = ex.getConstraintViolations().stream()
@@ -46,16 +49,18 @@ public class WebExceptionHandler {
 
         ActionResult result = new ActionResult();
         result.fail(ValidatorError.CONSTRAINT_VIOLATION.getCode(), message);
+        log.warn("ConstraintViolationException:", ex);
         return result;
     }
 
-    /** 
-    * 截获验证异常 
-    * @param  
-    * @return  
-    * @author jimmy.zhang 
-    * @date 2019-07-26 
-    */ 
+    /**
+     * 截获验证异常
+     *
+     * @param
+     * @return
+     * @author jimmy.zhang
+     * @date 2019-07-26
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ActionResult handleMethodArgumentException(MethodArgumentNotValidException ex) {
         FieldError error = ex.getBindingResult().getFieldErrors().stream()
@@ -71,48 +76,55 @@ public class WebExceptionHandler {
 
         ActionResult result = new ActionResult();
         result.fail(ValidatorError.METHOD_ARGUMENT.getCode(), message);
+        log.warn("MethodArgumentNotValidException:", ex);
         return result;
     }
 
-    /** 
-    * 截获统一的应用异常 
-    * @param  
-    * @return  
-    * @author jimmy.zhang 
-    * @date 2019-07-26 
-    */ 
+    /**
+     * 截获统一的应用异常
+     *
+     * @param
+     * @return
+     * @author jimmy.zhang
+     * @date 2019-07-26
+     */
     @ExceptionHandler(BusinessException.class)
     public ActionResult handleMethodArgumentException(BusinessException ex) {
         ActionResult result = new ActionResult();
         result.fail(ex.getCode(), ex.getMessage());
+        log.warn("BusinessException:", ex);
         return result;
     }
 
-    /** 
-    * 截获权限异常 
-    * @param  
-    * @return  
-    * @author jimmy.zhang 
-    * @date 2019-07-26 
-    */ 
+    /**
+     * 截获权限异常
+     *
+     * @param
+     * @return
+     * @author jimmy.zhang
+     * @date 2019-07-26
+     */
     @ExceptionHandler(AccessDeniedException.class)
     public ActionResult handleBadRequestException(Exception ex) {
         ActionResult result = new ActionResult();
         result.fail(ServiceError.BAD_REQUEST, ex.getMessage());
+        log.warn("AccessDeniedException:", ex);
         return result;
     }
 
-    /** 
-    * 截获其他异常
-    * @param  
-    * @return  
-    * @author jimmy.zhang 
-    * @date 2019-07-26 
-    */ 
+    /**
+     * 截获其他异常
+     *
+     * @param
+     * @return
+     * @author jimmy.zhang
+     * @date 2019-07-26
+     */
     @ExceptionHandler(Exception.class)
     public ActionResult handleServerErrorException(Exception ex) {
         ActionResult result = new ActionResult();
         result.fail(ServiceError.SERVER_ERROR, ex.getMessage());
+        log.warn("Exception:", ex);
         return result;
     }
 }

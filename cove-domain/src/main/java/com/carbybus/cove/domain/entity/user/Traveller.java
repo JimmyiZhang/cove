@@ -2,7 +2,7 @@ package com.carbybus.cove.domain.entity.user;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.carbybus.infrastructure.component.impl.DefaultEntity;
-import com.carbybus.infrastructure.utils.StringConstants;
+import com.carbybus.infrastructure.utils.StringUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -38,7 +38,7 @@ public class Traveller extends DefaultEntity {
         Traveller traveller = new Traveller();
         traveller.valueOf();
         traveller.setCreateTime(LocalDateTime.now())
-                .setStatus(StringConstants.EMPTY)
+                .setStatus(StringUtils.EMPTY)
                 .setGender(UserGender.NONE)
                 .setName(name);
 

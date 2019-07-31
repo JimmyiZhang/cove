@@ -5,7 +5,7 @@ import com.carbybus.cove.domain.entity.coordinate.Coordinate;
 import com.carbybus.cove.domain.principal.UserPrincipal;
 import com.carbybus.infrastructure.component.impl.DefaultEntity;
 import com.carbybus.infrastructure.file.FileMetadata;
-import com.carbybus.infrastructure.utils.StringConstants;
+import com.carbybus.infrastructure.utils.StringUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -46,8 +46,8 @@ public class Story extends DefaultEntity {
 
         story.setCreateTime(LocalDateTime.now())
                 .setOwnerId(user.getUserId())
-                .setSubject(StringConstants.EMPTY)
-                .setDescription(StringConstants.EMPTY);
+                .setSubject(StringUtils.EMPTY)
+                .setDescription(StringUtils.EMPTY);
         return story;
     }
 
@@ -68,7 +68,7 @@ public class Story extends DefaultEntity {
                 .setUrl(file.getUrl())
                 .setTakeTime(file.getToken())
                 .setOwnerId(user.getUserId())
-                .setSubject(StringConstants.EMPTY);
+                .setSubject(StringUtils.EMPTY);
 
         String description = String.format("from: %s %s", file.getMake(), file.getModel());
         story.setDescription(description);
