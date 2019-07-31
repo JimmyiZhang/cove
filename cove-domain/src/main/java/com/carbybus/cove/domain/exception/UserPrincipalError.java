@@ -21,6 +21,8 @@ public enum UserPrincipalError implements BusinessError {
      */
     private String message;
 
+    private static final int CATEGORY = 5000;
+
     /**
      * 构造函数
      *
@@ -30,7 +32,7 @@ public enum UserPrincipalError implements BusinessError {
      * @date 2019-03-08
      */
     UserPrincipalError(final int code, final String message) {
-        this.code = code;
+        this.code = CATEGORY + code;
         this.message = message;
     }
 

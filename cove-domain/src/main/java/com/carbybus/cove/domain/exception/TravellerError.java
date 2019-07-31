@@ -21,15 +21,18 @@ public enum TravellerError implements BusinessError {
      */
     private String message;
 
+    private static final int CATEGORY = 4000;
+
     /**
      * 构造函数
+     *
      * @param
      * @return
      * @author jimmy.zhang
      * @date 2019-03-08
      */
     TravellerError(final int code, final String message) {
-        this.code = code;
+        this.code = CATEGORY + code;
         this.message = message;
     }
 
@@ -39,7 +42,7 @@ public enum TravellerError implements BusinessError {
     }
 
     @Override
-    public String getMessage(){
+    public String getMessage() {
         return message;
     }
 }
