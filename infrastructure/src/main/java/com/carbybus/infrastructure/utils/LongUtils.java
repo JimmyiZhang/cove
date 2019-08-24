@@ -1,16 +1,16 @@
 package com.carbybus.infrastructure.utils;
 
 /**
- * 整型工具类
+ * 长整型工具类
  *
  * @author jimmy.zhang
  * @date 2019-04-04
  */
-public class IntegerUtils {
+public class LongUtils {
     /**
      * 私有构造器
      */
-    private IntegerUtils() {
+    private LongUtils() {
     }
 
     /**
@@ -21,8 +21,8 @@ public class IntegerUtils {
      * @author jimmy.zhang
      * @date 2019-08-20
      */
-    public static boolean isEmpty(Integer origin) {
-        return origin == null || origin.intValue() == 0;
+    public static boolean isEmpty(Long origin) {
+        return origin == null || origin.longValue() == 0;
     }
 
     /**
@@ -35,8 +35,8 @@ public class IntegerUtils {
      * @author jimmy.zhang
      * @date 2019-04-25
      */
-    public static boolean equals(Integer origin, int value) {
-        return origin != null && origin.intValue() == value;
+    public static boolean equals(Long origin, long value) {
+        return origin != null && origin.longValue() == value;
     }
 
     /**
@@ -49,8 +49,8 @@ public class IntegerUtils {
      * @author jimmy.zhang
      * @date 2019-04-04
      */
-    public static boolean greaterThan(Integer origin, int value) {
-        return origin != null && origin.intValue() > value;
+    public static boolean greaterThan(Long origin, long value) {
+        return origin != null && origin.longValue() > value;
     }
 
     /**
@@ -63,8 +63,8 @@ public class IntegerUtils {
      * @author jimmy.zhang
      * @date 2019-04-04
      */
-    public static boolean graterAndEquals(Integer origin, int value) {
-        return origin != null && origin.intValue() >= value;
+    public static boolean graterAndEquals(Long origin, long value) {
+        return origin != null && origin.longValue() >= value;
     }
 
     /**
@@ -77,7 +77,7 @@ public class IntegerUtils {
      * @author jimmy.zhang
      * @date 2019-04-04
      */
-    public static boolean lessThan(Integer origin, int value) {
-        return origin != null && origin.intValue() < value;
+    public static boolean lessThan(Long origin, long value) {
+        return origin != null && origin.longValue() < value;
     }
 }

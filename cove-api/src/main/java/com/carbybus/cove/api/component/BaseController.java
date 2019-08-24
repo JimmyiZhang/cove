@@ -4,6 +4,7 @@ import com.carbybus.cove.application.UserApplication;
 import com.carbybus.cove.domain.principal.UserPrincipal;
 import com.carbybus.infrastructure.component.ActionResult;
 import com.carbybus.infrastructure.exception.BusinessError;
+import com.carbybus.infrastructure.http.HttpUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,21 +32,38 @@ public class BaseController {
     @Autowired
     private UserApplication userApp;
 
-    private UserPrincipal user;
-
+	/**
+     * 获取当前用户
+     *
+     * @param
+     * @return
+     * @author jimmy.zhang
+     * @date 2019-08-19
+     */
     protected UserPrincipal getUser() {
-        if (this.user == null) {
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            String claim = auth.getName();
-            log.info("the user authentication is : {}", claim);
 
-            Long userId = Long.parseLong(claim);
-            // 获取用户信息
-            this.user = userApp.getPrincipal(userId);
-        }
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String claim = auth.getName();
+		log.info("the user authentication is : {}", claim);
 
-        return this.user;
+		Long userId = Long.parseLong(claim);
+		// 获取用户信息
+		UserPrincipal user = userApp.getPrincipal(userId);
+        return user;
     }
+	
+	    /**
+     * 获取ip地址
+     *
+     * @param
+     * @return
+     * @author jimmy.zhang
+     * @date 2019-08-19
+     */
+    protected String getRequestIp() {
+        return HttpUtils.getIp(this.request);
+    }
+
 
     /**
      * 成功

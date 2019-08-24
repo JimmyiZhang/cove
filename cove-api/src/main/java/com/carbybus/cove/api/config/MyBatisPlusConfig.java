@@ -23,7 +23,10 @@ public class MyBatisPlusConfig {
      */
     @Bean
     public PaginationInterceptor paginationInterceptor() {
-        return new PaginationInterceptor();
+        PaginationInterceptor paging = new PaginationInterceptor();
+        // 设置limit最大为500
+        paging.setLimit(500);
+        return paging;
     }
 
     /**

@@ -50,6 +50,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
         return new SpringValidatorAdapter(new CollectionValidator());
     }
 
+	/**
+	* 配置静态资源，可以直接访问
+	*/
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("swagger-ui.html")
