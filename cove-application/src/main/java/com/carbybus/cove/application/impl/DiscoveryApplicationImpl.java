@@ -1,7 +1,6 @@
 package com.carbybus.cove.application.impl;
 
 import com.carbybus.cove.application.DiscoveryApplication;
-import com.carbybus.cove.application.utils.CacheConstants;
 import com.carbybus.cove.domain.entity.city.City;
 import com.carbybus.cove.domain.entity.city.CityType;
 import com.carbybus.cove.domain.entity.discovery.DiscoveryPlace;
@@ -24,20 +23,29 @@ import java.util.List;
 @Service
 @Slf4j
 public class DiscoveryApplicationImpl implements DiscoveryApplication {
+    private static final String DISCOVERY_CITY = "DISCOVERY_CITY";
+
     @Autowired
     private CityRepository cityRep;
     @Autowired
     private CacheUtils cacheUtils;
 
-    // 获取指定类型的城市
+    /**
+     * 获取指定类型的城市
+     *
+     * @param
+     * @return
+     * @author jimmy.zhang
+     * @date 2019-08-24
+     */
     private List<City> listCity(CityType type) {
-        Object all = cacheUtils.get(CacheConstants.DISCOVERY_CITY, type.toString());
+        Object all = cacheUtils.get(DISCOVERY_CITY, type.toString());
         if (all != null) {
             return (List<City>) all;
         }
 
         List<City> cites = cityRep.selectByType(type);
-        cacheUtils.put(CacheConstants.DISCOVERY_CITY, type.toString(), cites);
+        cacheUtils.put(DISCOVERY_CITY, type.toString(), cites);
         return cites;
     }
 

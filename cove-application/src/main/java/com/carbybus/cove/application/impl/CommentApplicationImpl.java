@@ -9,7 +9,6 @@ import com.carbybus.infrastructure.component.impl.DefaultApplication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 /**
  * 消息应用
  *
