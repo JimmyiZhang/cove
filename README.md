@@ -35,22 +35,13 @@
 
 # 基本约定
 - 应用层Application:
-- findByXXX从缓存中获取
-- getByXXX从存储中获取
+- findOneByXXX从缓存中获取单个实体
+- findManyByXXX从缓存中获取列表
+- loadOneByXXX从存储中获取单个实体
+- loadManyByXXX从存储中获取返回列表
 
-repository
-selectOne
-[基类自带]
-查询实体对应的所有属性，一个结果
-selectList
-[基类自带]
-查询实体对应的所有属性，多个结果
-
-selectPart
-[需要实现]
-查询部分，列出某些常用属性，一般为了性能（非不要字段较大或较多）
-
-selectFull
-[需要实现]
-插叙你全部，根据输出查询结果，一般需要联合查询，包括非本实体的字段
-
+- 存储层Repository
+- selectOne[基类自带]查询实体对应的所有属性，一个结果
+- selectList[基类自带]查询实体对应的所有属性，多个结果
+- selectPart[需要实现]查询部分，列出某些常用属性，一般为了性能（排除非必须大字段或较多字段）
+- selectFull[需要实现]查询全部，根据输出查询结果，一般需要联合查询，包括非本实体的字段
