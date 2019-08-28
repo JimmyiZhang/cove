@@ -13,7 +13,9 @@ import java.time.Duration;
 
 /**
  * 基本redis缓存管理
- * 支持多租户和过期时间
+ * 支持过期时间，单位分钟，格式如下：
+ * Cacheable(value="cacheName#10")
+ * CacheUtils同样适用
  *
  * @author jimmy.zhang
  * @date 2019-05-13

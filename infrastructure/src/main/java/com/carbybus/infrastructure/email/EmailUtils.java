@@ -34,7 +34,7 @@ public class EmailUtils {
     private MimeMessageHelper helper;
 
     public EmailUtils build() {
-        result = ActionResult.OK;
+        result = ActionResult.success();
         mail = sender.createMimeMessage();
         try {
             helper = new MimeMessageHelper(mail, true);

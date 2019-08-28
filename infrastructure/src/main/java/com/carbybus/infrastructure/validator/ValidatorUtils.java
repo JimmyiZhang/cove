@@ -32,7 +32,7 @@ public class ValidatorUtils {
      * @date 2019-04-04
      */
     public static <T, C> ActionResult<C> valid(T input, Class<?>... groups) {
-        ActionResult<C> result = new ActionResult<>(0, "ok");
+        ActionResult<C> result = ActionResult.success();
         if (input == null) {
             result.fail(ValidatorError.METHOD_ARGUMENT);
             return result;
@@ -62,7 +62,7 @@ public class ValidatorUtils {
      * @date 2019-04-04
      */
     public static <E, C> ActionResult<C> validCollection(Collection<E> inputs, Class<?>... groups) {
-        ActionResult<C> result = new ActionResult<>(0, "ok");
+        ActionResult<C> result = ActionResult.success();
 
         if (inputs == null || inputs.isEmpty()) {
             result.fail(ValidatorError.METHOD_ARGUMENT);

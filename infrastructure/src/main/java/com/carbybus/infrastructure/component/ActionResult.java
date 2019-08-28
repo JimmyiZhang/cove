@@ -3,6 +3,7 @@ package com.carbybus.infrastructure.component;
 import com.carbybus.infrastructure.exception.BusinessError;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * <p>
@@ -14,6 +15,7 @@ import lombok.Getter;
  * @author jimmy.zhang
  * @date 2019-02-26
  */
+@ToString
 public class ActionResult<T> {
     @Getter
     private int code;
@@ -53,12 +55,49 @@ public class ActionResult<T> {
      * @author jimmy.zhang
      * @date 2019-04-03
      */
-    public ActionResult(int code, String message) {
+    ActionResult(int code, String message) {
         this.code = code;
         this.message = message;
     }
 
-    public static final ActionResult OK = new ActionResult(0, "ok");
+    /**
+     * 成功的静态方法
+     * @param
+     * @return
+     * @author jimmy.zhang
+     * @date 2019-08-19
+     */
+    public static ActionResult success() {
+        return new ActionResult(0, "ok");
+    }
+
+    /**
+     * 成功的静态方法
+     *
+     * @param
+     * @return
+     * @author jimmy.zhang
+     * @date 2019-08-05
+     */
+    public static <T> ActionResult success(T data) {
+        ActionResult result = ActionResult.success();
+        result.succeed(data);
+        return result;
+    }
+
+    /**
+     * 失败的静态方法
+     *
+     * @param
+     * @return
+     * @author jimmy.zhang
+     * @date 2019-08-05
+     */
+    public static <T> ActionResult failure(BusinessError error) {
+        ActionResult result = new ActionResult();
+        result.fail(error);
+        return result;
+    }
 
     /**
      * 是否成功
@@ -98,8 +137,7 @@ public class ActionResult<T> {
      * @date 2018/6/26
      */
     public void succeed() {
-        this.code = 0;
-        this.message = "ok";
+        this.succeed(null);
     }
 
     /**
@@ -110,8 +148,7 @@ public class ActionResult<T> {
      * @date 2019-03-28
      */
     public void fail(BusinessError error) {
-        this.code = error.getCode();
-        this.message = error.getMessage();
+        this.fail(error.getCode(), error.getMessage(), null);
     }
 
     /**
@@ -123,9 +160,7 @@ public class ActionResult<T> {
      * @date 2019-02-26
      */
     public void fail(BusinessError error, T data) {
-        this.code = error.getCode();
-        this.message = error.getMessage();
-        this.data = data;
+        this.fail(error.getCode(), error.getMessage(), data);
     }
 
     /**
@@ -137,8 +172,7 @@ public class ActionResult<T> {
      * @date 2018/6/26
      */
     public void fail(int code, String message) {
-        this.code = code;
-        this.message = message;
+        this.fail(code, message, null);
     }
 
     /**

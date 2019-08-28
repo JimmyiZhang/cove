@@ -28,7 +28,7 @@ public class StoryApplicationImpl extends DefaultApplication<StoryRepository, St
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ActionResult create(StoryCreateInput input, UserPrincipal owner) {
-        ActionResult result = ActionResult.OK;
+        ActionResult result = ActionResult.success();
 
         Story story = StoryConverter.INSTANCE.convertFrom(input, owner);
         long id = KeyGeneratorBuilder.INSTANCE.build();

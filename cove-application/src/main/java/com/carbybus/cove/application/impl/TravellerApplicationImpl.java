@@ -50,7 +50,7 @@ public class TravellerApplicationImpl extends DefaultApplication<TravellerReposi
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ActionResult signup(UserSignupInput input) {
-        ActionResult result = ActionResult.OK;
+        ActionResult result = ActionResult.success();
 
         // 检查是否存在
         Account dbAccount = accountRep.selectByName(input.getAccount());
@@ -80,7 +80,7 @@ public class TravellerApplicationImpl extends DefaultApplication<TravellerReposi
 
     @Override
     public ActionResult login(UserLoginInput input) {
-        ActionResult result = ActionResult.OK;
+        ActionResult result = ActionResult.success();
 
         // 账号是否存在
         Account dbAccount = accountRep.selectByName(input.getName());
@@ -121,7 +121,7 @@ public class TravellerApplicationImpl extends DefaultApplication<TravellerReposi
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ActionResult active(UserActiveInput input) {
-        ActionResult result = ActionResult.OK;
+        ActionResult result = ActionResult.success();
 
         // 查询激活信息
         AccountActivation activation = AccountActivationRep.selectByCode(input.getCode());
