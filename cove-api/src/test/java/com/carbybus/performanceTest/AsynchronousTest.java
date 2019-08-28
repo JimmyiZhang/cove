@@ -5,10 +5,7 @@ import com.github.noconnor.junitperf.JUnitPerfAsyncRule;
 import com.github.noconnor.junitperf.JUnitPerfTest;
 import com.github.noconnor.junitperf.data.TestContext;
 import com.github.noconnor.junitperf.reporting.providers.ConsoleReportGenerator;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 
 import java.time.LocalDateTime;
 import java.util.concurrent.ExecutorService;
@@ -31,33 +28,42 @@ public class AsynchronousTest {
         threadPool.shutdownNow();
     }
 
+    @Before
+    public void start(){
+        System.out.println(String.format("[%s] START: %s",
+                Thread.currentThread().getName(), LocalDateTime.now().toString())
+        );
+    }
+
+    @After
+    public void end(){
+        System.out.println(String.format("[%s]   END: %s",
+                Thread.currentThread().getName(), LocalDateTime.now().toString())
+        );
+    }
+
+    private void handle() {
+        boolean isEmpty = LongUtils.isEmpty(0L);
+
+        // 暂停
+        int reset = ThreadLocalRandom.current().nextInt(0, 100);
+        System.out.println(String.format("[%s] RESET: %s",
+                Thread.currentThread().getName(), reset)
+        );
+        try {
+            Thread.sleep(reset);
+        } catch (InterruptedException ex) {
+
+        }
+    }
+
     @Test
     @JUnitPerfTest(durationMs = 10_000, maxExecutionsPerSecond = 2)
     public void asynchronous() throws InterruptedException {
         TestContext context = rule.newContext();
         threadPool.submit(() -> {
-            System.out.println(String.format("[%s] START: %s",
-                    Thread.currentThread().getName(), LocalDateTime.now().toString())
-            );
-
-            boolean isEmpty = LongUtils.isEmpty(0L);
-
-            // 随机暂停
-            int reset = ThreadLocalRandom.current().nextInt(0, 100);
-            System.out.println(String.format("[%s] RESET: %s",
-                    Thread.currentThread().getName(), reset)
-            );
-            try {
-                Thread.sleep(reset);
-            } catch (InterruptedException ex) {
-
-            }
-
+            handle();
             context.success();
-
-            System.out.println(String.format("[%s]   END: %s",
-                    Thread.currentThread().getName(), LocalDateTime.now().toString())
-            );
         });
     }
 }
