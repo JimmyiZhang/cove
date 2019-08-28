@@ -38,6 +38,7 @@
         <springfox-swagger.version>2.9.2</springfox-swagger.version>
         <thumbnailator.version>0.4.8</thumbnailator.version>
         <metadata-extractor.version>2.11.0</metadata-extractor.version>
+        <junitperf.version>2.0.2</junitperf.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -124,6 +125,15 @@
                 <scope>provided</scope>
             </dependency>
             <!-- lombok end -->
+
+            <!-- junitperf -->
+            <dependency>
+                <groupId>com.github.houbb</groupId>
+                <artifactId>junitperf</artifactId>
+                <version>${junitperf.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <!-- junitperf end -->
 
             <!-- mysql -->
             <dependency>
