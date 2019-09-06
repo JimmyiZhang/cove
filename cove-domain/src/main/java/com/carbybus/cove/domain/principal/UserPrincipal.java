@@ -1,6 +1,7 @@
 package com.carbybus.cove.domain.principal;
 
 import lombok.Data;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 /**
@@ -12,6 +13,7 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
+@ToString
 public class UserPrincipal {
     /**
      * 用户编号
