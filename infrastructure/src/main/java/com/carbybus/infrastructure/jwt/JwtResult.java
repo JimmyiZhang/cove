@@ -12,9 +12,15 @@ import lombok.Getter;
  */
 @AllArgsConstructor
 public class JwtResult {
+    /**
+     * token值
+     */
     @Getter
     private String token;
 
+    /**
+     * 过期时间，单位分
+     */
     @Getter
     private Integer expire;
 }

@@ -45,14 +45,18 @@ public class ErrorController extends AbstractErrorController {
                 break;
         }
 
-        String requestId = response.getHeader("Request-Code");
-        log.error("请求失败, Request Code: {}", requestId);
+        String method = request.getMethod();
+        String path = request.getRequestURI();
+        String requestCode = request.getHeader("Request-Code");
+
+        log.error("请求异常, RequestCode: {}, Path: {}, method: {}",
+                requestCode, path, method);
 
         return result;
     }
 
     @Override
     public String getErrorPath() {
-        return null;
+        return "/error";
     }
 }

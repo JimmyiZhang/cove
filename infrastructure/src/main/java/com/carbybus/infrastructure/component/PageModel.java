@@ -18,7 +18,14 @@ import lombok.NoArgsConstructor;
 public class PageModel {
     public static final PageModel DEFAULT = new PageModel(1, 10);
 
+    /**
+     * 当前页码
+     */
     private int page;
+
+    /**
+     * 页大小
+     */
     private int size;
 
     /**

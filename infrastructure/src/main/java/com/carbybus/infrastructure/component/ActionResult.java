@@ -93,7 +93,7 @@ public class ActionResult<T> {
      * @author jimmy.zhang
      * @date 2019-08-05
      */
-    public static <T> ActionResult failure(BusinessError error) {
+    public static ActionResult failure(BusinessError error) {
         ActionResult result = new ActionResult();
         result.fail(error);
         return result;

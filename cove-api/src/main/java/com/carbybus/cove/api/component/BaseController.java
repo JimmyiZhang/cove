@@ -8,6 +8,7 @@ import com.carbybus.infrastructure.http.HttpUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -32,7 +33,7 @@ public class BaseController {
     @Autowired
     private UserApplication userApp;
 
-	/**
+    /**
      * 获取当前用户
      *
      * @param
@@ -41,18 +42,22 @@ public class BaseController {
      * @date 2019-08-19
      */
     protected UserPrincipal getUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String claim = auth.getName();
+        log.info("the user authentication is : {}", claim);
 
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String claim = auth.getName();
-		log.info("the user authentication is : {}", claim);
+        if (auth instanceof AnonymousAuthenticationToken) {
+            return UserPrincipal.UNKNOWN;
+        } else {
+            Long userId = Long.parseLong(claim);
 
-		Long userId = Long.parseLong(claim);
-		// 获取用户信息
-		UserPrincipal user = userApp.getPrincipal(userId);
-        return user;
+            // 获取用户信息
+            UserPrincipal user = userApp.findPrincipal(userId);
+            return user;
+        }
     }
-	
-	    /**
+
+    /**
      * 获取ip地址
      *
      * @param
@@ -63,7 +68,6 @@ public class BaseController {
     protected String getRequestIp() {
         return HttpUtils.getIp(this.request);
     }
-
 
     /**
      * 成功

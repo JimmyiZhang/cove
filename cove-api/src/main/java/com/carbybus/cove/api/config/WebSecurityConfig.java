@@ -1,6 +1,5 @@
 package com.carbybus.cove.api.config;
 
-import com.carbybus.infrastructure.jwt.UniteJwtConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -20,9 +19,6 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private UniteJwtConfig jwtConfig;
-
     @Autowired
     private JwtAuthenticationFilter jwtFilter;
 

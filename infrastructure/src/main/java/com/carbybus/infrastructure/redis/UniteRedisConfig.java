@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 public class UniteRedisConfig {
     /**
      * 过期时间，单位分钟
-     * 默认无过期
+     * 默认30天
      */
     private long expiredMinutes = 30 * 24 * 60;
 

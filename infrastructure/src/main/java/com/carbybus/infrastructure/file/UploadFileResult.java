@@ -17,11 +17,29 @@ import java.nio.file.Path;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UploadFileResult {
+    /**
+     * 名字
+     */
     private String name;
+
+    /**
+     * 地址
+     */
     private String url;
+
+    /**
+     * 类型
+     */
     private String type;
+
+    /**
+     * 大小
+     */
     private Long size;
 
+    /**
+     * 全路径
+     */
     @JsonIgnore
     private Path fullPath;
 }

@@ -19,9 +19,10 @@ public class StringUtils {
     public static final String EMPTY = "";
 
     /**
-     * 空字符串
+     * 易识别字符串
+     * 不包括1iIl0OozZ2
      */
-    public static final String RANDOM_EASY_WORD = "aAbBcCdDeEfFgGhHjJkKLmMnNpPqQrRsStTuUvVwWxXyYzZ23456789";
+    public static final String RANDOM_EASY_WORD = "aAbBcCdDeEfFgGhHjJkKLmMnNpPqQrRsStTuUvVwWxXyY3456789";
 
     /**
      * 用特定字符在原字符的特定位置代替原字符

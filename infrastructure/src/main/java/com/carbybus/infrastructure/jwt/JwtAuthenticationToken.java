@@ -1,4 +1,4 @@
-package com.carbybus.cove.api.config;
+package com.carbybus.infrastructure.jwt;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;

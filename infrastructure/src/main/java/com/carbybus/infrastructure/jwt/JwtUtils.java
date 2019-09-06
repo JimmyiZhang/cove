@@ -8,7 +8,7 @@ import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.carbybus.infrastructure.exception.BusinessException;
-import com.carbybus.infrastructure.exception.JwtTokenError;
+import com.carbybus.infrastructure.exception.JwtError;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +44,7 @@ public class JwtUtils {
     public JwtResult create(String id) {
         String tokenSecret = config.getTokenSecret();
         if (StringUtils.isEmpty(tokenSecret)) {
-            throw new BusinessException(JwtTokenError.INVALID_SECRET);
+            throw new BusinessException(JwtError.INVALID_SECRET);
         }
 
         Date now = Date.from(Instant.now());
@@ -66,7 +66,7 @@ public class JwtUtils {
 
             result = new JwtResult(token, expMinutes);
         } catch (JWTCreationException ex) {
-            throw new BusinessException(JwtTokenError.CREATION_EXCEPTION, ex);
+            throw new BusinessException(JwtError.CREATION_EXCEPTION, ex);
         }
         return result;
     }
@@ -82,7 +82,7 @@ public class JwtUtils {
     public JwtClaim decode(String token) {
         String tokenSecret = config.getTokenSecret();
         if (StringUtils.isEmpty(tokenSecret)) {
-            throw new BusinessException(JwtTokenError.INVALID_SECRET);
+            throw new BusinessException(JwtError.INVALID_SECRET);
         }
 
         JwtClaim claim;
@@ -98,10 +98,10 @@ public class JwtUtils {
             String id = code.getClaim(config.getTokenClaim()).asString();
             claim = new JwtClaim(true, id);
         } catch (JWTDecodeException ex) {
-            throw new BusinessException(JwtTokenError.DECODE_EXCEPTION, ex);
+            throw new BusinessException(JwtError.DECODE_EXCEPTION, ex);
         } catch (JWTVerificationException ex) {
             log.info("JWT 认证过期：{}", token);
-            claim = new JwtClaim(false, JwtTokenError.VERIFICATION_EXCEPTION.getMessage());
+            claim = new JwtClaim(false, JwtError.VERIFICATION_EXCEPTION.getMessage());
         }
         return claim;
     }
@@ -117,7 +117,7 @@ public class JwtUtils {
     public boolean verify(String token) {
         String tokenSecret = config.getTokenSecret();
         if (StringUtils.isEmpty(tokenSecret)) {
-            throw new BusinessException(JwtTokenError.INVALID_SECRET);
+            throw new BusinessException(JwtError.INVALID_SECRET);
         }
 
         boolean verify;
@@ -147,7 +147,7 @@ public class JwtUtils {
     public JwtResult refresh(String token) {
         String tokenSecret = config.getTokenSecret();
         if (StringUtils.isEmpty(tokenSecret)) {
-            throw new BusinessException(JwtTokenError.INVALID_SECRET);
+            throw new BusinessException(JwtError.INVALID_SECRET);
         }
 
         JwtResult result = null;
@@ -179,9 +179,9 @@ public class JwtUtils {
 
             result = new JwtResult(reToken, expMinutes);
         } catch (JWTDecodeException ex) {
-            throw new BusinessException(JwtTokenError.DECODE_EXCEPTION, ex);
+            throw new BusinessException(JwtError.DECODE_EXCEPTION, ex);
         } catch (JWTVerificationException ex) {
-            throw new BusinessException(JwtTokenError.VERIFICATION_EXCEPTION, ex);
+            throw new BusinessException(JwtError.VERIFICATION_EXCEPTION, ex);
         }
 
         return result;

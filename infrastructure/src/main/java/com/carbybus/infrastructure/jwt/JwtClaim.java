@@ -12,9 +12,15 @@ import lombok.Getter;
  */
 @AllArgsConstructor
 public class JwtClaim {
+    /**
+     * 是否成功
+     */
     @Getter
     private Boolean success;
 
+    /**
+     * 声明
+     */
     @Getter
     private String claim;
 }

@@ -19,6 +19,15 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/** 
+* json配置
+ * 包括时间格式，Long类型转为String
+ *
+* @param
+* @return  
+* @author jimmy.zhang 
+* @date 2019-09-06 
+*/ 
 @Configuration
 public class UniteJsonConfig {
     private final ObjectMapper objectMapper = new ObjectMapper();

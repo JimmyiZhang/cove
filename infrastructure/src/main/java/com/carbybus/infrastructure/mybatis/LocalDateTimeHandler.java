@@ -1,4 +1,4 @@
-package com.carbybus.cove.api.component;
+package com.carbybus.infrastructure.mybatis;
 
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
@@ -12,6 +12,15 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * 时间格式处理
+ * 适用于sqlite
+ *
+ * @param
+ * @author jimmy.zhang
+ * @return
+ * @date 2019-09-06
+ */
 @MappedJdbcTypes(JdbcType.TIMESTAMP)
 @MappedTypes(LocalDateTime.class)
 public class LocalDateTimeHandler extends BaseTypeHandler<LocalDateTime> {

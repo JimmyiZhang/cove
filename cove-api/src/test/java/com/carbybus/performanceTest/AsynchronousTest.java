@@ -20,26 +20,12 @@ public class AsynchronousTest {
 
     @BeforeClass
     public static void before() {
-        threadPool = Executors.newFixedThreadPool(5);
+        threadPool = Executors.newFixedThreadPool(10);
     }
 
     @AfterClass
     public static void after() {
         threadPool.shutdownNow();
-    }
-
-    @Before
-    public void start(){
-        System.out.println(String.format("[%s] START: %s",
-                Thread.currentThread().getName(), LocalDateTime.now().toString())
-        );
-    }
-
-    @After
-    public void end(){
-        System.out.println(String.format("[%s]   END: %s",
-                Thread.currentThread().getName(), LocalDateTime.now().toString())
-        );
     }
 
     private void handle() {
@@ -58,11 +44,19 @@ public class AsynchronousTest {
     }
 
     @Test
-    @JUnitPerfTest(durationMs = 10_000, maxExecutionsPerSecond = 2)
+    @JUnitPerfTest(durationMs = 10_000, rampUpPeriodMs = 1_000, maxExecutionsPerSecond = 100)
     public void asynchronous() throws InterruptedException {
         TestContext context = rule.newContext();
         threadPool.submit(() -> {
+            System.out.println(String.format("[%s] START: %s",
+                    Thread.currentThread().getName(), LocalDateTime.now().toString())
+            );
+
             handle();
+
+            System.out.println(String.format("[%s]   END: %s",
+                    Thread.currentThread().getName(), LocalDateTime.now().toString())
+            );
             context.success();
         });
     }

@@ -11,6 +11,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * 上传文件
@@ -20,7 +22,6 @@ import java.nio.file.StandardCopyOption;
  */
 public class UploadFileUtils {
     private static final Logger log = LoggerFactory.getLogger(UploadFileUtils.class);
-    private static final String EXTENSION_SYMBOL = ".";
 
     private UploadFileUtils() {
     }
@@ -38,8 +39,11 @@ public class UploadFileUtils {
     public static UploadFileResult saveFile(String rootPath, String fileName, InputStream fileStream) {
         // 绝对路径
         Path absolutePath = FileUtils.getAbsolutePath(rootPath);
+
         // 日期路径
-        String datePath = FileUtils.getDateName();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        String datePath = LocalDate.now().format(formatter);
+
         // 文件目录
         Path filePath = absolutePath.resolve(datePath);
 
@@ -54,6 +58,7 @@ public class UploadFileUtils {
 
         InputStream oriStream = null;
         InputStream thumStream = null;
+
         // 创建文件
         try {
             if (!Files.exists(filePath)) {

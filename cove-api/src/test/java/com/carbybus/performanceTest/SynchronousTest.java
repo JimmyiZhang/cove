@@ -32,7 +32,7 @@ public class SynchronousTest {
     }
 
     @Test
-    @JUnitPerfTest(threads = 5, durationMs = 10_000, maxExecutionsPerSecond = 2)
+    @JUnitPerfTest(threads = 5, durationMs = 10_000, rampUpPeriodMs = 1_000, maxExecutionsPerSecond = 100)
     public void synchronous() {
         boolean isEmpty = LongUtils.isEmpty(0L);
 

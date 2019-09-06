@@ -11,7 +11,14 @@ package com.carbybus.infrastructure.exception;
  * @date 2019-02-28
  */
 public class BusinessException extends RuntimeException {
+    /**
+     * 编码，唯一编码
+     */
     private final int code;
+
+    /**
+     * 信息，错误信息
+     */
     private final String message;
 
     public BusinessException(BusinessError error) {

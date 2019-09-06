@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * mybatis-plus配置
+ * 可以设置最大行数以及检测慢sql
  *
  * @author jimmy.zhang
  * @date 2019-03-29
@@ -36,8 +37,8 @@ public class MyBatisPlusConfig {
     @Profile("develop")
     public PerformanceInterceptor performanceInterceptor() {
         PerformanceInterceptor performance = new PerformanceInterceptor();
-        // 最大执行时间10s，超过则停止运行
-        performance.setMaxTime(10 * 1000L);
+        // 最大执行时间1s，超过则停止运行
+        performance.setMaxTime(1000L);
         return performance;
     }
 }

@@ -7,8 +7,10 @@ package com.carbybus.infrastructure.exception;
  * 所有异常枚举接口
  * 100-199 本地验证错误，包括
  *  100-109 验证错误 ValidatorError
- *  110-119 Jwt错误 JwtTokenError
+ *  110-119 Jwt错误 JwtError
  *  120-129 转换错误 ConverterError
+ *
+ * 200-299 备用
  *
  * 300-399 文件和网络错误
  *  300-309 文件错误 FileError

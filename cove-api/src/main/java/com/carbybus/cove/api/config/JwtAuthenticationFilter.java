@@ -1,5 +1,6 @@
 package com.carbybus.cove.api.config;
 
+import com.carbybus.infrastructure.jwt.JwtAuthenticationToken;
 import com.carbybus.infrastructure.jwt.JwtClaim;
 import com.carbybus.infrastructure.jwt.JwtUtils;
 import com.carbybus.infrastructure.jwt.UniteJwtConfig;
@@ -16,6 +17,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/** 
+* jwt认证过滤器 
+* @param  
+* @return  
+* @author jimmy.zhang 
+* @date 2019-09-06 
+*/ 
 @Slf4j
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -25,7 +33,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private JwtUtils jwtUtils;
 
-    // 获取jwt的token
+    /** 
+    * 获取jwt的token
+    * @param  
+    * @return  
+    * @author jimmy.zhang 
+    * @date 2019-09-06 
+    */ 
     private String getJwtToken(HttpServletRequest request) {
         String authHeader = request.getHeader(jwtConfig.getTokenHeader());
         if (StringUtils.isEmpty(authHeader)) {

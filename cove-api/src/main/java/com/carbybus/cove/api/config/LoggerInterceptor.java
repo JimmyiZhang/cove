@@ -23,12 +23,12 @@ public class LoggerInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String method = request.getMethod();
         String path = request.getRequestURI();
-        String requestId = UUID.randomUUID().toString();
-        log.debug("请求开始, RequestId: {}, Path: {}, method: {}",
-                requestId, path, method);
+        String requestCode= UUID.randomUUID().toString();
+        // 设置请求编码
+        response.addHeader("Request-Code", requestCode);
 
-        // 设置请求Id
-        response.addHeader("Request-Id", requestId);
+        log.info("请求开始, RequestCode: {}, Path: {}, method: {}",
+                requestCode, path, method);
         return true;
     }
 }

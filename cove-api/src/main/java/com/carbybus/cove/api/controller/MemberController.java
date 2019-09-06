@@ -2,10 +2,8 @@ package com.carbybus.cove.api.controller;
 
 import com.carbybus.cove.api.component.BaseController;
 import com.carbybus.cove.application.StoryApplication;
-import com.carbybus.cove.domain.entity.coordinate.CoordinateAround;
 import com.carbybus.cove.domain.entity.journey.Story;
 import com.carbybus.cove.domain.exception.StoryError;
-import com.carbybus.cove.domain.view.StoryViewOutput;
 import com.carbybus.infrastructure.component.ActionResult;
 import com.carbybus.infrastructure.file.*;
 import io.swagger.annotations.Api;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * 会员控制器
@@ -45,7 +42,7 @@ public class MemberController extends BaseController {
 
         // 保存故事
         FileMetadata metadata = FileUtils.getFileMetadata(result);
-        if (!metadata.isValid()) {
+        if (!metadata.hasCoordinate()) {
             return failure(StoryError.INVALID_COORDINATE);
         }
 

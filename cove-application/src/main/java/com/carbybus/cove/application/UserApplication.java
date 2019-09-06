@@ -18,7 +18,7 @@ public interface UserApplication {
      * @author jimmy.zhang
      * @date 2019-03-28
      */
-    UserPrincipal getPrincipal(Long id);
+    UserPrincipal findPrincipal(Long id);
 
     /**
      * 清除凭证

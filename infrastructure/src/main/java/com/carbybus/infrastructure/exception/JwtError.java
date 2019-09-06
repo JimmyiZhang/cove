@@ -6,7 +6,7 @@ package com.carbybus.infrastructure.exception;
  * @author jimmy.zhang
  * @date 2019-03-29
  */
-public enum JwtTokenError implements BusinessError {
+public enum JwtError implements BusinessError {
     CREATION_EXCEPTION(110, "生成TOKEN异常"),
     DECODE_EXCEPTION(111, "解码TOKEN异常"),
     VERIFICATION_EXCEPTION(112, "验证TOKEN异常"),
@@ -29,7 +29,7 @@ public enum JwtTokenError implements BusinessError {
      * @author: jimmy.zhang
      * @date: 2019-03-08
      */
-    JwtTokenError(final int code, final String message) {
+    JwtError(final int code, final String message) {
         this.code = code;
         this.message = message;
     }

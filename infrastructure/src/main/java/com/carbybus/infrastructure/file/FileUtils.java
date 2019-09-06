@@ -1,6 +1,5 @@
 package com.carbybus.infrastructure.file;
 
-import com.carbybus.infrastructure.coordinate.CoordinateUtils;
 import com.carbybus.infrastructure.exception.BusinessException;
 import com.carbybus.infrastructure.exception.FileError;
 import com.carbybus.infrastructure.utils.DateTimeUtils;
@@ -49,19 +48,6 @@ public class FileUtils {
      */
     public static Path getAbsolutePath(String rootPath) {
         return Paths.get(rootPath).toAbsolutePath();
-    }
-
-    /**
-     * 获取日期路径
-     *
-     * @param
-     * @return
-     * @author jimmy.zhang
-     * @date 2019-06-04
-     */
-    public static String getDateName() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        return LocalDate.now().format(formatter);
     }
 
     /**

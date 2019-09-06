@@ -124,7 +124,7 @@ public class WebExceptionHandler {
     public ActionResult handleServerErrorException(Exception ex) {
         ActionResult result = new ActionResult();
         result.fail(ServiceError.SERVER_ERROR, ex.getMessage());
-        log.warn("Exception:", ex);
+        log.error("Server Exception:", ex);
         return result;
     }
 }

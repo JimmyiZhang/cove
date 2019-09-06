@@ -45,7 +45,6 @@ public class BaseRedisCacheManager extends RedisCacheManager {
     @Override
     public Cache getCache(String name) {
         String cacheName = this.handlerCacheName(name);
-        log.info("处理缓存名称， 原名称：{}，现名称：{}", name, cacheName);
         return super.getCache(cacheName);
     }
 

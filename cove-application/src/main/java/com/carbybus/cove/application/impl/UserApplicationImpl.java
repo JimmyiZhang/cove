@@ -27,7 +27,7 @@ public class UserApplicationImpl implements UserApplication {
 
     @Override
     @Cacheable(value = USER_PRINCIPAL)
-    public UserPrincipal getPrincipal(Long id) {
+    public UserPrincipal findPrincipal(Long id) {
         Traveller traveller = travellerRep.selectById(id);
         if (traveller == null) {
             log.error("the user does not found, the id is: {}", id);

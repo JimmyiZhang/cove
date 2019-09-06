@@ -5,7 +5,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * cache配置
+ * 上传文件配置
+ * 包括上传路径
  *
  * @author jimmy.zhang
  * @ 2019-04-28
