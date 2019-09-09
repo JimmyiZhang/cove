@@ -54,4 +54,4 @@ summer:
 autumn:
   account-activation:
     active-days: 7
-    active-url: http://www.gotravelling.top/user/active?code=
+    active-url: http://www.gotravelling.top/active.html?code=

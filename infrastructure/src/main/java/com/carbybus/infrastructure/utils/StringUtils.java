@@ -1,7 +1,7 @@
 package com.carbybus.infrastructure.utils;
 
 /**
- * 字符串常量类
+ * 字符串帮助类
  *
  * @author jimmy.zhang
  * @date 2019-03-08
