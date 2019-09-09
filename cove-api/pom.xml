@@ -52,15 +52,6 @@
         </dependency>
         <!-- spring-boot end -->
 
-        <!-- junitperf -->
-        <dependency>
-            <groupId>com.github.noconnor</groupId>
-            <artifactId>junitperf</artifactId>
-            <version>1.15.0</version>
-            <scope>test</scope>
-        </dependency>
-        <!-- junitperf end -->
-
         <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>

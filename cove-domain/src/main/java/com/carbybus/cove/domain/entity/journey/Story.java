@@ -8,7 +8,6 @@ import com.carbybus.infrastructure.file.FileMetadata;
 import com.carbybus.infrastructure.utils.StringUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
@@ -19,7 +18,6 @@ import java.time.LocalDateTime;
  * @date 2019-05-20
  */
 @Data
-@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "story")
 public class Story extends DefaultEntity {
@@ -44,10 +42,10 @@ public class Story extends DefaultEntity {
         Story story = new Story();
         story.valueOf();
 
-        story.setCreateTime(LocalDateTime.now())
-                .setOwnerId(user.getUserId())
-                .setSubject(StringUtils.EMPTY)
-                .setDescription(StringUtils.EMPTY);
+        story.setCreateTime(LocalDateTime.now());
+        story.setOwnerId(user.getUserId());
+        story.setSubject(StringUtils.EMPTY);
+        story.setDescription(StringUtils.EMPTY);
         return story;
     }
 
@@ -63,12 +61,12 @@ public class Story extends DefaultEntity {
         Story story = new Story();
         story.valueOf();
 
-        story.setCreateTime(LocalDateTime.now())
-                .setName(file.getName())
-                .setUrl(file.getUrl())
-                .setTakeTime(file.getToken())
-                .setOwnerId(user.getUserId())
-                .setSubject(StringUtils.EMPTY);
+        story.setCreateTime(LocalDateTime.now());
+        story.setName(file.getName());
+        story.setUrl(file.getUrl());
+        story.setTakeTime(file.getToken());
+        story.setOwnerId(user.getUserId());
+        story.setSubject(StringUtils.EMPTY);
 
         String description = String.format("from: %s %s", file.getMake(), file.getModel());
         story.setDescription(description);
