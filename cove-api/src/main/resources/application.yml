@@ -37,14 +37,14 @@ logging:
 
 # mybatis-plus config
 mybatis-plus:
-  config-lacation: classpath:mybatis-config.xml
   mapper-locations: classpath:mappers/*.xml
-  type-enums-package: com.carbybus.cove.domain.*
-  type-aliases-package: com.carbybus.cove.domain.*
+  type-enums-package: plus.cove.jazzy.domain.*
+  type-aliases-package: plus.cove.jazzy.domain.*
+  type-handlers-package: plus.cove.infrastructure.mybatis
   configuration:
-    default-enum-type-handler: com.baomidou.mybatisplus.extension.handlers.EnumTypeHandler
+    default-enum-type-handler: com.baomidou.mybatisplus.extension.handlers.MybatisEnumTypeHandler
   global-config:
-    super-mapper-class: com.carbybus.infrastructure.component.BaseRepository
+    super-mapper-class: plus.cove.infrastructure.component.BaseRepository
 
 # global config
 summer:
@@ -54,11 +54,17 @@ summer:
   jwt-config:
     token-expired: 10080
     token-secret: 7p9izREdj3cAAQR7HyDCoMDv9dDDtzQLbJ1ScicADAclc
-    token-subject: Traveller
-    token-issue: carbybus
+    token-subject: jazzy
+    token-issue: cove
     token-claim: id
   redis-config:
     expired-minutes: 60
+  json-config:
+    datetime-format: yyyy-MM-dd HH:mm
+  security-config:
+    permit-urls: /error
+  system-config:
+    run-time: DEVELOPMENT
 
 # project config
 autumn:

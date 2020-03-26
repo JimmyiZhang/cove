@@ -4,13 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.carbybus</groupId>
-    <artifactId>cove</artifactId>
+    <groupId>plus.cove</groupId>
+    <artifactId>jazzy</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>cove</name>
-    <description>车联网</description>
+    <name>jazzy</name>
+    <description>在途中</description>
 
     <modules>
         <module>infrastructure</module>
@@ -26,19 +26,18 @@
         <java.version>1.8</java.version>
 
         <javax-validation.version>2.0.1.Final</javax-validation.version>
-        <spring-boot.version>2.1.5.RELEASE</spring-boot.version>
-        <lombok.version>1.18.8</lombok.version>
-        <mysql-connector.version>5.1.46</mysql-connector.version>
-        <commons-codec.version>1.12</commons-codec.version>
+        <spring-boot.version>2.2.4.RELEASE</spring-boot.version>
+        <lombok.version>1.18.12</lombok.version>
+        <mysql-connector.version>8.0.19</mysql-connector.version>
+        <commons-codec.version>1.14</commons-codec.version>
         <commons-lang3.version>3.9</commons-lang3.version>
         <orika-core.version>1.5.4</orika-core.version>
-        <mybatis-plus.version>3.1.1</mybatis-plus.version>
+        <mybatis-plus.version>3.1.2</mybatis-plus.version>
         <sqlite.version>3.28.0</sqlite.version>
-        <java-jwt.version>3.8.1</java-jwt.version>
+        <java-jwt.version>3.10.1</java-jwt.version>
         <springfox-swagger.version>2.9.2</springfox-swagger.version>
-        <thumbnailator.version>0.4.8</thumbnailator.version>
-        <metadata-extractor.version>2.11.0</metadata-extractor.version>
-        <junitperf.version>1.15.0</junitperf.version>
+        <thumbnailator.version>0.4.11</thumbnailator.version>
+        <metadata-extractor.version>2.13.0</metadata-extractor.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -100,16 +99,6 @@
                 <artifactId>spring-boot-starter-tomcat</artifactId>
                 <version>${spring-boot.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-actuator</artifactId>
-                <version>${spring-boot.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-devtools</artifactId>
-                <version>${spring-boot.version}</version>
-            </dependency>
             <!-- spring-boot end -->
 
             <!-- lombok -->
@@ -120,23 +109,6 @@
                 <scope>provided</scope>
             </dependency>
             <!-- lombok end -->
-
-            <!-- junitperf -->
-            <dependency>
-                <groupId>com.github.noconnor</groupId>
-                <artifactId>junitperf</artifactId>
-                <version>${junitperf.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <!-- junitperf end -->
-
-            <!-- mysql -->
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>${mysql-connector.version}</version>
-            </dependency>
-            <!-- mysql end -->
 
             <!-- apache commons -->
             <dependency>
@@ -208,7 +180,6 @@
                 <version>${metadata-extractor.version}</version>
             </dependency>
             <!-- image utils end-->
-
         </dependencies>
     </dependencyManagement>
 

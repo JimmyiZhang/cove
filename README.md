@@ -1,15 +1,14 @@
-# Cove = Connected Vehicle
+# Cove = Connected Vendor
 项目模板
 
 ---
 
 # 使用技术
-- Spring Boot 2.1.3 (Hikari，logback)
-- lombok 1.18.6
-- 对象映射: orika 1.5.4
-- ORM: mybatisPlus 3.1.0
-- jwt: java-jwt 3.4.0
-- 分布式数据库中间件: sharding-jdbc 4.0.0-RC1
+- Spring Boot 2.2.x (Hikari)
+- lombok 1.18.x
+- ORO: orika 1.5.x
+- ORM: mybatis & mybatisPlus 3.1.x
+- jwt: java-jwt 3.4.x
 
 ---
 
@@ -38,29 +37,40 @@
 ---
 
 # 基础设施层
-- caching
+- caching 缓存相关
 CachingUtils,提供基本的获取，更新，删除操作，提供与Cacheable一样的功能。 cache可以根据配置，启用SIMPLE或REDIS, 其中redis缓存可以单独设置过期实践，具体参见BaseRedisCacheManager
-- 实体基类，BaseEntity及实现DefaultEntity，包括Long类型主键和生成主键的valueOf方法
-- 仓储基类，BaseRepository,包括增删改查基本操作
-- 枚举基类，BaseEnum，所有涉及固定单值的建议用枚举，此基类主要实现前端序列化生成int类型而名称，具体见BaseEnumDeserialzer和BaseEnumSerializer
-- 返回基类，ActionResult, 所有api返回基类，统一返回结果code=0则返回成功，data中包括可能的返回结果，其余为返回失败，message中有具体的返回信息，可以在application中的非获取方法中作为返回值
-- *页码类，ModelPage,页码类
-- KeyGenerator,主键生成，提供Snowflake算法的实现，同时实现奇偶随机，保证取模概率一样
-- JwtUtils jwt生成，提供生成jwt创建（采用HMAC512加密方式），解密，校验，刷新操作
-- XXXUtils，工具类，提供其他方便操作工具类
+- component 组件相关
+实体基类，BaseEntity及实现DefaultEntity，包括Long类型主键和生成主键的valueOf方法
+仓储基类，BaseRepository,包括增删改查基本操作
+枚举基类，BaseEnum，所有涉及固定单值的建议用枚举，此基类主要实现前端序列化生成int类型而名称，具体见BaseEnumDeserialzer和BaseEnumSerializer
+返回基类，ActionResult, 所有api返回基类，统一返回结果code=0则返回成功，data中包括可能的返回结果，其余为返回失败，message中有具体的返回信息，可以在application中的非获取方法中作为返回值
+返回页码，PageModel页码输入，包括当前页和页大小，PageResult，页码返回，包括总记录数，总页数
+- converter 转换相关
+DefaultConverter，通用转换，支持同名，同类型的转换
+- exception 异常相关
+BusinessException业务基类，非受检基类
+- generator 生成器
+KeyGenerator,主键生成，提供Snowflake算法的实现，同时实现奇偶随机，保证取模概率一样
+- interceptor 拦截器
+ApiIdempotentInterceptor 幂等拦截器，保证接口只调用一次
+LogTracingInterceptor 日志跟踪拦截器
+- jwt jwt相关
+JwtUtils jwt生成，提供生成jwt创建（采用HMAC512加密方式），解密，校验，刷新操作
+- mybatis
+SqlStatement+SqlLike, 提供like过滤特殊符号及自动添加%（可配置）
+- system 系统配置
+提供各种环境，可以生成各种默认密码，默认随机码
+- utils 实用工具类
+- validator javax-validation实现类
+包括中文，手机号等
 
----
-# 接口层
-待续...
-
----
 
 # 配置管理
 所有的配置管理，UniteXXXConfig,可以对各种功能进行配置，根据最佳实践提供默认值
 - UniteCacheConfig 缓存配置类，提供缓存的基本配置，包括默认过期时间（对redis有作用，建议所有缓存均设置过期实践），可以通过配置进行调整
 - UniteJsonConfig json配置类，提供json序列化配置，包括设置时间格式，设置实体Long类型和json字符串类型的转换
 - UniteHttpConfig http配置类，提供跨域设置，跨域预检有效期，跨域允许的源地址等，可以通过properties对不同环境进进行设置
- UniteJwtConfig jwt配置类，包括token过期时间，密钥，主题，发行人等设置
+- UniteJwtConfig jwt配置类，包括token过期时间，密钥，主题，发行人等设置
 
 
 ---

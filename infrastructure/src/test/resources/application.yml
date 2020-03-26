@@ -1,15 +1,8 @@
 # spring config
 spring:
-  # 发送邮件配置
-  mail:
-    user-name: jimmymzhang@163.com
-    password: 43z58j70m36~
-    host: smtp.163.com
-    port: 465
-    properties:
-      mail.smtp.user: jimmymzhang@163.com
-      mail.smtp.auth: true
-      mail.smtp.ssl.enable: true
+  # cache config
+  cache:
+    type: SIMPLE
 
 # global config
 summer:
@@ -19,8 +12,14 @@ summer:
   jwt-config:
     token-expired: 10080
     token-secret: 7p9izREdj3cAAQR7HyDCoMDv9dDDtzQLbJ1ScicADAclc
-    token-subject: Traveller
-    token-issue: carbybus
+    token-subject: jazzy
+    token-issue: cove
     token-claim: id
   redis-config:
-    expired-minutes: 4320
+    expired-minutes: 60
+  json-config:
+    datetime-format: yyyy-MM-dd HH:mm
+  security-config:
+    permit-urls: /error
+  system-config:
+    run-time: DEVELOPMENT
