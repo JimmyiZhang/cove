@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
  * @author jimmy.zhang
  * @since 1.0
  */
-@Component
 @Slf4j
+@Component
 public class JsonUtils {
     @Autowired
     UniteJsonConfig config;

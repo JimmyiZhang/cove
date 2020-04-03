@@ -12,7 +12,12 @@ public enum NetworkError implements BusinessError {
     MAIL_FROM_ERROR(311, "无效的发件人"),
     MAIL_TO_ERROR(312, "无效的收件人"),
     MAIL_CONTENT_ERROR(313, "邮件内容无效"),
-    MAIL_SEND_ERROR(314, "邮件发送失败");
+    MAIL_SEND_ERROR(314, "邮件发送失败"),
+
+    REST_GET_ERROR(320,"HTTP GET请求错误"),
+    REST_POST_ERROR(320,"HTTP POST请求错误"),
+    REST_PUT_ERROR(320,"HTTP PUT请求错误"),
+    REST_DELETE_ERROR(320,"HTTP DELETE请求错误");
 
     /**
      * 枚举值

@@ -29,7 +29,6 @@ import java.util.List;
  * @date 2019-04-09
  */
 @Configuration
-@EnableWebMvc
 @ComponentScan({"plus.cove.jazzy.*", "plus.cove.infrastructure.*"})
 public class WebMvcConfig implements WebMvcConfigurer {
     @Autowired

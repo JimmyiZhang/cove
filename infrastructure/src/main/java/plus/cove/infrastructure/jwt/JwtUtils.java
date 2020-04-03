@@ -26,8 +26,8 @@ import java.util.UUID;
  * @author jimmy.zhang
  * @date 2019-04-03
  */
-@Component
 @Slf4j
+@Component
 public class JwtUtils {
     private static final String CLAIM_EXTRA = "extra";
 

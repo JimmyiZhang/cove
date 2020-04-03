@@ -6,9 +6,6 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
-import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -57,7 +54,7 @@ public class UniteJsonConfig {
 
     @Getter
     @Setter
-    private String datetimeFormat = "yyyy-MM-dd HH:mm";
+    private String datetimeFormat = "yyyy-MM-dd HH:mm:ss";
 
     public ObjectMapper getJsonMapper() {
         return jsonMapper;

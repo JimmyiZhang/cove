@@ -2,6 +2,7 @@ package plus.cove.infrastructure.http;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
@@ -21,18 +22,13 @@ import java.util.Map;
  * @date 2019-05-06
  */
 @Slf4j
+@Component
 public class HttpUtils {
     private static final String DEFAULT_CHARSET = "utf-8";
     private static final String IP_UNKNOWN = "unKnown";
     private static final String IP_LOCAL_V6 = "0:0:0:0:0:0:0:1";
     private static final String IP_LOCAL_V4 = "127.0.0.1";
 
-    /**
-     * 工具类使用私有构造器覆盖公共构造器，防止公共构造器被调用
-     * Sonar Code smell Major squid:S1118
-     */
-    private HttpUtils() {
-    }
 
     /**
      * 使用GET方法获取结果
@@ -43,7 +39,7 @@ public class HttpUtils {
      * @author jimmy.zhang
      * @date 2019-05-06
      */
-    public static String get(String url) {
+    public String get(String url) {
         BufferedReader in = null;
         StringBuilder result;
         try {
@@ -90,7 +86,7 @@ public class HttpUtils {
      * @author jimmy.zhang
      * @date 2019-05-06
      */
-    public static String post(String url, Map<String, String> data) {
+    public String post(String url, Map<String, String> data) {
         StringBuilder sb = new StringBuilder();
         // 构建请求参数
         if (data != null && data.size() > 0) {
@@ -116,7 +112,7 @@ public class HttpUtils {
      * @author jimmy.zhang
      * @date 2019-05-06
      */
-    public static String post(String url, String para, String charset) {
+    public String post(String url, String para, String charset) {
         PrintWriter out = null;
         BufferedReader in = null;
         try {
@@ -187,7 +183,7 @@ public class HttpUtils {
      * @author jimmy.zhang
      * @date 2019-08-19
      */
-    public static String getIp(HttpServletRequest request) {
+    public String getIp(HttpServletRequest request) {
         String ip = request.getHeader("X-Forwarded-For");
         if (StringUtils.isNotEmpty(ip) && !IP_UNKNOWN.equalsIgnoreCase(ip)) {
             // 多次反向代理后会有多个ip值，第一个ip才是真实ip

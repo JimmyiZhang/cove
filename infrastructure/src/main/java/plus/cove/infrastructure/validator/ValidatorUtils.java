@@ -1,5 +1,7 @@
 package plus.cove.infrastructure.validator;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import plus.cove.infrastructure.component.ActionResult;
 import plus.cove.infrastructure.exception.ValidatorError;
 
@@ -16,6 +18,8 @@ import java.util.Set;
  * @author jimmy.zhang
  * @date 2019-04-04
  */
+@Slf4j
+@Component
 public class ValidatorUtils {
     /**
      * 工具类使用私有构造器覆盖公共构造器，防止公共构造器被调用
@@ -31,7 +35,7 @@ public class ValidatorUtils {
      * @author jimmy.zhang
      * @date 2019-04-04
      */
-    public static <T, C> ActionResult<C> valid(T input, Class<?>... groups) {
+    public <T, C> ActionResult<C> valid(T input, Class<?>... groups) {
         ActionResult<C> result = ActionResult.success();
         if (input == null) {
             result.fail(ValidatorError.INVALID_ARGUMENT);
@@ -62,7 +66,7 @@ public class ValidatorUtils {
      * @author jimmy.zhang
      * @date 2019-04-04
      */
-    public static <E, C> ActionResult<C> validCollection(Collection<E> inputs, Class<?>... groups) {
+    public <E, C> ActionResult<C> validCollection(Collection<E> inputs, Class<?>... groups) {
         ActionResult<C> result = ActionResult.success();
 
         if (inputs == null || inputs.isEmpty()) {

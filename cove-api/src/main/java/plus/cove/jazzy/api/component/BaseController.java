@@ -59,17 +59,6 @@ public class BaseController {
     }
 
     /**
-     * 获取ip地址
-     *
-     * @param
-     * @return
-     * @author jimmy.zhang
-     */
-    protected String getRequestIp() {
-        return HttpUtils.getIp(this.request);
-    }
-
-    /**
      * 输出缓存
      *
      * @param

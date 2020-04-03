@@ -26,14 +26,21 @@ public class UniteHttpConfig {
     private static final String WHOLE_ALLOWED = "*";
 
     /**
-     * 缓存时间，默认10分钟
+     * 连接时间，单位秒，默认30
      */
     @Getter
     @Setter
-    private long cacheMaxAge = 10 * 60L;
+    private long connectTimeout = 30L;
 
     /**
-     * 跨域预检有效期，默认1天，单位秒
+     * 读取时间，单位秒，默认60
+     */
+    @Getter
+    @Setter
+    private Long readTimeout = 300L;
+
+    /**
+     * 跨域预检有效期，单位秒，默认1天
      */
     @Getter
     @Setter
