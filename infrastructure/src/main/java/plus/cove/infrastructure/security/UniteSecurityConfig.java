@@ -2,7 +2,11 @@ package plus.cove.infrastructure.security;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.convert.DurationUnit;
 import org.springframework.context.annotation.Configuration;
+
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 
 /**
  * 安全配置
@@ -33,5 +37,6 @@ public class UniteSecurityConfig {
     /**
      * 幂等有效时间，单位秒
      */
-    private Integer idempotentDuration = 600;
+    @DurationUnit(ChronoUnit.SECONDS)
+    private Duration idempotentDuration = Duration.ofSeconds(5 * 60L);
 }

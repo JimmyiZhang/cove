@@ -57,8 +57,11 @@ summer:
     token-subject: jazzy
     token-issue: cove
     token-claim: id
+  cache-config:
+    null-duration-time: 1
   redis-config:
-    expired-minutes: 60
+    duration-time: 60
+
   json-config:
     datetime-format: yyyy-MM-dd HH:mm
   security-config:

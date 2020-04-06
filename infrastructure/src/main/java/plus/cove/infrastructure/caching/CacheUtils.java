@@ -98,7 +98,7 @@ public class CacheUtils {
                 result = callback.call();
                 if (result == null) {
                     CacheNullObject nullObj = new CacheNullObject();
-                    nullObj.setExpiredTime(Instant.now().plusSeconds(cacheConfig.getNullRetainSeconds()));
+                    nullObj.setExpiredTime(Instant.now().plusMillis(cacheConfig.getNullDurationTime().toMillis()));
                     cacheManager.getCache(name).put(key, nullObj);
                 } else {
                     cacheManager.getCache(name).put(key, result);

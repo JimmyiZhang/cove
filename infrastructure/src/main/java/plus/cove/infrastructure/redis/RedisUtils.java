@@ -120,32 +120,32 @@ public class RedisUtils {
      * @date 2019-05-13
      */
     public boolean set(final String key, Object value) {
-        return set(key, value, redisConfig.getExpiredSeconds());
+        return set(key, value, redisConfig.getDurationTime().toMillis());
     }
 
     /**
      * 写入redis值
      *
-     * @param key           key值
-     * @param value         value值
-     * @param expireSeconds 过期分钟数
+     * @param key     key值
+     * @param value   value值
+     * @param timeout 过期时间，单位毫秒
      * @return 是否写入成功
      * @author jimmy.zhang
      * @date 2019-05-13
      */
-    public boolean set(final String key, Object value, Long expireSeconds) {
+    public boolean set(final String key, Object value, Long timeout) {
         boolean result = false;
         try {
             redisTemplate.opsForValue().set(key, value);
 
-            if (expireSeconds != null && expireSeconds > 0) {
-                redisTemplate.expire(key, expireSeconds, TimeUnit.SECONDS);
+            if (timeout != null && timeout > 0) {
+                redisTemplate.expire(key, timeout, TimeUnit.MILLISECONDS);
             }
 
             result = true;
-            log.info("redis写入缓存正常, key={}, value={}, expired={}", key, Objects.toString(value), expireSeconds);
+            log.info("redis写入缓存正常, key={}, value={}, timeout={}ms", key, Objects.toString(value), timeout);
         } catch (Exception e) {
-            log.error("redis写入缓存异常, key={}, value={}, expired={}", key, Objects.toString(value), expireSeconds);
+            log.error("redis写入缓存异常, key={}, value={}, timeout={}ms", key, Objects.toString(value), timeout);
         }
         return result;
     }

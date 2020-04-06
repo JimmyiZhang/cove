@@ -11,8 +11,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
 import plus.cove.infrastructure.json.UniteJsonConfig;
 
-import java.time.Duration;
-
 /**
  * 基本redis缓存管理
  * 支持过期时间，单位分钟，格式如下：
@@ -36,11 +34,9 @@ public class DefaultRedisCacheConfig {
 
     public RedisCacheConfiguration cacheConfig() {
         if (this.cacheConfig == null) {
-            // 缓存配置对象
-            Duration ttl = Duration.ofSeconds(redisConfig.getExpiredSeconds());
             this.cacheConfig = RedisCacheConfiguration
                     .defaultCacheConfig()
-                    .entryTtl(ttl)
+                    .entryTtl(redisConfig.getDurationTime())
                     .disableCachingNullValues()
                     .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(keySerializer()))
                     .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(valueSerializer()));

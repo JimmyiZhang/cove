@@ -3,7 +3,11 @@ package plus.cove.infrastructure.jwt;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.convert.DurationUnit;
 import org.springframework.context.annotation.Configuration;
+
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 
 /**
  * jwt配置
@@ -18,10 +22,11 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties("summer.jwt-config")
 public class UniteJwtConfig {
     /**
-     * Token过期时间，单位分钟
+     * Token过期时间，单位秒
      * 默认72小时
      */
-    private int tokenExpired = 72 * 60;
+    @DurationUnit(ChronoUnit.SECONDS)
+    private Duration tokenExpired = Duration.ofSeconds(72 * 60 * 60L);
 
     /**
      * Token秘钥

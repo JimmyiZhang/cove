@@ -2,7 +2,11 @@ package plus.cove.infrastructure.caching;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.convert.DurationUnit;
 import org.springframework.context.annotation.Configuration;
+
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 
 /**
  * cache配置
@@ -18,10 +22,12 @@ public class UniteCacheConfig {
      * 最大cache过期时间，单位秒
      * 默认72小时
      */
-    private long maxExpiredSeconds = 72 * 60 * 60L;
+    @DurationUnit(ChronoUnit.SECONDS)
+    private Duration maxDurationTime = Duration.ofSeconds(72 * 60 * 60L);
 
     /**
      * 空值保留时间，单位秒
      */
-    private long nullRetainSeconds = 2L;
+    @DurationUnit(ChronoUnit.SECONDS)
+    private Duration nullDurationTime = Duration.ofSeconds(2L);
 }

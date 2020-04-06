@@ -7,12 +7,12 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import plus.cove.infrastructure.exception.BusinessException;
-import plus.cove.infrastructure.exception.JwtError;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import plus.cove.infrastructure.exception.BusinessException;
+import plus.cove.infrastructure.exception.JwtError;
 
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
@@ -50,8 +50,8 @@ public class JwtUtils {
         }
 
         Date now = Date.from(Instant.now());
-        int expMinutes = config.getTokenExpired();
-        Date exp = Date.from(Instant.now().plus(expMinutes, ChronoUnit.MINUTES));
+        int expired = (int) config.getTokenExpired().toMinutes();
+        Date exp = Date.from(Instant.now().plus(expired, ChronoUnit.MINUTES));
         String jwtId = UUID.randomUUID().toString();
 
         JwtResult result;
@@ -66,7 +66,7 @@ public class JwtUtils {
                     .withClaim(config.getTokenClaim(), id)
                     .sign(algorithm);
 
-            result = new JwtResult(token, expMinutes);
+            result = new JwtResult(token, expired);
         } catch (JWTCreationException ex) {
             throw new BusinessException(JwtError.CREATION_EXCEPTION, ex);
         }
@@ -89,8 +89,8 @@ public class JwtUtils {
         }
 
         Date now = Date.from(Instant.now());
-        int expMinutes = config.getTokenExpired();
-        Date exp = Date.from(Instant.now().plus(expMinutes, ChronoUnit.MINUTES));
+        int expired = (int) config.getTokenExpired().toMinutes();
+        Date exp = Date.from(Instant.now().plus(expired, ChronoUnit.MINUTES));
         String jwtId = UUID.randomUUID().toString();
 
         JwtResult result;
@@ -106,7 +106,7 @@ public class JwtUtils {
                     .withClaim(CLAIM_EXTRA, extra)
                     .sign(algorithm);
 
-            result = new JwtResult(token, expMinutes);
+            result = new JwtResult(token, expired);
         } catch (JWTCreationException ex) {
             throw new BusinessException(JwtError.CREATION_EXCEPTION, ex);
         }
@@ -207,8 +207,8 @@ public class JwtUtils {
 
             // 重新生成
             Date now = Date.from(Instant.now());
-            int expMinutes = config.getTokenExpired() * 2;
-            Date exp = Date.from(Instant.now().plus(expMinutes, ChronoUnit.MINUTES));
+            int expired = (int)config.getTokenExpired().toMinutes() * 2;
+            Date exp = Date.from(Instant.now().plus(expired, ChronoUnit.MINUTES));
             String jwtId = UUID.randomUUID().toString();
 
             String reToken = JWT.create()
@@ -220,7 +220,7 @@ public class JwtUtils {
                     .withClaim(config.getTokenClaim(), id)
                     .sign(algorithm);
 
-            result = new JwtResult(reToken, expMinutes);
+            result = new JwtResult(reToken, expired);
         } catch (JWTDecodeException ex) {
             throw new BusinessException(JwtError.DECODE_EXCEPTION, ex);
         } catch (JWTVerificationException ex) {

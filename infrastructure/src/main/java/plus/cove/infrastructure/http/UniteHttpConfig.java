@@ -4,7 +4,11 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.convert.DurationUnit;
 import org.springframework.context.annotation.Configuration;
+
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 
 /**
  * http配置
@@ -26,25 +30,27 @@ public class UniteHttpConfig {
     private static final String WHOLE_ALLOWED = "*";
 
     /**
-     * 连接时间，单位秒，默认30
+     * 连接时间，单位秒，默认30s
      */
     @Getter
     @Setter
-    private long connectTimeout = 30L;
+    @DurationUnit(ChronoUnit.SECONDS)
+    private Duration connectTimeout = Duration.ofSeconds(30L);
 
     /**
-     * 读取时间，单位秒，默认60
+     * 读取时间，单位秒，默认300s
      */
     @Getter
     @Setter
-    private Long readTimeout = 300L;
+    @DurationUnit(ChronoUnit.SECONDS)
+    private Duration readTimeout = Duration.ofSeconds(300L);
 
     /**
      * 跨域预检有效期，单位秒，默认1天
      */
     @Getter
     @Setter
-    private long corsMaxAge = 24 * 60 * 60L;
+    private Long corsMaxAge =  24 * 60 * 60L;
 
     /**
      * 跨域允许的源地址

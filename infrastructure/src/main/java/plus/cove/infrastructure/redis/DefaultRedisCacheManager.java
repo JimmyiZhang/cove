@@ -26,7 +26,7 @@ public class DefaultRedisCacheManager extends RedisCacheManager {
     UniteRedisConfig redisConfig;
 
     // 缓存长度
-    private static final int NAME_LENGTH = 2;
+    private static final int CACHE_DURATION_LENGTH = 2;
 
     public DefaultRedisCacheManager(RedisCacheWriter cacheWriter, RedisCacheConfiguration defaultCacheConfiguration) {
         super(cacheWriter, defaultCacheConfiguration, true);
@@ -69,21 +69,24 @@ public class DefaultRedisCacheManager extends RedisCacheManager {
      */
     @Override
     protected RedisCache createRedisCache(String name, RedisCacheConfiguration cacheConfig) {
-        long cacheAge = redisConfig.getExpiredSeconds();
+        Duration duration = redisConfig.getDurationTime();
         String cacheTtl = redisConfig.getTtlSeparator();
 
         // 获取过期时间
         if (StringUtils.isNotEmpty(name) && name.contains(cacheTtl)) {
             String[] cacheNames = name.split(cacheTtl);
-            if (cacheNames.length == NAME_LENGTH) {
-                cacheAge = Long.parseLong(cacheNames[1]);
+            if (cacheNames.length == CACHE_DURATION_LENGTH) {
+                long maxAge = Long.parseLong(cacheNames[1]);
+                if (maxAge > 0) {
+                    duration = Duration.ofSeconds(maxAge);
+                }
                 name = cacheNames[0];
             }
         }
 
-        if (cacheConfig != null && cacheAge > 0) {
-            log.info("重置缓存参数，缓存名称：{}，过期时间：{}", name, cacheAge);
-            cacheConfig = cacheConfig.entryTtl(Duration.ofSeconds(cacheAge));
+        if (cacheConfig != null && duration != null) {
+            log.info("重置缓存参数，缓存名称：{}，过期时间：{}ms", name, duration.toMillis());
+            cacheConfig = cacheConfig.entryTtl(duration);
         }
         return super.createRedisCache(name, cacheConfig);
     }

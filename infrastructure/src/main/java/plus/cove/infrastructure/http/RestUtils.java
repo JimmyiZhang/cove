@@ -18,8 +18,6 @@ import plus.cove.infrastructure.exception.NetworkError;
 import plus.cove.infrastructure.json.UniteJsonConfig;
 
 import java.net.URI;
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 /**
@@ -47,8 +45,8 @@ public class RestUtils {
         jsonConverter.setObjectMapper(jsonConfig.getJsonMapper());
 
         return builder.messageConverters(jsonConverter)
-                .setConnectTimeout(Duration.of(httpConfig.getConnectTimeout(), ChronoUnit.SECONDS))
-                .setReadTimeout(Duration.of(httpConfig.getReadTimeout(), ChronoUnit.SECONDS))
+                .setConnectTimeout(httpConfig.getConnectTimeout())
+                .setReadTimeout(httpConfig.getReadTimeout())
                 .build();
     }
 
