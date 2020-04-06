@@ -17,7 +17,7 @@
         <module>cove-domain</module>
         <module>cove-repository</module>
         <module>cove-application</module>
-        <module>cove-api</module>
+        <module>cove-interface</module>
     </modules>
 
     <properties>

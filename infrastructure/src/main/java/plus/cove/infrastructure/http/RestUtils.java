@@ -61,8 +61,10 @@ public class RestUtils {
      * @since 1.0
      */
     public <T> T getObject(String uriString, Class<T> responseType, Object... uriVariables) {
-        URI uri = UriComponentsBuilder.fromUriString(uriString).build(uriVariables);
-        RequestEntity<Void> request = RequestEntity.get(uri).build();
+        URI uri = UriComponentsBuilder.fromUriString(uriString)
+                .build(uriVariables);
+        RequestEntity<Void> request = RequestEntity.get(uri)
+                .build();
 
         try {
             ResponseEntity<T> response = restTemplate.exchange(request, responseType);
@@ -82,8 +84,10 @@ public class RestUtils {
      * @return
      */
     public <T> List<T> getList(String uriString, Class<T> responseType, Object... uriVariables) {
-        URI uri = UriComponentsBuilder.fromUriString(uriString).build(uriVariables);
-        RequestEntity<Void> request = RequestEntity.get(uri).build();
+        URI uri = UriComponentsBuilder.fromUriString(uriString)
+                .build(uriVariables);
+        RequestEntity<Void> request = RequestEntity.get(uri)
+                .build();
         ParameterizedTypeReference<List<T>> paraType = ParameterizedTypeReference.forType(responseType);
 
         try {
@@ -103,7 +107,8 @@ public class RestUtils {
      * @since 1.0
      */
     public <T> T postObject(String uriString, T object, Class<T> responseType, Object... uriVariables) {
-        URI uri = UriComponentsBuilder.fromUriString(uriString).build(uriVariables);
+        URI uri = UriComponentsBuilder.fromUriString(uriString)
+                .build(uriVariables);
         RequestEntity<T> request = RequestEntity.post(uri)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(object);
