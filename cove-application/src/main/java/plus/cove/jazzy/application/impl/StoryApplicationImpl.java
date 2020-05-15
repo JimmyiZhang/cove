@@ -1,8 +1,9 @@
 package plus.cove.jazzy.application.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import plus.cove.infrastructure.component.ActionResult;
-import plus.cove.infrastructure.generator.KeyGeneratorBuilder;
 import plus.cove.jazzy.application.StoryApplication;
 import plus.cove.jazzy.domain.converter.StoryConverter;
 import plus.cove.jazzy.domain.entity.coordinate.CoordinateAround;
@@ -10,8 +11,6 @@ import plus.cove.jazzy.domain.entity.journey.Story;
 import plus.cove.jazzy.domain.principal.UserPrincipal;
 import plus.cove.jazzy.domain.view.StoryCreateInput;
 import plus.cove.jazzy.domain.view.StoryViewOutput;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import plus.cove.jazzy.repository.StoryRepository;
 
 import java.util.List;
@@ -34,8 +33,7 @@ public class StoryApplicationImpl implements StoryApplication {
         ActionResult result = ActionResult.success();
 
         Story story = StoryConverter.INSTANCE.convertFrom(input, owner);
-        long id = KeyGeneratorBuilder.INSTANCE.build();
-        story.setId(id);
+        story.buildId();
 
         this.storyRep.insert(story);
         return result;

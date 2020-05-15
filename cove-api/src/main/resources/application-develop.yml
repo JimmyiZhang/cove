@@ -1,0 +1,23 @@
+# actuator config
+management:
+  endpoints:
+    web.exposure.include: health,info,metrics,loggers,httptrace
+  endpoint:
+    health.show-details: always
+
+# spring config
+spring:
+  # datasource config
+  datasource:
+    url: jdbc:sqlite:c:/users/jimmy/cove.db
+    driver-class-name: org.sqlite.JDBC
+    user-name:
+    password:
+
+  # cache config
+  cache:
+    type: SIMPLE
+
+  redis:
+    host: 127.0.0.1
+    port: 6379

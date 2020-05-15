@@ -31,6 +31,10 @@ public class Story extends DefaultEntity {
     private LocalDateTime updateTime;
     private Long ownerId;
 
+    public void buildId(){
+        this.valueOf();
+    }
+
     /**
      * 创建
      *
