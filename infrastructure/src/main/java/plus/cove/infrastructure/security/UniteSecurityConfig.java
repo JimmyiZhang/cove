@@ -36,7 +36,8 @@ public class UniteSecurityConfig {
 
     /**
      * 幂等有效时间，单位秒
+     * 默认5秒
      */
     @DurationUnit(ChronoUnit.SECONDS)
-    private Duration idempotentDuration = Duration.ofSeconds(5 * 60L);
+    private Duration idempotentDuration = Duration.ofSeconds(5L);
 }

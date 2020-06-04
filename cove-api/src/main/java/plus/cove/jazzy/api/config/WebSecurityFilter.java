@@ -34,7 +34,6 @@ public class WebSecurityFilter extends OncePerRequestFilter {
     @Autowired
     private JwtUtils jwtUtils;
 
-
     /**
      * 获取jwt的token
      *

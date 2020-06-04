@@ -26,7 +26,7 @@ public class UniteJwtConfig {
      * 默认72小时
      */
     @DurationUnit(ChronoUnit.SECONDS)
-    private Duration tokenExpired = Duration.ofSeconds(72 * 60 * 60L);
+    private Duration tokenExpired = Duration.ofHours(72L);
 
     /**
      * Token秘钥
@@ -54,12 +54,12 @@ public class UniteJwtConfig {
     private String tokenHeader = "Authorization";
 
     /**
-     * Token http query认证标识
-     */
-    private String tokenQuery = "token";
-
-    /**
      * Token Bearer认证标识
      */
     private String tokenBearer = "Bearer";
+
+    /**
+     * Token http query认证标识
+     */
+    private String tokenQuery = "token";
 }

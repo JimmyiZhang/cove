@@ -23,10 +23,11 @@ public class UniteCacheConfig {
      * 默认72小时
      */
     @DurationUnit(ChronoUnit.SECONDS)
-    private Duration maxDurationTime = Duration.ofSeconds(72 * 60 * 60L);
+    private Duration maxDurationTime = Duration.ofHours(72L);
 
     /**
      * 空值保留时间，单位秒
+     * 默认2秒
      */
     @DurationUnit(ChronoUnit.SECONDS)
     private Duration nullDurationTime = Duration.ofSeconds(2L);

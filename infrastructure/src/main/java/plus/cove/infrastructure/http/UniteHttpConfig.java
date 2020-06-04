@@ -30,7 +30,8 @@ public class UniteHttpConfig {
     private static final String WHOLE_ALLOWED = "*";
 
     /**
-     * 连接时间，单位秒，默认30s
+     * 连接时间，单位秒
+     * 默认30s
      */
     @Getter
     @Setter
@@ -38,7 +39,8 @@ public class UniteHttpConfig {
     private Duration connectTimeout = Duration.ofSeconds(30L);
 
     /**
-     * 读取时间，单位秒，默认300s
+     * 读取时间，单位秒
+     * 默认300s
      */
     @Getter
     @Setter
@@ -46,11 +48,12 @@ public class UniteHttpConfig {
     private Duration readTimeout = Duration.ofSeconds(300L);
 
     /**
-     * 跨域预检有效期，单位秒，默认1天
+     * 跨域预检有效期，单位秒
+     * 默认1天
      */
     @Getter
     @Setter
-    private Long corsMaxAge =  24 * 60 * 60L;
+    private Duration corsMaxAge = Duration.ofDays(1L);
 
     /**
      * 跨域允许的源地址

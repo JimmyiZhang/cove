@@ -20,10 +20,10 @@ import java.time.temporal.ChronoUnit;
 public class UniteRedisConfig {
     /**
      * 过期时间，单位秒
-     * 默认7天
+     * 默认30天
      */
     @DurationUnit(ChronoUnit.SECONDS)
-    private Duration durationTime = Duration.ofSeconds(7 * 24 * 60 * 60L);
+    private Duration durationTime = Duration.ofDays(30L);
 
     /**
      * 分组分隔符

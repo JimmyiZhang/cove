@@ -2,6 +2,7 @@ package plus.cove.infrastructure.http;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +30,8 @@ public class HttpUtils {
     private static final String IP_LOCAL_V6 = "0:0:0:0:0:0:0:1";
     private static final String IP_LOCAL_V4 = "127.0.0.1";
 
+    @Autowired
+    UniteHttpConfig httpConfig;
 
     /**
      * 使用GET方法获取结果
@@ -125,8 +128,8 @@ public class HttpUtils {
             conn.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             // 设置超时时间
-            conn.setConnectTimeout(60);
-            conn.setReadTimeout(60);
+            conn.setConnectTimeout((int)httpConfig.getConnectTimeout().toMillis());
+            conn.setReadTimeout((int)httpConfig.getReadTimeout().toMillis());
             // 发送POST请求必须设置如下两行
             conn.setDoOutput(true);
             conn.setDoInput(true);
@@ -158,9 +161,7 @@ public class HttpUtils {
             return resp;
         } catch (Exception e) {
             log.error("获取出错, 地址: {}", url, e);
-        }
-        //使用finally块来关闭输出流、输入流
-        finally {
+        } finally {
             try {
                 if (out != null) {
                     out.close();

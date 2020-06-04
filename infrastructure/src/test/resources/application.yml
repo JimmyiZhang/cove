@@ -6,20 +6,34 @@ spring:
 
 # global config
 summer:
+  cache-config:
+    max-duration-time: 1D
+    null-duration-time: 1S
+  upload-config:
+    max-file-size: 10MB
   http-config:
-    cache-max-age: 3600
+    connect-timeout: 30S
+    read-timeout: 300S
+    cors-max-age: 1D
     cors-allowed-methods: GET,POST,PUT,DELETE,OPTIONS
-  jwt-config:
-    token-expired: 10080
-    token-secret: 7p9izREdj3cAAQR7HyDCoMDv9dDDtzQLbJ1ScicADAclc
-    token-subject: jazzy
-    token-issue: cove
-    token-claim: id
-  redis-config:
-    expired-minutes: 60
   json-config:
-    datetime-format: yyyy-MM-dd HH:mm
+    date-format: yyyy-MM-dd
+    time-format: HH:mm:ss
+    datetime-format: yyyy-MM-dd HH:mm:ss
+  jwt-config:
+    token-expired: 1D
+    token-secret: secret
+    token-subject: sub
+    token-issue: iss
+    token-claim: id
+    token-header: Authorization
+    token-bearer: Bearer
+    token-query: token
+  redis-config:
+    duration-time: 1D
   security-config:
     permit-urls: /error
+    idempotent-duration: 5M
   system-config:
     run-time: DEVELOPMENT
+    auth-code: 1234
