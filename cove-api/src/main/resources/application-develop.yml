@@ -1,22 +1,23 @@
-# server info
-server:
-  port: 8088
+# actuator config
+management:
+  endpoints:
+    web.exposure.include: health,info,metrics,loggers,httptrace
+  endpoint:
+    health.show-details: always
 
-# spring datasource config
+# spring config
 spring:
+  # datasource config
   datasource:
-    url: jdbc:mysql://192.168.168.40:3307/cove_ms?useSSL=false&allowMultiQueries=true&autoReconnect=true&failOverReadOnly=false&useUnicode=true&characterEncoding=utf-8
-    user-name: root
-    password: root
-    driver-class-name: com.mysql.jdbc.Driver
-    # mysql configuration
-    useServerPrepStmts: true
-    cachePrepStmts: true
-    prepStmtCacheSize: 250
-    prepStmtCacheSqlLimit: 2048
-    useLocalSessionState: true
-    rewriteBatchedStatements: true
-    cacheResultSetMetadata: true
-    cacheServerConfiguration: true
-    elideSetAutoCommits: true
-    maintainTimeStats: false
+    url: jdbc:sqlite:c:/users/jimmy/cove.db
+    driver-class-name: org.sqlite.JDBC
+    user-name:
+    password:
+
+  # cache config
+  cache:
+    type: SIMPLE
+
+  redis:
+    host: 127.0.0.1
+    port: 6379

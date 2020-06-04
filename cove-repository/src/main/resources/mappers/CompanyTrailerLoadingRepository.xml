@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.carbybus.cove.repository.CompanyTrailerLoadingRepository">
-    <select id="selectByCompany" resultType="com.carbybus.cove.domain.entity.company.CompanyTrailerLoading">
-        SELECT place, heavy FROM `company_trailer_loading`
-        WHERE company_id = #{companyId}
-    </select>
-</mapper>

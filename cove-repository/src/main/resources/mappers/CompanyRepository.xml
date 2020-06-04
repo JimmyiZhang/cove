@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.carbybus.cove.repository.CompanyRepository">
-    <select id="selectByName" resultType="com.carbybus.cove.domain.entity.company.Company">
-        SELECT id, name, income_fee, toll_fee, fuel_fee, driver_fee, speed_warning FROM `company`
-        WHERE name = #{name}
-    </select>
-</mapper>

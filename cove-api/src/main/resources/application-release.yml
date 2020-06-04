@@ -1,36 +1,62 @@
-# server info
-server:
-  port: 8088
+# actuator config
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,trace
 
-# spring datasource config
+# spring config
 spring:
+  port: 8080
+  error:
+    include-stacktrace: NEVER
+    include-exception: false
+
   datasource:
-    url: jdbc:mysql://192.168.168.40:3307/cove_business?useSSL=false&allowMultiQueries=true&autoReconnect=true&failOverReadOnly=false&useUnicode=true&characterEncoding=utf-8
-    user-name: root
-    password: root
-    driver-class-name: com.mysql.jdbc.Driver
-    # mysql configuration
-    useServerPrepStmts: true
-    cachePrepStmts: true
-    prepStmtCacheSize: 250
-    prepStmtCacheSqlLimit: 2048
-    useLocalSessionState: true
-    rewriteBatchedStatements: true
-    cacheResultSetMetadata: true
-    cacheServerConfiguration: true
-    elideSetAutoCommits: true
-    maintainTimeStats: false
+    url: jdbc:sqlite:/usr/local/cove/data/cove.db
+    driver-class-name: org.sqlite.JDBC
+    user-name:
+    password:
 
-# logging config
-logging:
-  path: logs
-  file:
-    max-history: 15
-    max-size: 20MB
-  level.org: warn
+  # cache config
+  cache:
+    type: SIMPLE
 
+  # 发送邮件配置
+  mail:
+    user-name: jimmymzhang@163.com
+    password: 43z58j70m36~
+    host: smtp.163.com
+    port: 465
+    properties:
+      mail.smtp.user: jimmymzhang@163.com
+      mail.smtp.auth: true
+      mail.smtp.ssl.enable: true
+
+# global config
 summer:
   http-config:
-    cache-max-age: 600
-    cors-allowed-origins: http://www.carbybus.com
-    cors-allowed-headers: GET,POST,PUT,DELETE
+    cache-max-age: 3600
+    cors-allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+  jwt-config:
+    token-expired: 10080
+    token-secret: 7p9izREdj3cAAQR7HyDCoMDv9dDDtzQLbJ1ScicADAclc
+    token-subject: jazzy
+    token-issue: cove
+    token-claim: id
+  cache-config:
+    null-duration-time: 1
+  redis-config:
+    duration-time: 60
+  json-config:
+    datetime-format: yyyy-MM-dd HH:mm:ss
+  security-config:
+    permit-urls: /error
+  system-config:
+    run-time: PRODUCTION
+
+# project config
+autumn:
+  account-activation:
+    active-days: 7
+    active-url: localhost:8080/active.html?code=

@@ -3,17 +3,25 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>cove</artifactId>
-        <groupId>com.carbybus</groupId>
+        <artifactId>jazzy</artifactId>
+        <groupId>plus.cove</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.carbybus</groupId>
+    <groupId>plus.cove</groupId>
     <artifactId>infrastructure</artifactId>
 
     <name>infrastructure</name>
     <description>基础框架库</description>
+
+    <distributionManagement>
+        <repository>
+            <id>cove-plus-cove-infrastructure</id>
+            <name>infrastructure</name>
+            <url>https://cove-plus-maven.pkg.coding.net/repository/cove/infrastructure</url>
+        </repository>
+    </distributionManagement>
 
     <dependencies>
         <!-- spring-boot -->
@@ -32,6 +40,19 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
         <!-- spring-boot end -->
 
@@ -75,12 +96,16 @@
         </dependency>
         <!-- JWT end-->
 
+        <!-- image -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.drewnoakes</groupId>
+            <artifactId>metadata-extractor</artifactId>
+        </dependency>
+        <!-- image end-->
     </dependencies>
 </project>

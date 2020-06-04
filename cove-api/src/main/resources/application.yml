@@ -1,47 +1,79 @@
 # server info
 server:
-  port: 8088
+  port: 8080
+  error:
+    include-stacktrace: ALWAYS
+    include-exception: true
 
 # spring config
 spring:
+  # profile config
   profiles:
     active: "@profile.active@"
-  cache:
-    type: redis
-    redis:
-      key-prefix: COVE
-  redis:
-    host: 127.0.0.1
-    port: 6379
+
+  # servlet config
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 1KB
+      max-file-size: 10MB
+      max-request-size: 20MB
+
+  # 发送邮件配置
+  mail:
+    user-name: jimmymzhang@163.com
+    password: 43z58j70m36~
+    host: smtp.163.com
+    port: 465
+    properties:
+      mail.smtp.user: jimmymzhang@163.com
+      mail.smtp.auth: true
+      mail.smtp.ssl.enable: true
 
 # logging config
 logging:
   path: logs
   file:
+    # 最少保留15天，防止某些异常以周为频次发生
     max-history: 15
     max-size: 20MB
 
 # mybatis-plus config
 mybatis-plus:
-  config-lacation: classpath:mybatis-config.xml
   mapper-locations: classpath:mappers/*.xml
-  type-enums-package: com.carbybus.cove.domain.*
-  type-aliases-package: com.carbybus.cove.domain.*
+  type-enums-package: plus.cove.jazzy.domain.*
+  type-aliases-package: plus.cove.jazzy.domain.*
+  type-handlers-package: plus.cove.infrastructure.mybatis
+  configuration:
+    default-enum-type-handler: com.baomidou.mybatisplus.extension.handlers.MybatisEnumTypeHandler
   global-config:
-    super-mapper-class: com.carbybus.infrastructure.component.BaseRepository
+    super-mapper-class: plus.cove.infrastructure.component.BaseRepository
 
 # global config
 summer:
   http-config:
-    cache-max-age: 600
+    cache-max-age: 3600
     cors-allowed-methods: GET,POST,PUT,DELETE,OPTIONS
-    cors-allowed-headers: Authorization
   jwt-config:
     token-expired: 10080
     token-secret: 7p9izREdj3cAAQR7HyDCoMDv9dDDtzQLbJ1ScicADAclc
-    token-subject: user
-    token-issue: carbybus
+    token-subject: jazzy
+    token-issue: cove
     token-claim: id
+  cache-config:
+    null-duration-time: 1
   redis-config:
-    expired-minutes: 0
+    duration-time: 60
+  json-config:
+    datetime-format: yyyy-MM-dd HH:mm:ss
+  security-config:
+    permit-urls: /error
+  system-config:
+    run-time: DEVELOPMENT
+
+# project config
+autumn:
+  account-activation:
+    active-days: 7
+    active-url: localhost:8080/active.html?code=
 
