@@ -1,6 +1,5 @@
 package plus.cove.jazzy.domain.entity.discovery;
 
-import com.baomidou.mybatisplus.annotation.EnumValue;
 import plus.cove.infrastructure.component.BaseEnum;
 
 /**
@@ -32,7 +31,6 @@ public enum DiscoveryLevel implements BaseEnum {
     /**
      * 枚举值
      */
-    @EnumValue
     private int value;
 
     /**

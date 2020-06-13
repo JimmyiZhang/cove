@@ -1,10 +1,12 @@
 package plus.cove.jazzy.domain.entity.city;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import plus.cove.jazzy.domain.entity.coordinate.Coordinate;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import plus.cove.infrastructure.component.impl.DefaultEntity;
+import plus.cove.jazzy.domain.entity.coordinate.Coordinate;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * 城市
@@ -15,7 +17,8 @@ import plus.cove.infrastructure.component.impl.DefaultEntity;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName(value = "city")
+@Entity
+@Table(name = "city")
 public class City extends DefaultEntity {
     private String name;
     private String title;

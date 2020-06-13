@@ -1,6 +1,5 @@
 package plus.cove.infrastructure.component;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -43,23 +42,4 @@ public class PageResult<E> {
      * 数据
      */
     private List<E> rows;
-
-    /**
-     * 转换
-     *
-     * @param
-     * @return
-     * @author jimmy.zhang
-     * @date 2019-08-13
-     */
-    public static PageResult from(IPage page) {
-        PageResult result = new PageResult();
-        result.setPage((int) page.getCurrent());
-        result.setSize((int) page.getSize());
-        result.setPages((int) page.getPages());
-        result.setTotal((int) page.getTotal());
-        result.setRows(page.getRecords());
-
-        return result;
-    }
 }

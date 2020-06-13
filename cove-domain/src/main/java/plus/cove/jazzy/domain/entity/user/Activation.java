@@ -1,10 +1,10 @@
 package plus.cove.jazzy.domain.entity.user;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import plus.cove.infrastructure.component.impl.DefaultEntity;
 
+import javax.persistence.Entity;
 import java.time.LocalDateTime;
 
 /**
@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName(value = "activation")
+@Entity
 public class Activation extends DefaultEntity {
     private String userCode;
     private String authCode;

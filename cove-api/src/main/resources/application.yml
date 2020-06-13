@@ -38,16 +38,11 @@ logging:
     max-history: 15
     max-size: 20MB
 
-# mybatis-plus config
-mybatis-plus:
+# mybatis config
+mybatis:
+  config-localtion: classpath:mybatis-config.xml
   mapper-locations: classpath:mappers/*.xml
-  type-enums-package: plus.cove.jazzy.domain.*
   type-aliases-package: plus.cove.jazzy.domain.*
-  type-handlers-package: plus.cove.infrastructure.mybatis
-  configuration:
-    default-enum-type-handler: com.baomidou.mybatisplus.extension.handlers.MybatisEnumTypeHandler
-  global-config:
-    super-mapper-class: plus.cove.infrastructure.component.BaseRepository
 
 # global config
 summer:

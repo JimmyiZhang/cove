@@ -105,7 +105,7 @@ public class AuthorApplicationImpl implements AuthorApplication {
         }
 
         // 用户是否存在
-        Author author = authorRep.selectById(dbAccount.getId());
+        Author author = authorRep.selectByPrimaryKey(dbAccount.getId());
         if (author == null) {
             result.fail(TravellerError.INVALID_USER);
             return result;
@@ -140,7 +140,7 @@ public class AuthorApplicationImpl implements AuthorApplication {
 
         // 查询是否激活
         Long userId = Long.parseLong(activation.getUserCode());
-        Account account = accountRep.selectById(userId);
+        Account account = accountRep.selectByPrimaryKey(userId);
         if (account != null && account.getStatus().equals(UserStatus.ACTIVE)) {
             result.fail(AccountError.USED_ACTIVATION);
             return result;
@@ -152,7 +152,7 @@ public class AuthorApplicationImpl implements AuthorApplication {
         account.setStatus(UserStatus.ACTIVE);
         account.setExpiredTime(expiredTime);
         account.setId(userId);
-        accountRep.updateById(account);
+        accountRep.updateByPrimaryKey(account);
         return result;
     }
 }

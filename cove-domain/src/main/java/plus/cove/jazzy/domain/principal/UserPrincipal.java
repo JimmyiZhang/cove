@@ -1,8 +1,6 @@
 package plus.cove.jazzy.domain.principal;
 
 import lombok.Data;
-import lombok.ToString;
-import lombok.experimental.Accessors;
 
 /**
  * 用户凭证
@@ -12,7 +10,6 @@ import lombok.experimental.Accessors;
  * @author Jimmy.Zhang
  */
 @Data
-@ToString
 public class UserPrincipal {
     /**
      * 用户编号

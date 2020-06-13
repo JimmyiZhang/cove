@@ -1,6 +1,5 @@
 package plus.cove.infrastructure.file;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -40,6 +39,5 @@ public class UploadFileResult {
     /**
      * 全路径
      */
-    @JsonIgnore
     private Path fullPath;
 }

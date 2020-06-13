@@ -52,7 +52,9 @@ public class ErrorController extends AbstractErrorController {
         return result;
     }
 
+
     @Override
+    @SuppressWarnings("unchecked")
     public String getErrorPath() {
         return "/error";
     }

@@ -66,7 +66,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .maxAge(httpConfig.getCorsMaxAge())
+                .maxAge(httpConfig.getCorsMaxAge().toMillis() / 1000)
                 .allowedMethods(httpConfig.getCorsAllowedMethods())
                 .allowedOrigins(httpConfig.getCorsAllowedOrigins())
                 .allowedHeaders(httpConfig.getCorsAllowedHeaders())

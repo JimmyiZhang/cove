@@ -16,13 +16,11 @@
     <description>应用层</description>
 
     <dependencies>
-        <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <scope>provided</scope>
         </dependency>
-        <!-- lombok end -->
 
         <!-- apache commons -->
         <dependency>
@@ -34,20 +32,6 @@
             <artifactId>commons-lang3</artifactId>
         </dependency>
         <!-- apache commons end-->
-
-        <!-- orika -->
-        <dependency>
-            <groupId>ma.glasnost.orika</groupId>
-            <artifactId>orika-core</artifactId>
-        </dependency>
-        <!-- orika end-->
-
-        <!-- mybatis-plus -->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-        </dependency>
-        <!-- mybatis-plus end-->
 
         <dependency>
             <groupId>plus.cove</groupId>

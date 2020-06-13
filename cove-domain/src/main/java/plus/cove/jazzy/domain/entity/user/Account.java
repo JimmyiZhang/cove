@@ -1,12 +1,12 @@
 package plus.cove.jazzy.domain.entity.user;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import plus.cove.infrastructure.component.impl.DefaultEntity;
 
+import javax.persistence.Entity;
 import java.time.LocalDateTime;
 
 /**
@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName(value = "account")
+@Entity
 public class Account extends DefaultEntity {
     private String name;
     private String secret;
@@ -48,7 +48,7 @@ public class Account extends DefaultEntity {
         entity.createTime = createTime;
         entity.expiredTime = expiredTime;
         entity.name = name;
-        entity.status = UserStatus.UNACTIVED;
+        entity.status = UserStatus.NONE;
         entity.salt = salt;
         entity.secret = pass;
 

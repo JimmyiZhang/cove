@@ -4,15 +4,12 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.UUID;
-
 /**
  * 用户激活配置
  *
  * @author jimmy.zhang
  * @date 2019-06-24
  */
-
 @Data
 @Configuration
 @ConfigurationProperties("autumn.account-activation")

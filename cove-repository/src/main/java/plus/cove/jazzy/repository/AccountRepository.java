@@ -1,9 +1,9 @@
 package plus.cove.jazzy.repository;
 
 
-import plus.cove.jazzy.domain.entity.user.Account;
 import org.springframework.stereotype.Repository;
-import plus.cove.infrastructure.component.BaseRepository;
+import plus.cove.jazzy.domain.entity.user.Account;
+import tk.mybatis.mapper.common.Mapper;
 
 /**
  * 账号仓储
@@ -12,7 +12,7 @@ import plus.cove.infrastructure.component.BaseRepository;
  * @date 2019-03-28
  */
 @Repository
-public interface AccountRepository extends BaseRepository<Account> {
+public interface AccountRepository extends Mapper<Account> {
     /**
      * 根据用户名获取账号
      *

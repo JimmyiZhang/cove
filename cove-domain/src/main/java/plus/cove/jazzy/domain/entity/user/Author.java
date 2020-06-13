@@ -1,10 +1,11 @@
 package plus.cove.jazzy.domain.entity.user;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.apache.commons.lang3.StringUtils;
 import plus.cove.infrastructure.component.impl.DefaultTimeEntity;
+
+import javax.persistence.Entity;
 
 /**
  * 用户信息
@@ -14,7 +15,7 @@ import plus.cove.infrastructure.component.impl.DefaultTimeEntity;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName(value = "author")
+@Entity
 public class Author extends DefaultTimeEntity {
     private String name;
     private String avatar;

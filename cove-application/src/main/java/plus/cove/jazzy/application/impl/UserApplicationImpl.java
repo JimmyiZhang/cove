@@ -28,7 +28,7 @@ public class UserApplicationImpl implements UserApplication {
     @Override
     @Cacheable(value = USER_PRINCIPAL)
     public UserPrincipal findPrincipal(Long id) {
-        Author author = authorRep.selectById(id);
+        Author author = authorRep.selectByPrimaryKey(id);
         if (author == null) {
             log.error("the user does not found, the id is: {}", id);
             throw new BusinessException(UserError.INVALID_USER);

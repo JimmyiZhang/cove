@@ -1,6 +1,5 @@
 package plus.cove.jazzy.domain.entity.city;
 
-import com.baomidou.mybatisplus.annotation.EnumValue;
 import plus.cove.infrastructure.component.BaseEnum;
 
 /**
@@ -19,7 +18,6 @@ public enum CityType implements BaseEnum {
     /**
      * 枚举值
      */
-    @EnumValue
     private int value;
 
     /**

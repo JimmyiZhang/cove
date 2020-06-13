@@ -7,12 +7,11 @@ management:
 
 # spring config
 spring:
-  # datasource config
   datasource:
-    url: jdbc:sqlite:c:/users/jimmy/cove.db
-    driver-class-name: org.sqlite.JDBC
-    user-name:
-    password:
+    url: jdbc:mysql://192.168.168.40:3307/cove_business?useSSL=false&allowMultiQueries=true&autoReconnect=true&failOverReadOnly=false&useUnicode=true&characterEncoding=utf-8
+    user-name: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
 
   # cache config
   cache:

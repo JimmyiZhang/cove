@@ -1,6 +1,5 @@
 package plus.cove.infrastructure.mybatis;
 
-import com.baomidou.mybatisplus.extension.handlers.AbstractSqlParserHandler;
 import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -23,7 +22,7 @@ import java.util.Properties;
  * @since 1.0
  */
 @Intercepts({@Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class})})
-public class SqlStatementInterceptor extends AbstractSqlParserHandler implements Interceptor {
+public class SqlStatementInterceptor implements Interceptor {
     private static final String PARAM_NAME_PREFIX = "param";
     private static final String LIKE_ESCAPE_CHARACTERS = "%_[";
     private static final char LIKE_ESCAPE = '\\';

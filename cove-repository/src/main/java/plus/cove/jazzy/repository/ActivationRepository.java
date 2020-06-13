@@ -1,9 +1,9 @@
 package plus.cove.jazzy.repository;
 
 
-import plus.cove.jazzy.domain.entity.user.Activation;
 import org.springframework.stereotype.Repository;
-import plus.cove.infrastructure.component.BaseRepository;
+import plus.cove.jazzy.domain.entity.user.Activation;
+import tk.mybatis.mapper.common.Mapper;
 
 /**
  * 验证码仓储
@@ -12,7 +12,7 @@ import plus.cove.infrastructure.component.BaseRepository;
  * @date 2019-03-28
  */
 @Repository
-public interface ActivationRepository extends BaseRepository<Activation> {
+public interface ActivationRepository extends Mapper<Activation> {
     /**
      * 根据用户码获取信息
      *

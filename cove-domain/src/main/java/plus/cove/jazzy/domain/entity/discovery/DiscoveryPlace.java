@@ -1,8 +1,6 @@
 package plus.cove.jazzy.domain.entity.discovery;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
 import org.apache.commons.lang3.RandomUtils;
 
 /**
@@ -14,8 +12,6 @@ import org.apache.commons.lang3.RandomUtils;
  * @date 2019-07-24
  */
 @Data
-@Accessors(chain = true)
-@NoArgsConstructor
 public class DiscoveryPlace {
     // 目标坐标经度
     private Double latitude;
@@ -41,9 +37,9 @@ public class DiscoveryPlace {
      * @date 2019-07-25
      */
     public static DiscoveryPlace create(Double latitude, Double longitude, DiscoveryLevel level) {
-        DiscoveryPlace dp = new DiscoveryPlace()
-                .setFindZoom(level.getFind())
-                .setViewZoom(level.getView());
+        DiscoveryPlace dp = new DiscoveryPlace();
+        dp.setFindZoom(level.getFind());
+        dp.setViewZoom(level.getView());
 
         // 目标坐标
         Double ofLatitude = RandomUtils.nextDouble(latitude - level.getOffset() * level.getFactor(), latitude + level.getOffset() * level.getFactor());

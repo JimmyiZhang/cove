@@ -1,6 +1,5 @@
 package plus.cove.jazzy.domain.entity.user;
 
-import com.baomidou.mybatisplus.annotation.EnumValue;
 import plus.cove.infrastructure.component.BaseEnum;
 
 /**
@@ -12,14 +11,13 @@ import plus.cove.infrastructure.component.BaseEnum;
  * @date 2019-05-24
  */
 public enum UserStatus implements BaseEnum {
-    UNACTIVED(1, "未激活的"),
+    NONE(1, "未知的"),
     ACTIVE(2, "激活的"),
     DISABLED(3, "禁用的");
 
     /**
      * 枚举值
      */
-    @EnumValue
     private final int value;
 
     /**

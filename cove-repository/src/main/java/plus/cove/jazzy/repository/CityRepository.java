@@ -1,10 +1,10 @@
 package plus.cove.jazzy.repository;
 
 
+import org.springframework.stereotype.Repository;
 import plus.cove.jazzy.domain.entity.city.City;
 import plus.cove.jazzy.domain.entity.city.CityType;
-import org.springframework.stereotype.Repository;
-import plus.cove.infrastructure.component.BaseRepository;
+import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import java.util.List;
  * @date 2019-03-28
  */
 @Repository
-public interface CityRepository extends BaseRepository<City> {
+public interface CityRepository extends Mapper<City> {
     /** 
     * 获取过程和城市
     * @param  

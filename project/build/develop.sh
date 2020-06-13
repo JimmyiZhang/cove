@@ -1,7 +1,7 @@
 #! /bin/bash
 
 echo "[DEV] install start....."
-mvn clean install -D maven.test.skip=true -P test -f ../../pom.xml
+mvn clean install -D maven.test.skip=true -P develop -f ../../pom.xml
 
 echo "[DEV] copy start....."
 scp ../../cove-api/target/ROOT.war root@101.200.53.244:/usr/local/tomcat-8070/temp

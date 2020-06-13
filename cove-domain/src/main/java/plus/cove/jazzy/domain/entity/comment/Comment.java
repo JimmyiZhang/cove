@@ -1,12 +1,12 @@
 package plus.cove.jazzy.domain.entity.comment;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import plus.cove.infrastructure.component.impl.DefaultEntity;
 import plus.cove.jazzy.domain.entity.journey.Story;
 import plus.cove.jazzy.domain.principal.UserPrincipal;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
+import javax.persistence.Entity;
 import java.time.LocalDateTime;
 
 /**
@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName(value = "comment")
+@Entity
 public class Comment extends DefaultEntity {
     private Long storyId;
     private Long ownerId;

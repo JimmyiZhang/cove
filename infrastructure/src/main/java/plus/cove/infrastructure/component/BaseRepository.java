@@ -1,8 +1,6 @@
 package plus.cove.infrastructure.component;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.apache.ibatis.annotations.Param;
+import org.springframework.data.domain.Example;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -37,7 +35,7 @@ public interface BaseRepository<T> {
      * @author jimmy.zhang
      * @date 2019-03-27
      */
-    int delete(@Param("ew") Wrapper<T> wrapper);
+    int delete(Example<T> wrapper);
 
     /**
      * 根据主键删除实体
@@ -57,7 +55,7 @@ public interface BaseRepository<T> {
      * @author jimmy.zhang
      * @date 2019-03-27
      */
-    int deleteBatchIds(@Param("coll") Collection<? extends Serializable> idList);
+    int deleteBatchIds(Collection<? extends Serializable> idList);
 
     /**
      * 条件更新实体
@@ -68,7 +66,7 @@ public interface BaseRepository<T> {
      * @author jimmy.zhang
      * @date 2019-03-27
      */
-    int update(@Param("et") T entity, @Param("ew") Wrapper<T> updateWrapper);
+    int update(T entity, Example<T> updateWrapper);
 
     /**
      * <p>
@@ -81,7 +79,7 @@ public interface BaseRepository<T> {
      * @author jimmy.zhang
      * @date 2019-03-27
      */
-    int updateById(@Param("et") T entity);
+    int updateById(T entity);
 
     /**
      * 根据id获取实体
@@ -101,7 +99,7 @@ public interface BaseRepository<T> {
      * @author jimmy.zhang
      * @date 2019-03-27
      */
-    T selectOne(@Param("ew") Wrapper<T> queryWrapper);
+    T selectOne(Example<T> queryWrapper);
 
     /**
      * 根据条件获取实体列表
@@ -111,7 +109,7 @@ public interface BaseRepository<T> {
      * @author jimmy.zhang
      * @date 2019-03-27
      */
-    List<T> selectList(@Param("ew") Wrapper<T> queryWrapper);
+    List<T> selectList(Example<T> queryWrapper);
 
     /**
      * 根据id集合获取实体列表
@@ -121,7 +119,7 @@ public interface BaseRepository<T> {
      * @author jimmy.zhang
      * @date 2019-03-27
      */
-    List<T> selectBatchIds(@Param("coll") Collection<? extends Serializable> idList);
+    List<T> selectBatchIds(Collection<? extends Serializable> idList);
 
     /**
      * 根据条件和分页获取分页实体
@@ -132,7 +130,7 @@ public interface BaseRepository<T> {
      * @author jimmy.zhang
      * @date 2019-03-27
      */
-    IPage<T> selectPage(IPage<T> page, @Param("ew") Wrapper<T> queryWrapper);
+    PageResult<T> selectPage(PageModel page, Example<T> queryWrapper);
 
     /**
      * 查询条数
@@ -142,5 +140,5 @@ public interface BaseRepository<T> {
      * @author jimmy.zhang
      * @date 2019-03-27
      */
-    Integer selectCount(@Param("ew") Wrapper<T> queryWrapper);
+    Integer selectCount(Example<T> queryWrapper);
 }

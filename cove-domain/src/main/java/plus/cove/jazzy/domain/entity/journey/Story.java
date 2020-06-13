@@ -1,14 +1,14 @@
 package plus.cove.jazzy.domain.entity.journey;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import plus.cove.infrastructure.file.FileMetadata;
-import plus.cove.jazzy.domain.entity.coordinate.Coordinate;
-import plus.cove.jazzy.domain.principal.UserPrincipal;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.apache.commons.lang3.StringUtils;
 import plus.cove.infrastructure.component.impl.DefaultEntity;
+import plus.cove.infrastructure.file.FileMetadata;
+import plus.cove.jazzy.domain.entity.coordinate.Coordinate;
+import plus.cove.jazzy.domain.principal.UserPrincipal;
 
+import javax.persistence.Entity;
 import java.time.LocalDateTime;
 
 /**
@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName(value = "story")
+@Entity
 public class Story extends DefaultEntity {
     private String name;
     private String url;

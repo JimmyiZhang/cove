@@ -1,7 +1,5 @@
 package plus.cove.infrastructure.component;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,17 +25,4 @@ public class PageModel {
      * 页大小
      */
     private int size;
-
-    /**
-     * 转换
-     *
-     * @param
-     * @return
-     * @author jimmy.zhang
-     * @date 2019-08-13
-     */
-    public IPage toPage() {
-        IPage page = new Page(this.page, this.size);
-        return page;
-    }
 }

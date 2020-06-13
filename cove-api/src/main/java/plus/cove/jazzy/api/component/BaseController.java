@@ -8,7 +8,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import plus.cove.infrastructure.component.ActionResult;
 import plus.cove.infrastructure.exception.BusinessError;
-import plus.cove.infrastructure.http.HttpUtils;
 import plus.cove.infrastructure.json.JsonUtils;
 import plus.cove.jazzy.application.UserApplication;
 import plus.cove.jazzy.domain.principal.UserPrincipal;
@@ -66,13 +65,13 @@ public class BaseController {
      * @author jimmy.zhang
      * @since 1.0
      */
-    protected void responseCache(int maxAgeSeconds) {
-        if (maxAgeSeconds < 0) {
+    protected void responseCache(int maxAge) {
+        if (maxAge < 0) {
             response.setHeader("Pragma", "No-cache");
             response.setHeader("Cache-Control", "no-cache");
             response.setDateHeader("Expires", 0);
         } else {
-            response.setHeader("Cache-Control", "max-age=" + String.valueOf(maxAgeSeconds));
+            response.setHeader("Cache-Control", "max-age=" + String.valueOf(maxAge));
         }
     }
 

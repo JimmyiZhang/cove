@@ -10,8 +10,7 @@
     <packaging>pom</packaging>
 
     <name>jazzy</name>
-    <description>在途中</description>
-
+    <description>旅行日记</description>
     <modules>
         <module>infrastructure</module>
         <module>cove-domain</module>
@@ -26,15 +25,16 @@
         <java.version>1.8</java.version>
 
         <javax-validation.version>2.0.1.Final</javax-validation.version>
-        <spring-boot.version>2.2.4.RELEASE</spring-boot.version>
+        <jakarta.persistence-api.version>2.2.3</jakarta.persistence-api.version>
+        <spring-boot.version>2.3.0.RELEASE</spring-boot.version>
         <lombok.version>1.18.12</lombok.version>
-        <mysql-connector.version>8.0.19</mysql-connector.version>
+        <mysql-connector.version>8.0.20</mysql-connector.version>
         <commons-codec.version>1.14</commons-codec.version>
-        <commons-lang3.version>3.9</commons-lang3.version>
+        <commons-lang3.version>3.10</commons-lang3.version>
         <orika-core.version>1.5.4</orika-core.version>
-        <mybatis-plus.version>3.1.2</mybatis-plus.version>
-        <sqlite.version>3.28.0</sqlite.version>
-        <java-jwt.version>3.10.1</java-jwt.version>
+        <tk.mybatis.version>2.1.5</tk.mybatis.version>
+        <mybatis.version>3.4.6</mybatis.version>
+        <java-jwt.version>3.10.3</java-jwt.version>
         <springfox-swagger.version>2.9.2</springfox-swagger.version>
         <thumbnailator.version>0.4.11</thumbnailator.version>
         <metadata-extractor.version>2.13.0</metadata-extractor.version>
@@ -47,15 +47,21 @@
                 <version>${javax-validation.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>jakarta.persistence</groupId>
+                <artifactId>jakarta.persistence-api</artifactId>
+                <version>${jakarta.persistence-api.version}</version>
+            </dependency>
+
             <!-- spring-boot -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-web</artifactId>
+                <artifactId>spring-boot-starter</artifactId>
                 <version>${spring-boot.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-validation</artifactId>
+                <artifactId>spring-boot-starter-web</artifactId>
                 <version>${spring-boot.version}</version>
             </dependency>
             <dependency>
@@ -86,6 +92,11 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-security</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-jpa</artifactId>
                 <version>${spring-boot.version}</version>
             </dependency>
             <dependency>
@@ -131,21 +142,25 @@
             </dependency>
             <!-- orika end-->
 
-            <!-- mybatis-plus -->
+            <!-- mybatis -->
             <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${mybatis-plus.version}</version>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${mybatis.version}</version>
             </dependency>
-            <!-- mybatis-plus end-->
 
-            <!-- sqlite- driver-->
             <dependency>
-                <groupId>org.xerial</groupId>
-                <artifactId>sqlite-jdbc</artifactId>
-                <version>${sqlite.version}</version>
+                <groupId>tk.mybatis</groupId>
+                <artifactId>mapper-spring-boot-starter</artifactId>
+                <version>${tk.mybatis.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.mybatis</groupId>
+                        <artifactId>mybatis</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
-            <!-- sqlite- driver end-->
+            <!-- mybatis end-->
 
             <!-- JWT -->
             <dependency>

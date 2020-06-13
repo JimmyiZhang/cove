@@ -1,13 +1,14 @@
 package plus.cove.infrastructure.component.impl;
 
-import com.baomidou.mybatisplus.annotation.TableId;
+
 import plus.cove.infrastructure.component.BaseEntity;
 import plus.cove.infrastructure.generator.KeyGeneratorBuilder;
 
+import javax.persistence.Id;
+
 /**
- * <p>
  * 实体基类
- * </p>
+ * <p>
  * 领域类，表示业务对象
  * 1. 提供基本属性
  * 2. 提供基础方法，valueOf用于生成id等基本属性
@@ -19,7 +20,7 @@ import plus.cove.infrastructure.generator.KeyGeneratorBuilder;
  * @since 1.0
  */
 public abstract class DefaultEntity implements BaseEntity<Long> {
-    @TableId
+    @Id
     private Long id;
 
     @Override
