@@ -2,7 +2,7 @@ package plus.cove.jazzy.api.test.converter;
 
 import plus.cove.jazzy.api.ApiApplication;
 import plus.cove.jazzy.domain.converter.StoryConverter;
-import plus.cove.jazzy.domain.entity.journey.Story;
+import plus.cove.jazzy.domain.entity.story.Story;
 import plus.cove.jazzy.domain.principal.UserPrincipal;
 import plus.cove.jazzy.domain.view.StoryCreateInput;
 import org.junit.Test;

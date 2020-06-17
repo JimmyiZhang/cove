@@ -3,7 +3,7 @@ package plus.cove.jazzy.application;
 
 import plus.cove.infrastructure.component.ActionResult;
 import plus.cove.jazzy.domain.entity.coordinate.CoordinateAround;
-import plus.cove.jazzy.domain.entity.journey.Story;
+import plus.cove.jazzy.domain.entity.story.Story;
 import plus.cove.jazzy.domain.principal.UserPrincipal;
 import plus.cove.jazzy.domain.view.StoryCreateInput;
 import plus.cove.jazzy.domain.view.StoryViewOutput;

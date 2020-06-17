@@ -2,7 +2,7 @@ package plus.cove.jazzy.api.test.repository;
 
 import plus.cove.jazzy.api.ApiApplication;
 import plus.cove.jazzy.domain.entity.coordinate.Coordinate;
-import plus.cove.jazzy.domain.entity.journey.Story;
+import plus.cove.jazzy.domain.entity.story.Story;
 import plus.cove.jazzy.domain.principal.UserPrincipal;
 import plus.cove.jazzy.repository.StoryRepository;
 import org.junit.Test;
@@ -32,7 +32,7 @@ public class StoryRepositoryTest {
         story.setSubject("tianjin");
         story.setName("风花雪月");
         story.setDescription("DDDDescription");
-        story.setUrl("https://cove-1259284616.cos.ap-beijing.myqcloud.com/photos/IMG_1325.JPG?q-sign-algorithm=sha1&q-ak=AKIDOFjQJX6VMcNpCs4xtjBG9uItrLx7RPgi&q-sign-time=1558501623;1558503423&q-key-time=1558501623;1558503423&q-header-list=&q-url-param-list=&q-signature=eecb541e4fbc6d7af0eb4ed2ba8944bc0bedbb49&x-cos-security-token=cda0887df6238b19bbe0e77e3a62e41996bb74d610001");
+        story.setImage("https://cove-1259284616.cos.ap-beijing.myqcloud.com/photos/IMG_1325.JPG?q-sign-algorithm=sha1&q-ak=AKIDOFjQJX6VMcNpCs4xtjBG9uItrLx7RPgi&q-sign-time=1558501623;1558503423&q-key-time=1558501623;1558503423&q-header-list=&q-url-param-list=&q-signature=eecb541e4fbc6d7af0eb4ed2ba8944bc0bedbb49&x-cos-security-token=cda0887df6238b19bbe0e77e3a62e41996bb74d610001");
         story.setTakeTime(LocalDateTime.now());
 
         storyRep.insertStory(story);

@@ -13,10 +13,10 @@ spring:
     include-exception: false
 
   datasource:
-    url: jdbc:sqlite:/usr/local/cove/data/cove.db
-    driver-class-name: org.sqlite.JDBC
-    user-name:
-    password:
+    url: jdbc:mysql://101.200.53.244:3306/cove?useSSL=false&allowMultiQueries=true&autoReconnect=true&failOverReadOnly=false&useUnicode=true&characterEncoding=utf-8
+    user-name: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
 
   # cache config
   cache:

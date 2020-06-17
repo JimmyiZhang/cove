@@ -11,9 +11,9 @@ import plus.cove.infrastructure.component.BaseEnum;
  * @date 2019-05-24
  */
 public enum UserGender implements BaseEnum {
-    NONE(1, "未知"),
-    MALE(2, "男"),
-    FEMALE(3, "女");
+    NONE(0, "未知"),
+    MALE(1, "男"),
+    FEMALE(2, "女");
 
     /**
      * 枚举值

@@ -1,7 +1,7 @@
 package plus.cove.jazzy.domain.converter;
 
 import plus.cove.infrastructure.converter.DefaultConverter;
-import plus.cove.jazzy.domain.entity.journey.Story;
+import plus.cove.jazzy.domain.entity.story.Story;
 import plus.cove.jazzy.domain.principal.UserPrincipal;
 import plus.cove.jazzy.domain.view.StoryCreateInput;
 import plus.cove.jazzy.domain.view.StoryViewOutput;
@@ -36,7 +36,7 @@ public class StoryConverter extends DefaultConverter {
 
     public Story convertFrom(StoryCreateInput input, UserPrincipal user) {
         Story out = super.convert(input, Story.class);
-        out.setOwnerId(user.getUserId());
+        out.setUserId(user.getUserId());
         out.setCreateTime(LocalDateTime.now());
         return out;
     }

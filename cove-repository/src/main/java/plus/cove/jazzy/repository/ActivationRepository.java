@@ -2,7 +2,7 @@ package plus.cove.jazzy.repository;
 
 
 import org.springframework.stereotype.Repository;
-import plus.cove.jazzy.domain.entity.user.Activation;
+import plus.cove.jazzy.domain.account.Activation;
 import tk.mybatis.mapper.common.Mapper;
 
 /**

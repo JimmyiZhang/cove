@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="plus.cove.jazzy.repository.StoryRepository">
-    <resultMap id="photoMap" type="plus.cove.jazzy.domain.entity.journey.Story">
+    <resultMap id="photoMap" type="plus.cove.jazzy.domain.entity.story.Story">
         <id property="id" column="id"></id>
-        <result property="url" column="url"></result>
         <result property="name" column="name"></result>
+        <result property="image" column="image"></result>
         <result property="subject" column="subject"></result>
         <result property="description" column="description"></result>
-        <result property="takeTime" column="take_time"
-                typeHandler="plus.cove.infrastructure.mybatis.LocalDateTimeHandler"></result>
-        <result property="createTime" column="create_time"
-                typeHandler="plus.cove.infrastructure.mybatis.LocalDateTimeHandler"></result>
-        <result property="updateTime" column="update_time"
-                typeHandler="plus.cove.infrastructure.mybatis.LocalDateTimeHandler"></result>
-        <result property="ownerId" column="owner_id"></result>
+        <result property="takeTime" column="take_time"></result>
+        <result property="createTime" column="create_time"></result>
+        <result property="updateTime" column="update_time"></result>
+        <result property="userId" column="user_id"></result>
         <association property="location" javaType="plus.cove.jazzy.domain.entity.coordinate.Coordinate">
             <result property="latitude" column="latitude"></result>
             <result property="longitude" column="longitude"></result>
@@ -22,13 +19,13 @@
 
     <insert id="insertStory">
         INSERT INTO story
-        (id,`url`,`name`,`subject`,description,take_time,create_time,update_time,latitude,longitude,owner_id)
+        (id,`image`,`name`,`subject`,description,take_time,create_time,update_time,latitude,longitude,user_id)
         VALUES
-        (#{id},#{url},#{name},#{subject},#{description},#{takeTime},#{createTime},#{updateTime},#{location.latitude},#{location.longitude},#{ownerId});
+        (#{id},#{image},#{name},#{subject},#{description},#{takeTime},#{createTime},#{updateTime},#{location.latitude},#{location.longitude},#{userId});
     </insert>
 
     <select id="selectByName" resultMap="photoMap">
-        SELECT id,`url`,`name`,`subject`,description,take_time,latitude,longitude,owner_id
+        SELECT id,`image`,`name`,`subject`,description,take_time,latitude,longitude,user_id
         FROM story
         <if test="name!=null">
             WHERE `name` LIKE #{name}
@@ -37,18 +34,18 @@
     </select>
 
     <select id="selectByNear" resultMap="photoMap">
-        SELECT id,`url`,`name`,`subject`,description,take_time,latitude,longitude,owner_id
+        SELECT id,`image`,`name`,`subject`,description,take_time,latitude,longitude,user_id
         FROM story
         <if test="around!=null">
-            WHERE latitude &gt; #{around.minLatitude} and latitude &lt; #{around.maxLatitude}
-            and longitude &gt; #{around.minLongitude} and longitude &lt; #{around.maxLongitude}
+            WHERE latitude &gt; #{around.minLatitude} AND latitude &lt; #{around.maxLatitude}
+            AND longitude &gt; #{around.minLongitude} AND longitude &lt; #{around.maxLongitude}
         </if>
         ORDER BY id DESC
         LIMIT 0,#{size}
     </select>
 
     <select id="selectBySubject" resultMap="photoMap">
-        SELECT id,`url`,`name`,`subject`,description,take_time,latitude,longitude,owner_id
+        SELECT id,`image`,`name`,`subject`,description,take_time,latitude,longitude,user_id
         FROM story
         <if test="subjects!=null">
             WHERE `subject` IN

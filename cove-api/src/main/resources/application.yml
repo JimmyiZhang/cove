@@ -40,9 +40,13 @@ logging:
 
 # mybatis config
 mybatis:
-  config-localtion: classpath:mybatis-config.xml
+  config-location: classpath:mybatis-config.xml
   mapper-locations: classpath:mappers/*.xml
   type-aliases-package: plus.cove.jazzy.domain.*
+
+mapper:
+  identity: MYSQL
+  enum-as-simple-type: true
 
 # global config
 summer:

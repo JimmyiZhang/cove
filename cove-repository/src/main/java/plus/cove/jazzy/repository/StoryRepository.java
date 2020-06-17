@@ -4,7 +4,7 @@ package plus.cove.jazzy.repository;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import plus.cove.jazzy.domain.entity.coordinate.CoordinateAround;
-import plus.cove.jazzy.domain.entity.journey.Story;
+import plus.cove.jazzy.domain.entity.story.Story;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;

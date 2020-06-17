@@ -1,9 +1,8 @@
 package plus.cove.jazzy.domain.view;
 
-import plus.cove.jazzy.domain.entity.user.Account;
+import plus.cove.jazzy.domain.account.Account;
 import plus.cove.jazzy.domain.entity.user.Author;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;

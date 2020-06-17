@@ -7,7 +7,7 @@ import plus.cove.infrastructure.file.UploadFileResult;
 import plus.cove.infrastructure.file.UploadFileUtils;
 import plus.cove.jazzy.api.component.BaseController;
 import plus.cove.jazzy.application.StoryApplication;
-import plus.cove.jazzy.domain.entity.journey.Story;
+import plus.cove.jazzy.domain.entity.story.Story;
 import plus.cove.jazzy.domain.exception.StoryError;
 import io.swagger.annotations.Api;
 import org.apache.commons.lang3.StringUtils;

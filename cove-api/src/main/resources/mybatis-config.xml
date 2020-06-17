@@ -5,11 +5,8 @@
 <configuration>
     <settings>
         <setting name="cacheEnabled" value="true"/>
-        <setting name="defaultEnumTypeHandler"
-                 value="com.baomidou.mybatisplus.extension.handlers.MybatisEnumTypeHandler"/>
+        <setting name="defaultEnumTypeHandler" value="plus.cove.infrastructure.mybatis.BaseEnumHandler"/>
     </settings>
     <typeHandlers>
-        <typeHandler handler="plus.cove.infrastructure.mybatis.LocalDateTimeHandler"/>
     </typeHandlers>
-
 </configuration>

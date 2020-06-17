@@ -1,4 +1,4 @@
-package plus.cove.jazzy.domain.entity.journey;
+package plus.cove.jazzy.domain.entity.story;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,16 +22,16 @@ import java.time.LocalDateTime;
 @Entity
 public class Story extends DefaultEntity {
     private String name;
-    private String url;
     private String subject;
+    private String image;
     private String description;
     private Coordinate location;
     private LocalDateTime takeTime;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
-    private Long ownerId;
+    private Long userId;
 
-    public void buildId(){
+    public void buildId() {
         this.valueOf();
     }
 
@@ -48,11 +48,11 @@ public class Story extends DefaultEntity {
         story.valueOf();
 
         LocalDateTime now = LocalDateTime.now();
-        story.setCreateTime(now);
-        story.setUpdateTime(now);
-        story.setOwnerId(user.getUserId());
-        story.setSubject(StringUtils.EMPTY);
-        story.setDescription(StringUtils.EMPTY);
+        story.createTime = now;
+        story.updateTime = now;
+        story.userId = user.getUserId();
+        story.subject = StringUtils.EMPTY;
+        story.description = StringUtils.EMPTY;
         return story;
     }
 
@@ -66,11 +66,11 @@ public class Story extends DefaultEntity {
      */
     public static Story fromFile(UserPrincipal user, FileMetadata file) {
         Story story = Story.create(user);
-        story.setName(file.getName());
-        story.setUrl(file.getUrl());
-        story.setTakeTime(file.getToken());
-        story.setOwnerId(user.getUserId());
-        story.setSubject(StringUtils.EMPTY);
+        story.name = file.getName();
+        story.image = file.getUrl();
+        story.takeTime = file.getToken();
+        story.userId = user.getUserId();
+        story.subject = StringUtils.EMPTY;
 
         String description = String.format("from: %s %s", file.getMake(), file.getModel());
         story.setDescription(description);

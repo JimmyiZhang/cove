@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="plus.cove.jazzy.repository.ActivationRepository">
-    <select id="selectByCode" resultType="plus.cove.jazzy.domain.entity.user.Activation">
+    <select id="selectByCode" resultType="plus.cove.jazzy.domain.account.Activation">
         SELECT id, user_code, auth_code, create_time, expired_time FROM `activation`
         WHERE user_code = #{userCode}
     </select>
 
-    <select id="selectByAuth" resultType="plus.cove.jazzy.domain.entity.user.Activation">
+    <select id="selectByAuth" resultType="plus.cove.jazzy.domain.account.Activation">
         SELECT id, user_code, auth_code, create_time, expired_time FROM `activation`
         WHERE auth_code = #{authCode}
     </select>

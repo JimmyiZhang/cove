@@ -22,6 +22,6 @@ import javax.persistence.Table;
 public class City extends DefaultEntity {
     private String name;
     private String title;
-    private Coordinate location;
     private CityType type;
+    private Coordinate location;
 }

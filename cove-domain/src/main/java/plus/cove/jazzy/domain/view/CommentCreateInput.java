@@ -1,12 +1,11 @@
 package plus.cove.jazzy.domain.view;
 
-import plus.cove.jazzy.domain.entity.comment.Comment;
 import lombok.Data;
-import lombok.experimental.Accessors;
-import org.hibernate.validator.constraints.Length;
+import plus.cove.jazzy.domain.entity.comment.Comment;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * 评论输入
@@ -17,7 +16,7 @@ import javax.validation.constraints.NotNull;
 @Data
 public class CommentCreateInput {
     @NotNull(message = "评论不能为空")
-    @Length(max = 120, message = "最多120个字")
+    @Size(max = 120, message = "最多120个字")
     private String comment;
 
     @NotNull(message = "故事不能为空")

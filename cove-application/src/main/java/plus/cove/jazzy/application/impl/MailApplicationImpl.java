@@ -2,7 +2,7 @@ package plus.cove.jazzy.application.impl;
 
 import plus.cove.infrastructure.email.EmailUtils;
 import plus.cove.jazzy.application.MailApplication;
-import plus.cove.jazzy.domain.entity.user.ActivationConfig;
+import plus.cove.jazzy.domain.account.ActivationConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

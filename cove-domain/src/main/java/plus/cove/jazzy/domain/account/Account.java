@@ -1,10 +1,11 @@
-package plus.cove.jazzy.domain.entity.user;
+package plus.cove.jazzy.domain.account;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import plus.cove.infrastructure.component.impl.DefaultEntity;
+import plus.cove.jazzy.domain.entity.user.UserStatus;
 
 import javax.persistence.Entity;
 import java.time.LocalDateTime;

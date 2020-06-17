@@ -1,4 +1,4 @@
-package plus.cove.jazzy.domain.entity.user;
+package plus.cove.jazzy.domain.account;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
