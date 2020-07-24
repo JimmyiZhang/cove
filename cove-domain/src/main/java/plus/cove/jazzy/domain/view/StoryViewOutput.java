@@ -1,7 +1,6 @@
 package plus.cove.jazzy.domain.view;
 
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
@@ -16,7 +15,7 @@ import java.time.LocalDateTime;
 public class StoryViewOutput {
     private Long id;
     private String name;
-    private String url;
+    private String image;
     private LocalDateTime takeTime;
     private Double latitude;
     private Double longitude;

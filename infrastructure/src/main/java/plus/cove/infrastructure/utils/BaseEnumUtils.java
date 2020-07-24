@@ -1,4 +1,4 @@
-package plus.cove.infrastructure.mybatis;
+package plus.cove.infrastructure.utils;
 
 import plus.cove.infrastructure.component.BaseEnum;
 

@@ -5,7 +5,8 @@
 <configuration>
     <settings>
         <setting name="cacheEnabled" value="true"/>
-        <setting name="defaultEnumTypeHandler" value="plus.cove.infrastructure.mybatis.BaseEnumHandler"/>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="defaultEnumTypeHandler" value="plus.cove.infrastructure.mybatis.handler.BaseEnumHandler"/>
     </settings>
     <typeHandlers>
     </typeHandlers>

@@ -28,6 +28,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * 设置web安全细节
      * 定义那些需要被保护，那些不需要保护
+     * 不需要验证
+     * .antMatchers("").permitAll()
+     * 需要验证
+     * .anyRequest().authenticated()
      *
      * @param
      * @return
@@ -37,21 +41,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                // 认证配置
-                .authorizeRequests()
-                // 不需要验证
-                .antMatchers(securityConfig.getPermitUrls()).permitAll()
-                // 其他验证
-                .anyRequest().authenticated()
-                .and()
-                // 关闭X-Frame-Options
-                .headers().frameOptions().disable()
-                .and()
-                // 不需要csrf(cross-site request forgery)
-                .csrf().disable()
-
-                // 不需要session
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+            // 认证配置
+            .authorizeRequests()
+            // 不需要验证
+            .anyRequest().permitAll()
+            .and()
+            // 关闭X-Frame-Options
+            .headers().frameOptions().disable()
+            .and()
+            // 不需要csrf(cross-site request forgery)
+            .csrf().disable()
+            // 不需要session
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtFilter, FilterSecurityInterceptor.class);
     }
 

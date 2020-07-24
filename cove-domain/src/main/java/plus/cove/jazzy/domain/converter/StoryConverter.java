@@ -37,7 +37,9 @@ public class StoryConverter extends DefaultConverter {
     public Story convertFrom(StoryCreateInput input, UserPrincipal user) {
         Story out = super.convert(input, Story.class);
         out.setUserId(user.getUserId());
-        out.setCreateTime(LocalDateTime.now());
+        LocalDateTime now = LocalDateTime.now();
+        out.setCreateTime(now);
+        out.setUpdateTime(now);
         return out;
     }
 

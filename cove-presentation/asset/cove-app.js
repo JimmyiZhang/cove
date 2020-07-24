@@ -1,4 +1,5 @@
 (function() {
+    var api_url = "http://101.200.53.244:9080";
 
     // ==================本地工具BEGIN====================
     // 保存本地存储
@@ -30,9 +31,9 @@
 
     // 删除本地存储
     var removeStorage = function(key) {
-            window.localStorage.removeItem(key);
-        }
-        // ==================本地工具END======================
+        window.localStorage.removeItem(key);
+    }
+    // ==================本地工具END======================
 
 
     // ==================公共工具START======================
@@ -47,9 +48,9 @@
     }
 
     utils.getRandomNumber = function(min, max) {
-            return Math.floor(Math.random() * (max - min) + min);;
-        }
-        // =================公共工具END===================
+        return Math.floor(Math.random() * (max - min) + min);;
+    }
+    // =================公共工具END===================
 
 
     // 输出对象
@@ -90,7 +91,7 @@
                 break;
         }
 
-        fetch(option.url, data)
+        fetch(api_url + option.url, data)
             .then(function(response) {
                 response.json().then(function(json) {
                     if (option.onSuccess) {

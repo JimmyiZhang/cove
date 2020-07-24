@@ -1,14 +1,17 @@
 package plus.cove.jazzy.application.impl;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import plus.cove.infrastructure.component.ActionResult;
 import plus.cove.infrastructure.email.EmailUtils;
 import plus.cove.infrastructure.jwt.JwtResult;
 import plus.cove.infrastructure.jwt.JwtUtils;
-import plus.cove.jazzy.application.MailApplication;
 import plus.cove.jazzy.application.AuthorApplication;
-import plus.cove.jazzy.domain.account.Account;
-import plus.cove.jazzy.domain.account.Activation;
+import plus.cove.jazzy.application.MailApplication;
+import plus.cove.jazzy.domain.entity.account.Account;
+import plus.cove.jazzy.domain.entity.account.Activation;
 import plus.cove.jazzy.domain.entity.user.Author;
 import plus.cove.jazzy.domain.entity.user.UserStatus;
 import plus.cove.jazzy.domain.exception.AccountError;
@@ -17,14 +20,9 @@ import plus.cove.jazzy.domain.view.UserActiveInput;
 import plus.cove.jazzy.domain.view.UserLoginInput;
 import plus.cove.jazzy.domain.view.UserLoginOutput;
 import plus.cove.jazzy.domain.view.UserSignupInput;
-import plus.cove.jazzy.repository.ActivationRepository;
 import plus.cove.jazzy.repository.AccountRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import plus.cove.jazzy.repository.ActivationRepository;
 import plus.cove.jazzy.repository.AuthorRepository;
-
-import java.time.LocalDateTime;
 
 
 /**
@@ -140,19 +138,17 @@ public class AuthorApplicationImpl implements AuthorApplication {
 
         // 查询是否激活
         Long userId = Long.parseLong(activation.getUserCode());
-        Account account = accountRep.selectByPrimaryKey(userId);
-        if (account != null && account.getStatus().equals(UserStatus.ACTIVE)) {
+        Account account = accountRep.selectById(userId);
+        if (account != null && account.getStatus() == UserStatus.ACTIVE) {
             result.fail(AccountError.USED_ACTIVATION);
             return result;
         }
 
         // 激活用户
-        LocalDateTime expiredTime = LocalDateTime.of(2099, 12, 31, 0, 0, 0);
         account = new Account();
-        account.setStatus(UserStatus.ACTIVE);
-        account.setExpiredTime(expiredTime);
         account.setId(userId);
-        accountRep.updateByPrimaryKey(account);
+        account.active();
+        accountRep.updateById(account);
         return result;
     }
 }

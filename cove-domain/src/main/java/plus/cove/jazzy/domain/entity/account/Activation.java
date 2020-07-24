@@ -1,4 +1,4 @@
-package plus.cove.jazzy.domain.account;
+package plus.cove.jazzy.domain.entity.account;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
  * @since 1.1
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @Entity
+@EqualsAndHashCode(callSuper = true)
 public class Activation extends DefaultEntity {
     private String userCode;
     private String authCode;
@@ -35,7 +35,7 @@ public class Activation extends DefaultEntity {
         entity.valueOf();
 
         LocalDateTime createTime = LocalDateTime.now();
-        LocalDateTime expiredTime = createTime.plusMinutes(15);
+        LocalDateTime expiredTime = createTime.plusDays(7);
         entity.createTime = createTime;
         entity.expiredTime = expiredTime;
         entity.userCode = userCode;

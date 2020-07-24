@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import plus.cove.jazzy.api.ApiApplication;
-import plus.cove.jazzy.domain.account.Account;
+import plus.cove.jazzy.domain.entity.account.Account;
 import plus.cove.jazzy.domain.entity.user.UserStatus;
 import plus.cove.jazzy.repository.AccountRepository;
 
@@ -29,6 +29,12 @@ public class RepositoryTest {
     }
 
     @Test
+    public void select(){
+        Account account = accountRep.selectById(71473214508761088L);
+        Assert.assertNotNull(account);
+    }
+
+    @Test
     public void insert() {
         int count = accountRep.insert(account);
         Assert.assertTrue(count > 0);
@@ -39,13 +45,13 @@ public class RepositoryTest {
         Account account = new Account();
         account.setId(1L);
         account.setStatus(UserStatus.DISABLED);
-        int count = accountRep.updateByPrimaryKeySelective(account);
+        int count = accountRep.updateAllById(account);
         Assert.assertTrue(count > 0);
     }
 
     @Test
     public void delete() {
-        int count = accountRep.deleteByPrimaryKey(1L);
+        int count = accountRep.deleteById(1L);
         Assert.assertTrue(count > 0);
     }
 

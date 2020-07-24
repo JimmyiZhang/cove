@@ -1,8 +1,9 @@
-package plus.cove.infrastructure.mybatis;
+package plus.cove.infrastructure.mybatis.handler;
 
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import plus.cove.infrastructure.component.BaseEnum;
+import plus.cove.infrastructure.utils.BaseEnumUtils;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;

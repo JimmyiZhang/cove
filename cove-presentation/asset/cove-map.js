@@ -192,11 +192,16 @@
 
     exports.addMarker = function(option) {
         var mrkContent = `<div class="marker"><img class="${option.className}" src="${option.icon}" /></div>`;
+
+        // 坐标转换
+        var coordinate = wgs84togcj02(option.longitude, option.latitude);
+
+        // 坐标标记
         var marker = new AMap.Marker({
             content: mrkContent,
             map: map,
             title: option.title,
-            position: new AMap.LngLat(option.longitude, option.latitude),
+            position: new AMap.LngLat(coordinate[0], coordinate[1]),
         });
         marker.on('click', option.onClick);
     }

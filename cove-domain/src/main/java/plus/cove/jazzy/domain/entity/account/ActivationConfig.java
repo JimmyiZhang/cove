@@ -1,4 +1,4 @@
-package plus.cove.jazzy.domain.account;
+package plus.cove.jazzy.domain.entity.account;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

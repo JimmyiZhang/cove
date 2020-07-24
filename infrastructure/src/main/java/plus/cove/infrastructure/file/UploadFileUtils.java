@@ -119,6 +119,7 @@ public class UploadFileUtils {
         // 绝对路径
         Path absolutePath = FileUtils.getAbsolutePath(rootPath);
 
+
         // 日期路径
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         String datePath = LocalDate.now().format(formatter);
@@ -138,6 +139,7 @@ public class UploadFileUtils {
         InputStream oriStream = null;
         InputStream thumStream = null;
 
+        log.info("upload file path: {}", fullPath);
         // 创建文件
         try {
             if (!Files.exists(filePath)) {

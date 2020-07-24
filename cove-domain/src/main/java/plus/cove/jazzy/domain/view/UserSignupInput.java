@@ -1,6 +1,6 @@
 package plus.cove.jazzy.domain.view;
 
-import plus.cove.jazzy.domain.account.Account;
+import plus.cove.jazzy.domain.entity.account.Account;
 import plus.cove.jazzy.domain.entity.user.Author;
 import lombok.Data;
 
@@ -17,15 +17,15 @@ import javax.validation.constraints.Size;
 @Data
 public class UserSignupInput {
     @NotEmpty(message = "账号不能为空")
-    @Size(min = 4, max = 32, message = "账号5-32个字符")
+    @Size(min = 4, max = 32, message = "账号4-32个字符")
     private String account;
 
     @NotEmpty(message = "名称不能为空")
-    @Size(min = 4, max = 32, message = "名称5-32个字符")
+    @Size(min = 3, max = 32, message = "名称3-32个字符")
     private String name;
 
     @NotEmpty(message = "密码不能为空")
-    @Size(min = 4, max = 32, message = "密码5-32个字符")
+    @Size(min = 3, max = 32, message = "密码3-32个字符")
     private String password;
 
     /**

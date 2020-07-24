@@ -4,11 +4,11 @@ echo "[DEV] install start....."
 mvn clean install -D maven.test.skip=true -P test -f ../../pom.xml
 
 echo "[DEV] copy start....."
-scp ../../cove-api/target/ROOT.war root@101.200.53.244:/usr/local/tomcat-8070/temp
+scp ../../cove-api/target/ROOT.war root@101.200.53.244:/usr/local/tomcat-9000/temp
 
 echo "[DEV] deploy start....."
 ssh -t -t root@101.200.53.244 << EOF
-    cd /usr/local/tomcat-8070
+    cd /usr/local/tomcat-9000
 
     echo "[DEV] shutdown tomcat..."
     bin/shutdown.sh

@@ -154,20 +154,4 @@ public class BaseController {
     public ActionResult failure(BusinessError error) {
         return ActionResult.failure(error);
     }
-
-    /**
-     * 失败
-     *
-     * @param error 错误
-     * @param data  返回的数据
-     * @return 携带错误码、错误消息和返回数据的操作失败结果
-     * @author jimmy.zhang
-     * @date 2019-02-26
-     */
-    public <T> ActionResult<T> failure(BusinessError error, T data) {
-        ActionResult result = ActionResult.result();
-        result.fail(error, data);
-
-        return result;
-    }
 }

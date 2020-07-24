@@ -1,4 +1,6 @@
 (function() {
+    var file_url = "http://101.200.53.244:9080";
+
     var uppy;
     var viewer;
     var user;
@@ -38,7 +40,7 @@
                 headers: {
                     'Authorization': `Bearer ${cove.app.getUser().token}`
                 },
-                endpoint: option.endpoint
+                endpoint: file_url + option.endpoint
             });
 
         uppy.on("complete", (result) => {
@@ -64,12 +66,13 @@
     // 获取缩略图
     exports.getThumbnail = function(url) {
         var dot = url.lastIndexOf('.');
-        return 'uploads/' + url.substring(0, dot) + "_t" + url.substring(dot);
+        return file_url + '/uploads/' + url.substring(0, dot) + "_t" + url.substring(dot);
     }
 
     // 获取装饰图
     exports.getOrnament = function(url) {
-        return "file/download?name=" + url.replace('\\', '/');
+        return file_url + '/uploads/' + url;
+        // return file_url + "/file/download?name=" + url.replace('\\', '/');
     }
 
     // 初始化显示

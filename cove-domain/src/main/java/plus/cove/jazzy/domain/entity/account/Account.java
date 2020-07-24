@@ -1,4 +1,4 @@
-package plus.cove.jazzy.domain.account;
+package plus.cove.jazzy.domain.entity.account;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,10 +16,9 @@ import java.time.LocalDateTime;
  * @author jimmy.zhang
  * @date 2019-05-20
  */
-
 @Data
-@EqualsAndHashCode(callSuper = true)
 @Entity
+@EqualsAndHashCode(callSuper = true)
 public class Account extends DefaultEntity {
     private String name;
     private String secret;
@@ -27,6 +26,45 @@ public class Account extends DefaultEntity {
     private UserStatus status;
     private LocalDateTime createTime;
     private LocalDateTime expiredTime;
+
+    /**
+     * 验证密码
+     *
+     * @param
+     * @return
+     * @author jimmy.zhang
+     * @date 2019-05-20
+     */
+    public boolean checkPassword(String password) {
+        String pass = generatePassword(password, this.getSalt());
+        return pass.equals(this.getSecret());
+    }
+
+    /**
+     * 更新过期时间
+     *
+     * @param
+     * @return
+     * @author jimmy.zhang
+     * @since 1.0
+     */
+    public void active(){
+        this.status = UserStatus.ACTIVE;
+        this.expiredTime=  LocalDateTime.of(2099, 12, 31, 0, 0, 0);
+    }
+
+    /**
+     * 是否有效
+     *
+     * @param
+     * @return
+     * @author jimmy.zhang
+     * @date 2019-06-25
+     */
+    public boolean checkStatus() {
+        return this.status == UserStatus.ACTIVE &&
+                this.expiredTime.isAfter(LocalDateTime.now());
+    }
 
     /**
      * 创建
@@ -54,32 +92,6 @@ public class Account extends DefaultEntity {
         entity.secret = pass;
 
         return entity;
-    }
-
-    /**
-     * 验证密码
-     *
-     * @param
-     * @return
-     * @author jimmy.zhang
-     * @date 2019-05-20
-     */
-    public boolean checkPassword(String password) {
-        String pass = generatePassword(password, this.getSalt());
-        return pass.equals(this.getSecret());
-    }
-
-    /**
-     * 是否有效
-     *
-     * @param
-     * @return
-     * @author jimmy.zhang
-     * @date 2019-06-25
-     */
-    public boolean checkStatus() {
-        return this.status.equals(UserStatus.DISABLED) == false &&
-                this.expiredTime.isAfter(LocalDateTime.now());
     }
 
     /**

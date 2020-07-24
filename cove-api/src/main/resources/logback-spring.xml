@@ -5,9 +5,10 @@
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
     <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
 
-    <property name="DEBUG_FILE" value="${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/debug/debug.log}"/>
-    <property name="INFO_FILE" value="${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/info/info.log}"/>
-    <property name="ERROR_FILE" value="${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/error/error.log}"/>
+    <springProperty scope="context" name="logging.path" source="logging.path"/>
+
+    <property name="DEBUG_FILE" value="${logging.path}/debug/debug.log}"/>
+    <property name="ERROR_FILE" value="${logging.path}/error/error.log}"/>
 
     <appender name="DEBUG_FILE_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <encoder>
@@ -24,25 +25,6 @@
             <level>DEBUG</level>
         </filter>
     </appender>
-
-    <appender name="INFO_FILE_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <encoder>
-            <pattern>${FILE_LOG_PATTERN}</pattern>
-            <charset>UTF-8</charset>
-        </encoder>
-        <file>${INFO_FILE}</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>${INFO_FILE}.%d{yyyy-MM-dd}.%i</fileNamePattern>
-            <maxFileSize>${LOG_FILE_MAX_SIZE:-10MB}</maxFileSize>
-            <maxHistory>${LOG_FILE_MAX_HISTORY:-0}</maxHistory>
-        </rollingPolicy>
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>INFO</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
-        </filter>
-    </appender>
-
     <appender name="ERROR_FILE_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <encoder>
             <pattern>${FILE_LOG_PATTERN}</pattern>
@@ -67,12 +49,6 @@
         <!-- 添加附加的appender,最多只能添加一个 -->
         <appender-ref ref="DEBUG_FILE_APPENDER"/>
     </appender>
-
-    <appender name="INFO_FILE_ASYNC_APPENDER" class="ch.qos.logback.classic.AsyncAppender">
-        <queueSize>384</queueSize>
-        <appender-ref ref="INFO_FILE_APPENDER"/>
-    </appender>
-
     <appender name="ERROR_FILE_ASYNC_APPENDER" class="ch.qos.logback.classic.AsyncAppender">
         <appender-ref ref="ERROR_FILE_APPENDER"/>
     </appender>
@@ -83,11 +59,9 @@
             <appender-ref ref="DEBUG_FILE_ASYNC_APPENDER"/>
         </root>
     </springProfile>
-
-    <springProfile name="release">
-        <root level="DEBUG">
+    <springProfile name="product">
+        <root level="INFO">
             <appender-ref ref="DEBUG_FILE_ASYNC_APPENDER"/>
-            <appender-ref ref="INFO_FILE_ASYNC_APPENDER"/>
             <appender-ref ref="ERROR_FILE_ASYNC_APPENDER"/>
         </root>
     </springProfile>

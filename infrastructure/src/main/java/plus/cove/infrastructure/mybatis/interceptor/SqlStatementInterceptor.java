@@ -1,4 +1,4 @@
-package plus.cove.infrastructure.mybatis;
+package plus.cove.infrastructure.mybatis.interceptor;
 
 import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.executor.Executor;

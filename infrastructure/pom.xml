@@ -15,14 +15,6 @@
     <name>infrastructure</name>
     <description>基础框架库</description>
 
-    <distributionManagement>
-        <repository>
-            <id>cove-plus-cove-infrastructure</id>
-            <name>infrastructure</name>
-            <url>https://cove-plus-maven.pkg.coding.net/repository/cove/infrastructure</url>
-        </repository>
-    </distributionManagement>
-
     <dependencies>
         <dependency>
             <groupId>javax.validation</groupId>

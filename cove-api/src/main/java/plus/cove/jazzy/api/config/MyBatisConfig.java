@@ -4,7 +4,7 @@ package plus.cove.jazzy.api.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import plus.cove.infrastructure.mybatis.SqlStatementInterceptor;
+import plus.cove.infrastructure.mybatis.interceptor.SqlStatementInterceptor;
 import tk.mybatis.spring.annotation.MapperScan;
 
 /**

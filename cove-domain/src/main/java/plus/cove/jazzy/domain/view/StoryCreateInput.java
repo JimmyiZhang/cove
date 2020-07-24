@@ -1,7 +1,6 @@
 package plus.cove.jazzy.domain.view;
 
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
@@ -16,7 +15,7 @@ import java.time.LocalDateTime;
 @Data
 public class StoryCreateInput {
     @NotNull(message = "图片不能为空")
-    private String url;
+    private String image;
 
     @NotNull(message = "拍照时间不能为空")
     private LocalDateTime takeTime;

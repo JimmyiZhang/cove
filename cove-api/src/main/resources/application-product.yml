@@ -17,6 +17,7 @@ spring:
     user-name: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
+    hikari.maximum-pool-size: 12
 
   # cache config
   cache:
@@ -48,10 +49,6 @@ summer:
     null-duration-time: 1
   redis-config:
     duration-time: 60
-  json-config:
-    datetime-format: yyyy-MM-dd HH:mm:ss
-  security-config:
-    permit-urls: /error
   system-config:
     run-time: PRODUCTION
 
