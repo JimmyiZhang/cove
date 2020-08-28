@@ -43,6 +43,7 @@ public enum UserStatus implements BaseEnum {
         return value;
     }
 
+    @Override
     public String getDesc() {
         return desc;
     }

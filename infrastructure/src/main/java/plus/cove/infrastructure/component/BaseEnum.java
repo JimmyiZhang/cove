@@ -15,4 +15,14 @@ public interface BaseEnum {
      * @since 1.0
      */
     Integer getValue();
+
+    /**
+     * 获取描述
+     *
+     * @param
+     * @return
+     * @author jimmy.zhang
+     * @since 1.0
+     */
+    String getDesc();
 }

@@ -91,6 +91,11 @@ public enum DiscoveryLevel implements BaseEnum {
         return value;
     }
 
+    @Override
+    public String getDesc() {
+        return desc;
+    }
+
     public double getFactor() {
         return factor;
     }

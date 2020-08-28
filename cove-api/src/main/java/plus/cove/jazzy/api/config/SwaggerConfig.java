@@ -1,19 +1,19 @@
 package plus.cove.jazzy.api.config;
 
-import com.google.common.base.Predicate;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.ParameterBuilder;
+import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.schema.ModelRef;
+import springfox.documentation.builders.RequestParameterBuilder;
+import springfox.documentation.oas.annotations.EnableOpenApi;
 import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Parameter;
+import springfox.documentation.service.ParameterType;
+import springfox.documentation.service.RequestParameter;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,55 +22,44 @@ import java.util.List;
  * swagger 配置
  *
  * @author jimmy.zhang
- * @date 2019-04-04
+ * @since 1.0
  */
 @Configuration
-@EnableSwagger2
-@Profile({"develop", "test"})
+@EnableOpenApi
+@Profile({"develop"})
 public class SwaggerConfig {
-    private final String excludes = "/error";
-
     @Bean
-    public Docket createRestApi() {
+    public Docket createDocket() {
         ApiInfo info = this.getApiInfo();
-        List<Parameter> parameters = this.getParameters();
+        List<RequestParameter> parameters = this.getParameters();
 
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(this.getApiInfo())
+        return new Docket(DocumentationType.OAS_30)
+                .apiInfo(info)
                 .select()
-                .apis(this.getRequests())
-                .paths(this.getPaths())
+                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
+                .paths(PathSelectors.any())
                 .build()
-                .globalOperationParameters(this.getParameters());
+                .globalRequestParameters(parameters);
     }
 
     private ApiInfo getApiInfo() {
         return new ApiInfoBuilder()
                 .title("接口文档")
-                .description("项目接口文档")
+                .description("接口文档")
                 .version("1.0")
                 .build();
     }
 
-    private List<Parameter> getParameters() {
-        ParameterBuilder builder = new ParameterBuilder();
-        builder.name("Authorization")
+    private List<RequestParameter> getParameters() {
+        RequestParameterBuilder builder = new RequestParameterBuilder();
+        RequestParameter parameter = builder.name("Authorization")
+                .in(ParameterType.HEADER)
                 .description("认证token")
-                .modelRef(new ModelRef("string"))
-                .parameterType("header")
                 .required(false)
                 .build();
 
-        List<Parameter> parameters = new ArrayList<>();
-        parameters.add(builder.build());
+        List<RequestParameter> parameters = new ArrayList<>();
+        parameters.add(parameter);
         return parameters;
-    }
-
-    private Predicate<String> getPaths() {
-        return input -> excludes.indexOf(input) == -1;
-    }
-
-    private Predicate<RequestHandler> getRequests() {
-        return RequestHandlerSelectors.basePackage("plus.cove.jazzy.api.controller");
     }
 }

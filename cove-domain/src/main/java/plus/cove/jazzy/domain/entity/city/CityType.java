@@ -42,5 +42,10 @@ public enum CityType implements BaseEnum {
     public Integer getValue() {
         return value;
     }
+
+    @Override
+    public String getDesc() {
+        return desc;
+    }
 }
 
