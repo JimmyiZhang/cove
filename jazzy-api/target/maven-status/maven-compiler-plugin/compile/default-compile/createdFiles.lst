@@ -1,0 +1,17 @@
+plus\cove\jazzy\api\controller\UserController.class
+plus\cove\jazzy\api\config\MyBatisConfig.class
+plus\cove\jazzy\api\config\RedisConfig.class
+plus\cove\jazzy\api\BotApplication.class
+plus\cove\jazzy\api\controller\StoryController.class
+plus\cove\jazzy\api\config\WebMvcConfig.class
+plus\cove\jazzy\api\config\SwaggerConfig.class
+plus\cove\jazzy\api\controller\FileController.class
+plus\cove\jazzy\api\component\BaseController.class
+plus\cove\jazzy\api\controller\MemberController.class
+plus\cove\jazzy\api\ApiApplication.class
+plus\cove\jazzy\api\config\WebExceptionHandler.class
+plus\cove\jazzy\api\config\WebSecurityFilter.class
+plus\cove\jazzy\api\config\CachingConfig.class
+plus\cove\jazzy\api\component\ErrorController.class
+plus\cove\jazzy\api\config\WebSecurityConfig.class
+plus\cove\jazzy\api\controller\DiscoveryController.class

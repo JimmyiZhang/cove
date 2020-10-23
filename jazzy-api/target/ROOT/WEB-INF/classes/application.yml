@@ -1,0 +1,88 @@
+# server info
+server:
+  port: 8080
+  error:
+    include-stacktrace: ALWAYS
+    include-exception: true
+
+# spring config
+spring:
+  # profile config
+  profiles:
+    active: "develop"
+
+  datasource:
+    url: jdbc:mysql://101.200.53.244:3306/jazzy?useSSL=false&allowMultiQueries=true&autoReconnect=true&failOverReadOnly=false&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: Wu5%AVGr
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  # cache config
+  cache:
+    type: SIMPLE
+
+  # servlet config
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 1KB
+      max-file-size: 10MB
+      max-request-size: 20MB
+
+  # 发送邮件配置
+  mail:
+    user-name: jimmymzhang@163.com
+    password: 43z58j70m36~
+    host: smtp.163.com
+    port: 465
+    properties:
+      mail.smtp.user: jimmymzhang@163.com
+      mail.smtp.auth: true
+      mail.smtp.ssl.enable: true
+
+# logging config
+logging:
+  path: logs
+  file:
+    # 最少保留15天，防止某些异常以周为频次发生
+    max-history: 15
+    max-size: 20MB
+
+# mybatis config
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath:mappers/*.xml
+  type-aliases-package: plus.cove.jazzy.domain.*
+
+mapper:
+  identity: MYSQL
+  enum-as-simple-type: true
+
+# global config
+summer:
+  http-config:
+    cache-max-age: 3600
+    cors-allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+  jwt-config:
+    token-expired: 7d
+    token-secret: 7p9izREdj3cAAQR7HyDCoMDv9dDDtzQLbJ1ScicADAclc
+    token-subject: jazzy
+    token-issue: cove
+    token-claim: id
+  cache-config:
+    null-duration-time: 1
+  redis-config:
+    duration-time: 60
+  json-config:
+    datetime-format: yyyy-MM-dd HH:mm:ss
+  security-config:
+    permit-urls: /error
+  system-config:
+    run-time: DEVELOPMENT
+
+# project config
+autumn:
+  account-activation:
+    active-days: 7
+    active-url: localhost:8080/active.html?code=
+
