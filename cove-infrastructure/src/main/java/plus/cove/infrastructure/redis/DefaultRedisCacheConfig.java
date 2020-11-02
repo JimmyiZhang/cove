@@ -9,6 +9,7 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
+import plus.cove.infrastructure.caching.UniteCacheConfig;
 import plus.cove.infrastructure.json.UniteJsonConfig;
 
 /**
@@ -24,7 +25,7 @@ import plus.cove.infrastructure.json.UniteJsonConfig;
 @Component
 public class DefaultRedisCacheConfig {
     @Autowired
-    private UniteRedisConfig redisConfig;
+    private UniteCacheConfig redisConfig;
     @Autowired
     private UniteJsonConfig jsonConfig;
 

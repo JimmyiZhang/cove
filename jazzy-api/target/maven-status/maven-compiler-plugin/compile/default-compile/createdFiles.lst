@@ -5,6 +5,7 @@ plus\cove\jazzy\api\BotApplication.class
 plus\cove\jazzy\api\controller\StoryController.class
 plus\cove\jazzy\api\config\WebMvcConfig.class
 plus\cove\jazzy\api\config\SwaggerConfig.class
+plus\cove\jazzy\api\controller\CityController.class
 plus\cove\jazzy\api\controller\FileController.class
 plus\cove\jazzy\api\component\BaseController.class
 plus\cove\jazzy\api\controller\MemberController.class

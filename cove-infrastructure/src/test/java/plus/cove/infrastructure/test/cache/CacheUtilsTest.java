@@ -1,5 +1,6 @@
 package plus.cove.infrastructure.test.cache;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,7 +9,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
+import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import plus.cove.infrastructure.caching.CacheUtils;
@@ -28,13 +29,13 @@ import java.util.Collection;
 @ContextConfiguration(classes = {
         CacheUtils.class,
         UniteCacheConfig.class,
-        ConcurrentMapCacheManager.class},
+        CaffeineCacheManager.class},
         initializers = ConfigFileApplicationContextInitializer.class)
 @EnableCaching(proxyTargetClass = true)
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
 public class CacheUtilsTest {
     @Autowired
-    ConcurrentMapCacheManager cacheManager;
+    CaffeineCacheManager cacheManager;
 
     @Autowired
     CacheUtils cacheUtils;
@@ -69,5 +70,14 @@ public class CacheUtilsTest {
             tryGetObject();
             tryGetNull();
         }
+    }
+
+    @Test
+    public void putAndGet() {
+        cacheUtils.put("NAME", "KEY3", "OK");
+
+        String value = cacheUtils.get("NAME", "KEY3", String.class);
+        System.out.println(value);
+        Assert.assertEquals("相等", value, "OK");
     }
 }

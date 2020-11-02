@@ -1,3 +1,4 @@
+plus\cove\infrastructure\mybatis\helper\MybatisPageHelper.class
 plus\cove\infrastructure\mybatis\interceptor\SqlStatementInterceptor.class
 plus\cove\infrastructure\mybatis\handler\BaseEnumHandler.class
 plus\cove\infrastructure\mybatis\provider\SelectRepositoryProvider.class

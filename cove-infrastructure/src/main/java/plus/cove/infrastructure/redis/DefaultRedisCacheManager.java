@@ -1,15 +1,14 @@
 package plus.cove.infrastructure.redis;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.data.redis.cache.RedisCache;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
-
-import java.time.Duration;
+import plus.cove.infrastructure.caching.CacheResetResult;
+import plus.cove.infrastructure.caching.UniteCacheConfig;
 
 /**
  * 基本redis缓存管理
@@ -23,10 +22,7 @@ import java.time.Duration;
 @Slf4j
 public class DefaultRedisCacheManager extends RedisCacheManager {
     @Autowired
-    UniteRedisConfig redisConfig;
-
-    // 缓存长度
-    private static final int CACHE_DURATION_LENGTH = 2;
+    UniteCacheConfig cacheConfig;
 
     public DefaultRedisCacheManager(RedisCacheWriter cacheWriter, RedisCacheConfiguration defaultCacheConfiguration) {
         super(cacheWriter, defaultCacheConfiguration, true);
@@ -68,26 +64,14 @@ public class DefaultRedisCacheManager extends RedisCacheManager {
      * @date 2019-05-13
      */
     @Override
-    protected RedisCache createRedisCache(String name, RedisCacheConfiguration cacheConfig) {
-        Duration duration = redisConfig.getDurationTime();
-        String cacheTtl = redisConfig.getTtlSeparator();
+    protected RedisCache createRedisCache(String name, RedisCacheConfiguration configuration) {
+        CacheResetResult reset = cacheConfig.resetCache(name);
 
-        // 获取过期时间
-        if (StringUtils.isNotEmpty(name) && name.contains(cacheTtl)) {
-            String[] cacheNames = name.split(cacheTtl);
-            if (cacheNames.length == CACHE_DURATION_LENGTH) {
-                long maxAge = Long.parseLong(cacheNames[1]);
-                if (maxAge > 0) {
-                    duration = Duration.ofSeconds(maxAge);
-                }
-                name = cacheNames[0];
-            }
+        if (configuration != null) {
+            log.debug("重置缓存参数，缓存名称：{}->{}，过期时间：{}ms", name,
+                    reset.getName(), reset.getExpire().toMillis());
+            configuration = configuration.entryTtl(reset.getExpire());
         }
-
-        if (cacheConfig != null && duration != null) {
-            log.info("重置缓存参数，缓存名称：{}，过期时间：{}ms", name, duration.toMillis());
-            cacheConfig = cacheConfig.entryTtl(duration);
-        }
-        return super.createRedisCache(name, cacheConfig);
+        return super.createRedisCache(reset.getName(), configuration);
     }
 }

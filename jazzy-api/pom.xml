@@ -20,6 +20,20 @@
         <!-- spring-boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
@@ -87,6 +101,11 @@
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.noconnor</groupId>
+            <artifactId>junitperf</artifactId>
+        </dependency>
         <!-- micrometer end-->
 
         <dependency>
@@ -138,7 +157,7 @@
                 <filtering>true</filtering>
                 <includes>
                     <include>mappers/**</include>
-                    <include>logback-spring.xml</include>
+                    <include>log4j-config.xml</include>
                     <include>mybatis-config.xml</include>
                     <include>application.yml</include>
                     <include>application-${profile.active}.yml</include>

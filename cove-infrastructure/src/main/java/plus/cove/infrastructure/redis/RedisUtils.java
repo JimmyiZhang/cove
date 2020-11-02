@@ -1,5 +1,6 @@
 package plus.cove.infrastructure.redis;
 
+import plus.cove.infrastructure.caching.UniteCacheConfig;
 import plus.cove.infrastructure.json.UniteJsonConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RedisUtils {
     @Autowired
-    UniteRedisConfig redisConfig;
+    UniteCacheConfig redisConfig;
     @Autowired
     UniteJsonConfig jsonConfig;
 
@@ -143,7 +144,7 @@ public class RedisUtils {
             }
 
             result = true;
-            log.info("redis写入缓存正常, key={}, value={}, timeout={}ms", key, Objects.toString(value), timeout);
+            log.debug("redis写入缓存正常, key={}, value={}, timeout={}ms", key, Objects.toString(value), timeout);
         } catch (Exception e) {
             log.error("redis写入缓存异常, key={}, value={}, timeout={}ms", key, Objects.toString(value), timeout);
         }

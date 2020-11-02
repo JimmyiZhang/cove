@@ -4,6 +4,8 @@ plus\cove\jazzy\application\DiscoveryApplication.class
 plus\cove\jazzy\application\impl\AuthorApplicationImpl.class
 plus\cove\jazzy\application\impl\CommentApplicationImpl.class
 plus\cove\jazzy\application\impl\DiscoveryApplicationImpl$1.class
+plus\cove\jazzy\application\CityApplication.class
+plus\cove\jazzy\application\impl\CityApplicationImpl.class
 plus\cove\jazzy\application\CommentApplication.class
 plus\cove\jazzy\application\MailApplication.class
 plus\cove\jazzy\application\impl\UserApplicationImpl.class

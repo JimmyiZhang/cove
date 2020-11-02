@@ -62,7 +62,7 @@ public class HttpUtils {
             }
 
             String resp = result.toString();
-            log.info("获取地址：{}, 获取结果: {}", url, resp);
+            log.debug("获取地址：{}, 获取结果: {}", url, resp);
 
             return resp;
         } catch (Exception e) {
@@ -157,7 +157,7 @@ public class HttpUtils {
             }
 
             String resp = sb.toString();
-            log.info("获取地址：{}, 获取结果: {}", url, resp);
+            log.debug("获取地址：{}, 获取结果: {}", url, resp);
             return resp;
         } catch (Exception e) {
             log.error("获取出错, 地址: {}", url, e);

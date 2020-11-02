@@ -14,6 +14,7 @@ import plus.cove.jazzy.domain.entity.city.CityType;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ApiApplication.class)
 public class CacheUtilsTest {
+
     @Autowired
     CacheUtils cacheUtils;
 
@@ -34,6 +35,22 @@ public class CacheUtilsTest {
 
         cacheUtils.put("OBJ", "CITY", city);
         City value = cacheUtils.get("OBJ", "CITY", City.class);
+        Assert.notNull(value, "cache获取对象");
+        Assert.isTrue(value.getName().equals("北京"), "获取对象");
+    }
+
+    @Test
+    public void getCity() {
+        City city = new City();
+        city.setName("北京");
+        city.setTitle("北京市");
+        city.setType(CityType.CITY);
+
+        cacheUtils.put("CITY", "BJ", city);
+
+        City value = cacheUtils.get("CITY", "BJ", City.class);
+        System.out.println(value);
+
         Assert.notNull(value, "cache获取对象");
         Assert.isTrue(value.getName().equals("北京"), "获取对象");
     }

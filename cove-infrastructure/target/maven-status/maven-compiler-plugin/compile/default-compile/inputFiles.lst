@@ -25,6 +25,7 @@ D:\Project\Cove\cove-infrastructure\src\main\java\plus\cove\infrastructure\redis
 D:\Project\Cove\cove-infrastructure\src\main\java\plus\cove\infrastructure\generator\KeyGeneratorBuilder.java
 D:\Project\Cove\cove-infrastructure\src\main\java\plus\cove\infrastructure\coordinate\BaseCoordinate.java
 D:\Project\Cove\cove-infrastructure\src\main\java\plus\cove\infrastructure\file\UploadFileUtils.java
+D:\Project\Cove\cove-infrastructure\src\main\java\plus\cove\infrastructure\caching\CacheResetResult.java
 D:\Project\Cove\cove-infrastructure\src\main\java\plus\cove\infrastructure\exception\BusinessException.java
 D:\Project\Cove\cove-infrastructure\src\main\java\plus\cove\infrastructure\redis\DefaultRedisCacheConfig.java
 D:\Project\Cove\cove-infrastructure\src\main\java\plus\cove\infrastructure\jwt\JwtClaim.java
@@ -46,10 +47,12 @@ D:\Project\Cove\cove-infrastructure\src\main\java\plus\cove\infrastructure\json\
 D:\Project\Cove\cove-infrastructure\src\main\java\plus\cove\infrastructure\caching\CacheNullObject.java
 D:\Project\Cove\cove-infrastructure\src\main\java\plus\cove\infrastructure\http\UniteHttpConfig.java
 D:\Project\Cove\cove-infrastructure\src\main\java\plus\cove\infrastructure\caching\UniteCacheConfig.java
+D:\Project\Cove\cove-infrastructure\src\main\java\plus\cove\infrastructure\component\PageHelper.java
 D:\Project\Cove\cove-infrastructure\src\main\java\plus\cove\infrastructure\component\BaseEntity.java
 D:\Project\Cove\cove-infrastructure\src\main\java\plus\cove\infrastructure\component\BaseEnum.java
 D:\Project\Cove\cove-infrastructure\src\main\java\plus\cove\infrastructure\exception\ServiceError.java
 D:\Project\Cove\cove-infrastructure\src\main\java\plus\cove\infrastructure\utils\StringHelper.java
+D:\Project\Cove\cove-infrastructure\src\main\java\plus\cove\infrastructure\caching\DefaultCaffeineCacheManager.java
 D:\Project\Cove\cove-infrastructure\src\main\java\plus\cove\infrastructure\security\UniteSecurityConfig.java
 D:\Project\Cove\cove-infrastructure\src\main\java\plus\cove\infrastructure\component\PageResult.java
 D:\Project\Cove\cove-infrastructure\src\main\java\plus\cove\infrastructure\component\impl\DefaultTimeEntity.java

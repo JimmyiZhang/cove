@@ -82,7 +82,7 @@ public class CacheUtils {
             }
             // 空类型，判断有效期
             if (CacheNullObject.class.isInstance(value)) {
-                log.info("cache [{}:{}] is null", name, key);
+                log.debug("cache [{}:{}] is null", name, key);
                 CacheNullObject nullObj = (CacheNullObject) value;
                 if (nullObj.getExpiredTime().isBefore(Instant.now())) {
                     value = null;

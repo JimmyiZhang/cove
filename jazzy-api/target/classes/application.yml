@@ -9,7 +9,7 @@ server:
 spring:
   # profile config
   profiles:
-    active: "@profile.active@"
+    active: "develop"
 
   datasource:
     url: jdbc:mysql://101.200.53.244:3306/jazzy?useSSL=false&allowMultiQueries=true&autoReconnect=true&failOverReadOnly=false&useUnicode=true&characterEncoding=utf-8
@@ -42,11 +42,7 @@ spring:
 
 # logging config
 logging:
-  path: logs
-  file:
-    # 最少保留15天，防止某些异常以周为频次发生
-    max-history: 15
-    max-size: 20MB
+  config: classpath:log4j-config.xml
 
 # mybatis config
 mybatis:
@@ -71,7 +67,6 @@ summer:
     token-claim: id
   cache-config:
     null-duration-time: 1
-  redis-config:
     duration-time: 60
   json-config:
     datetime-format: yyyy-MM-dd HH:mm:ss

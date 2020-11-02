@@ -17,11 +17,9 @@ spring:
 
   # cache config
   cache:
-    type: SIMPLE
-
-  redis:
-    host: 127.0.0.1
-    port: 6379
+    type: CAFFEINE
+    caffeine:
+      spec: initialCapacity=2,maximumSize=200,expireAfterWrite=10m,recordStats
 
 # global config
 summer:

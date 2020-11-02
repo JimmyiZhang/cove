@@ -1,7 +1,12 @@
 package plus.cove.jazzy.api.config;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.caffeine.CaffeineCacheManager;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import plus.cove.infrastructure.caching.DefaultCaffeineCacheManager;
 
 /**
  * 缓存配置
@@ -17,5 +22,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableCaching(proxyTargetClass = true)
 public class CachingConfig {
-
+    @Bean
+    @ConditionalOnProperty(prefix = "spring.cache", name = "type", havingValue = "CAFFEINE")
+    public CacheManager cacheManager() {
+        CaffeineCacheManager cacheManager = new DefaultCaffeineCacheManager();
+        cacheManager.setAllowNullValues(false);
+        return cacheManager;
+    }
 }

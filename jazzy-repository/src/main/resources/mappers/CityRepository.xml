@@ -13,7 +13,7 @@
     </resultMap>
 
     <select id="selectByType" resultMap="cityMap">
-        SELECT `name`, `title`, `type`, latitude, longitude
+        SELECT id, `name`, `title`, `type`, latitude, longitude
         FROM city
         WHERE type = #{type}
     </select>

@@ -20,8 +20,10 @@ plus\cove\infrastructure\interceptor\LogTracingInterceptor.class
 plus\cove\infrastructure\redis\DefaultRedisCacheConfig.class
 plus\cove\infrastructure\json\BaseEnumSerializer.class
 plus\cove\infrastructure\component\BaseApplication.class
+plus\cove\infrastructure\component\PageHelper.class
 plus\cove\infrastructure\jwt\JwtUtils.class
 plus\cove\infrastructure\redis\RedisUtils.class
+plus\cove\infrastructure\caching\DefaultCaffeineCacheManager.class
 plus\cove\infrastructure\file\FileUtils.class
 plus\cove\infrastructure\generator\KeyGeneratorBuilder.class
 plus\cove\infrastructure\exception\BusinessError.class
@@ -36,6 +38,7 @@ plus\cove\infrastructure\file\UploadFileResult.class
 plus\cove\infrastructure\utils\UuidHelper.class
 plus\cove\infrastructure\exception\CacheError.class
 plus\cove\infrastructure\utils\BaseEnumUtils.class
+plus\cove\infrastructure\caching\DefaultCaffeineCacheManager$1.class
 plus\cove\infrastructure\security\UniteSecurityConfig.class
 plus\cove\infrastructure\http\RestUtils.class
 plus\cove\infrastructure\redis\DefaultRedisCacheManager.class
@@ -74,5 +77,6 @@ plus\cove\infrastructure\system\UniteSystemConfig.class
 plus\cove\infrastructure\converter\LocalDateConverter.class
 plus\cove\infrastructure\redis\RedisLockUtils.class
 plus\cove\infrastructure\component\PageModel.class
+plus\cove\infrastructure\caching\CacheResetResult.class
 plus\cove\infrastructure\component\impl\DefaultEntity.class
 plus\cove\infrastructure\exception\BusinessException.class

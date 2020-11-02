@@ -1,5 +1,6 @@
 package plus.cove.jazzy.domain.entity.coordinate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 /**
@@ -10,6 +11,7 @@ import lombok.Data;
  */
 @Data
 public class Coordinate {
+    @JsonIgnore
     public final static Coordinate EMPTY = new Coordinate(-1D, -1D);
 
     private Double latitude;
