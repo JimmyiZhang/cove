@@ -156,13 +156,13 @@
                 zoomToAccuracy: true
             });
 
-            geolocation.getCurrentPosition();
-            AMap.event.addListener(geolocation, 'complete', function(result) {
-                console.log('定位成功');
-                map.setCenter(result.position);
-            });
-            AMap.event.addListener(geolocation, 'error', function(result) {
+            geolocation.getCurrentPosition(function(status, result){
+                if(status=='complete'){
+                    console.log('定位成功');
+                    map.setCenter(result.position);
+                } else {
                 console.log('定位失败');
+                }
             });
         });
 
@@ -173,8 +173,8 @@
     // 获取地图范围
     exports.getBounds = function() {
         var bounds = map.getBounds();
-        var min = gcj02towgs84(bounds.southwest.lng, bounds.southwest.lat);
-        var max = gcj02towgs84(bounds.northeast.lng, bounds.northeast.lat);
+        var min = gcj02towgs84(bounds.southWest.lng, bounds.southWest.lat);
+        var max = gcj02towgs84(bounds.northEast.lng, bounds.northEast.lat);
 
         return {
             minLatitude: min[1],

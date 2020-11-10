@@ -30,12 +30,12 @@ public class Activation extends DefaultEntity {
      * @author jimmy.zhang
      * @date 2019-06-24
      */
-    public static Activation create(String userCode, String authCode) {
+    public static Activation create(String userCode, String authCode, long expMinutes) {
         Activation entity = new Activation();
         entity.valueOf();
 
         LocalDateTime createTime = LocalDateTime.now();
-        LocalDateTime expiredTime = createTime.plusDays(7);
+        LocalDateTime expiredTime = createTime.plusMinutes(expMinutes);
         entity.createTime = createTime;
         entity.expiredTime = expiredTime;
         entity.userCode = userCode;

@@ -20,13 +20,13 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class UserApplicationImpl implements UserApplication {
-    private static final String USER_PRINCIPAL = "USER_PRINCIPAL#1440";
+    private static final String CACHE_USER = "USER#1440";
 
     @Autowired
-    private AuthorRepository authorRep;
+    AuthorRepository authorRep;
 
     @Override
-    @Cacheable(value = USER_PRINCIPAL)
+    @Cacheable(value = CACHE_USER)
     public UserPrincipal findPrincipal(Long id) {
         Author author = authorRep.selectById(id);
         if (author == null) {
@@ -43,7 +43,7 @@ public class UserApplicationImpl implements UserApplication {
     }
 
     @Override
-    @Cacheable(value = USER_PRINCIPAL)
+    @Cacheable(value = CACHE_USER)
     public void clearPrincipal(Long id) {
     }
 }

@@ -25,7 +25,7 @@ import java.util.List;
 @Service
 public class StoryApplicationImpl implements StoryApplication {
     @Autowired
-    private StoryRepository storyRep;
+    StoryRepository storyRep;
 
     @Override
     @Transactional(rollbackFor = Exception.class)

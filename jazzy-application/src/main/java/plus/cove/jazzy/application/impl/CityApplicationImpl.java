@@ -21,7 +21,7 @@ import java.util.List;
 @Slf4j
 @Service
 public class CityApplicationImpl implements CityApplication {
-    private static final String CACHE_CITY = "CITY#20";
+    private static final String CACHE_CITY = "CITY";
 
     @Autowired
     CacheUtils cacheUtils;
@@ -33,11 +33,8 @@ public class CityApplicationImpl implements CityApplication {
     public List<City> findAllCity() {
         List<City> cities = cacheUtils.get(CACHE_CITY, "ALL", List.class);
         if (cities == null) {
-            log.info("from db");
             cities = cityRep.selectByType(CityType.CITY);
             cacheUtils.put(CACHE_CITY, "ALL", cities);
-        } else {
-            log.info("from cache");
         }
         return cities;
     }

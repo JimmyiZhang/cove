@@ -8,7 +8,6 @@ import plus.cove.infrastructure.component.ActionResult;
 import plus.cove.infrastructure.component.PageHelper;
 import plus.cove.infrastructure.component.PageModel;
 import plus.cove.infrastructure.component.PageResult;
-import plus.cove.infrastructure.email.EmailUtils;
 import plus.cove.infrastructure.jwt.JwtResult;
 import plus.cove.infrastructure.jwt.JwtUtils;
 import plus.cove.jazzy.application.AuthorApplication;
@@ -35,20 +34,20 @@ import java.util.List;
  */
 @Service
 public class AuthorApplicationImpl implements AuthorApplication {
+
     @Autowired
-    private JwtUtils jwtUtils;
+    MailApplication mailApp;
     @Autowired
-    private EmailUtils emailUtils;
+    AuthorRepository authorRep;
     @Autowired
-    private MailApplication mailApp;
+    AccountRepository accountRep;
     @Autowired
-    private AuthorRepository authorRep;
+    ActivationRepository activationRep;
+
     @Autowired
-    private AccountRepository accountRep;
+    PageHelper pageHelper;
     @Autowired
-    private ActivationRepository activationRep;
-    @Autowired
-    private PageHelper pageHelper;
+    JwtUtils jwtUtils;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -72,12 +71,11 @@ public class AuthorApplicationImpl implements AuthorApplication {
 
         // 保存激活码
         String authCode = RandomStringUtils.randomAlphanumeric(12);
-        Activation activation = Activation.create(author.getId().toString(), authCode);
+        Activation activation = Activation.create(author.getId().toString(), authCode, 7 * 24 * 60L);
         activationRep.insert(activation);
 
         // 发送邮件
         mailApp.sendActivateMail(input.getAccount(), activation.getAuthCode());
-
         result.succeed();
         return result;
     }

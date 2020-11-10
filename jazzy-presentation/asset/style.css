@@ -8,6 +8,21 @@
     width: 30px;
 }
 
+.modal-dialog{
+    margin: .5rem .4rem;
+}
+
+.modal-content{
+    border: 0;
+}
+.modal-body{
+    padding: .1rem auto;
+}
+
+.modal-footer{
+    padding: .2rem 0 0 0;
+}
+
 .mark {
     position: absolute;
     right: 0;
@@ -210,14 +225,23 @@
 
 
 /* 上传相关 */
-
-.upload {
+.mark-upload {
     margin-top: 50px;
     max-width: 100%;
 }
 
+/*登录*/
+.mark-login {
+    margin-top: 50px;
+    max-width: 200px;
+}
 
 /*登录*/
+.mark-work {
+    margin-top: 50px;
+    max-width: 200px;
+    min-width: 10rem !important;
+}
 
 .user-card {
     height: 400px;

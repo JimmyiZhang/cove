@@ -11,85 +11,139 @@
     <link rel="stylesheet" type="text/css" href="/asset/spop/spop.min.css">
     <link rel="stylesheet" type="text/css" href="/asset/uppy/uppy.min.css">
     <link rel="stylesheet" type="text/css" href="/asset/style.css">
-    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.14&key=6b87d1d3817e5b1c59b8a646300c4b25"></script>
+    <script type="text/javascript"
+            src="https://webapi.amap.com/maps?v=2.0&key=6b87d1d3817e5b1c59b8a646300c4b25"></script>
     <title>发现世界</title>
 </head>
 
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top  color-bg-first">
-            <a class="navbar-brand" href="#">
-                <img src="/asset/img/logo_40_40.png" />发现世界
-            </a>
-            <div class="navbar-toggler">
-                <ul class="navbar-nav right">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#" v-show="user.login" v-on:click="openUpload">上传</a>
-                    </li>
-                    <li class="nav-item" v-show="!user.login">
-                        <a class="nav-link active" href="login.html">登录</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">首页</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/game/discovery.html">探索</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav right">
-                    <li class="nav-item" v-show="!user.login">
-                        <a class="nav-link active" href="login.html">登录</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#" v-show="user.login" v-on:click="openUpload">上传</a>
-                    </li>
-                    <li class="nav-item">
-                        <img class="navbar-brand avatar" v-bind:src="user.avatar" v-show="user.login" />
-                    </li>
-                </ul>
-            </div>
-        </nav>
+<div id="app">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top  color-bg-first">
+        <a class="navbar-brand" href="#">
+            <img src="/asset/img/logo_40_40.png"/>发现世界
+        </a>
+        <div class="navbar-toggler">
+            <ul class="navbar-nav right">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#" v-show="user.login" v-on:click="openUpload">上传</a>
+                </li>
+                <li class="nav-item" v-show="!user.login">
+                    <a class="nav-link active" href="login.html">登录</a>
+                </li>
+            </ul>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">首页</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/game/discovery.html">探索</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav right">
+                <li class="nav-item" v-show="!user.login">
+                    <a class="nav-link active" href="#" v-on:click="openLogin">登录</a>
+                </li>
+                <li class="nav-item">
 
-        <div id="container"></div>
+                </li>
+                <li class="nav-item">
+                    <img class="navbar-brand avatar" v-show="user.login" v-bind:src="user.avatar"
+                         v-on:click="openWork"/>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-        <div class="mark upload" v-show="upload.open">
-            <div class="mark-body" id="fileUpload">
-            </div>
-            <div class="mark-footer">
-                <button class="btn btn-sm text-right" v-on:click="clearUpload">重置</button>
-                <button class="btn btn-sm text-right" v-on:click="closeUpload">关闭</button>
+    <div id="container"></div>
+
+    <div class="mark mark-upload" v-show="upload.open">
+        <div class="mark-body" id="fileUpload">
+        </div>
+        <div class="mark-footer">
+            <button class="btn btn-sm text-right" v-on:click="clearUpload">重置</button>
+            <button class="btn btn-sm text-right" v-on:click="closeUpload">关闭</button>
+        </div>
+    </div>
+
+    <div class="mark mark-login" tabindex="-1" v-show="login.open"
+         aria-labelledby="modalLoginLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLoginLabel">登录</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            v-on:click="closeLogin">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="user-name" class="col-form-label">用户</label>
+                            <input type="text" class="form-control" id="user-name" v-model="loginData.name">
+                        </div>
+                        <div class="form-group">
+                            <label for="user-password" class="col-form-label">密码</label>
+                            <input type="password" class="form-control" id="user-password" v-model="loginData.password">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-primary" v-on:click="toLogin">登录</button>
+                </div>
             </div>
         </div>
     </div>
 
+    <div class="mark mark-work" tabindex="-1" v-show="work.open" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-body">
+                <a class="btn btn-sm btn-success" href="#" role="button" v-on:click="openUpload">上传</a>
+                <a class="btn btn-sm btn-success" href="#" role="button" v-on:click="openUpload">选点</a>
+                <a class="btn btn-sm btn-light" href="#" role="button" v-on:click="logout">退出</a>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm" v-on:click="closeWork">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <script src="/asset/cdn/fetch.min.js" type="module"></script>
-    <script src="/asset/cdn/lodash.min.js"></script>
-    <script src="/asset/cdn/moment.min.js"></script>
-    <script src="/asset/cdn/vue.min.js"></script>
-    <script src="/asset/cdn/viewer/viewer.min.js"></script>
+<script src="/asset/cdn/fetch.min.js" type="module"></script>
+<script src="/asset/cdn/lodash.min.js"></script>
+<script src="/asset/cdn/moment.min.js"></script>
+<script src="/asset/cdn/vue.min.js"></script>
+<script src="/asset/cdn/viewer/viewer.min.js"></script>
 
-    <script src="/asset/uppy/uppy.min.js"></script>
-    <script src="/asset/uppy/uppy.zh_CN.min.js"></script>
-    <script src="/asset/spop/spop.min.js"></script>
+<script src="/asset/uppy/uppy.min.js"></script>
+<script src="/asset/uppy/uppy.zh_CN.min.js"></script>
+<script src="/asset/spop/spop.min.js"></script>
 
-    <script src="/asset/cove-app.js"></script>
-    <script src="/asset/cove-map.js"></script>
-    <script src="/asset/cove-file.js"></script>
+<script src="/asset/cove-app.js"></script>
+<script src="/asset/cove-map.js"></script>
+<script src="/asset/cove-file.js"></script>
 
-    <script>
+<script>
         var app = new Vue({
             el: '#app',
             data: {
                 upload: {
                     open: false
                 },
+                login: {
+                    open: false
+                },
+                loginData: {
+                    name: '',
+                    password: ''
+                },
                 user: {
                     login: false
+                },
+                work: {
+                    open: false
                 },
                 allStory: []
             },
@@ -163,18 +217,62 @@
                 },
                 openUpload: function() {
                     this.upload.open = true;
+                    this.work.open = false;
                 },
                 closeUpload: function() {
                     this.upload.open = false;
                 },
                 clearUpload: function() {
                     cove.file.clearUpload();
+                },
+                openLogin: function(){
+                    this.login.open = true;
+                },
+                toLogin: function(){
+                    var that = this;
+                    cove.app.send({
+                        url: '/user/login',
+                        method: 'POST',
+                        data: that.loginData,
+                        onSuccess: function(res) {
+                            if (res.code == 0) {
+                                spop('登录成功', 'success');
+                                that.doLogin();
+                                cove.app.login(res.data, false);
+                            } else {
+                                spop(res.message, 'error');
+                            }
+                        }
+                    });
+                },
+                doLogin: function(){
+                    this.user.login = true;
+                    this.login.open = false;
+                },
+                closeLogin: function(){
+                    this.login.open = false;
+                },
+                openWork: function(){
+                    this.work.open = true;
+                },
+                closeWork: function(){
+                    this.work.open = false;
+                },
+                logout: function(){
+                    cove.app.logout();
+                    this.user.login = false;
+                    this.work.open = false;
                 }
             }
         })
 
         app.init();
-    </script>
+
+
+
+
+
+</script>
 
 </body>
 

@@ -4,7 +4,7 @@ echo "[DEV] install start....."
 mvn clean install -D maven.test.skip=true -P develop -f ../../pom.xml
 
 echo "[DEV] copy start....."
-scp ../../cove-api/target/ROOT.war root@101.200.53.244:/usr/local/tomcat-9000/temp
+scp ../../jazzy-api/target/ROOT.war root@101.200.53.244:/usr/local/tomcat-9000/temp
 
 echo "[DEV] deploy start....."
 ssh -t -t root@101.200.53.244 << EOF
