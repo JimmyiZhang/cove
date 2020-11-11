@@ -1,16 +1,17 @@
 package plus.cove.jazzy.api.controller;
 
-import plus.cove.infrastructure.component.ActionResult;
-import plus.cove.jazzy.api.component.BaseController;
-import plus.cove.jazzy.application.DiscoveryApplication;
-import plus.cove.jazzy.domain.entity.discovery.DiscoveryPlace;
-import plus.cove.jazzy.domain.view.DiscoveryInput;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import plus.cove.infrastructure.component.ActionResult;
+import plus.cove.jazzy.api.component.BaseController;
+import plus.cove.jazzy.application.DiscoveryApplication;
+import plus.cove.jazzy.domain.entity.discovery.DiscoveryPlace;
+import plus.cove.jazzy.domain.entity.discovery.DiscoveryWallpaper;
+import plus.cove.jazzy.domain.view.DiscoveryInput;
 
 import javax.validation.Valid;
 
@@ -26,11 +27,17 @@ import javax.validation.Valid;
 @RequestMapping(value = "/discovery")
 public class DiscoveryController extends BaseController {
     @Autowired
-    private DiscoveryApplication discoveryApp;
+    DiscoveryApplication discoveryApp;
 
     @RequestMapping(value = "place", method = RequestMethod.GET)
     public ActionResult getPlace(@Valid DiscoveryInput input) {
         DiscoveryPlace output = discoveryApp.generatePlace(input);
+        return success(output);
+    }
+
+    @RequestMapping(value = "wallpaper", method = RequestMethod.GET)
+    public ActionResult getBing() {
+        DiscoveryWallpaper output = discoveryApp.fetchWallpaper();
         return success(output);
     }
 }

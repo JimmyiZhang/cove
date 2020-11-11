@@ -1,5 +1,6 @@
 package plus.cove.infrastructure.json;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,34 @@ import org.springframework.stereotype.Component;
 public class JsonUtils {
     @Autowired
     UniteJsonConfig config;
+
+    /**
+     * 反序列化
+     *
+     * @param
+     * @return
+     * @author jimmy.zhang
+     * @since 1.0
+     */
+    public String fromJson(String json, String path) {
+        if (json == null || json.isEmpty()) {
+            return null;
+        }
+
+        String result = "";
+        String[] paths = path.split("\\.");
+        try {
+            JsonNode node = config.getJsonMapper().readTree(json);
+            for (String pt : paths) {
+                node = node.path(pt);
+            }
+            result = node.asText();
+        } catch (Exception e) {
+            log.warn("Parse Json to Object error", e);
+        }
+
+        return result;
+    }
 
     /**
      * 反序列化

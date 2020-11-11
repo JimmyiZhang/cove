@@ -14,7 +14,7 @@ public class HttpUtilsTest {
 
     @Test
     public void getTest() {
-        String res = httpUtils.get("http://www.baidu.com");
+        String res = httpUtils.get("http://www.baidu.com", null);
         Assert.notNull(res, "http get");
     }
 }

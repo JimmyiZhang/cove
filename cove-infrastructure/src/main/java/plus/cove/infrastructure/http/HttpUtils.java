@@ -14,6 +14,7 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -42,16 +43,36 @@ public class HttpUtils {
      * @author jimmy.zhang
      * @date 2019-05-06
      */
-    public String get(String url) {
+    public String getJson(String url) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Content-Type", "application/json");
+        return get(url, headers);
+    }
+
+    /**
+     * 使用GET方法获取结果
+     * 获取失败返回null
+     *
+     * @param url 获取地址
+     * @return 返回内容，失败则为null
+     * @author jimmy.zhang
+     * @date 2019-05-06
+     */
+    public String get(String url, Map<String, String> headers) {
         BufferedReader in = null;
         StringBuilder result;
         try {
             // url请求中如果有中文，要在接收方用相应字符转码
             URL uri = new URI(url).toURL();
             URLConnection connection = uri.openConnection();
-            connection.setRequestProperty("Content-type", "text/html");
             connection.setRequestProperty("Accept-Charset", DEFAULT_CHARSET);
-            connection.setRequestProperty("contentType", DEFAULT_CHARSET);
+
+            if (headers != null && headers.size() > 0) {
+                for (Map.Entry<String, String> e : headers.entrySet()) {
+                    connection.setRequestProperty(e.getKey(), e.getValue());
+                }
+            }
+
             connection.connect();
             result = new StringBuilder();
             // 读取URL的响应
@@ -128,8 +149,8 @@ public class HttpUtils {
             conn.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             // 设置超时时间
-            conn.setConnectTimeout((int)httpConfig.getConnectTimeout().toMillis());
-            conn.setReadTimeout((int)httpConfig.getReadTimeout().toMillis());
+            conn.setConnectTimeout((int) httpConfig.getConnectTimeout().toMillis());
+            conn.setReadTimeout((int) httpConfig.getReadTimeout().toMillis());
             // 发送POST请求必须设置如下两行
             conn.setDoOutput(true);
             conn.setDoInput(true);
