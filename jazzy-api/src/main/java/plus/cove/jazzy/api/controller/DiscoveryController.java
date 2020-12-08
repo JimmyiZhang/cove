@@ -3,6 +3,7 @@ package plus.cove.jazzy.api.controller;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,7 +37,8 @@ public class DiscoveryController extends BaseController {
     }
 
     @RequestMapping(value = "wallpaper", method = RequestMethod.GET)
-    public ActionResult getBing() {
+    @CrossOrigin("*")
+    public ActionResult getWallpaper() {
         DiscoveryWallpaper output = discoveryApp.fetchWallpaper();
         return success(output);
     }

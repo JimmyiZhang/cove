@@ -71,10 +71,13 @@
             method: option.method,
             mode: 'cors',
             headers: {
-                'Authorization': 'Bearer ' + user.token,
+
                 'Content-Type': 'application/json'
             }
         }
+
+        option.data = option.data || {};
+        option.method = option.method || 'GET';
 
         switch (option.method) {
             case 'GET':

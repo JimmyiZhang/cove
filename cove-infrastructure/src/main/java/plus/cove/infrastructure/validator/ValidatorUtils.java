@@ -35,7 +35,7 @@ public class ValidatorUtils {
      * @author jimmy.zhang
      * @date 2019-04-04
      */
-    public <T, C> ActionResult<C> valid(T input, Class<?>... groups) {
+    public static <T, C> ActionResult<C> valid(T input, Class<?>... groups) {
         ActionResult<C> result = ActionResult.success();
         if (input == null) {
             result.fail(ValidatorError.INVALID_ARGUMENT);
@@ -66,7 +66,7 @@ public class ValidatorUtils {
      * @author jimmy.zhang
      * @date 2019-04-04
      */
-    public <E, C> ActionResult<C> validCollection(Collection<E> inputs, Class<?>... groups) {
+    public static <E, C> ActionResult<C> validCollection(Collection<E> inputs, Class<?>... groups) {
         ActionResult<C> result = ActionResult.success();
 
         if (inputs == null || inputs.isEmpty()) {

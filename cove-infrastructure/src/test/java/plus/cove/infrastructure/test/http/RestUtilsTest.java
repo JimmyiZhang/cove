@@ -1,6 +1,5 @@
 package plus.cove.infrastructure.test.http;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,8 @@ import plus.cove.infrastructure.http.UniteHttpConfig;
 import plus.cove.infrastructure.json.UniteJsonConfig;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {
@@ -31,20 +32,31 @@ public class RestUtilsTest {
 
     @Test
     public void getForObject() {
-        ActionResult result = restUtils.getObject("http://101.200.53.244:8090/activation/message?phone={phone}",
-                ActionResult.class, "13911006493");
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Product-Code", "A20001");
+
+        ActionResult result = restUtils.getObject(
+                "http://101.200.53.244:8090/activation/message?phone=13911006493",
+                headers,
+                ActionResult.class);
         System.out.println(result);
         Assert.isTrue(result.isSuccess(), "get");
     }
 
     @Test
     public void postObject() {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Product-Code", "A20001");
+
         RestObject expected = new RestObject();
         expected.setDateValue(LocalDateTime.now());
         expected.setIntValue(123);
         expected.setLongValue(123456L);
-        RestObject actual = restUtils.postObject("http://101.200.53.244:8090/activation/left?api-token={token}",
-                expected, RestObject.class, RandomStringUtils.randomAlphanumeric(10));
+        RestObject actual = restUtils.postObject(
+                "http://101.200.53.244:8090/activation/left?api-token=token",
+                null,
+                headers,
+                RestObject.class);
         System.out.println(actual);
         Assert.notNull(actual, "post");
     }

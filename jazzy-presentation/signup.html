@@ -14,45 +14,52 @@
 
 <body class="container-image">
     <div class="container" id="app">
-        <div class="justify-content-center">
-            <div class="user-card">
-                <div class="text-center">
-                    <h3>发现世界</h3>
-                </div>
-                <div class="justify-content-center form-container">
-                    <div class="input-group mb-3">
-                        <div class="input-group-append">
-                            <span class="input-group-text">
-                            <i class="fa fa-envelope"></i>
-                        </span>
+        <div class="row">
+            <div class="col">
+                <div class="user-card">
+                    <div class="text-center">
+                        <h3>发现世界</h3>
+                    </div>
+                    <div class="justify-content-center form-container">
+                        <div class="input-group mb-3">
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                <i class="fa fa-envelope"></i>
+                            </span>
+                            </div>
+                            <input type="text" class="form-control input-user" name="user-account" placeholder="邮箱，登录账号" autocomplete="off" v-model="input.account">
                         </div>
-                        <input type="text" class="form-control input-user" name="user-account" placeholder="邮箱，登录账号" autocomplete="off" v-model="input.account">
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-append">
-                            <span class="input-group-text">
-                            <i class="fa fa-user"></i>
-                        </span>
+                        <div class="input-group mb-3">
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                <i class="fa fa-user"></i>
+                            </span>
+                            </div>
+                            <input type="text" class="form-control input-user" name="user-name" placeholder="名字，2-10个字符" autocomplete="off" v-model="input.name">
                         </div>
-                        <input type="text" class="form-control input-user" name="user-name" placeholder="名字，2-10个字符" autocomplete="off" v-model="input.name">
-                    </div>
-                    <div class="input-group mb-2">
-                        <div class="input-group-append">
-                            <span class="input-group-text">
-                            <i class="fa fa-asterisk"></i>
-                        </span>
+                        <div class="input-group mb-2">
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                <i class="fa fa-asterisk"></i>
+                            </span>
+                            </div>
+                            <input type="password" class="form-control input-pass" name="user-password" placeholder="密码，5-20个字符" autocomplete="off" v-model="input.password">
                         </div>
-                        <input type="password" class="form-control input-pass" name="user-password" placeholder="密码，5-20个字符" autocomplete="off" v-model="input.password">
+                    </div>
+                    <div class="justify-content-center mt-3 login-container">
+                        <button type="button" name="button" class="btn login-btn" v-on:click="signup">注册
+                    </button>
+                    </div>
+                    <div class="mt-4">
+                        <div class="text-right">
+                            <a href="login.html" class="btn btn-sm">登录</a>
+                        </div>
                     </div>
                 </div>
-                <div class="justify-content-center mt-3 login-container">
-                    <button type="button" name="button" class="btn login-btn" v-on:click="signup">注册
-                </button>
-                </div>
-                <div class="mt-4">
-                    <div class="text-right">
-                        <a href="login.html" class="btn btn-sm">登录</a>
-                    </div>
+            </div>
+            <div class="col-8">
+                <div class="user-hero">
+                    {{wall.title}}
                 </div>
             </div>
         </div>
@@ -72,9 +79,27 @@
                     account: '',
                     name: '',
                     password: ''
+                },
+                wall: {
+                    title: '...'
                 }
             },
             methods: {
+                init: function(){
+                    var that = this;
+                    cove.app.send({
+                        url: '/discovery/wallpaper',
+                        method: 'GET',
+                        onSuccess: function(res) {
+                            if (res.code == 0) {
+                                window.document.body.style.backgroundImage = "url("+res.data.image+")";
+                                that.wall.title=res.data.title;
+                            } else {
+                                spop(res.message, 'error');
+                            }
+                        }
+                    });
+                },
                 signup: function() {
                     var that = this;
                     cove.app.send({
@@ -98,6 +123,8 @@
                 }
             }
         })
+
+        app.init();
     </script>
 </body>
 
