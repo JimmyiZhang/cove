@@ -33,13 +33,16 @@ HELP.md
 
 ### Project ###
 /logs/
+/target/
 /uploads/
-/cove-api/logs/
-/cove-api/uploads/
-/cove-api/target/
-/cove-application/target/
-/cove-repository/target/
-/cove-domain/target/
-/cove-web/install/
-/infrastructure/target/
+/jazzy-api/logs/
+/jazzy-api/uploads/
+/jazzy-api/target/
+/jazzy-application/target/
+/jazzy-repository/target/
+/jazzy-domain/target/
+/jazzy-presentation/install/
+/cove-infrastructure/target/
+/cove-infrastructure-excel/target/
+/cove-infrastructure-mybatis/target/
 
