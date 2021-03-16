@@ -1,0 +1,49 @@
+HELP.md
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+/build/
+
+### Visual Studio Code ###
+.vscode
+
+### Maven ###
+/.mvn/
+
+### Java ###
+/target/
+
+### Project ###
+/logs/
+/target/
+/uploads/
+/jazzy-api/logs/
+/jazzy-api/uploads/
+/jazzy-api/target/
+/jazzy-application/target/
+/jazzy-repository/target/
+/jazzy-domain/target/
+/jazzy-presentation/install/
+/cove-infrastructure/target/
+/cove-infrastructure-excel/target/
+/cove-infrastructure-mybatis/target/
+/cove-service-document/target/
+

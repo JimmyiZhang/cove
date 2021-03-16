@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL -->
+<!--status="WARN" :用于设置log4j2自身内部日志的信息输出级别，默认是OFF-->
+<!--monitorInterval="30"  :间隔秒数,自动检测配置文件的变更和重新配置本身-->
+<Configuration status="OFF" monitorInterval="60">
+    <Properties>
+        <!--自定义一些常量，之后使用${变量名}引用-->
+        <Property name="path">logs</Property>
+    </Properties>
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%d][%-5p][%t] %m (%F:%L)%n"/>
+        </Console>
+        <RollingFile name="debug" fileName="${path}/debug/debug.log"
+                     filePattern="${path}/debug/debug_%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="[%d][%-5p][%t] %m (%F:%L)%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="60">
+                <Delete basePath="${path}/debug" maxDepth="1">
+                    <IfFileName glob="debug_*.log"/>
+                    <IfLastModified age="30d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <RollingFile name="error" fileName="${path}/error/error.log"
+                     filePattern="${path}/error/error_%d{yyyy-MM-dd}-%i.log">
+            <Filters>
+                <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout pattern="[%d][%-5p][%t] %m (%F:%L)%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <!--   每个文件最大50M -->
+                <SizeBasedTriggeringPolicy size="20MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="30">
+                <Delete basePath="${path}/error" maxDepth="1">
+                    <IfFileName glob="error_*.log"/>
+                    <IfLastModified age="30d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <RollingFile name="frog" fileName="${path}/frog/frog.log"
+                     filePattern="${path}/frog/frog_%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="[%d][%-5p][%t] %m (%F:%L)%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="2MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="30">
+                <Delete basePath="${path}/frog" maxDepth="1">
+                    <IfFileName glob="frog_*.log"/>
+                    <IfLastModified age="15d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+    </Appenders>
+    <!--切换输出级别-->
+    <Loggers>
+        <!--过滤掉spring和mybatis的一些无用的DEBUG信息-->
+        <!--Logger节点用来单独指定日志的形式，name为包路径,比如要为org.springframework包下所有日志指定为INFO级别等。 -->
+        <logger name="org.springframework" level="info"></logger>
+        <logger name="org.mybatis" level="info"></logger>
+        <logger name="plus.cove.infrastructure" level="debug"></logger>
+        <Root level="debug">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="debug"/>
+            <AppenderRef ref="error"/>
+        </Root>
+    </Loggers>
+</Configuration>
