@@ -47,10 +47,9 @@ public class ErrorController extends AbstractErrorController {
                 break;
         }
 
-        log.error("请求异常, RequestCode: {}, method: {}",
+        log.error("Request Log ==> code: {}, method: {}",
                 response.getHeader("Request-Code"), request.getMethod());
         response.setStatus(HttpServletResponse.SC_OK);
-
         return result;
     }
 

@@ -8,9 +8,9 @@ package plus.cove.infrastructure.exception;
  */
 public enum CacheError implements BusinessError {
     NOT_FOUND(130, "文件未找到"),
-    CREATE_ERROR(301, "创建失败"),
-    READ_ERROR(302, "读取失败"),
-    WRITE_ERROR(303, "写失败");
+    CREATE_ERROR(131, "创建失败"),
+    READ_ERROR(132, "读取失败"),
+    WRITE_ERROR(133, "写失败");
 
     /**
      * 枚举值

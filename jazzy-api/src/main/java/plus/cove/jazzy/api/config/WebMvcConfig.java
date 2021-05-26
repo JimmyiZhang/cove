@@ -14,6 +14,7 @@ import plus.cove.infrastructure.converter.LocalDateConverter;
 import plus.cove.infrastructure.converter.LocalDateTimeConverter;
 import plus.cove.infrastructure.http.UniteHttpConfig;
 import plus.cove.infrastructure.interceptor.ApiIdempotentInterceptor;
+import plus.cove.infrastructure.interceptor.ApiVersionHandlerMapping;
 import plus.cove.infrastructure.interceptor.LogTracingInterceptor;
 import plus.cove.infrastructure.json.UniteJsonConfig;
 import plus.cove.infrastructure.validator.CollectionValidator;
@@ -40,6 +41,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
     private LogTracingInterceptor logInterceptor;
     @Autowired
     private ApiIdempotentInterceptor apiInterceptor;
+
+    // @Bean
+    public ApiVersionHandlerMapping customRequestHandlerMapping() {
+        ApiVersionHandlerMapping avMapping = new ApiVersionHandlerMapping();
+        return avMapping;
+    }
 
     @Override
     public Validator getValidator() {

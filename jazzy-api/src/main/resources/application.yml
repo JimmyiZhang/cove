@@ -29,17 +29,6 @@ spring:
       max-file-size: 10MB
       max-request-size: 20MB
 
-  # 发送邮件配置
-  mail:
-    user-name: jimmymzhang@163.com
-    password: 43z58j70m36~
-    host: smtp.163.com
-    port: 465
-    properties:
-      mail.smtp.user: jimmymzhang@163.com
-      mail.smtp.auth: true
-      mail.smtp.ssl.enable: true
-
 # logging config
 logging:
   config: classpath:log4j-config.xml

@@ -10,8 +10,8 @@ import org.apache.commons.lang3.StringUtils;
  * 生成每天不重复的序列号
  * worker+timestamp+sequence
  * worker       4位，支持16台机器，默认位为0
+ * timestamp    秒时间戳
  * sequence     8位，支持单位时间内256个序列码，即每秒256个
- * timestamp    秒数
  *
  * 适用于没有递增要求，每天生成不重复序号，长度在9位以内
  *

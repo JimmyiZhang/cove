@@ -21,6 +21,7 @@ import org.springframework.cache.caffeine.CaffeineCacheManager;
  */
 public class DefaultCaffeineCacheManager extends CaffeineCacheManager {
     private final Logger log = LoggerFactory.getLogger(DefaultCaffeineCacheManager.class);
+    private final static long NANO_SECOND = 1_000_000_000L;
 
     @Autowired
     UniteCacheConfig cacheConfig;
@@ -65,34 +66,33 @@ public class DefaultCaffeineCacheManager extends CaffeineCacheManager {
         CacheResetResult reset = cacheConfig.resetCache(name);
         log.debug("重置缓存参数，缓存名称：{}->{}", name, reset.getName());
 
-        com.github.benmanes.caffeine.cache.Cache caffeine =
-                Caffeine.newBuilder()
-                        .expireAfter(new Expiry<Object, Object>() {
-                            @Override
-                            public long expireAfterCreate(Object key, Object value, long currentTime) {
-                                log.debug("重置缓存参数，过期时间：{}s->{}s",
-                                        currentTime / 1_000_000_000L, reset.getExpire().getSeconds());
-                                return reset.getExpire().toNanos();
-                            }
+        com.github.benmanes.caffeine.cache.Cache caffeine = Caffeine.newBuilder()
+                .expireAfter(new Expiry<Object, Object>() {
+                    @Override
+                    public long expireAfterCreate(Object key, Object value, long currentTime) {
+                        log.debug("重置缓存参数，过期时间：{}s->{}s",
+                                currentTime / NANO_SECOND, reset.getExpire().getSeconds());
+                        return reset.getExpire().toNanos();
+                    }
 
-                            @Override
-                            public long expireAfterUpdate(Object key, Object value, long currentTime, long currentDuration) {
-                                log.debug("重置缓存参数，剩余时间：{}，过期时间：{}s->{}s",
-                                        currentDuration / 1_000_000_000L,
-                                        currentTime / 1_000_000_000L,
-                                        reset.getExpire().getSeconds());
-                                return reset.getExpire().toNanos();
-                            }
+                    @Override
+                    public long expireAfterUpdate(Object key, Object value, long currentTime, long currentDuration) {
+                        log.debug("重置缓存参数，剩余时间：{}，过期时间：{}s->{}s",
+                                currentDuration / NANO_SECOND,
+                                currentTime / NANO_SECOND,
+                                reset.getExpire().getSeconds());
+                        return reset.getExpire().toNanos();
+                    }
 
-                            @Override
-                            public long expireAfterRead(Object key, Object value, long currentTime, long currentDuration) {
-                                log.debug("重置缓存参数，剩余时间：{}，过期时间：{}s",
-                                        currentDuration / 1_000_000_000L,
-                                        currentTime / 1_000_000_000L);
-                                return currentDuration;
-                            }
-                        })
-                        .build();
+                    @Override
+                    public long expireAfterRead(Object key, Object value, long currentTime, long currentDuration) {
+                        log.debug("重置缓存参数，剩余时间：{}，过期时间：{}s",
+                                currentDuration / NANO_SECOND,
+                                currentTime / NANO_SECOND);
+                        return currentDuration;
+                    }
+                })
+                .build();
 
         return new CaffeineCache(reset.getName(), caffeine, this.isAllowNullValues());
     }

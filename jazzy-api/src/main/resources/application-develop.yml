@@ -5,7 +5,7 @@ spring:
     username: root
     password: Wu5%AVGr
     driver-class-name: com.mysql.cj.jdbc.Driver
-    hikari.maximum-pool-size: 12
+    hikari.maximum-pool-size: 2
     hikari.registerMbeans: true
 
   # cache config

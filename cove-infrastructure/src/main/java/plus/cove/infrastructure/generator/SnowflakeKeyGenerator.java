@@ -10,9 +10,9 @@ import java.time.ZoneOffset;
  * <p>
  * 生成不重复的序列号（从自定义时间开始）
  * timestamp+worker+sequence
+ * timestamp    毫秒时间戳
  * worker       10位，支持1024台机器，默认位为0
  * sequence     12位，支持1毫秒内4096个序列码
- * timestamp    时间戳
  *
  * 适用于生成全局序号，全局非连续递增，19位
  * 尾数奇偶分散分布

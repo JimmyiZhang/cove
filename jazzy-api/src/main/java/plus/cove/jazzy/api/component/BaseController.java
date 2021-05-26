@@ -46,7 +46,7 @@ public class BaseController {
     protected UserPrincipal getUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String claim = auth.getName();
-        log.info("the user authentication is : {}", claim);
+        log.debug("the user authentication is : {}", claim);
 
         if (auth instanceof AnonymousAuthenticationToken) {
             return UserPrincipal.UNKNOWN;

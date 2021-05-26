@@ -28,8 +28,8 @@ public class LogTracingInterceptor implements HandlerInterceptor {
         String requestCode = UUID.randomUUID().toString();
         // 设置请求编码
         response.addHeader("Request-Code", requestCode);
-        log.info("请求开始, RequestCode: {}, Path: {}, method: {}",
-                requestCode, request.getRequestURI(), request.getMethod());
+        log.info("Request Log ==> code: {}, method: {}, path: {}",
+                requestCode, request.getMethod(), request.getRequestURI());
         return true;
     }
 }

@@ -26,7 +26,7 @@ public interface ActivationRepository extends MybatisRepository<Activation> {
     /**
      * 根据验证码获取
      *
-     * @param
+     * @param authCode 验证码
      * @return
      * @author jimmy.zhang
      * @since 1.0

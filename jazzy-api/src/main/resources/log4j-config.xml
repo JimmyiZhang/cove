@@ -64,7 +64,7 @@
         <!--Logger节点用来单独指定日志的形式，name为包路径,比如要为org.springframework包下所有日志指定为INFO级别等。 -->
         <logger name="org.springframework" level="info"></logger>
         <logger name="org.mybatis" level="info"></logger>
-        <logger name="plus.cove.infrastructure" level="debug"></logger>
+        <logger name="plus.cove.infrastructure" level="info"></logger>
         <Root level="debug">
             <AppenderRef ref="console"/>
             <AppenderRef ref="debug"/>

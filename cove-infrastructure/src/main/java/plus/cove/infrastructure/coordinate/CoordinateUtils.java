@@ -72,7 +72,6 @@ public class CoordinateUtils {
         return distance;
     }
 
-    // 转换
     private static double[] delta(double lng, double lat) {
         // a: 卫星椭球坐标投影到平面地图坐标系的投影因子。
         double a = 6378245.0;
@@ -89,7 +88,6 @@ public class CoordinateUtils {
 
         return new double[]{dLon, dLat};
     }
-
 
     private static double transformLat(double x, double y) {
         double ret = -100.0 + 2.0 * x + 3.0 * y + 0.2 * y * y + 0.1 * x * y + 0.2 * Math.sqrt(Math.abs(x));

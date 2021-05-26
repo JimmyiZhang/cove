@@ -10,6 +10,9 @@ import java.util.regex.Pattern;
  * @date 2019-03-08
  */
 public class StringHelper {
+    private static final char FORMAT_BEGIN = '{';
+    private static final char FORMAT_END = '}';
+
     private static Pattern casePattern = Pattern.compile("[A-Z]");
     private static Pattern linePattern = Pattern.compile("-(\\w)");
 
@@ -122,6 +125,91 @@ public class StringHelper {
         }
 
         return target + sb.toString();
+    }
+
+    /**
+     * 格式化
+     * <p>
+     * 使用方法：
+     * StringUtils.format("{0}-{1}","hello", "world");
+     *
+     * @param
+     * @return
+     * @author jimmy.zhang
+     * @since 1.0
+     */
+    public static String format(String format, String... args) {
+        if (null == format || args == null || args.length == 0) {
+            return null;
+        }
+
+        // 计算最大长度
+        int len = format.length();
+        int max = len;
+        for (String arg : args) {
+            max += arg.length();
+        }
+
+        // 初始化结果
+        char[] charArr = new char[max];
+
+        int index = 0;
+        int length = 0;
+        char cChar = '\0';
+        char nChar = '\0';
+
+        // 数字模式（大于-1）
+        int number = -1;
+
+        // 拼接字符串
+        while (index < len) {
+            // 取当前字符和下一个字符
+            cChar = (nChar == '\0' ? format.charAt(index) : nChar);
+            nChar = index < len - 1 ? format.charAt(index + 1) : '\0';
+
+            // 转义符
+            boolean isEscape = (cChar == FORMAT_BEGIN || cChar == FORMAT_END);
+            if (isEscape && cChar == nChar) {
+                charArr[length] = cChar;
+                length++;
+                index += 2;
+                nChar = '\0';
+                continue;
+            }
+
+            // 数字模式，匹配数字
+            if (number > -1) {
+                if (nChar == FORMAT_END) {
+                    String arg = args[number];
+                    for (char ac : arg.toCharArray()) {
+                        charArr[length] = ac;
+                        length++;
+                    }
+                    number = -1;
+                } else {
+                    number = number * 10 + nChar - 48;
+                }
+                index++;
+                continue;
+            }
+
+            // 匹配结尾
+            if (cChar == FORMAT_END) {
+                index++;
+                continue;
+            }
+
+            // 匹配开始
+            if (cChar == FORMAT_BEGIN && cChar != nChar) {
+                number = nChar - 48;
+            } else {
+                charArr[length] = cChar;
+                length++;
+            }
+            index++;
+        }
+
+        return new String(charArr, 0, length);
     }
 
     /**

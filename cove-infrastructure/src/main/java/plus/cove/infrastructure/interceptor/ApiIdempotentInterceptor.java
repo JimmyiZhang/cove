@@ -67,9 +67,9 @@ public class ApiIdempotentInterceptor implements HandlerInterceptor {
 
         // 获取cache
         if (StringUtils.isEmpty(cacheName)) {
-            cacheName = String.format("%s#%d",
+            cacheName = StringUtils.joinWith("#",
                     securityConfig.getIdempotentCache(),
-                    securityConfig.getIdempotentDuration());
+                    securityConfig.getIdempotentDuration().toSeconds());
         }
 
         // 从cache中获取token
