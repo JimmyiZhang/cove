@@ -1,7 +1,7 @@
 package plus.cove.infrastructure.test.exception;
 
 import org.junit.Test;
-import plus.cove.infrastructure.utils.AssertUtils;
+import plus.cove.infrastructure.utils.AssertHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,16 +12,16 @@ import java.util.List;
  * @author jimmy.zhang
  * @since 1.0
  */
-public class AssertUtilsTest {
+public class AssertHelperTest {
     @Test(expected = IllegalArgumentException.class)
     public void assertTrue(){
-        AssertUtils.assertTrue(false);
+        AssertHelper.assertTrue(false);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void assertEmpty(){
         List<String> list = new ArrayList<>();
         list.add("list");
-        AssertUtils.assertEmpty(list);
+        AssertHelper.assertEmpty(list);
     }
 }

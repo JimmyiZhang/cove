@@ -1,7 +1,9 @@
 package plus.cove.jazzy.application.impl;
 
+import com.github.pagehelper.PageRowBounds;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import plus.cove.infrastructure.component.ActionResult;
@@ -11,10 +13,10 @@ import plus.cove.infrastructure.component.PageResult;
 import plus.cove.infrastructure.jwt.JwtResult;
 import plus.cove.infrastructure.jwt.JwtUtils;
 import plus.cove.jazzy.application.AuthorApplication;
-import plus.cove.jazzy.application.MailApplication;
 import plus.cove.jazzy.domain.entity.account.Account;
 import plus.cove.jazzy.domain.entity.account.Activation;
 import plus.cove.jazzy.domain.entity.user.Author;
+import plus.cove.jazzy.domain.entity.user.UserEvent;
 import plus.cove.jazzy.domain.entity.user.UserStatus;
 import plus.cove.jazzy.domain.exception.AccountError;
 import plus.cove.jazzy.domain.exception.TravellerError;
@@ -35,8 +37,6 @@ import java.util.List;
 @Service
 public class AuthorApplicationImpl implements AuthorApplication {
     @Autowired
-    MailApplication mailApp;
-    @Autowired
     AuthorRepository authorRep;
     @Autowired
     AccountRepository accountRep;
@@ -48,13 +48,16 @@ public class AuthorApplicationImpl implements AuthorApplication {
     @Autowired
     JwtUtils jwtUtils;
 
+    @Autowired
+    ApplicationContext appContext;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ActionResult signup(UserSignupInput input) {
         ActionResult result = ActionResult.success();
 
         // 检查是否存在
-        Account dbAccount = accountRep.selectByName(input.getAccount());
+        Account dbAccount = accountRep.selectByName(input.getUserMail());
         if (dbAccount != null) {
             result.fail(AccountError.EXISTED_ACCOUNT);
             return result;
@@ -73,8 +76,9 @@ public class AuthorApplicationImpl implements AuthorApplication {
         Activation activation = Activation.create(author.getId().toString(), authCode, 7 * 24 * 60L);
         activationRep.insert(activation);
 
-        // 发送邮件
-        mailApp.sendSignupMail(input.getAccount(), activation.getAuthCode());
+        // 发送邮件事件
+        appContext.publishEvent(new UserEvent(account.getName()));
+
         result.succeed();
         return result;
     }
@@ -155,7 +159,7 @@ public class AuthorApplicationImpl implements AuthorApplication {
 
     @Override
     public PageResult loadMany(AuthorListInput input, PageModel page) {
-        List<AuthorListOutput> list = authorRep.selectMany(input, pageHelper.fromModel(page));
+        List<AuthorListOutput> list = authorRep.selectMany(input, pageHelper.<PageRowBounds>fromModel(page));
         return pageHelper.toResult(list);
     }
 }

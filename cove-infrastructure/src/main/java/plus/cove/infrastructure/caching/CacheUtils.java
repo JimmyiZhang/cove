@@ -13,11 +13,12 @@ import java.util.concurrent.Callable;
 
 /**
  * 缓存工具类
+ * <p>
  * 仅支持Spring Boot方式的缓存
  * 与注解保持一致
  *
  * @author jimmy.zhang
- * @date 2019-05-09
+ * @date 2021-05-27
  */
 @Component
 public class CacheUtils {
@@ -38,11 +39,17 @@ public class CacheUtils {
      * @date 2019-05-09
      */
     public Object get(final String name, final Object key) {
-        Cache.ValueWrapper vw = cacheManager.getCache(name).get(key);
-        if (vw != null) {
-            return vw.get();
+        Cache.ValueWrapper element = cacheManager.getCache(name).get(key);
+        Object value = (element == null ? null : element.get());
+        if (value != null && CacheNullObject.class.isInstance(value)) {
+            log.debug("cache [{}:{}] is null", name, key);
+            CacheNullObject nullObj = (CacheNullObject) value;
+            if (nullObj.getExpiredTime().isBefore(Instant.now())) {
+                value = null;
+            }
         }
-        return null;
+
+        return value;
     }
 
     /**
@@ -71,7 +78,7 @@ public class CacheUtils {
      */
     public <T> T get(final String name, final Object key, @Nullable Class<T> tClass, @Nullable Callable<T> callback) {
         Cache.ValueWrapper element = cacheManager.getCache(name).get(key);
-        Object value = element == null ? null : element.get();
+        Object value = (element == null ? null : element.get());
 
         T result = null;
         // 缓存有值
@@ -123,7 +130,13 @@ public class CacheUtils {
      * @date 2019-05-09
      */
     public void put(final String name, final Object key, @Nullable Object value) {
-        cacheManager.getCache(name).put(key, value);
+        if (value == null) {
+            CacheNullObject nullObj = new CacheNullObject();
+            nullObj.setExpiredTime(Instant.now().plusMillis(cacheConfig.getNullDurationTime().toMillis()));
+            cacheManager.getCache(name).put(key, nullObj);
+        } else {
+            cacheManager.getCache(name).put(key, value);
+        }
     }
 
     /**

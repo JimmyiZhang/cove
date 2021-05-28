@@ -35,8 +35,11 @@ public class LongHelper {
      * @author jimmy.zhang
      * @date 2019-04-25
      */
-    public static boolean equals(Long origin, long value) {
-        return origin != null && origin.longValue() == value;
+    public static boolean equals(Long origin, Long value) {
+        if (origin == null || value == null) {
+            return false;
+        }
+        return origin.longValue() == value.longValue();
     }
 
     /**
@@ -49,8 +52,12 @@ public class LongHelper {
      * @author jimmy.zhang
      * @date 2019-04-04
      */
-    public static boolean greaterThan(Long origin, long value) {
-        return origin != null && origin.longValue() > value;
+    public static boolean greaterThan(Long origin, Long value) {
+        if (origin == null || value == null) {
+            return false;
+        }
+
+        return origin.longValue() > value.longValue();
     }
 
     /**
@@ -63,8 +70,12 @@ public class LongHelper {
      * @author jimmy.zhang
      * @date 2019-04-04
      */
-    public static boolean graterAndEquals(Long origin, long value) {
-        return origin != null && origin.longValue() >= value;
+    public static boolean graterAndEquals(Long origin, Long value) {
+        if (origin == null || value == null) {
+            return false;
+        }
+
+        return origin.longValue() >= value.longValue();
     }
 
     /**
@@ -77,8 +88,12 @@ public class LongHelper {
      * @author jimmy.zhang
      * @date 2019-04-04
      */
-    public static boolean lessThan(Long origin, long value) {
-        return origin != null && origin.longValue() < value;
+    public static boolean lessThan(Long origin, Long value) {
+        if (origin == null || value == null) {
+            return false;
+        }
+
+        return origin.longValue() < value.longValue();
     }
 
     /**
@@ -91,7 +106,10 @@ public class LongHelper {
      * @author jimmy.zhang
      * @date 2019-04-04
      */
-    public static boolean lessThanAndEquals(Long origin, long value) {
-        return origin != null && origin.longValue() <= value;
+    public static boolean lessThanAndEquals(Long origin, Long value) {
+        if (origin == null || value == null) {
+            return false;
+        }
+        return origin.longValue() <= value.longValue();
     }
 }

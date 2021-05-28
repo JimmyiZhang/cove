@@ -18,11 +18,11 @@ import javax.validation.constraints.Size;
 public class UserSignupInput {
     @NotEmpty(message = "账号不能为空")
     @Size(min = 4, max = 32, message = "账号4-32个字符")
-    private String account;
+    private String userMail;
 
     @NotEmpty(message = "名称不能为空")
     @Size(min = 3, max = 32, message = "名称3-32个字符")
-    private String name;
+    private String userName;
 
     @NotEmpty(message = "密码不能为空")
     @Size(min = 3, max = 32, message = "密码3-32个字符")
@@ -37,11 +37,11 @@ public class UserSignupInput {
      * @date 2019-05-20
      */
     public Account convertToAccount() {
-        return Account.create(this.account, this.password);
+        return Account.create(this.userMail, this.password);
     }
 
     /**
-     * 转换为旅行者
+     * 转换为用户
      *
      * @param
      * @return
@@ -49,6 +49,6 @@ public class UserSignupInput {
      * @date 2019-05-20
      */
     public Author convertToAuthor() {
-        return Author.create(this.name);
+        return Author.create(this.userName);
     }
 }

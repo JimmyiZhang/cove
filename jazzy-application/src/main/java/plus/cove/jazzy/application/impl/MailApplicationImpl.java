@@ -21,11 +21,12 @@ public class MailApplicationImpl implements MailApplication {
     }
 
     @Override
-    public void sendSignupMail(String email, String code) {
+    public void sendSignupMail(String email, String name) {
         String mailSubject = "发现世界注册成功邮件";
 
         StringBuilder mailContent = new StringBuilder()
-                .append("您好：<br><br>")
+                .append(name)
+                .append("，您好：<br><br>")
                 .append("欢迎您使用发现世界，您的账号已激活，可以正常使用。")
                 .append("<br><br><br><br>")
                 .append("祝您使用愉快，有任何问题请联系jimmyi.zhang@outlook.com<br>")

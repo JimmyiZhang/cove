@@ -47,8 +47,12 @@ public class IntegerHelper {
      * @author jimmy.zhang
      * @date 2019-04-25
      */
-    public static boolean equals(Integer origin, int value) {
-        return origin != null && origin.intValue() == value;
+    public static boolean equals(Integer origin, Integer value) {
+        if (origin == null || value == null) {
+            return false;
+        }
+
+        return origin.intValue() == value.intValue();
     }
 
     /**
@@ -61,7 +65,11 @@ public class IntegerHelper {
      * @author jimmy.zhang
      * @date 2019-04-04
      */
-    public static boolean greaterThan(Integer origin, int value) {
+    public static boolean greaterThan(Integer origin, Integer value) {
+        if (origin == null || value == null) {
+            return false;
+        }
+
         return origin != null && origin.intValue() > value;
     }
 
@@ -75,8 +83,12 @@ public class IntegerHelper {
      * @author jimmy.zhang
      * @date 2019-04-04
      */
-    public static boolean graterAndEquals(Integer origin, int value) {
-        return origin != null && origin.intValue() >= value;
+    public static boolean graterAndEquals(Integer origin, Integer value) {
+        if (origin == null || value == null) {
+            return false;
+        }
+
+        return origin.intValue() >= value.intValue();
     }
 
     /**
@@ -89,8 +101,12 @@ public class IntegerHelper {
      * @author jimmy.zhang
      * @date 2019-04-04
      */
-    public static boolean lessThan(Integer origin, int value) {
-        return origin != null && origin.intValue() < value;
+    public static boolean lessThan(Integer origin, Integer value) {
+        if (origin == null || value == null) {
+            return false;
+        }
+
+        return origin.intValue() < value.intValue();
     }
 
     /**
@@ -103,7 +119,11 @@ public class IntegerHelper {
      * @author jimmy.zhang
      * @date 2019-04-04
      */
-    public static boolean lessThanAndEquals(Integer origin, int value) {
-        return origin != null && origin.intValue() <= value;
+    public static boolean lessThanAndEquals(Integer origin, Integer value) {
+        if (origin == null || value == null) {
+            return false;
+        }
+
+        return origin.intValue() <= value.intValue();
     }
 }

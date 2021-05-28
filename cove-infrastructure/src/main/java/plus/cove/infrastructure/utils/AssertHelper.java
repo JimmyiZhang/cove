@@ -9,8 +9,8 @@ import java.util.Objects;
  * @author jimmy.zhang
  * @since 1.0
  */
-public class AssertUtils {
-    private AssertUtils() {
+public class AssertHelper {
+    private AssertHelper() {
     }
 
     /**
