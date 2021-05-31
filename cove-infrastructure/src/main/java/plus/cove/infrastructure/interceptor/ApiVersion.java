@@ -14,5 +14,25 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ApiVersion {
+    /**
+     * 版本号，v1
+     *
+     * @return
+     */
     String[] value();
+
+    /**
+     * 版本号来源，uri或header
+     *
+     * @return
+     */
+    ApiVersionSource source();
+
+    /**
+     * 版本号来源的key
+     * 适用于header和parameter
+     *
+     * @return
+     */
+    String sourceKey() default "X-API-VERSION";
 }

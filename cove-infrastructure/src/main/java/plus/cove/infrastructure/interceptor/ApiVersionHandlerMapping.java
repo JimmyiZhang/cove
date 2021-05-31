@@ -3,6 +3,7 @@ package plus.cove.infrastructure.interceptor;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.servlet.mvc.condition.HeadersRequestCondition;
 import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
@@ -12,7 +13,6 @@ import java.lang.reflect.Method;
 /**
  * 接口版本处理
  * <p>
- * 根据类或方法上@RequestMapping生成RequestMappingInfo
  *
  * @author jimmy.zhang
  * @since 2.0
@@ -31,16 +31,29 @@ public class ApiVersionHandlerMapping extends RequestMappingHandlerMapping {
             apiVersion = AnnotationUtils.findAnnotation(method.getDeclaringClass(), ApiVersion.class);
         }
 
-        // 初始化url
-        String[] urlPatterns = apiVersion == null ? new String[0] : apiVersion.value();
+        if (apiVersion == null || apiVersion.source() == null) {
+            super.registerHandlerMethod(handler, method, mapping);
+        }
 
-        // 构建mapping
-        PatternsRequestCondition apiPattern = new PatternsRequestCondition(urlPatterns);
-        PatternsRequestCondition oriPattern = mapping.getPatternsCondition();
-        PatternsRequestCondition finalPattern = apiPattern.combine(oriPattern);
-        mapping = new RequestMappingInfo(mapping.getName(), finalPattern, mapping.getMethodsCondition(),
-                mapping.getParamsCondition(), mapping.getHeadersCondition(), mapping.getConsumesCondition(),
-                mapping.getProducesCondition(), mapping.getCustomCondition());
+        ApiVersionSource source = apiVersion.source();
+        switch (source) {
+            case PATH:
+                String[] path = apiVersion.value();
+                PatternsRequestCondition pathCondition = new PatternsRequestCondition(path)
+                        .combine(mapping.getPatternsCondition());
+                mapping = new RequestMappingInfo(mapping.getName(), pathCondition, mapping.getMethodsCondition(),
+                        mapping.getParamsCondition(), mapping.getHeadersCondition(), mapping.getConsumesCondition(),
+                        mapping.getProducesCondition(), mapping.getCustomCondition());
+                break;
+            case HEADER:
+                String header = String.format("%s=%s", apiVersion.sourceKey(), apiVersion.value());
+                HeadersRequestCondition headerCondition = new HeadersRequestCondition(header)
+                        .combine(mapping.getHeadersCondition());
+                mapping = new RequestMappingInfo(mapping.getName(), mapping.getPatternsCondition(), mapping.getMethodsCondition(),
+                        mapping.getParamsCondition(), headerCondition, mapping.getConsumesCondition(),
+                        mapping.getProducesCondition(), mapping.getCustomCondition());
+                break;
+        }
         super.registerHandlerMethod(handler, method, mapping);
     }
 }
