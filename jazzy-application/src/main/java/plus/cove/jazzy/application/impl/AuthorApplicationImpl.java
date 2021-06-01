@@ -20,6 +20,8 @@ import plus.cove.jazzy.domain.entity.user.UserEvent;
 import plus.cove.jazzy.domain.entity.user.UserStatus;
 import plus.cove.jazzy.domain.exception.AccountError;
 import plus.cove.jazzy.domain.exception.TravellerError;
+import plus.cove.jazzy.domain.principal.UserPrincipal;
+import plus.cove.jazzy.domain.principal.UserRequest;
 import plus.cove.jazzy.domain.view.*;
 import plus.cove.jazzy.repository.AccountRepository;
 import plus.cove.jazzy.repository.ActivationRepository;
@@ -57,7 +59,7 @@ public class AuthorApplicationImpl implements AuthorApplication {
         ActionResult result = ActionResult.success();
 
         // 检查是否存在
-        Account dbAccount = accountRep.selectByName(input.getUserMail());
+        Account dbAccount = accountRep.selectByName(input.getUserName());
         if (dbAccount != null) {
             result.fail(AccountError.EXISTED_ACCOUNT);
             return result;
@@ -76,10 +78,18 @@ public class AuthorApplicationImpl implements AuthorApplication {
         Activation activation = Activation.create(author.getId().toString(), authCode, 7 * 24 * 60L);
         activationRep.insert(activation);
 
-        // 发送邮件事件
-        appContext.publishEvent(new UserEvent(account.getName()));
+        // 生成token
+        JwtResult jwt = jwtUtils.create(author.getId().toString());
+        UserLoginOutput output = new UserLoginOutput(jwt.getToken(), jwt.getExpire(), author.getAvatar());
 
-        result.succeed();
+        // 发送邮件
+        appContext.publishEvent(new UserEvent(account.getName()));
+        // 记录日志
+        UserRequest userRequest = input.getRequest();
+        userRequest.withPrincipal(UserPrincipal.init(author.getId(), author.getName()));
+        appContext.publishEvent(userRequest);
+
+        result.succeed(output);
         return result;
     }
 
@@ -88,7 +98,7 @@ public class AuthorApplicationImpl implements AuthorApplication {
         ActionResult result = ActionResult.success();
 
         // 账号是否存在
-        Account dbAccount = accountRep.selectByName(input.getName());
+        Account dbAccount = accountRep.selectByName(input.getUserName());
         if (dbAccount == null) {
             result.fail(AccountError.INVALID_NAME);
             return result;
@@ -119,6 +129,10 @@ public class AuthorApplicationImpl implements AuthorApplication {
         UserLoginOutput output = new UserLoginOutput(jwt.getToken(), jwt.getExpire(), author.getAvatar());
         result.succeed(output);
 
+        // 记录日志
+        UserRequest userRequest = input.getRequest();
+        userRequest.withPrincipal(UserPrincipal.init(author.getId(), author.getName()));
+        appContext.publishEvent(userRequest);
         return result;
     }
 

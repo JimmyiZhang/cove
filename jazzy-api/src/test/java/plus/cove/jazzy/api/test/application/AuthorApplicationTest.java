@@ -22,8 +22,8 @@ public class AuthorApplicationTest {
     @Test
     public void signup() {
         UserSignupInput input = new UserSignupInput();
-        input.setAccount("zjm281@163.com");
-        input.setName("jimmy");
+        input.setUserName("zjm281@163.com");
+        input.setNickName("jimmy");
         input.setPassword("123456");
 
         ActionResult result = authorApp.signup(input);
@@ -34,7 +34,7 @@ public class AuthorApplicationTest {
     @Test
     public void login() {
         UserLoginInput input = new UserLoginInput();
-        input.setName("zjm281@163.com");
+        input.setUserName("zjm281@163.com");
         input.setPassword("123456");
 
         ActionResult<UserLoginOutput> output = authorApp.login(input);

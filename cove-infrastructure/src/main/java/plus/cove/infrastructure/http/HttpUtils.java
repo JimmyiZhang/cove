@@ -1,12 +1,10 @@
 package plus.cove.infrastructure.http;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -197,39 +195,5 @@ public class HttpUtils {
             }
         }
         return null;
-    }
-
-    /**
-     * 获取ip地址
-     *
-     * @param
-     * @return
-     * @author jimmy.zhang
-     * @date 2019-08-19
-     */
-    public String getIp(HttpServletRequest request) {
-        String ip = request.getHeader("X-Forwarded-For");
-        if (StringUtils.isNotEmpty(ip) && !IP_UNKNOWN.equalsIgnoreCase(ip)) {
-            // 多次反向代理后会有多个ip值，第一个ip才是真实ip
-            int index = ip.indexOf(",");
-            if (index != -1) {
-                return ip.substring(0, index);
-            } else {
-                return ip;
-            }
-        }
-
-        ip = request.getHeader("X-Real-IP");
-        if (StringUtils.isNotEmpty(ip) && !IP_UNKNOWN.equalsIgnoreCase(ip)) {
-            return ip;
-        }
-
-        ip = request.getRemoteAddr();
-        if (IP_LOCAL_V6.equals(ip)) {
-            ip = IP_LOCAL_V4;
-            return ip;
-        }
-
-        return ip;
     }
 }

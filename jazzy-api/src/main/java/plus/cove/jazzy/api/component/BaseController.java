@@ -9,9 +9,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import plus.cove.infrastructure.component.ActionResult;
 import plus.cove.infrastructure.exception.BusinessError;
-import plus.cove.infrastructure.json.JsonUtils;
+import plus.cove.infrastructure.utils.RequestUtils;
 import plus.cove.jazzy.application.UserApplication;
 import plus.cove.jazzy.domain.principal.UserPrincipal;
+import plus.cove.jazzy.domain.principal.UserRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,8 +31,9 @@ public class BaseController {
     protected HttpServletRequest request;
     @Autowired
     protected HttpServletResponse response;
+
     @Autowired
-    protected JsonUtils jsonUtils;
+    protected RequestUtils requestUtils;
     @Autowired
     protected UserApplication userApp;
 
@@ -49,14 +51,29 @@ public class BaseController {
         log.debug("the user authentication is : {}", claim);
 
         if (auth instanceof AnonymousAuthenticationToken) {
-            return UserPrincipal.UNKNOWN;
+            return null;
         } else {
             Long userId = Long.parseLong(claim);
-
-            // 获取用户信息
             UserPrincipal user = userApp.findPrincipal(userId);
             return user;
         }
+    }
+
+    /**
+     * 填充输入
+     *
+     * @param
+     * @return
+     * @author jimmy.zhang
+     * @since 1.0
+     */
+    protected UserRequest getUserRequest() {
+        UserRequest ur = new UserRequest();
+        ur.setSource(requestUtils.getRemoteAddress(request));
+        ur.setVersion(requestUtils.getClientVersion(request));
+        ur.setDevice(request.getHeader("User-Agent"));
+        ur.setRouter(String.format("%s:%s", request.getMethod(), request.getRequestURI()));
+        return ur;
     }
 
     /**
@@ -106,14 +123,16 @@ public class BaseController {
     }
 
     /**
-     * 输出json
-     *
-     * @param object
+     * 输出内容
      */
-    protected void responseJson(Object object) {
-        String json = jsonUtils.toJson(object);
+    protected void responseContent(String mediaType, String content) {
+        response.setContentType(mediaType);
+        response.setCharacterEncoding("utf-8");
+        response.setHeader("Pragma", "No-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setDateHeader("Expires", 0);
         try {
-            response.getWriter().print(json);
+            response.getWriter().print(content);
         } catch (IOException ex) {
             log.error("response输出失败", ex);
         }

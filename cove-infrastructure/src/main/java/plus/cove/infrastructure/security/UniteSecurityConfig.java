@@ -27,7 +27,7 @@ public class UniteSecurityConfig {
     /**
      * 幂等token名称
      */
-    private String idempotentToken = "api-token";
+    private String idempotentToken = "api-idempotent";
 
     /**
      * 幂等cache名称

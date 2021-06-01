@@ -7,6 +7,16 @@ import java.lang.annotation.Target;
 
 /**
  * 接口版本
+ * <p>
+ * controller使用方法
+ * <p>
+ * 使用path
+ * ApiVersion(value = "v1", source = ApiVersionSource.PATH)
+ * GetMapping(value = "city")
+ * <p>
+ * 使用header
+ * ApiVersion(value = "v1", source = ApiVersionSource.HEADER)
+ * GetMapping(value = "city", headers = "X-API-VERSION=v1")
  *
  * @author jimmy.zhang
  * @since 2.0
@@ -22,11 +32,11 @@ public @interface ApiVersion {
     String[] value();
 
     /**
-     * 版本号来源，uri或header
+     * 版本号来源，path或header
      *
      * @return
      */
-    ApiVersionSource source();
+    ApiVersionSource source() default ApiVersionSource.PATH;
 
     /**
      * 版本号来源的key
@@ -34,5 +44,5 @@ public @interface ApiVersion {
      *
      * @return
      */
-    String sourceKey() default "X-API-VERSION";
+    String sourceKey() default "Api-Version";
 }

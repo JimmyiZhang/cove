@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import plus.cove.infrastructure.component.ActionResult;
+import plus.cove.infrastructure.interceptor.ApiVersion;
+import plus.cove.infrastructure.interceptor.ApiVersionSource;
 import plus.cove.jazzy.api.component.BaseController;
 import plus.cove.jazzy.application.DistrictApplication;
 import plus.cove.jazzy.domain.entity.common.DistrictCity;
@@ -35,6 +37,14 @@ public class DistrictController extends BaseController {
     @ApiOperation(value = "获取所有城市", notes = "获取所有城市")
     @GetMapping(value = "city")
     public ActionResult allCity() {
+        List<DistrictCity> list = cityApp.findAllCity();
+        return success(list);
+    }
+
+    @ApiOperation(value = "获取所有城市", notes = "获取所有城市")
+    @ApiVersion(value = "v2", source = ApiVersionSource.HEADER)
+    @GetMapping(value = "city", headers = "X-API-VERSION=v2")
+    public ActionResult allCityV2() {
         List<DistrictCity> list = cityApp.findAllCity();
         return success(list);
     }

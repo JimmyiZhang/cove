@@ -32,16 +32,6 @@ public class UserPrincipal {
     private String userAvatar;
 
     /**
-     * 未知用户
-     *
-     * @param
-     * @return
-     * @author jimmy.zhang
-     * @date 2019-09-06
-     */
-    public static final UserPrincipal UNKNOWN = init(0L, "unknown");
-
-    /**
      * 初始化用户
      *
      * @param

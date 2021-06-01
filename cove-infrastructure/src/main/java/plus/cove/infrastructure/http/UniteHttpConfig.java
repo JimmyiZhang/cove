@@ -119,4 +119,22 @@ public class UniteHttpConfig {
 
         return corsAllowedMethods.split(SEPARATOR_ALLOWED);
     }
+
+    /**
+     * 请求接口版本标识
+     * <p>
+     * 服务端接口版本
+     */
+    @Getter
+    @Setter
+    private String serverVersion = "Api-Version";
+
+    /**
+     * 请求产品版本标识
+     * <p>
+     * 客户端版本
+     */
+    @Getter
+    @Setter
+    private String clientVersion = "Product-Version";
 }
