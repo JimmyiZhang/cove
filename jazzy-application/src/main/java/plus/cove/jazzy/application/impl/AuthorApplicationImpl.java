@@ -13,8 +13,11 @@ import plus.cove.infrastructure.component.PageResult;
 import plus.cove.infrastructure.jwt.JwtResult;
 import plus.cove.infrastructure.jwt.JwtUtils;
 import plus.cove.jazzy.application.AuthorApplication;
+import plus.cove.jazzy.application.LimitingApplication;
 import plus.cove.jazzy.domain.entity.account.Account;
 import plus.cove.jazzy.domain.entity.account.Activation;
+import plus.cove.jazzy.domain.entity.limiting.LimitingCondition;
+import plus.cove.jazzy.domain.entity.limiting.LimitingTarget;
 import plus.cove.jazzy.domain.entity.user.Author;
 import plus.cove.jazzy.domain.entity.user.UserEvent;
 import plus.cove.jazzy.domain.entity.user.UserStatus;
@@ -44,6 +47,9 @@ public class AuthorApplicationImpl implements AuthorApplication {
     AccountRepository accountRep;
     @Autowired
     ActivationRepository activationRep;
+
+    @Autowired
+    LimitingApplication limitingApp;
 
     @Autowired
     PageHelper pageHelper;
@@ -97,16 +103,28 @@ public class AuthorApplicationImpl implements AuthorApplication {
     public ActionResult login(UserLoginInput input) {
         ActionResult result = ActionResult.success();
 
+        // 是否限流
+        LimitingCondition condition = LimitingCondition.createWithDay(
+                input.getUserName(), "login-failure", 3);
+        LimitingTarget limiting = limitingApp.loadTarget(condition);
+        boolean isLimit = limiting.exceedLimit();
+        if (isLimit) {
+            result.fail(AccountError.EXCEED_LIMIT);
+            return result;
+        }
+
         // 账号是否存在
         Account dbAccount = accountRep.selectByName(input.getUserName());
         if (dbAccount == null) {
             result.fail(AccountError.INVALID_NAME);
+            limitingApp.saveTarget(limiting);
             return result;
         }
 
         // 状态无效或已过期
         if (!dbAccount.checkStatus()) {
             result.fail(AccountError.INVALID_STATUS);
+            limitingApp.saveTarget(limiting);
             return result;
         }
 
@@ -114,6 +132,7 @@ public class AuthorApplicationImpl implements AuthorApplication {
         boolean isLogin = dbAccount.checkPassword(input.getPassword());
         if (!isLogin) {
             result.fail(AccountError.INVALID_PASSWORD);
+            limitingApp.saveTarget(limiting);
             return result;
         }
 
@@ -121,6 +140,7 @@ public class AuthorApplicationImpl implements AuthorApplication {
         Author author = authorRep.selectById(dbAccount.getId());
         if (author == null) {
             result.fail(TravellerError.INVALID_USER);
+            limitingApp.saveTarget(limiting);
             return result;
         }
 
