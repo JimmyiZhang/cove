@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import plus.cove.jazzy.application.DiscoveryApplication;
 import plus.cove.jazzy.application.DistrictApplication;
-import plus.cove.jazzy.domain.entity.common.DistrictCity;
+import plus.cove.jazzy.domain.entity.district.DistrictCity;
 import plus.cove.jazzy.domain.entity.discovery.DiscoveryPlace;
 import plus.cove.jazzy.domain.view.DiscoveryInput;
 

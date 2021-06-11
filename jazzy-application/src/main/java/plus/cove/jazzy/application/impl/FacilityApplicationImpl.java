@@ -3,10 +3,10 @@ package plus.cove.jazzy.application.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import plus.cove.infrastructure.utils.AssertHelper;
-import plus.cove.jazzy.application.LimitingApplication;
-import plus.cove.jazzy.domain.entity.limiting.LimitingCondition;
-import plus.cove.jazzy.domain.entity.limiting.LimitingTarget;
+import plus.cove.jazzy.application.FacilityApplication;
+import plus.cove.jazzy.domain.facility.*;
 import plus.cove.jazzy.repository.LimitingRepository;
+import plus.cove.jazzy.repository.VersioningRepository;
 
 import java.time.LocalDateTime;
 
@@ -18,12 +18,14 @@ import java.time.LocalDateTime;
  * @date 2021-06-02
  */
 @Service
-public class LimitingApplicationImpl implements LimitingApplication {
+public class FacilityApplicationImpl implements FacilityApplication {
     @Autowired
     LimitingRepository limitingRep;
+    @Autowired
+    VersioningRepository versioningRep;
 
     @Override
-    public LimitingTarget loadTarget(LimitingCondition condition) {
+    public LimitingTarget loadLimitingTarget(LimitingCondition condition) {
         AssertHelper.assertNotNull(condition);
         Integer totalValue = limitingRep.selectTarget(condition);
 
@@ -39,7 +41,22 @@ public class LimitingApplicationImpl implements LimitingApplication {
     }
 
     @Override
-    public void saveTarget(LimitingTarget target) {
+    public void saveLimitingTarget(LimitingTarget target) {
         limitingRep.saveTarget(target);
+    }
+
+    @Override
+    public VersioningTarget loadVersioningTarget(VersioningCondition condition) {
+        Versioning entity = versioningRep.selectEntity(condition);
+        versioningRep.updateEntity(entity);
+
+        VersioningTarget target = VersioningTarget.from(entity);
+        return target;
+    }
+
+    @Override
+    public void saveVersioningTarget(VersioningTarget target) {
+        Versioning entity = Versioning.create(target.getCode(), target.getRandom());
+        versioningRep.insertEntity(entity);
     }
 }

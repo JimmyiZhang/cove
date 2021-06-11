@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import plus.cove.infrastructure.caching.CacheUtils;
 import plus.cove.jazzy.application.DistrictApplication;
-import plus.cove.jazzy.domain.entity.common.DistrictCity;
-import plus.cove.jazzy.domain.entity.common.DistrictType;
+import plus.cove.jazzy.domain.entity.district.DistrictCity;
+import plus.cove.jazzy.domain.entity.district.DistrictType;
 import plus.cove.jazzy.repository.DistrictRepository;
 
 import java.util.List;

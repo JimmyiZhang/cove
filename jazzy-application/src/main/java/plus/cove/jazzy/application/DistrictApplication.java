@@ -1,7 +1,7 @@
 package plus.cove.jazzy.application;
 
 
-import plus.cove.jazzy.domain.entity.common.DistrictCity;
+import plus.cove.jazzy.domain.entity.district.DistrictCity;
 
 import java.util.List;
 

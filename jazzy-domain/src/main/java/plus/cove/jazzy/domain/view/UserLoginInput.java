@@ -28,6 +28,16 @@ public class UserLoginInput {
     private String password;
 
     @Getter
+    @Setter
+    @NotEmpty(message = "消息编码不能为空")
+    private String messageCode;
+
+    @Getter
+    @Setter
+    @NotEmpty(message = "消息随机码不能为空")
+    private String messageRandom;
+
+    @Getter
     private UserRequest request;
 
     public void withRequest(UserRequest request) {

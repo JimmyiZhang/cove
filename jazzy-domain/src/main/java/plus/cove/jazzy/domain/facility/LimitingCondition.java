@@ -1,4 +1,4 @@
-package plus.cove.jazzy.domain.entity.limiting;
+package plus.cove.jazzy.domain.facility;
 
 import lombok.Data;
 import plus.cove.infrastructure.utils.AssertHelper;

@@ -3,9 +3,9 @@ package plus.cove.jazzy.repository;
 
 import org.springframework.stereotype.Repository;
 import plus.cove.infrastructure.mybatis.MybatisRepository;
-import plus.cove.jazzy.domain.entity.common.District;
-import plus.cove.jazzy.domain.entity.common.DistrictCity;
-import plus.cove.jazzy.domain.entity.common.DistrictType;
+import plus.cove.jazzy.domain.entity.district.District;
+import plus.cove.jazzy.domain.entity.district.DistrictCity;
+import plus.cove.jazzy.domain.entity.district.DistrictType;
 
 import java.util.List;
 

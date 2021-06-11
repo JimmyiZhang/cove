@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="plus.cove.jazzy.repository.VersioningRepository">
+    <select id="selectEntity" resultType="plus.cove.jazzy.domain.facility.Versioning">
+        SELECT id, `target`, `state`, `random`, `expired_time`
+        FROM versioning
+        WHERE target = #{cd.target}
+        ORDER BY id DESC
+        LIMIT 1
+    </select>
+
+    <insert id="insertEntity">
+        INSERT INTO versioning (`target`, `state`, `random`, `create_time`, `expired_time`)
+        VALUES (#{et.target}, #{et.state}, #{et.random}, #{et.createTime}, #{et.expiredTime})
+    </insert>
+
+    <insert id="updateEntity">
+        UPDATE versioning SET `state` = 1
+        WHERE target = #{et.target} AND `state` = 0
+    </insert>
+</mapper>

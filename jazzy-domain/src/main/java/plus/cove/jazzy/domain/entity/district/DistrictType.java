@@ -1,4 +1,4 @@
-package plus.cove.jazzy.domain.entity.common;
+package plus.cove.jazzy.domain.entity.district;
 
 import plus.cove.infrastructure.component.BaseEnum;
 

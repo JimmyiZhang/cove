@@ -12,7 +12,7 @@ import plus.cove.infrastructure.interceptor.ApiVersion;
 import plus.cove.infrastructure.interceptor.ApiVersionSource;
 import plus.cove.jazzy.api.component.BaseController;
 import plus.cove.jazzy.application.DistrictApplication;
-import plus.cove.jazzy.domain.entity.common.DistrictCity;
+import plus.cove.jazzy.domain.entity.district.DistrictCity;
 
 import java.util.List;
 

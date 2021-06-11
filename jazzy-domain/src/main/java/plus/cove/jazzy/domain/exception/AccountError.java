@@ -18,7 +18,8 @@ public enum AccountError implements BusinessError {
     EXPIRED_ACTIVATION(21, "激活码已过期"),
     USED_ACTIVATION(22, "账号已激活"),
 
-    EXCEED_LIMIT(30, "超过登陆错误上限");
+    INVALID_LIMIT(30, "超过登陆错误上限"),
+    INVALID_VERSION(31, "无效的随机码");
 
     /**
      * 枚举值

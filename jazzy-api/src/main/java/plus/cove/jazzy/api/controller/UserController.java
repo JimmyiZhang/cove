@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import plus.cove.infrastructure.component.ActionResult;
 import plus.cove.jazzy.api.component.BaseController;
 import plus.cove.jazzy.application.AuthorApplication;
+import plus.cove.jazzy.application.FacilityApplication;
+import plus.cove.jazzy.domain.facility.VersioningTarget;
 import plus.cove.jazzy.domain.principal.UserRequest;
 import plus.cove.jazzy.domain.view.UserActiveInput;
 import plus.cove.jazzy.domain.view.UserLoginInput;
@@ -27,10 +29,22 @@ import javax.validation.Valid;
 @RequestMapping(value = "/user")
 public class UserController extends BaseController {
     private AuthorApplication travellerApp;
+    private FacilityApplication facilityApp;
 
     @Autowired
-    public UserController(AuthorApplication travellerApp) {
+    public UserController(AuthorApplication travellerApp,
+                          FacilityApplication facilityApp) {
         this.travellerApp = travellerApp;
+        this.facilityApp = facilityApp;
+    }
+
+    @ApiOperation(value = "验证码", notes = "获取验证码")
+    @GetMapping(value = "message")
+    public ActionResult message(@RequestParam String name) {
+        VersioningTarget target = VersioningTarget.of();
+        facilityApp.saveVersioningTarget(target);
+
+        return success(target);
     }
 
     @ApiOperation(value = "登录", notes = "用户登录并获取TOKEN")

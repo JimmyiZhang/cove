@@ -1,4 +1,4 @@
-package plus.cove.jazzy.domain.entity.limiting;
+package plus.cove.jazzy.domain.facility;
 
 import lombok.Data;
 
@@ -44,11 +44,11 @@ public class LimitingTarget {
      * @author jimmy.zhang
      * @since 1.0
      */
-    public boolean exceedLimit() {
-        if (this.limitValue == null || this.totalValue == null) {
+    public static boolean exceedLimit(LimitingTarget target) {
+        if (target.limitValue == null || target.totalValue == null) {
             return true;
         }
-        return totalValue.intValue() >= limitValue.intValue();
+        return target.totalValue.intValue() >= target.limitValue.intValue();
     }
 
     public static LimitingTarget fromCondition(LimitingCondition condition) {

@@ -1,4 +1,4 @@
-package plus.cove.jazzy.domain.entity.limiting;
+package plus.cove.jazzy.domain.facility;
 
 import plus.cove.infrastructure.component.BaseEnum;
 

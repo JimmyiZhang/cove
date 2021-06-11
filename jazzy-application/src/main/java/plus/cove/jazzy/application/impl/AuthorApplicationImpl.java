@@ -13,16 +13,18 @@ import plus.cove.infrastructure.component.PageResult;
 import plus.cove.infrastructure.jwt.JwtResult;
 import plus.cove.infrastructure.jwt.JwtUtils;
 import plus.cove.jazzy.application.AuthorApplication;
-import plus.cove.jazzy.application.LimitingApplication;
+import plus.cove.jazzy.application.FacilityApplication;
 import plus.cove.jazzy.domain.entity.account.Account;
 import plus.cove.jazzy.domain.entity.account.Activation;
-import plus.cove.jazzy.domain.entity.limiting.LimitingCondition;
-import plus.cove.jazzy.domain.entity.limiting.LimitingTarget;
 import plus.cove.jazzy.domain.entity.user.Author;
 import plus.cove.jazzy.domain.entity.user.UserEvent;
 import plus.cove.jazzy.domain.entity.user.UserStatus;
 import plus.cove.jazzy.domain.exception.AccountError;
 import plus.cove.jazzy.domain.exception.TravellerError;
+import plus.cove.jazzy.domain.facility.LimitingCondition;
+import plus.cove.jazzy.domain.facility.LimitingTarget;
+import plus.cove.jazzy.domain.facility.VersioningCondition;
+import plus.cove.jazzy.domain.facility.VersioningTarget;
 import plus.cove.jazzy.domain.principal.UserPrincipal;
 import plus.cove.jazzy.domain.principal.UserRequest;
 import plus.cove.jazzy.domain.view.*;
@@ -49,7 +51,7 @@ public class AuthorApplicationImpl implements AuthorApplication {
     ActivationRepository activationRep;
 
     @Autowired
-    LimitingApplication limitingApp;
+    FacilityApplication facilityApp;
 
     @Autowired
     PageHelper pageHelper;
@@ -103,13 +105,22 @@ public class AuthorApplicationImpl implements AuthorApplication {
     public ActionResult login(UserLoginInput input) {
         ActionResult result = ActionResult.success();
 
-        // 是否限流
-        LimitingCondition condition = LimitingCondition.createWithDay(
+        // 是否超过限流
+        LimitingCondition limCondition = LimitingCondition.createWithDay(
                 input.getUserName(), "login-failure", 3);
-        LimitingTarget limiting = limitingApp.loadTarget(condition);
-        boolean isLimit = limiting.exceedLimit();
+        LimitingTarget limiting = facilityApp.loadLimitingTarget(limCondition);
+        boolean isLimit = LimitingTarget.exceedLimit(limiting);
         if (isLimit) {
-            result.fail(AccountError.EXCEED_LIMIT);
+            result.fail(AccountError.INVALID_LIMIT);
+            return result;
+        }
+
+        // 是否重复请求
+        VersioningCondition verCondition = VersioningCondition.from(input.getMessageCode());
+        VersioningTarget versioning = facilityApp.loadVersioningTarget(verCondition);
+        boolean isVersion = VersioningTarget.invalidRandom(versioning, input.getMessageRandom());
+        if (isVersion) {
+            result.fail(AccountError.INVALID_VERSION);
             return result;
         }
 
@@ -117,14 +128,14 @@ public class AuthorApplicationImpl implements AuthorApplication {
         Account dbAccount = accountRep.selectByName(input.getUserName());
         if (dbAccount == null) {
             result.fail(AccountError.INVALID_NAME);
-            limitingApp.saveTarget(limiting);
+            facilityApp.saveLimitingTarget(limiting);
             return result;
         }
 
         // 状态无效或已过期
         if (!dbAccount.checkStatus()) {
             result.fail(AccountError.INVALID_STATUS);
-            limitingApp.saveTarget(limiting);
+            facilityApp.saveLimitingTarget(limiting);
             return result;
         }
 
@@ -132,7 +143,7 @@ public class AuthorApplicationImpl implements AuthorApplication {
         boolean isLogin = dbAccount.checkPassword(input.getPassword());
         if (!isLogin) {
             result.fail(AccountError.INVALID_PASSWORD);
-            limitingApp.saveTarget(limiting);
+            facilityApp.saveLimitingTarget(limiting);
             return result;
         }
 
@@ -140,7 +151,7 @@ public class AuthorApplicationImpl implements AuthorApplication {
         Author author = authorRep.selectById(dbAccount.getId());
         if (author == null) {
             result.fail(TravellerError.INVALID_USER);
-            limitingApp.saveTarget(limiting);
+            facilityApp.saveLimitingTarget(limiting);
             return result;
         }
 
