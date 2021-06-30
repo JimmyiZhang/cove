@@ -31,6 +31,15 @@ public class UserPrincipal {
      */
     private String userAvatar;
 
+    public String toLog() {
+        StringBuilder sb = new StringBuilder(7);
+        sb.append("User Principal ==> ")
+                .append("user-id: ").append(this.userId)
+                .append("user-name: ").append(this.userName)
+                .append("user-avatar: ").append(this.userAvatar);
+        return sb.toString();
+    }
+
     /**
      * 初始化用户
      *

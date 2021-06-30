@@ -142,9 +142,10 @@ public class JwtUtils {
             String extra = code.getClaim(CLAIM_EXTRA).asString();
             claim = new JwtClaim(true, id, extra);
         } catch (JWTDecodeException ex) {
-            throw new BusinessException(JwtError.DECODE_EXCEPTION, ex);
+            log.debug("jwt解析失败：{}", token);
+            claim = new JwtClaim(false, JwtError.DECODE_EXCEPTION.getMessage(), null);
         } catch (JWTVerificationException ex) {
-            log.info("jwt认证过期：{}", token);
+            log.debug("jwt认证过期：{}", token);
             claim = new JwtClaim(false, JwtError.VERIFICATION_EXCEPTION.getMessage(), null);
         }
         return claim;
@@ -208,7 +209,7 @@ public class JwtUtils {
 
             // 重新生成
             Date now = Date.from(Instant.now());
-            int expired = (int)config.getTokenExpired().toMinutes() * 2;
+            int expired = (int) config.getTokenExpired().toMinutes() * 2;
             Date exp = Date.from(Instant.now().plus(expired, ChronoUnit.MINUTES));
             String jwtId = UUID.randomUUID().toString();
 

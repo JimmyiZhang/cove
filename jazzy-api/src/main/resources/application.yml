@@ -1,21 +1,12 @@
 # server info
 server:
   port: 8080
-  error:
-    include-stacktrace: ALWAYS
-    include-exception: true
 
 # spring config
 spring:
   # profile config
   profiles:
     active: "@profile.active@"
-
-  datasource:
-    url: jdbc:mysql://101.200.53.244:3306/jazzy?useSSL=false&allowMultiQueries=true&autoReconnect=true&failOverReadOnly=false&useUnicode=true&characterEncoding=utf-8
-    username: root
-    password: Wu5%AVGr
-    driver-class-name: com.mysql.cj.jdbc.Driver
 
   # cache config
   cache:

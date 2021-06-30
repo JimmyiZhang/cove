@@ -1,5 +1,7 @@
 # spring config
 spring:
+  port: 8080
+
   datasource:
     url: jdbc:mysql://101.200.53.244:3306/jazzy?useSSL=false&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&autoReconnect=true&failOverReadOnly=false&serverTimezone=Asia/Shanghai
     username: root
@@ -21,9 +23,16 @@ spring:
 
   # cache config
   cache:
-    type: CAFFEINE
-    caffeine:
-      spec: initialCapacity=2,maximumSize=200,expireAfterWrite=10m,recordStats
+    type: REDIS
+  # type: CAFFEINE
+  #  caffeine:
+  #    spec: initialCapacity=2,maximumSize=200,expireAfterWrite=10m,recordStats
+
+  # redis config
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
 
 # global config
 summer:

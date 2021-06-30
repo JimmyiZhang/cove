@@ -1,3 +1,9 @@
+# spring config
+spring:
+  # profile config
+  profiles:
+    active: develop
+
 # logging config
 logging:
   config: classpath:log4j-config.xml

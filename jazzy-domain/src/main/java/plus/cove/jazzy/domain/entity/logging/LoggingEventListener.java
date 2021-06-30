@@ -20,7 +20,6 @@ public class LoggingEventListener {
         builder.withRequest(event);
         Logging log = builder.toLogging();
 
-
         System.out.println("日志：" + log.toString());
     }
 }

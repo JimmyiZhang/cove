@@ -71,13 +71,11 @@ public class WebSecurityFilter extends OncePerRequestFilter {
      * @author jimmy.zhang
      * @date 2021-06-01
      */
-    private void logUserRequest(Long userId, HttpServletRequest request) {
-        UserRequest ur = new UserRequest();
-        ur.setUserId(userId);
-        ur.setSource(requestUtils.getRemoteAddress(request));
-        ur.setVersion(requestUtils.getClientVersion(request));
-        ur.setRouter(String.format("%s:%s", request.getMethod(), request.getRequestURI()));
-        log.info(ur.toString());
+    private void logUserRequest(UserRequest ur) {
+        log.info("Request Log ==> user-id: {}, source: {}, version: {}, device: {}, router: {}",
+                ur.getUserId(), ur.getSource(), ur.getVersion(), ur.getDevice(), ur.getRouter());
+
+        // 记录请求次数
     }
 
     @Override
@@ -92,9 +90,17 @@ public class WebSecurityFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
+        // 请求
+        UserRequest ur = new UserRequest();
+        ur.setSource(requestUtils.getRemoteAddress(request));
+        ur.setVersion(requestUtils.getClientVersion(request));
+        ur.setRouter(String.format("%s:%s", request.getMethod(), request.getRequestURI()));
+
         String authToken = getUserToken(request);
         // 没有认证信息，不处理
         if (StringUtils.isEmpty(authToken)) {
+            logUserRequest(ur);
+
             chain.doFilter(request, response);
             return;
         }
@@ -109,10 +115,12 @@ public class WebSecurityFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(jwtToken);
 
             // 记录日志
-            logUserRequest(Long.parseLong(userId), request);
+            ur.setUserId(Long.parseLong(userId));
+            logUserRequest(ur);
 
             chain.doFilter(request, response);
         } else {
+            logUserRequest(ur);
             throw new AccessDeniedException("无效用户");
         }
     }

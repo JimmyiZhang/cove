@@ -8,8 +8,8 @@
 
 ---
 
-# 使用技术
-- Spring Boot 2.2.x (HikariCP)
+# 技术选型
+- Spring Boot 2.3.x (HikariCP)
 - lombok 1.18.x
 - ORO: orika 1.5.x
 - ORM: mybatis & tk.mybatis & pagehelper
@@ -18,11 +18,10 @@
 ---
 
 # 框架介绍
-- 实体类：简化和优化实体类的构建，使用静态方法创建对象
-- 对象转换：简化对象转化，提供对象转化基类
-- 数据层：提供基本CRUD操作，无需xml文件和SQL语句，兼容原myBatis使用方式
-- 服务层：提供基本CRUD操作，提供基于Lambda表达式的查询
-- 表现层：提供常用基类支持和统一异常拦截，以及swagger配置，异步日志和日志历史删除
+- 实体类：BaseEntity: DefaultEntity, DeDefaultTimeEntity 简化和优化实体类的构建，使用静态方法创建对象
+- 转换类：BaseConverter: DefaultConverter 简化对象转化，提供对象转化基类
+- 数据层：BaseRepository 提供基本CRUD操作，无需xml文件和SQL语句，兼容原myBatis使用方式
+- 表现层：提供常用基类支持和统一异常拦截，以及swagger配置，log4j配置
 - 项目管理：提供基于dependencyManagement的依赖管理和profile的发布方式，灵活方便
 
 ---
@@ -44,7 +43,7 @@
 
 ---
 
-# 基础设施层infrastructure
+# 基础设施层 infrastructure
 - caching 缓存相关
 CachingUtils,提供基本的获取，更新，删除操作，提供与Cacheable一样的功能。 cache可以根据配置，启用SIMPLE或REDIS, 其中redis缓存可以单独设置过期实践，具体参见BaseRedisCacheManager
 支持Caffeine，可以设置过期时间
@@ -60,7 +59,7 @@ DefaultConverter，通用转换，支持同名，同类型的转换
 BusinessException业务基类，非受检基类
 - generator 生成器
 KeyGenerator,主键生成，提供Snowflake算法的实现，同时实现奇偶随机，保证取模概率一样
-  提供DailyNumberGenerator，提供一天内不重复的Integer数值
+DailyNumberGenerator，提供一天内不重复的Integer数值
 - interceptor 拦截器
 ApiIdempotentInterceptor 幂等拦截器，保证接口只调用一次
 LogTracingInterceptor 日志跟踪拦截器
@@ -75,7 +74,7 @@ SqlStatement+SqlLike, 提供like过滤特殊符号及自动添加%（可配置�
 包括中文，手机号等
 
 
-# 配置管理
+# 配置管理 infrastructure 
 所有的配置管理，UniteXXXConfig,可以对各种功能进行配置，根据最佳实践提供默认值
 - UniteCacheConfig 缓存配置类，提供缓存的基本配置，包括默认过期时间（对redis有作用，建议所有缓存均设置过期实践），可以通过配置进行调整
 - UniteJsonConfig json配置类，提供json序列化配置，包括设置时间格式，设置实体Long类型和json字符串类型的转换
@@ -84,6 +83,33 @@ SqlStatement+SqlLike, 提供like过滤特殊符号及自动添加%（可配置�
 
 
 ---
+
+# 特殊功能
+可以进一步改造为注解模式
+## 限流控制-针对登陆错误次数限制，短信发送次数限制
+```dtd
+    // 创建限流条件，包括限流目标，限流类别，限流次数，支持按天，按小时，按分钟控制
+    LimitingCondition limCondition = LimitingCondition.createWithDay(input.getUserName(), "login-failure", 3);
+    LimitingTarget limiting = facilityApp.loadLimitingTarget(limCondition);
+    boolean isLimit = LimitingTarget.exceedLimit(limiting);
+```
+
+## 版本控制-用于一次性使用，比如充值等，也可用于重复提交
+```dtd
+    // step1
+    // 获取对象随机数，输出code和random
+    VersioningTarget target = VersioningTarget.of();
+    facilityApp.saveVersioningTarget(target);
+
+    // step2
+    // 创建版本条件, 使用上一步的code并验证random
+    VersioningCondition verCondition = VersioningCondition.from(input.getMessageCode());
+    VersioningTarget versioning = facilityApp.loadVersioningTarget(verCondition);
+    boolean isVersion = VersioningTarget.invalidRandom(versioning, input.getMessageRandom());
+```
+
+---
+
 
 # 基本约定
 - 应用层Application:
@@ -109,6 +135,34 @@ SqlStatement+SqlLike, 提供like过滤特殊符号及自动添加%（可配置�
   直接运行即可
 - 通过脚本develop.sh生成war文件
   直接Java参数JAVA_HOME_15即可
+  
+# 观察者模式-基于Spring的事件机制
+定义事件
+```
+  @Component("loggingEventListener")
+  public class LoggingEventListener {
+    // 注册UserRequest事件
+    @Async
+    @EventListener
+    public void saveLog(UserRequest event) {
+      System.out.println("日志");
+    }
+  }
+```
+
+使用事件
+
+```
+    @Autowired
+    ApplicationContext appContext;
+    public ActionResult login(UserLoginInput input) {
+      ...
+      UserRequest userRequest = new UserRequest();
+      // 触发事件
+      appContext.publishEvent(userRequest);
+    }
+```
+
 
 # 参考资料
 [effective java](https://jiapengcai.gitbooks.io/effective-java/content/)
