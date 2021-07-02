@@ -6,7 +6,7 @@ package plus.cove.infrastructure.coordinate;
  * @author jimmy.zhang
  * @date 2019-06-04
  */
-public class CoordinateUtils {
+public class CoordinateHelper {
     private static final double PI = 3.14159265358979324D;
 
     /**

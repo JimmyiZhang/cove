@@ -12,7 +12,7 @@ import plus.cove.infrastructure.jwt.JwtAuthenticationToken;
 import plus.cove.infrastructure.jwt.JwtClaim;
 import plus.cove.infrastructure.jwt.JwtUtils;
 import plus.cove.infrastructure.jwt.UniteJwtConfig;
-import plus.cove.infrastructure.utils.RequestUtils;
+import plus.cove.infrastructure.utils.RequestHelper;
 import plus.cove.jazzy.domain.principal.UserRequest;
 
 import javax.servlet.FilterChain;
@@ -41,7 +41,7 @@ public class WebSecurityFilter extends OncePerRequestFilter {
     @Autowired
     private JwtUtils jwtUtils;
     @Autowired
-    private RequestUtils requestUtils;
+    private RequestHelper requestHelper;
 
     /**
      * 获取jwt的token
@@ -92,8 +92,8 @@ public class WebSecurityFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         // 请求
         UserRequest ur = new UserRequest();
-        ur.setSource(requestUtils.getRemoteAddress(request));
-        ur.setVersion(requestUtils.getClientVersion(request));
+        ur.setSource(requestHelper.getRemoteAddress(request));
+        ur.setVersion(requestHelper.getClientVersion(request));
         ur.setRouter(String.format("%s:%s", request.getMethod(), request.getRequestURI()));
 
         String authToken = getUserToken(request);

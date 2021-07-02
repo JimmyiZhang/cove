@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletRequest;
  * @date 2019-05-06
  */
 @Component
-public class RequestUtils {
-    private final Logger log = LoggerFactory.getLogger(RequestUtils.class);
+public class RequestHelper {
+    private final Logger log = LoggerFactory.getLogger(RequestHelper.class);
 
     private static final String IP_UNKNOWN = "unKnown";
     private static final String IP_LOCAL_V6 = "0:0:0:0:0:0:0:1";

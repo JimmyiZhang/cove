@@ -3,7 +3,7 @@ package plus.cove.infrastructure.mybatis.handler;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import plus.cove.infrastructure.component.BaseEnum;
-import plus.cove.infrastructure.utils.BaseEnumUtils;
+import plus.cove.infrastructure.utils.BaseEnumHelper;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
@@ -54,7 +54,7 @@ public class BaseEnumHandler<E extends Enum<?> & BaseEnum> extends BaseTypeHandl
 
     private E valueOf(int value) {
         try {
-            return BaseEnumUtils.valueOf(type, value);
+            return BaseEnumHelper.valueOf(type, value);
         } catch (Exception ex) {
             throw new IllegalArgumentException("Cannot convert " + value + " to " + type.getSimpleName() + " by value.", ex);
         }

@@ -9,7 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import plus.cove.infrastructure.component.ActionResult;
 import plus.cove.infrastructure.exception.BusinessError;
-import plus.cove.infrastructure.utils.RequestUtils;
+import plus.cove.infrastructure.utils.RequestHelper;
 import plus.cove.jazzy.application.UserApplication;
 import plus.cove.jazzy.domain.principal.UserPrincipal;
 import plus.cove.jazzy.domain.principal.UserRequest;
@@ -33,7 +33,7 @@ public class BaseController {
     protected HttpServletResponse response;
 
     @Autowired
-    protected RequestUtils requestUtils;
+    protected RequestHelper requestHelper;
     @Autowired
     protected UserApplication userApp;
 
@@ -69,8 +69,8 @@ public class BaseController {
      */
     protected UserRequest getUserRequest() {
         UserRequest ur = new UserRequest();
-        ur.setSource(requestUtils.getRemoteAddress(request));
-        ur.setVersion(requestUtils.getClientVersion(request));
+        ur.setSource(requestHelper.getRemoteAddress(request));
+        ur.setVersion(requestHelper.getClientVersion(request));
         ur.setDevice(request.getHeader("User-Agent"));
         ur.setRouter(String.format("%s:%s", request.getMethod(), request.getRequestURI()));
         return ur;

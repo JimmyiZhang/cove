@@ -11,7 +11,9 @@ public enum ValidatorError implements BusinessError {
     INVALID_CONSTRAINT(100, "无效的验证规则"),
     INVALID_ARGUMENT(101, "无效的参数"),
     IDEMPOTENT_TOKEN_MISSING(110, "无效的提交参数"),
-    IDEMPOTENT_TOKEN_DUPLICATED(111, "重复提交数据");
+    IDEMPOTENT_TOKEN_DUPLICATED(111, "重复提交数据"),
+
+    RETRY_FAILURE(120, "重试失败");
 
 
     /**

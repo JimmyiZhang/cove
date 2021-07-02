@@ -8,7 +8,7 @@ import plus.cove.infrastructure.component.BaseEnum;
  * @author jimmy.zhang
  * @since 1.0
  */
-public class BaseEnumUtils {
+public class BaseEnumHelper {
     public static <E extends Enum<?> & BaseEnum> E valueOf(Class<E> enumClass, int value) {
         if (!enumClass.isEnum()) {
             return null;
