@@ -108,6 +108,23 @@ SqlStatement+SqlLike, 提供like过滤特殊符号及自动添加%（可配置�
     boolean isVersion = VersioningTarget.invalidRandom(versioning, input.getMessageRandom());
 ```
 
+## 重试-基于Spring Retry，支持多种重试策略和回退策略
+```dtd
+    Retrying retrying = RetryingBuilder.create()
+                // withRetryXXX重试策略
+                .withRetryTimes(5)
+                // withBackXXX回退策略
+                .withBackTime(1000L)
+                .build();
+
+    retrying.execute(() -> {
+        // 代码执行，返回false则重试
+        System.out.println("重试中..." + LocalDateTime.now().toString());
+        return false;
+    });
+```
+具体参见plus.cove.infrastructure.test.retry.RetryingTest
+
 ---
 
 
