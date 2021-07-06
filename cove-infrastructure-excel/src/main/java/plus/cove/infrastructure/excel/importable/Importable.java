@@ -9,15 +9,39 @@ package plus.cove.infrastructure.excel.importable;
 public interface Importable {
     /**
      * 获取最大行数
+     *
      * @return
      */
-    Integer getMaxRowIndex();
+    default Integer getMaxRowIndex() {
+        return 500;
+    }
 
     /**
      * 最大行数错误信息
+     *
      * @return
      */
-    String getMaxRowError();
+    default String getMaxRowError() {
+        return "最大允许行数为500";
+    }
+
+    /**
+     * 获取最大列数
+     *
+     * @return
+     */
+    default Integer getMaxColumnIndex() {
+        return 50;
+    }
+
+    /**
+     * 最大行数错误信息
+     *
+     * @return
+     */
+    default String getMaxColumnError() {
+        return "最大允许列数为50";
+    }
 
     /**
      * 获取标识列

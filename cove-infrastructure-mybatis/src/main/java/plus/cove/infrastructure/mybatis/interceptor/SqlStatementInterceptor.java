@@ -10,6 +10,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.core.annotation.AnnotationUtils;
 
 import java.lang.reflect.Field;
+import java.time.LocalDate;
 import java.util.Properties;
 
 /**
@@ -59,16 +60,17 @@ public class SqlStatementInterceptor implements Interceptor {
                 Field[] fields = origin.getClass().getDeclaredFields();
                 for (int j = 0; j < fields.length; j++) {
                     Field field = fields[j];
+
                     // 查找SqlLike注解，只支持String类型的参数
                     SqlLike sqlLike = AnnotationUtils.findAnnotation(field, SqlLike.class);
                     if (sqlLike != null && field.getType().equals(String.class)) {
                         field.setAccessible(true);
-                        // 转义通配符
                         String before = (String) field.get(origin);
                         if (before == null || before == "") {
                             continue;
                         }
 
+                        // 转义通配符
                         StringBuilder sbEscape = new StringBuilder(before.length() + LIKE_ESCAPE_CHARACTERS.length());
                         sbEscape.append(sqlLike.prefix());
                         for (int k = 0; k < before.length(); k++) {
@@ -85,6 +87,21 @@ public class SqlStatementInterceptor implements Interceptor {
                         sbEscape.append(sqlLike.suffix());
                         // 设置处理后的值
                         fields[j].set(origin, sbEscape.toString());
+                        continue;
+                    }
+
+                    // 查找SqlDate注解，只支持LocalDate类型的参数
+                    SqlDate sqlDate = AnnotationUtils.findAnnotation(field, SqlDate.class);
+                    if (sqlDate != null && field.getType().equals(LocalDate.class)) {
+                        field.setAccessible(true);
+                          LocalDate before = (LocalDate) field.get(origin);
+                        if (before == null) {
+                            continue;
+                        }
+
+                        // 设置日期
+                        field.set(origin, before.plus(sqlDate.increment(), sqlDate.unit()));
+                        continue;
                     }
                 }
             }

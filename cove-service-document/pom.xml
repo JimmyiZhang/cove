@@ -39,12 +39,12 @@
         <dependency>
             <groupId>plus.cove</groupId>
             <artifactId>cove-infrastructure</artifactId>
-            <version>1.0</version>
+            <version>${project.cove.version}</version>
         </dependency>
         <dependency>
             <groupId>plus.cove</groupId>
             <artifactId>cove-infrastructure-excel</artifactId>
-            <version>1.0</version>
+            <version>${project.cove.version}</version>
         </dependency>
     </dependencies>
 </project>

@@ -25,7 +25,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <project.infrastructure.verion>1.0</project.infrastructure.verion>
+        <project.cove.version>1.0</project.cove.version>
         <project.jazzy.version>1.0-SNAPSHOT</project.jazzy.version>
 
         <java.version>15</java.version>
@@ -39,6 +39,7 @@
         <mysql-connector.version>8.0.21</mysql-connector.version>
         <commons-codec.version>1.14</commons-codec.version>
         <commons-lang3.version>3.10</commons-lang3.version>
+        <commons-collections.version>3.2.2</commons-collections.version>
         <orika-core.version>1.5.4</orika-core.version>
         <tk.mybatis.version>2.1.5</tk.mybatis.version>
         <pagehelper.version>5.2.0</pagehelper.version>
@@ -135,7 +136,6 @@
                 <artifactId>spring-boot-starter-actuator</artifactId>
                 <version>${spring-boot.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.springframework.retry</groupId>
                 <artifactId>spring-retry</artifactId>
@@ -162,6 +162,11 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons-lang3.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>${commons-collections.version}</version>
             </dependency>
             <!-- apache commons end-->
 

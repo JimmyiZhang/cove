@@ -4,10 +4,11 @@ import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.metadata.CellData;
 import com.alibaba.excel.metadata.CellExtra;
 import com.alibaba.excel.read.listener.ReadListener;
+import com.alibaba.excel.read.metadata.holder.ReadRowHolder;
 import lombok.extern.slf4j.Slf4j;
-import plus.cove.infrastructure.excel.exception.ExcelError;
 import plus.cove.infrastructure.excel.importable.Importable;
 import plus.cove.infrastructure.exception.BusinessException;
+import plus.cove.infrastructure.exception.ConverterError;
 import plus.cove.infrastructure.utils.IntegerHelper;
 
 import java.util.Map;
@@ -20,16 +21,16 @@ import java.util.Map;
  */
 @Slf4j
 public class CheckHeadListener<T> implements ReadListener<T> {
-    private final Integer maxRowIdx;
-    private final String maxRowErr;
-    private final Integer identityCol;
-    private final String identityVal;
+    private final Importable identity;
+    private final Boolean emptyStop;
 
     public CheckHeadListener(Importable identity) {
-        this.identityCol = identity.getIdentityColumn();
-        this.identityVal = identity.getIdentityValue();
-        this.maxRowIdx = identity.getMaxRowIndex();
-        this.maxRowErr = identity.getMaxRowError();
+        this(identity, true);
+    }
+
+    public CheckHeadListener(Importable identity, Boolean emptyStop) {
+        this.identity = identity;
+        this.emptyStop = emptyStop;
     }
 
     @Override
@@ -38,9 +39,14 @@ public class CheckHeadListener<T> implements ReadListener<T> {
 
     @Override
     public void invoke(T data, AnalysisContext context) {
-        Integer rowIndex = context.readRowHolder().getRowIndex();
-        if (IntegerHelper.greaterThan(rowIndex, maxRowIdx)) {
-            throw new BusinessException(ExcelError.INVALID_IMPORT_DATA_ROW, this.maxRowErr);
+        ReadRowHolder holder = context.readRowHolder();
+        if (this.identity.getMaxRowIndex() == null || holder == null) {
+            return;
+        }
+
+        // 判断最大行
+        if (IntegerHelper.greaterThan(holder.getRowIndex(), this.identity.getMaxRowIndex())) {
+            throw new BusinessException(ConverterError.INVALID_IMPORT_DATA_ROW, this.identity.getMaxRowError());
         }
     }
 
@@ -50,19 +56,41 @@ public class CheckHeadListener<T> implements ReadListener<T> {
 
     @Override
     public void invokeHead(Map<Integer, CellData> headMap, AnalysisContext context) {
-        CellData cell = headMap.get(this.identityCol);
-        if (cell == null || !cell.getStringValue().equals(this.identityVal)) {
-            throw new BusinessException(ExcelError.INVALID_IMPORT_TEMPLATE);
+        if (this.identity.getIdentityColumn() == null) {
+            return;
+        }
+
+        // 判断验证规则
+        CellData cell = headMap.get(this.identity.getIdentityColumn());
+        if (cell == null || !cell.getStringValue().equals(this.identity.getIdentityValue())) {
+            throw new BusinessException(ConverterError.INVALID_IMPORT_TEMPLATE);
         }
     }
 
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
+        ReadRowHolder holder = context.readRowHolder();
+        if (this.identity.getMaxColumnIndex() == null || holder == null) {
+            return;
+        }
+
+        // 判断最大列
+        if (IntegerHelper.greaterThan(holder.getCellMap().size(), this.identity.getMaxColumnIndex())) {
+            throw new BusinessException(ConverterError.INVALID_IMPORT_DATA_ROW, this.identity.getMaxColumnError());
+        }
     }
 
     @Override
     public boolean hasNext(AnalysisContext context) {
-        boolean hasData = context.readRowHolder().getCellMap().size() > 0;
-        return hasData;
+        ReadRowHolder holder = context.readRowHolder();
+        if (holder == null) {
+            return false;
+        }
+
+        if (emptyStop.booleanValue()) {
+            return holder.getCellMap().size() > 0;
+        }
+
+        return true;
     }
 }

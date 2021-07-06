@@ -190,4 +190,23 @@ public class ExcelService {
 
         return list;
     }
+
+    /**
+     * 导入excel
+     * 带标题，带验证
+     *
+     * @param
+     * @return
+     * @author jimmy.zhang
+     * @since 1.0
+     */
+    public <T> List<T> importExcelWithHead(InputStream stream, Class dataType, Importable identity) {
+        List<T> list = EasyExcel.read(stream, dataType, new CheckHeadListener(identity, false))
+                .headRowNumber(0)
+                .ignoreEmptyRow(true)
+                .sheet(0)
+                .doReadSync();
+
+        return list;
+    }
 }

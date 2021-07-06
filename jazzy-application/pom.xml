@@ -24,31 +24,20 @@
         </dependency>
         <!-- lombok end -->
 
-        <!-- apache commons -->
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <!-- apache commons end-->
-
         <dependency>
             <groupId>plus.cove</groupId>
             <artifactId>cove-infrastructure</artifactId>
-            <version>1.0</version>
+            <version>${project.cove.version}</version>
         </dependency>
         <dependency>
             <groupId>plus.cove.jazzy</groupId>
             <artifactId>jazzy-domain</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.jazzy.version}</version>
         </dependency>
         <dependency>
             <groupId>plus.cove.jazzy</groupId>
             <artifactId>jazzy-repository</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.jazzy.version}</version>
         </dependency>
     </dependencies>
 </project>

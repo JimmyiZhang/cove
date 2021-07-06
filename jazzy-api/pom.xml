@@ -122,22 +122,22 @@
         <dependency>
             <groupId>plus.cove</groupId>
             <artifactId>cove-infrastructure</artifactId>
-            <version>1.0</version>
+            <version>${project.cove.version}</version>
         </dependency>
         <dependency>
             <groupId>plus.cove</groupId>
             <artifactId>cove-infrastructure-mybatis</artifactId>
-            <version>1.0</version>
+            <version>${project.cove.version}</version>
         </dependency>
         <dependency>
             <groupId>plus.cove.jazzy</groupId>
             <artifactId>jazzy-domain</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.jazzy.version}</version>
         </dependency>
         <dependency>
             <groupId>plus.cove.jazzy</groupId>
             <artifactId>jazzy-application</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.jazzy.version}</version>
         </dependency>
     </dependencies>
 
