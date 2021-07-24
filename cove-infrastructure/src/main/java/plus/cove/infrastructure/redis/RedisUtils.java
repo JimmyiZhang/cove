@@ -1100,4 +1100,19 @@ public class RedisUtils {
         redisTemplate.setEnableTransactionSupport(true);
         return redisTemplate.execute(callback);
     }
+
+    /**
+     * ------------------管道相关操作--------------------------------
+     */
+    public <R> List<Object> pipeline(Consumer<RedisOperations> action) {
+        SessionCallback<R> callback = new SessionCallback() {
+            @Override
+            public Object execute(RedisOperations operations) throws DataAccessException {
+                action.accept(operations);
+                return null;
+            }
+        };
+        return redisTemplate.executePipelined(callback);
+    }
+
 }
