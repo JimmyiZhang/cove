@@ -50,10 +50,18 @@ public class LimitingCondition {
     private void calculateTime(LimitingDimension dimension, LocalDateTime endTime) {
         AssertHelper.assertNotNull(endTime);
         switch (dimension) {
-            case MINUTE -> this.startTime = endTime.minusMinutes(1);
-            case HOUR -> this.startTime = endTime.minusHours(1);
-            case DAY -> this.startTime = endTime.minusDays(1);
-            case WEEK -> this.startTime = endTime.minusDays(7);
+            case MINUTE:
+                this.startTime = endTime.minusMinutes(1);
+                break;
+            case HOUR:
+                this.startTime = endTime.minusHours(1);
+                break;
+            case DAY:
+                this.startTime = endTime.minusDays(1);
+                break;
+            case WEEK:
+                this.startTime = endTime.minusDays(7);
+                break;
         }
     }
 

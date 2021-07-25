@@ -1,7 +1,7 @@
 #! /bin/bash
 
 echo "[DEV] install start....."
-mvn clean install -D maven.test.skip=true -D "JAVA_HOME_15=C:\Program Files\Java\jdk-15.0.2" -P develop -f ../../pom.xml
+mvn clean install -D maven.test.skip=true -P develop -f ../../pom.xml
 
 echo "[DEV] copy start....."
 scp ../../jazzy-api/target/ROOT.war root@101.200.53.244:/usr/local/tomcat-9000/temp
