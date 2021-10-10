@@ -1,9 +1,11 @@
 # actuator config
 management:
+  endpoint.health.show-details: always
   endpoints:
-    web:
-      exposure:
-        include: health,info,metrics,trace
+    web.exposure.include: prometheus,loggers
+    metrics.export.prometheus.enabled: true
+  metrics:
+    tags.application: jazzy
 
 # spring config
 spring:

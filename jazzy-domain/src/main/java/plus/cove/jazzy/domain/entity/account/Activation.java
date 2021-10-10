@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import plus.cove.infrastructure.component.impl.DefaultEntity;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 /**
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Entity
+@Table(name = "activation")
 @EqualsAndHashCode(callSuper = true)
 public class Activation extends DefaultEntity {
     private String userCode;

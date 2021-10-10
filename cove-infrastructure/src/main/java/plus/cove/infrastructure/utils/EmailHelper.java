@@ -1,4 +1,4 @@
-package plus.cove.infrastructure.email;
+package plus.cove.infrastructure.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,8 +21,8 @@ import javax.mail.internet.MimeMessage;
  * @date 2019-06-19
  */
 @Component
-public class EmailUtils {
-    private final Logger log = LoggerFactory.getLogger(EmailUtils.class);
+public class EmailHelper {
+    private final Logger log = LoggerFactory.getLogger(EmailHelper.class);
 
     @Autowired
     JavaMailSender sender;
@@ -34,7 +34,7 @@ public class EmailUtils {
     private MimeMessage mail;
     private MimeMessageHelper helper;
 
-    public EmailUtils build() {
+    public EmailHelper build() {
         result = ActionResult.success();
         mail = sender.createMimeMessage();
         try {
@@ -47,7 +47,7 @@ public class EmailUtils {
         return this;
     }
 
-    public EmailUtils to(String... toUsers) {
+    public EmailHelper to(String... toUsers) {
         try {
             helper.setTo(toUsers);
         } catch (MessagingException ex) {
@@ -57,7 +57,7 @@ public class EmailUtils {
         return this;
     }
 
-    public EmailUtils subject(String subject) {
+    public EmailHelper subject(String subject) {
         try {
             helper.setSubject(subject);
         } catch (MessagingException ex) {
@@ -67,7 +67,7 @@ public class EmailUtils {
         return this;
     }
 
-    public EmailUtils text(String text) {
+    public EmailHelper text(String text) {
         try {
             helper.setText(text);
         } catch (MessagingException ex) {
@@ -78,7 +78,7 @@ public class EmailUtils {
         return this;
     }
 
-    public EmailUtils html(String text) {
+    public EmailHelper html(String text) {
         try {
             helper.setText(text, true);
         } catch (MessagingException ex) {

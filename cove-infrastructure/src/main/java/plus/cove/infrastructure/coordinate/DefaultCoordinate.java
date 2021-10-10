@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
  * @author Jimmy.Zhang
  */
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class DefaultCoordinate implements BaseCoordinate {
     private Double latitude;
     private Double longitude;

@@ -13,11 +13,14 @@ import org.springframework.security.core.authority.AuthorityUtils;
 public class JwtAuthenticationToken extends AbstractAuthenticationToken {
     private String claim;
     private String extra;
+    private String actor;
 
-    public JwtAuthenticationToken(String claim, String authority, String extra) {
-        super(AuthorityUtils.createAuthorityList("ROLE_" + authority));
+    public JwtAuthenticationToken(String claim, String actor, String extra) {
+        super(AuthorityUtils.createAuthorityList(actor));
         this.claim = claim;
+        this.actor = actor;
         this.extra = extra;
+
         setAuthenticated(true);
     }
 
@@ -60,7 +63,10 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
         code ^= this.isAuthenticated() ? 0 : 1;
         code ^= this.getName().hashCode();
         if (this.extra != null && this.extra != "") {
-            code ^= this.getExtra().hashCode();
+            code ^= this.extra.hashCode();
+        }
+        if (this.actor != null && this.actor != "") {
+            code ^= this.actor.hashCode();
         }
         return code;
     }
@@ -68,10 +74,13 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Name: ").append(this.getName()).append("; ");
-        sb.append("Authenticated: ").append(this.isAuthenticated()).append("; ");
+        sb.append("Name: ").append(this.getName());
+        sb.append(", Authenticated: ").append(this.isAuthenticated());
         if (this.extra != null && this.extra != "") {
-            sb.append("Extra: ").append(this.extra).append("; ");
+            sb.append(", Extra: ").append(this.extra);
+        }
+        if (this.actor != null && this.actor != null) {
+            sb.append(", Actor: ").append(this.actor);
         }
         return sb.toString();
     }

@@ -1,19 +1,19 @@
 package plus.cove.infrastructure.test.system;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer;
+import org.springframework.boot.test.context.ConfigDataApplicationContextInitializer;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.util.Assert;
 import plus.cove.infrastructure.system.SystemRunTime;
 import plus.cove.infrastructure.system.SystemUtils;
 import plus.cove.infrastructure.system.UniteSystemConfig;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {UniteSystemConfig.class, SystemUtils.class},
-        initializers = ConfigFileApplicationContextInitializer.class)
+        initializers = ConfigDataApplicationContextInitializer.class)
 public class SystemUtilsTest {
     @Autowired
     UniteSystemConfig systemConfig;

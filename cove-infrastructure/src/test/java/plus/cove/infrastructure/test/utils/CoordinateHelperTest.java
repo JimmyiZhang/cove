@@ -1,10 +1,10 @@
 package plus.cove.infrastructure.test.utils;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import plus.cove.infrastructure.coordinate.BaseCoordinate;
 import plus.cove.infrastructure.coordinate.CoordinateHelper;
 import plus.cove.infrastructure.coordinate.DefaultCoordinate;
-import org.junit.Test;
-import org.springframework.util.Assert;
 
 public class CoordinateHelperTest {
     @Test
@@ -16,7 +16,7 @@ public class CoordinateHelperTest {
                 coordinate.getLatitude(), coordinate.getLongitude());
         System.out.println(gcj02);
 
-        Assert.isTrue(Math.abs(coordinate.getLatitude() - 39.11677) < 0.0001, "纬度");
-        Assert.isTrue(Math.abs(coordinate.getLongitude() - 117.73756) < 0.0001, "经度");
+        Assertions.assertTrue(Math.abs(coordinate.getLatitude() - 39.11677) < 0.0001, "纬度");
+        Assertions.assertTrue(Math.abs(coordinate.getLongitude() - 117.73756) < 0.0001, "经度");
     }
 }

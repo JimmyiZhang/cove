@@ -5,13 +5,13 @@
     <parent>
         <artifactId>jazzy</artifactId>
         <groupId>plus.cove</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>plus.cove.jazzy</groupId>
     <artifactId>jazzy-domain</artifactId>
-
+    <version>1.0</version>
     <name>jazzy-domain</name>
     <description>领域层</description>
 
@@ -33,6 +33,11 @@
             <scope>provided</scope>
         </dependency>
         <!-- lombok end -->
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>plus.cove</groupId>

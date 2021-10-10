@@ -11,8 +11,7 @@ import java.time.LocalDateTime;
  * 版本
  * <p>
  * 用于执行一次限制使用，比如消费，充值
- * 用于去重使用，比如重复提交
- * 5分钟有效
+ * 用于去重使用，比如重复提交，存在有效时间
  *
  * @author jimmy.zhang
  * @since 1.1

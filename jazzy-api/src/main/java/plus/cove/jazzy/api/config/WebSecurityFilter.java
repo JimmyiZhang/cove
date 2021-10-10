@@ -1,6 +1,6 @@
 package plus.cove.jazzy.api.config;
 
-import org.apache.commons.lang3.StringUtils;
+import cn.hutool.core.util.StrUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,14 +53,14 @@ public class WebSecurityFilter extends OncePerRequestFilter {
      */
     private String getUserToken(HttpServletRequest request) {
         String authHeader = request.getHeader(jwtConfig.getTokenHeader());
-        if (StringUtils.isEmpty(authHeader)) {
+        if (StrUtil.isEmpty(authHeader)) {
             authHeader = request.getParameter(jwtConfig.getTokenQuery());
         }
 
-        if (StringUtils.isEmpty(authHeader)) {
+        if (StrUtil.isEmpty(authHeader)) {
             return authHeader;
         }
-        return StringUtils.removeStart(authHeader, jwtConfig.getTokenBearer()).trim();
+        return StrUtil.removePrefix(authHeader, jwtConfig.getTokenBearer()).trim();
     }
 
     /**
@@ -98,7 +98,7 @@ public class WebSecurityFilter extends OncePerRequestFilter {
 
         String authToken = getUserToken(request);
         // 没有认证信息，不处理
-        if (StringUtils.isEmpty(authToken)) {
+        if (StrUtil.isEmpty(authToken)) {
             logUserRequest(ur);
 
             chain.doFilter(request, response);

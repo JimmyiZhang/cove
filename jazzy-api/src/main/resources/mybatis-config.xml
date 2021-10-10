@@ -10,13 +10,4 @@
     </settings>
     <typeHandlers>
     </typeHandlers>
-    <plugins>
-        <plugin interceptor="com.github.pagehelper.PageInterceptor">
-            <!-- 配置通用参数 -->
-            <property name="helperDialect" value="mysql"/>
-            <property name="rowBoundsWithCount" value="true"/>
-            <property name="offsetAsPageNum" value="true"/>
-            <property name="reasonable" value="true"/>
-        </plugin>
-    </plugins>
 </configuration>

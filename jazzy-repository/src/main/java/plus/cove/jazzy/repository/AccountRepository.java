@@ -1,6 +1,7 @@
 package plus.cove.jazzy.repository;
 
 
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 import plus.cove.infrastructure.mybatis.MybatisRepository;
 import plus.cove.jazzy.domain.entity.account.Account;
@@ -11,6 +12,7 @@ import plus.cove.jazzy.domain.entity.account.Account;
  * @author jimmy.zhang
  * @date 2019-03-28
  */
+@Mapper
 @Repository
 public interface AccountRepository extends MybatisRepository<Account> {
     /**

@@ -5,12 +5,13 @@
     <parent>
         <artifactId>jazzy</artifactId>
         <groupId>plus.cove</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>plus.cove.jazzy</groupId>
     <artifactId>jazzy-api</artifactId>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <name>jazzy-api</name>
@@ -76,16 +77,21 @@
         </dependency>
         <!-- spring-boot end -->
 
-        <!-- apache commons -->
+        <!-- mybatis -->
         <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>2.0.4</version>
         </dependency>
-        <!-- apache commons end-->
+        <dependency>
+            <groupId>io.mybatis</groupId>
+            <artifactId>mybatis-mapper</artifactId>
+        </dependency>
+        <!-- mybatis end -->
 
         <!-- mysql driver -->
         <dependency>
@@ -119,6 +125,14 @@
         </dependency>
         <!-- micrometer end-->
 
+        <!-- hutool -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
+        <!-- hutool end -->
+
         <dependency>
             <groupId>plus.cove</groupId>
             <artifactId>cove-infrastructure</artifactId>
@@ -142,7 +156,7 @@
     </dependencies>
 
     <build>
-        <finalName>ROOT</finalName>
+        <finalName>jazzy</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

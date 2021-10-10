@@ -1,6 +1,6 @@
 package plus.cove.infrastructure.system;
 
-import org.apache.commons.lang3.RandomStringUtils;
+import cn.hutool.core.util.RandomUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -36,7 +36,7 @@ public class SystemUtils {
      * @since 1.0
      */
     public String generateNumberCode(final int count) {
-        String actual = RandomStringUtils.randomNumeric(count);
+        String actual = RandomUtil.randomNumbers(count);
         return generateWordCode(actual);
     }
 
@@ -49,7 +49,7 @@ public class SystemUtils {
      * @since 1.0
      */
     public String generateWordCode(final int count) {
-        String actual = RandomStringUtils.randomAlphanumeric(count);
+        String actual = RandomUtil.randomString(count);
         return generateWordCode(actual);
     }
 }

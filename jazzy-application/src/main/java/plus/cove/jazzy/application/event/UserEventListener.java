@@ -1,8 +1,9 @@
-package plus.cove.jazzy.domain.entity.user;
+package plus.cove.jazzy.application.event;
 
-import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.event.TransactionalEventListener;
+import plus.cove.jazzy.domain.entity.user.UserEvent;
 
 /**
  * 用户事件监听
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component("userEventListener")
 public class UserEventListener {
     @Async
-    @EventListener
+    @TransactionalEventListener
     public void sendEmail(UserEvent event) {
         System.out.println("发送邮件，邮件地址：" + event.getUserMail());
     }

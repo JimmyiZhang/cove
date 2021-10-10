@@ -1,6 +1,6 @@
 package plus.cove.infrastructure.test.utils;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.util.Assert;
 
 public class IntegerHelperTest {

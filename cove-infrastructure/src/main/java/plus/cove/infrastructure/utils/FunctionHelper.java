@@ -1,6 +1,6 @@
 package plus.cove.infrastructure.utils;
 
-import org.apache.commons.collections.CollectionUtils;
+import cn.hutool.core.collection.CollUtil;
 
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -21,7 +21,7 @@ public class FunctionHelper {
      * @since 1.0
      */
     public static <T, E> void combine(List<T> origin, List<E> target, BiConsumer<T, E> consumer) {
-        if (CollectionUtils.isEmpty(origin) || CollectionUtils.isEmpty(target)) {
+        if (CollUtil.isEmpty(origin) || CollUtil.isEmpty(target)) {
             return;
         }
 

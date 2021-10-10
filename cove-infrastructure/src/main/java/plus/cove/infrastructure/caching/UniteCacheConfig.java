@@ -1,7 +1,7 @@
 package plus.cove.infrastructure.caching;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.Data;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.convert.DurationUnit;
 import org.springframework.context.annotation.Configuration;
@@ -62,7 +62,7 @@ public class UniteCacheConfig {
         result.setName(name);
 
         // 获取过期时间
-        if (StringUtils.isNotEmpty(name) && name.contains(ttlSeparator)) {
+        if (StrUtil.isNotEmpty(name) && name.contains(ttlSeparator)) {
             String[] cacheNames = name.split(ttlSeparator);
             if (cacheNames.length == CACHE_DURATION_LENGTH) {
                 long maxAge = Long.parseLong(cacheNames[1]);

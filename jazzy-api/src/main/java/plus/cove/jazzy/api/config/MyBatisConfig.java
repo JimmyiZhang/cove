@@ -1,6 +1,7 @@
 package plus.cove.jazzy.api.config;
 
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,10 +9,7 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.interceptor.*;
-import plus.cove.infrastructure.component.PageHelper;
-import plus.cove.infrastructure.mybatis.helper.MybatisPageHelper;
 import plus.cove.infrastructure.mybatis.interceptor.SqlStatementInterceptor;
-import tk.mybatis.spring.annotation.MapperScan;
 
 import java.util.Collections;
 
@@ -32,12 +30,6 @@ public class MyBatisConfig {
     public SqlStatementInterceptor likeInterceptor() {
         SqlStatementInterceptor statement = new SqlStatementInterceptor();
         return statement;
-    }
-
-    @Bean
-    public PageHelper pageHandler() {
-        PageHelper helper = new MybatisPageHelper();
-        return helper;
     }
 
     public TransactionInterceptor transactionInterceptor() {

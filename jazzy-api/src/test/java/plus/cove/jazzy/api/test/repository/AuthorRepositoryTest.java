@@ -32,7 +32,7 @@ public class AuthorRepositoryTest {
     @Test
     public void selectPage() {
         AuthorListInput input = new AuthorListInput();
-        List<AuthorListOutput> rows = authorRep.selectMany(input, pageHelper.fromModel(page));
+        List<AuthorListOutput> rows = authorRep.selectMany(input, page);
         PageResult output = pageHelper.toResult(rows);
 
         System.out.println("CLASS: ");

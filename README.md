@@ -153,6 +153,11 @@ SqlStatement+SqlLike, 提供like过滤特殊符号及自动添加%（可配置�
 - 通过脚本develop.sh生成war文件
   直接Java参数JAVA_HOME_15即可
   
+# docker
+sh develop.sh
+docker build -t cove/jazzy:dev .
+docker run -p:8080:8080 cove-jazzy
+
 # 观察者模式-基于Spring的事件机制
 定义事件
 ```

@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import plus.cove.infrastructure.file.FileUtils;
+import plus.cove.infrastructure.utils.FileHelper;
 import plus.cove.infrastructure.logger.LoggerFront;
 import plus.cove.jazzy.api.component.BaseController;
 
@@ -38,7 +38,7 @@ public class HomeController extends BaseController {
 
         // 获取输入流
         InputStream stream = this.getClass().getResourceAsStream("/config/" + path + ".txt");
-        byte[] bytes = FileUtils.copyStream(stream).toByteArray();
+        byte[] bytes = FileHelper.copyStream(stream).toByteArray();
         response.getOutputStream().write(bytes);
     }
 

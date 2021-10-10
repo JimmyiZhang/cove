@@ -1,13 +1,14 @@
 package plus.cove.jazzy.domain.entity.account;
 
+import cn.hutool.core.util.RandomUtil;
+import cn.hutool.crypto.digest.DigestUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang3.RandomStringUtils;
 import plus.cove.infrastructure.component.impl.DefaultEntity;
 import plus.cove.jazzy.domain.entity.user.UserStatus;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 /**
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Entity
+@Table(name = "account")
 @EqualsAndHashCode(callSuper = true)
 public class Account extends DefaultEntity {
     private String name;
@@ -48,9 +50,9 @@ public class Account extends DefaultEntity {
      * @author jimmy.zhang
      * @since 1.0
      */
-    public void active(){
+    public void active() {
         this.status = UserStatus.ACTIVE;
-        this.expiredTime=  LocalDateTime.of(2099, 12, 31, 0, 0, 0);
+        this.expiredTime = LocalDateTime.of(2099, 12, 31, 0, 0, 0);
     }
 
     /**
@@ -77,9 +79,8 @@ public class Account extends DefaultEntity {
      */
     public static Account create(String name, String password) {
         Account entity = new Account();
-        entity.valueOf();
 
-        String salt = RandomStringUtils.randomAlphanumeric(32);
+        String salt = RandomUtil.randomString(32);
         String pass = generatePassword(password, salt);
 
         LocalDateTime createTime = LocalDateTime.now();
@@ -102,6 +103,6 @@ public class Account extends DefaultEntity {
      * @return
      */
     private static String generatePassword(String password, String salt) {
-        return DigestUtils.sha256Hex(password + salt);
+        return DigestUtil.sha256Hex(password + salt);
     }
 }

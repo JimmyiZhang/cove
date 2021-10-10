@@ -1,6 +1,5 @@
 package plus.cove.infrastructure.jwt;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
@@ -10,7 +9,6 @@ import lombok.Getter;
  * @author jimmy.zhang
  * @date 2019-05-15
  */
-@AllArgsConstructor
 public class JwtResult {
     /**
      * token值
@@ -23,4 +21,9 @@ public class JwtResult {
      */
     @Getter
     private Integer expire;
+
+    public JwtResult(String token, Integer expire) {
+        this.token = token;
+        this.expire = expire;
+    }
 }

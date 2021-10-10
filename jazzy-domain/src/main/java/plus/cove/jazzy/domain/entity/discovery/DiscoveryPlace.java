@@ -1,7 +1,7 @@
 package plus.cove.jazzy.domain.entity.discovery;
 
+import cn.hutool.core.util.RandomUtil;
 import lombok.Data;
-import org.apache.commons.lang3.RandomUtils;
 
 /**
  * 探索输出
@@ -55,9 +55,9 @@ public class DiscoveryPlace {
         dp.setViewZoom(level.getView());
 
         // 目标坐标
-        Double ofLatitude = RandomUtils.nextDouble(latitude - level.getOffset() * level.getFactor(), latitude + level.getOffset() * level.getFactor());
+        Double ofLatitude = RandomUtil.randomDouble(latitude - level.getOffset() * level.getFactor(), latitude + level.getOffset() * level.getFactor());
         dp.setLatitude(ofLatitude);
-        Double ofLongitude = RandomUtils.nextDouble(longitude - level.getOffset(), longitude + level.getOffset());
+        Double ofLongitude = RandomUtil.randomDouble(longitude - level.getOffset(), longitude + level.getOffset());
         dp.setLongitude(ofLongitude);
 
         // 限制偏移

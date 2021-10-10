@@ -50,8 +50,12 @@ public class UserSignupInput {
      * @author jimmy.zhang
      * @date 2019-05-20
      */
-    public Account convertToAccount() {
-        return Account.create(this.userName, this.password);
+    public Account toAccount(Long authorId) {
+        Account entity =  Account.create(this.userName, this.password);
+        // id保持一致
+        entity.setId(authorId);
+
+        return entity;
     }
 
     /**
@@ -62,7 +66,7 @@ public class UserSignupInput {
      * @author jimmy.zhang
      * @date 2019-05-20
      */
-    public Author convertToAuthor() {
+    public Author toAuthor() {
         return Author.create(this.nickName);
     }
 }

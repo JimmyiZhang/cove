@@ -1,11 +1,12 @@
 package plus.cove.jazzy.domain.entity.user;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.apache.commons.lang3.StringUtils;
 import plus.cove.infrastructure.component.impl.DefaultTimeEntity;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * 用户信息
@@ -14,8 +15,9 @@ import javax.persistence.Entity;
  * @date 2019-05-20
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @Entity
+@Table(name = "author")
+@EqualsAndHashCode(callSuper = true)
 public class Author extends DefaultTimeEntity {
     private String name;
     private String avatar;
@@ -34,8 +36,8 @@ public class Author extends DefaultTimeEntity {
         Author author = new Author();
         author.valueOf();
         author.name = name;
-        author.status = StringUtils.EMPTY;
-        author.avatar = StringUtils.EMPTY;
+        author.status = StrUtil.EMPTY;
+        author.avatar = StrUtil.EMPTY;
         author.gender = UserGender.NONE;
 
         return author;

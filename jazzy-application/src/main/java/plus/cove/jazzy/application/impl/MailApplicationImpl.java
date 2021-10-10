@@ -1,6 +1,6 @@
 package plus.cove.jazzy.application.impl;
 
-import plus.cove.infrastructure.email.EmailUtils;
+import plus.cove.infrastructure.utils.EmailHelper;
 import plus.cove.jazzy.application.MailApplication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,10 +13,10 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class MailApplicationImpl implements MailApplication {
-    private EmailUtils mailUtils;
+    private EmailHelper mailUtils;
 
     @Autowired
-    public MailApplicationImpl(EmailUtils utils) {
+    public MailApplicationImpl(EmailHelper utils) {
         this.mailUtils = utils;
     }
 

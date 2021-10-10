@@ -49,6 +49,16 @@ public class UniteJwtConfig {
     private String tokenClaim = "id";
 
     /**
+     * Token角色
+     */
+    private String tokenActor = "act";
+
+    /**
+     * Token其他
+     */
+    private String tokenExtra = "ext";
+
+    /**
      * Token http header认证标识
      */
     private String tokenHeader = "Authorization";

@@ -1,6 +1,7 @@
 package plus.cove.infrastructure.test.generator;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.util.Assert;
 import plus.cove.infrastructure.generator.KeyGeneratorBuilder;
 
@@ -16,7 +17,7 @@ public class KeyGeneratorBuilderTest {
         long id = KeyGeneratorBuilder.INSTANCE.build();
         System.out.println(id);
 
-        Assert.isTrue(id > 0, "id测试");
+        Assertions.assertTrue(id > 0, "id测试");
     }
 
     @Test

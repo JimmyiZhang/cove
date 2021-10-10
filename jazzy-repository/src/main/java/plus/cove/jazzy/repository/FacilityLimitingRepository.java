@@ -1,6 +1,7 @@
 package plus.cove.jazzy.repository;
 
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import plus.cove.infrastructure.mybatis.MybatisRepository;
@@ -14,9 +15,10 @@ import plus.cove.jazzy.domain.facility.LimitingTarget;
  * @author jimmy.zhang
  * @since 1.1
  */
+@Mapper
 @Repository
-public interface LimitingRepository extends MybatisRepository<Limiting> {
-    Integer selectTarget(@Param("cd") LimitingCondition condition);
+public interface FacilityLimitingRepository extends MybatisRepository<Limiting> {
+    Integer selectLimiting(@Param("cd") LimitingCondition condition);
 
-    void saveTarget(@Param("tg") LimitingTarget target);
+    void saveLimiting(@Param("tg") LimitingTarget target);
 }

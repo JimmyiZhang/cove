@@ -1,13 +1,10 @@
 package plus.cove.infrastructure.jwt;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTCreationException;
-import com.auth0.jwt.exceptions.JWTDecodeException;
-import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.auth0.jwt.interfaces.DecodedJWT;
-import org.apache.commons.lang3.StringUtils;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.jwt.JWT;
+import cn.hutool.jwt.JWTException;
+import cn.hutool.jwt.signers.JWTSigner;
+import cn.hutool.jwt.signers.JWTSignerUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +15,8 @@ import plus.cove.infrastructure.exception.JwtError;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 import java.util.UUID;
+
 
 /**
  * jwt工具类
@@ -30,10 +27,11 @@ import java.util.UUID;
 @Component
 public class JwtUtils {
     private final Logger log = LoggerFactory.getLogger(JwtUtils.class);
-    private static final String CLAIM_EXTRA = "extra";
+    private static final String DEFAULT_ACTOR = "USER";
+    private static final String DEFAULT_EXTRA = "EXTRA";
 
     @Autowired
-    private UniteJwtConfig config;
+    UniteJwtConfig config;
 
     /**
      * 生成Token
@@ -45,33 +43,7 @@ public class JwtUtils {
      * @date 2019-04-03
      */
     public JwtResult create(@NotNull String id) {
-        String tokenSecret = config.getTokenSecret();
-        if (StringUtils.isEmpty(tokenSecret)) {
-            throw new BusinessException(JwtError.INVALID_SECRET);
-        }
-
-        Date now = Date.from(Instant.now());
-        int expired = (int) config.getTokenExpired().toMinutes();
-        Date exp = Date.from(Instant.now().plus(expired, ChronoUnit.MINUTES));
-        String jwtId = UUID.randomUUID().toString();
-
-        JwtResult result;
-        try {
-            Algorithm algorithm = Algorithm.HMAC512(tokenSecret);
-            String token = JWT.create()
-                    .withIssuer(config.getTokenIssue())
-                    .withIssuedAt(now)
-                    .withSubject(config.getTokenSubject())
-                    .withExpiresAt(exp)
-                    .withJWTId(jwtId)
-                    .withClaim(config.getTokenClaim(), id)
-                    .sign(algorithm);
-
-            result = new JwtResult(token, expired);
-        } catch (JWTCreationException ex) {
-            throw new BusinessException(JwtError.CREATION_EXCEPTION, ex);
-        }
-        return result;
+        return this.create(id, DEFAULT_ACTOR, DEFAULT_EXTRA);
     }
 
     /**
@@ -83,32 +55,33 @@ public class JwtUtils {
      * @author jimmy.zhang
      * @date 2019-04-03
      */
-    public JwtResult create(@NotNull String id, String extra) {
+    public JwtResult create(@NotNull String id, String actor, String extra) {
         String tokenSecret = config.getTokenSecret();
-        if (StringUtils.isEmpty(tokenSecret)) {
+        if (StrUtil.isEmpty(tokenSecret)) {
             throw new BusinessException(JwtError.INVALID_SECRET);
         }
 
-        Date now = Date.from(Instant.now());
-        int expired = (int) config.getTokenExpired().toMinutes();
-        Date exp = Date.from(Instant.now().plus(expired, ChronoUnit.MINUTES));
         String jwtId = UUID.randomUUID().toString();
+        Instant now = Instant.now();
+        int expired = (int) config.getTokenExpired().toMinutes();
+        Instant exp = now.plus(expired, ChronoUnit.MINUTES);
 
         JwtResult result;
         try {
-            Algorithm algorithm = Algorithm.HMAC512(tokenSecret);
+            JWTSigner signer = JWTSignerUtil.hs512(tokenSecret.getBytes());
             String token = JWT.create()
-                    .withIssuer(config.getTokenIssue())
-                    .withIssuedAt(now)
-                    .withSubject(config.getTokenSubject())
-                    .withExpiresAt(exp)
-                    .withJWTId(jwtId)
-                    .withClaim(config.getTokenClaim(), id)
-                    .withClaim(CLAIM_EXTRA, extra)
-                    .sign(algorithm);
-
+                    .setPayload("sub", config.getTokenSubject())
+                    .setPayload("iss", config.getTokenIssue())
+                    .setPayload("jti", jwtId)
+                    .setPayload("iat", now.toString())
+                    .setPayload("exp", exp.toString())
+                    .setPayload(config.getTokenClaim(), id)
+                    .setPayload(config.getTokenActor(), actor)
+                    .setPayload(config.getTokenExtra(), extra)
+                    .setSigner(signer)
+                    .sign();
             result = new JwtResult(token, expired);
-        } catch (JWTCreationException ex) {
+        } catch (JWTException ex) {
             throw new BusinessException(JwtError.CREATION_EXCEPTION, ex);
         }
         return result;
@@ -124,29 +97,31 @@ public class JwtUtils {
      */
     public JwtClaim decode(@NotNull String token) {
         String tokenSecret = config.getTokenSecret();
-        if (StringUtils.isEmpty(tokenSecret)) {
+        if (StrUtil.isEmpty(tokenSecret)) {
             throw new BusinessException(JwtError.INVALID_SECRET);
         }
 
         JwtClaim claim;
         try {
-            Algorithm algorithm = Algorithm.HMAC512(tokenSecret);
-            JWTVerifier verifier = JWT.require(algorithm)
-                    .withIssuer(config.getTokenIssue())
-                    .acceptExpiresAt(5)
-                    .build();
-            verifier.verify(token);
+            JWT jwt = JWT.of(token);
 
-            DecodedJWT code = JWT.decode(token);
-            String id = code.getClaim(config.getTokenClaim()).asString();
-            String extra = code.getClaim(CLAIM_EXTRA).asString();
-            claim = new JwtClaim(true, id, extra);
-        } catch (JWTDecodeException ex) {
+            // 验证算法与过期时间
+            boolean verify = jwt.setKey(tokenSecret.getBytes()).validate(5);
+            if (!verify) {
+                throw new BusinessException(JwtError.VERIFICATION_EXCEPTION);
+            }
+
+            String id = jwt.getPayload(config.getTokenClaim()).toString();
+            String extra = jwt.getPayload(config.getTokenExtra()).toString();
+            String actor = jwt.getPayload(config.getTokenActor()).toString();
+            if (actor == null || actor == "") {
+                actor = config.getTokenActor();
+            }
+
+            claim = JwtClaim.success(id, actor, extra);
+        } catch (JWTException ex) {
             log.debug("jwt解析失败：{}", token);
-            claim = new JwtClaim(false, JwtError.DECODE_EXCEPTION.getMessage(), null);
-        } catch (JWTVerificationException ex) {
-            log.debug("jwt认证过期：{}", token);
-            claim = new JwtClaim(false, JwtError.VERIFICATION_EXCEPTION.getMessage(), null);
+            claim = JwtClaim.failure(JwtError.DECODE_EXCEPTION.getMessage());
         }
         return claim;
     }
@@ -161,74 +136,18 @@ public class JwtUtils {
      */
     public boolean verify(String token) {
         String tokenSecret = config.getTokenSecret();
-        if (StringUtils.isEmpty(tokenSecret)) {
+        if (StrUtil.isEmpty(tokenSecret)) {
             throw new BusinessException(JwtError.INVALID_SECRET);
         }
 
         boolean verify;
         try {
-            Algorithm algorithm = Algorithm.HMAC512(tokenSecret);
-            JWTVerifier verifier = JWT.require(algorithm)
-                    .withIssuer(config.getTokenIssue())
-                    .acceptExpiresAt(5)
-                    .build();
-
-            verifier.verify(token);
-            verify = true;
-        } catch (JWTVerificationException exception) {
+            JWT jwt = JWT.of(token);
+            // 验证算法与过期时间
+            verify = jwt.setKey(tokenSecret.getBytes()).validate(5);
+        } catch (JWTException exception) {
             verify = false;
         }
         return verify;
-    }
-
-    /**
-     * 刷新
-     *
-     * @param
-     * @return
-     * @author jimmy.zhang
-     * @date 2019-05-15
-     */
-    public JwtResult refresh(String token) {
-        String tokenSecret = config.getTokenSecret();
-        if (StringUtils.isEmpty(tokenSecret)) {
-            throw new BusinessException(JwtError.INVALID_SECRET);
-        }
-
-        JwtResult result = null;
-        try {
-            Algorithm algorithm = Algorithm.HMAC512(tokenSecret);
-            JWTVerifier verifier = JWT.require(algorithm)
-                    .withIssuer(config.getTokenIssue())
-                    .acceptExpiresAt(5)
-                    .build();
-
-            verifier.verify(token);
-            DecodedJWT code = JWT.decode(token);
-            String id = code.getClaim(config.getTokenClaim()).asString();
-
-            // 重新生成
-            Date now = Date.from(Instant.now());
-            int expired = (int) config.getTokenExpired().toMinutes() * 2;
-            Date exp = Date.from(Instant.now().plus(expired, ChronoUnit.MINUTES));
-            String jwtId = UUID.randomUUID().toString();
-
-            String reToken = JWT.create()
-                    .withIssuer(config.getTokenIssue())
-                    .withIssuedAt(now)
-                    .withSubject(config.getTokenSubject())
-                    .withExpiresAt(exp)
-                    .withJWTId(jwtId)
-                    .withClaim(config.getTokenClaim(), id)
-                    .sign(algorithm);
-
-            result = new JwtResult(reToken, expired);
-        } catch (JWTDecodeException ex) {
-            throw new BusinessException(JwtError.DECODE_EXCEPTION, ex);
-        } catch (JWTVerificationException ex) {
-            throw new BusinessException(JwtError.VERIFICATION_EXCEPTION, ex);
-        }
-
-        return result;
     }
 }

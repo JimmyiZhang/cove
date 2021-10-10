@@ -1,9 +1,9 @@
 package plus.cove.jazzy.domain.facility;
 
+import cn.hutool.core.util.RandomUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.RandomStringUtils;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -40,17 +40,12 @@ public class VersioningTarget {
      * @author jimmy.zhang
      * @since 1.0
      */
-    public static boolean invalidRandom(VersioningTarget target, String random) {
+    public static boolean valid(VersioningTarget target, String random) {
         if (target == null) {
             return false;
         }
         return target.getExpiredTime().isBefore(LocalDateTime.now()) ||
                 !Objects.equals(target.getRandom(), random);
-    }
-
-    public Versioning toEntity() {
-        Versioning entity = Versioning.create(this.code, this.random);
-        return entity;
     }
 
     public static VersioningTarget from(Versioning entity) {
@@ -64,12 +59,12 @@ public class VersioningTarget {
     public static VersioningTarget codeOf(String code) {
         VersioningTarget target = new VersioningTarget();
         target.code = code;
-        target.random = RandomStringUtils.randomNumeric(16);
+        target.random = RandomUtil.randomString (16);
         return target;
     }
 
     public static VersioningTarget of() {
-        String code = RandomStringUtils.randomAlphanumeric(32);
+        String code = RandomUtil.randomString (32);
         return codeOf(code);
     }
 }

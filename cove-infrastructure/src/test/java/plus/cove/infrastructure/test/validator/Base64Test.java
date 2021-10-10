@@ -1,6 +1,7 @@
 package plus.cove.infrastructure.test.validator;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import plus.cove.infrastructure.component.ActionResult;
 import plus.cove.infrastructure.validator.Base64;
 import plus.cove.infrastructure.validator.ValidatorUtils;
@@ -14,7 +15,7 @@ public class Base64Test {
 
         ActionResult result = ValidatorUtils.valid(obj, javax.validation.groups.Default.class);
         System.out.println(result);
-        org.junit.Assert.assertTrue(result.isSuccess());
+        Assertions.assertTrue(result.isSuccess());
     }
 
     public static class Base64Object {

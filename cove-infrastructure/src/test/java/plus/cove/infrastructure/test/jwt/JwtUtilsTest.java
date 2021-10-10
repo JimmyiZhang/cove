@@ -1,19 +1,21 @@
 package plus.cove.infrastructure.test.jwt;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer;
+import org.springframework.boot.test.context.ConfigDataApplicationContextInitializer;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import plus.cove.infrastructure.jwt.JwtResult;
 import plus.cove.infrastructure.jwt.JwtUtils;
 import plus.cove.infrastructure.jwt.UniteJwtConfig;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {UniteJwtConfig.class, JwtUtils.class},
-        initializers = ConfigFileApplicationContextInitializer.class)
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = {
+        UniteJwtConfig.class,
+        JwtUtils.class },
+        initializers = ConfigDataApplicationContextInitializer.class)
 public class JwtUtilsTest {
     @Autowired
     UniteJwtConfig config;
@@ -24,17 +26,17 @@ public class JwtUtilsTest {
     @Test
     public void config() {
         System.out.println(config);
-        Assert.assertNotNull(config);
+        Assertions.assertNotNull(config);
     }
 
     @Test
     public void create() {
         System.out.println(config.getTokenSecret());
 
-        JwtResult result = utils.create("10000", "MANAGER");
+        JwtResult result = utils.create("10000", "MANAGER", "");
         String token = result.getToken();
         System.out.println(token);
 
-        Assert.assertTrue(!token.isEmpty());
+        Assertions.assertTrue(!token.isEmpty());
     }
 }

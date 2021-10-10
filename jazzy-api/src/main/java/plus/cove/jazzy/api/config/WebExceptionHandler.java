@@ -1,6 +1,6 @@
 package plus.cove.jazzy.api.config;
 
-import org.mybatis.spring.MyBatisSystemException;
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.AccessDeniedException;
@@ -124,11 +124,11 @@ public class WebExceptionHandler {
      * @author jimmy.zhang
      * @date 2019-07-26
      */
-    @ExceptionHandler(MyBatisSystemException.class)
-    public ActionResult handlePersistenceException(MyBatisSystemException ex) {
+    @ExceptionHandler(PersistenceException.class)
+    public ActionResult handlePersistenceException(PersistenceException ex) {
         ActionResult result = ActionResult.result();
 
-        Throwable cause = ex.getRootCause();
+        Throwable cause = ex.getCause();
         if (cause != null && cause instanceof BusinessException) {
             BusinessException e = (BusinessException) cause;
             result.fail(e.getCode(), e.getMessage());

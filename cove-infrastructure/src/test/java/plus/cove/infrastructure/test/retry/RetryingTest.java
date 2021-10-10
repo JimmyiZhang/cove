@@ -1,6 +1,6 @@
 package plus.cove.infrastructure.test.retry;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import plus.cove.infrastructure.retry.Retrying;
 import plus.cove.infrastructure.retry.RetryingBuilder;
 

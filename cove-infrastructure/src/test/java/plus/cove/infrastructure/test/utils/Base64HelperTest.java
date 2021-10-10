@@ -1,6 +1,7 @@
 package plus.cove.infrastructure.test.utils;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import plus.cove.infrastructure.utils.Base64Helper;
 
 public class Base64HelperTest {
@@ -10,6 +11,6 @@ public class Base64HelperTest {
         String actual = Base64Helper.trim(base64);
         String expected = "/9j/4AAQSkZJRg";
 
-        org.junit.Assert.assertEquals("相等", expected, actual);
+        Assertions.assertEquals("相等", expected, actual);
     }
 }

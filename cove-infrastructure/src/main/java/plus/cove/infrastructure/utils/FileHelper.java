@@ -1,10 +1,13 @@
-package plus.cove.infrastructure.file;
+package plus.cove.infrastructure.utils;
 
-import org.apache.commons.lang3.StringUtils;
+import cn.hutool.core.util.StrUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,10 +20,10 @@ import java.util.UUID;
  * @author jimmy.zhang
  * @date 2019-06-04
  */
-public class FileUtils {
-    private static final Logger log = LoggerFactory.getLogger(FileUtils.class);
+public class FileHelper {
+    private static final Logger log = LoggerFactory.getLogger(FileHelper.class);
 
-    private FileUtils() {
+    private FileHelper() {
     }
 
     /**
@@ -92,10 +95,10 @@ public class FileUtils {
     public static String getFullName(String fileName, String extendName, String suffix) {
         StringBuilder sbName = new StringBuilder();
         sbName.append(fileName);
-        if (!StringUtils.isEmpty(suffix)) {
+        if (!StrUtil.isEmpty(suffix)) {
             sbName.append(suffix);
         }
-        if (!StringUtils.isEmpty(extendName)) {
+        if (!StrUtil.isEmpty(extendName)) {
             sbName.append(".");
             sbName.append(extendName);
         }

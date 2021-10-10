@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import plus.cove.infrastructure.utils.AssertHelper;
 import plus.cove.jazzy.application.FacilityApplication;
 import plus.cove.jazzy.domain.facility.*;
-import plus.cove.jazzy.repository.LimitingRepository;
-import plus.cove.jazzy.repository.VersioningRepository;
+import plus.cove.jazzy.repository.FacilityLimitingRepository;
+import plus.cove.jazzy.repository.FacilityVersioningRepository;
 
 import java.time.LocalDateTime;
 
@@ -20,14 +20,14 @@ import java.time.LocalDateTime;
 @Service
 public class FacilityApplicationImpl implements FacilityApplication {
     @Autowired
-    LimitingRepository limitingRep;
+    FacilityLimitingRepository limitingRep;
     @Autowired
-    VersioningRepository versioningRep;
+    FacilityVersioningRepository versioningRep;
 
     @Override
     public LimitingTarget loadLimitingTarget(LimitingCondition condition) {
         AssertHelper.assertNotNull(condition);
-        Integer totalValue = limitingRep.selectTarget(condition);
+        Integer totalValue = limitingRep.selectLimiting(condition);
 
         LimitingTarget target = new LimitingTarget();
         target.setTotalValue(totalValue);
@@ -42,13 +42,13 @@ public class FacilityApplicationImpl implements FacilityApplication {
 
     @Override
     public void saveLimitingTarget(LimitingTarget target) {
-        limitingRep.saveTarget(target);
+        limitingRep.saveLimiting(target);
     }
 
     @Override
     public VersioningTarget loadVersioningTarget(VersioningCondition condition) {
-        Versioning entity = versioningRep.selectEntity(condition);
-        versioningRep.updateEntity(entity);
+        Versioning entity = versioningRep.selectVersioning(condition);
+        versioningRep.updateVersioning(entity);
 
         VersioningTarget target = VersioningTarget.from(entity);
         return target;
@@ -57,6 +57,6 @@ public class FacilityApplicationImpl implements FacilityApplication {
     @Override
     public void saveVersioningTarget(VersioningTarget target) {
         Versioning entity = Versioning.create(target.getCode(), target.getRandom());
-        versioningRep.insertEntity(entity);
+        versioningRep.insertVersioning(entity);
     }
 }

@@ -1,6 +1,6 @@
 package plus.cove.infrastructure.utils;
 
-import org.apache.commons.lang3.StringUtils;
+import cn.hutool.core.util.StrUtil;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -66,7 +66,7 @@ public class DateTimeHelper {
             // 匹配
             String delimiter = pattern.replaceAll("[\\s|Y|y|M|m|d]", "");
             if (!delimiter.isEmpty()) {
-                if (StringUtils.containsNone(value, delimiter)) {
+                if (!StrUtil.containsAny(value, delimiter)) {
                     continue;
                 }
             }

@@ -52,11 +52,4 @@ public class ErrorController extends AbstractErrorController {
         response.setStatus(HttpServletResponse.SC_OK);
         return result;
     }
-
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public String getErrorPath() {
-        return "/error";
-    }
 }

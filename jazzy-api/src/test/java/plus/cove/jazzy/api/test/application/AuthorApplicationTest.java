@@ -41,9 +41,4 @@ public class AuthorApplicationTest {
         Assert.isTrue(output.isSuccess(), "登录用户");
         System.out.println("TOKEN:" + output.getData().getToken());
     }
-
-    @Test
-    public void loadMany(){
-
-    }
 }

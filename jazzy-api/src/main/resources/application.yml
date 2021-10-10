@@ -4,10 +4,6 @@ server:
 
 # spring config
 spring:
-  # profile config
-  profiles:
-    active: "@profile.active@"
-
   # cache config
   cache:
     type: SIMPLE
@@ -29,10 +25,6 @@ mybatis:
   config-location: classpath:mybatis-config.xml
   mapper-locations: classpath:mappers/*.xml
   type-aliases-package: plus.cove.jazzy.domain.*
-
-mapper:
-  identity: MYSQL
-  enum-as-simple-type: true
 
 # global config
 summer:

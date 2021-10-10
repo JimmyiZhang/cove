@@ -1,8 +1,8 @@
 package plus.cove.jazzy.repository;
 
-
-import com.github.pagehelper.PageRowBounds;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
+import plus.cove.infrastructure.component.PageModel;
 import plus.cove.infrastructure.mybatis.MybatisRepository;
 import plus.cove.jazzy.domain.entity.user.Author;
 import plus.cove.jazzy.domain.view.AuthorListInput;
@@ -16,7 +16,8 @@ import java.util.List;
  * @author jimmy.zhang
  * @date 2019-03-28
  */
+@Mapper
 @Repository
 public interface AuthorRepository extends MybatisRepository<Author> {
-    List<AuthorListOutput> selectMany(AuthorListInput input, PageRowBounds page);
+    List<AuthorListOutput> selectMany(AuthorListInput input, PageModel page);
 }

@@ -1,0 +1,44 @@
+open module cove.infrastructure {
+    exports plus.cove.infrastructure.caching;
+    exports plus.cove.infrastructure.component;
+    exports plus.cove.infrastructure.converter;
+    exports plus.cove.infrastructure.coordinate;
+    exports plus.cove.infrastructure.exception;
+    exports plus.cove.infrastructure.generator;
+    exports plus.cove.infrastructure.http;
+    exports plus.cove.infrastructure.interceptor;
+    exports plus.cove.infrastructure.json;
+    exports plus.cove.infrastructure.jwt;
+    exports plus.cove.infrastructure.logger;
+    exports plus.cove.infrastructure.mask;
+    exports plus.cove.infrastructure.redis;
+    exports plus.cove.infrastructure.retry;
+    exports plus.cove.infrastructure.security;
+    exports plus.cove.infrastructure.system;
+    exports plus.cove.infrastructure.utils;
+    exports plus.cove.infrastructure.validator;
+
+    requires java.validation;
+    requires spring.context;
+    requires lombok;
+    requires spring.webmvc;
+    requires spring.core;
+    requires slf4j.api;
+    requires spring.beans;
+    requires spring.boot;
+    requires spring.security.core;
+    requires com.fasterxml.jackson.databind;
+    requires spring.data.redis;
+    requires spring.retry;
+    requires com.fasterxml.jackson.datatype.jsr310;
+    requires spring.boot.autoconfigure;
+    requires spring.context.support;
+    requires jakarta.mail;
+    requires spring.web;
+    requires org.apache.tomcat.embed.core;
+    requires orika.core;
+    requires spring.tx;
+    requires java.persistence;
+    requires com.github.benmanes.caffeine;
+    requires hutool.all;
+}

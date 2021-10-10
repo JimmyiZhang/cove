@@ -1,10 +1,9 @@
 package plus.cove.infrastructure.converter;
 
-import plus.cove.infrastructure.exception.ConverterError;
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
-import org.apache.commons.lang3.Validate;
+import plus.cove.infrastructure.utils.AssertHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,16 +25,16 @@ public class DefaultConverter implements BaseConverter {
 
     @Override
     public <O, T> T convert(O origin, Class<T> targetClass) {
-        Validate.notNull(origin, ConverterError.INVALID_ORIGIN.getMessage());
-        Validate.notNull(targetClass, ConverterError.INVALID_CLASS_TYPE.getMessage());
+        AssertHelper.assertNotNull(origin);
+        AssertHelper.assertNotNull(targetClass);
 
         return MAPPER_FACADE.map(origin, targetClass);
     }
 
     @Override
     public <O, T> void convert(O origin, T target) {
-        Validate.notNull(origin, ConverterError.INVALID_ORIGIN.getMessage());
-        Validate.notNull(target, ConverterError.INVALID_TARGET.getMessage());
+        AssertHelper.assertNotNull(origin);
+        AssertHelper.assertNotNull(target);
 
         MAPPER_FACADE.map(origin, target);
     }

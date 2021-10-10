@@ -1,8 +1,8 @@
 package plus.cove.jazzy.domain.entity.story;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.apache.commons.lang3.StringUtils;
 import plus.cove.infrastructure.component.impl.DefaultEntity;
 import plus.cove.jazzy.domain.entity.coordinate.Coordinate;
 import plus.cove.jazzy.domain.principal.UserPrincipal;
@@ -50,8 +50,8 @@ public class Story extends DefaultEntity {
         story.createTime = now;
         story.updateTime = now;
         story.userId = user.getUserId();
-        story.subject = StringUtils.EMPTY;
-        story.description = StringUtils.EMPTY;
+        story.subject = StrUtil.EMPTY;
+        story.description = StrUtil.EMPTY;
         return story;
     }
 
@@ -66,7 +66,7 @@ public class Story extends DefaultEntity {
     public static Story fromFile(UserPrincipal user) {
         Story story = Story.create(user);
         story.userId = user.getUserId();
-        story.subject = StringUtils.EMPTY;
+        story.subject = StrUtil.EMPTY;
         return story;
     }
 }

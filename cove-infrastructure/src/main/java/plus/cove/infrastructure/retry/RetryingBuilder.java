@@ -1,13 +1,13 @@
 package plus.cove.infrastructure.retry;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.classify.BinaryExceptionClassifier;
 import org.springframework.retry.RetryPolicy;
 import org.springframework.retry.backoff.*;
 import org.springframework.retry.policy.*;
 import org.springframework.retry.support.RetryTemplate;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 重试构造器
@@ -96,7 +96,7 @@ public class RetryingBuilder {
                 BinaryExceptionClassifier.builder().retryOn(RetryingException.class).traversingCauses().build()
         );
 
-        RetryPolicy[] policies = ArrayUtils.toArray(timPolicy, excPolicy);
+        RetryPolicy[] policies = new RetryPolicy[]{timPolicy, excPolicy};
         policy.setPolicies(policies);
         this.retryPolicy = policy;
         return this;

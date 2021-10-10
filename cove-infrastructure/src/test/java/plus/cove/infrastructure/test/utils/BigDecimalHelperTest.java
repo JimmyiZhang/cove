@@ -1,7 +1,7 @@
 package plus.cove.infrastructure.test.utils;
 
-import org.junit.Test;
-import org.springframework.util.Assert;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import plus.cove.infrastructure.utils.BigDecimalHelper;
 
 import java.math.BigDecimal;
@@ -13,6 +13,6 @@ public class BigDecimalHelperTest {
         BigDecimal result = BigDecimalHelper.round(value1, 2);
         System.out.println(result);
 
-        Assert.isTrue(result.equals(3), "四舍五入");
+        Assertions.assertTrue(result.equals(3), "四舍五入");
     }
 }

@@ -1,14 +1,14 @@
 package plus.cove.infrastructure.interceptor;
 
-import plus.cove.infrastructure.caching.CacheUtils;
-import plus.cove.infrastructure.exception.BusinessException;
-import plus.cove.infrastructure.exception.ValidatorError;
-import plus.cove.infrastructure.security.UniteSecurityConfig;
-import org.apache.commons.lang3.StringUtils;
+import cn.hutool.core.util.StrUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
+import plus.cove.infrastructure.caching.CacheUtils;
+import plus.cove.infrastructure.exception.BusinessException;
+import plus.cove.infrastructure.exception.ValidatorError;
+import plus.cove.infrastructure.security.UniteSecurityConfig;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -61,13 +61,13 @@ public class ApiIdempotentInterceptor implements HandlerInterceptor {
     private void check(HttpServletRequest request) {
         // 从request获取token
         String token = request.getParameter(securityConfig.getIdempotentToken());
-        if (StringUtils.isEmpty(token)) {
+        if (StrUtil.isEmpty(token)) {
             throw new BusinessException(ValidatorError.IDEMPOTENT_TOKEN_MISSING);
         }
 
         // 获取cache
-        if (StringUtils.isEmpty(cacheName)) {
-            cacheName = StringUtils.joinWith("#",
+        if (StrUtil.isEmpty(cacheName)) {
+            cacheName = StrUtil.join("#",
                     securityConfig.getIdempotentCache(),
                     securityConfig.getIdempotentDuration().toMinutes() * 60);
         }

@@ -1,13 +1,13 @@
 package plus.cove.jazzy.application.impl;
 
+import cn.hutool.core.util.RandomUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import plus.cove.jazzy.application.DiscoveryApplication;
 import plus.cove.jazzy.application.DistrictApplication;
-import plus.cove.jazzy.domain.entity.district.DistrictCity;
 import plus.cove.jazzy.domain.entity.discovery.DiscoveryPlace;
+import plus.cove.jazzy.domain.entity.district.DistrictCity;
 import plus.cove.jazzy.domain.view.DiscoveryInput;
 
 import java.util.List;
@@ -31,7 +31,7 @@ public class DiscoveryApplicationImpl implements DiscoveryApplication {
             case HARD:
             case EXPERT:
                 List<DistrictCity> cities = cityApp.findAllCity();
-                int index = RandomUtils.nextInt(0, cities.size());
+                int index = RandomUtil.randomInt(0, cities.size());
                 DistrictCity district = cities.get(index);
 
                 input.setLatitude(district.getLocation().getLatitude());

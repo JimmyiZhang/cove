@@ -1,17 +1,17 @@
 package plus.cove.infrastructure.test.cache;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer;
+import org.springframework.boot.test.context.ConfigDataApplicationContextInitializer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import plus.cove.infrastructure.caching.CacheUtils;
 import plus.cove.infrastructure.caching.UniteCacheConfig;
 
@@ -25,12 +25,12 @@ import java.util.Collection;
  * @author jimmy.zhang
  * @since 1.0
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
         CacheUtils.class,
         UniteCacheConfig.class,
         CaffeineCacheManager.class},
-        initializers = ConfigFileApplicationContextInitializer.class)
+        initializers = ConfigDataApplicationContextInitializer.class)
 @EnableCaching(proxyTargetClass = true)
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
 public class CacheUtilsTest {
@@ -40,7 +40,7 @@ public class CacheUtilsTest {
     @Autowired
     CacheUtils cacheUtils;
 
-    @Before
+    @BeforeEach
     public void before() {
         Collection<String> caches = new ArrayList<>();
         caches.add("NAME");
@@ -78,6 +78,6 @@ public class CacheUtilsTest {
 
         String value = cacheUtils.get("NAME", "KEY3", String.class);
         System.out.println(value);
-        Assert.assertEquals("相等", value, "OK");
+        Assertions.assertEquals("相等", value, "OK");
     }
 }

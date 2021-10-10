@@ -1,6 +1,6 @@
 package plus.cove.infrastructure.generator;
 
-import org.apache.commons.lang3.StringUtils;
+import cn.hutool.core.util.StrUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +36,7 @@ public class KeyGeneratorBuilder {
         int workId = 0;
         // 获取环境变量
         String prop = System.getProperty(PROP_WORK_ID);
-        if (StringUtils.isEmpty(prop)) {
+        if (StrUtil.isEmpty(prop)) {
             log.warn("cove.infrastructure.generator - [{}] is not configured", PROP_WORK_ID);
         } else {
             workId = Integer.valueOf(prop).intValue();

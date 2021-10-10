@@ -1,8 +1,10 @@
-package plus.cove.jazzy.domain.entity.logging;
+package plus.cove.jazzy.application.event;
 
-import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.event.TransactionalEventListener;
+import plus.cove.jazzy.domain.entity.logging.Logging;
+import plus.cove.jazzy.domain.entity.logging.LoggingBuilder;
 import plus.cove.jazzy.domain.principal.UserRequest;
 
 /**
@@ -14,7 +16,7 @@ import plus.cove.jazzy.domain.principal.UserRequest;
 @Component("loggingEventListener")
 public class LoggingEventListener {
     @Async
-    @EventListener
+    @TransactionalEventListener
     public void saveLog(UserRequest event) {
         LoggingBuilder builder = LoggingBuilder.create();
         builder.withRequest(event);

@@ -1,3 +1,12 @@
+# actuator config
+management:
+  endpoint.health.show-details: always
+  endpoints:
+    web.exposure.include: prometheus,loggers
+    metrics.export.prometheus.enabled: true
+  metrics:
+    tags.application: jazzy
+
 # spring config
 spring:
   port: 8080
@@ -23,10 +32,9 @@ spring:
 
   # cache config
   cache:
-    type: REDIS
-  # type: CAFFEINE
-  #  caffeine:
-  #    spec: initialCapacity=2,maximumSize=200,expireAfterWrite=10m,recordStats
+    type: CAFFEINE
+    caffeine:
+      spec: initialCapacity=2,maximumSize=200,expireAfterWrite=10m,recordStats
 
   # redis config
   redis:

@@ -1,8 +1,8 @@
 package plus.cove.infrastructure.http;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.convert.DurationUnit;
 import org.springframework.context.annotation.Configuration;
@@ -72,7 +72,7 @@ public class UniteHttpConfig {
      * @date 2019-04-28
      */
     public String[] getCorsAllowedOrigins() {
-        if (StringUtils.isEmpty(corsAllowedOrigins) || WHOLE_ALLOWED.equals(corsAllowedOrigins)) {
+        if (StrUtil.isEmpty(corsAllowedOrigins) || WHOLE_ALLOWED.equals(corsAllowedOrigins)) {
             return new String[]{WHOLE_ALLOWED};
         }
 
@@ -94,7 +94,7 @@ public class UniteHttpConfig {
      * @date 2019-04-28
      */
     public String[] getCorsAllowedHeaders() {
-        if (StringUtils.isEmpty(corsAllowedHeaders) || WHOLE_ALLOWED.equals(corsAllowedHeaders)) {
+        if (StrUtil.isEmpty(corsAllowedHeaders) || WHOLE_ALLOWED.equals(corsAllowedHeaders)) {
             return new String[]{WHOLE_ALLOWED};
         }
 
@@ -113,7 +113,7 @@ public class UniteHttpConfig {
      * @date 2019-04-28
      */
     public String[] getCorsAllowedMethods() {
-        if (StringUtils.isEmpty(corsAllowedMethods) || WHOLE_ALLOWED.equals(corsAllowedMethods)) {
+        if (StrUtil.isEmpty(corsAllowedMethods) || WHOLE_ALLOWED.equals(corsAllowedMethods)) {
             return new String[]{WHOLE_ALLOWED};
         }
 

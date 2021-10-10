@@ -1,7 +1,6 @@
 package plus.cove.jazzy.application.impl;
 
-import com.github.pagehelper.PageRowBounds;
-import org.apache.commons.lang3.RandomStringUtils;
+import cn.hutool.core.util.RandomUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
@@ -73,16 +72,15 @@ public class AuthorApplicationImpl implements AuthorApplication {
             return result;
         }
 
-        Author author = input.convertToAuthor();
-        Account account = input.convertToAccount();
-        account.setId(author.getId());
+        Author author = input.toAuthor();
+        Account account = input.toAccount(author.getId());
 
         // 保存数据
         authorRep.insert(author);
         accountRep.insert(account);
 
         // 保存激活码
-        String authCode = RandomStringUtils.randomAlphanumeric(12);
+        String authCode = RandomUtil.randomString(12);
         Activation activation = Activation.create(author.getId().toString(), authCode, 7 * 24 * 60L);
         activationRep.insert(activation);
 
@@ -118,7 +116,7 @@ public class AuthorApplicationImpl implements AuthorApplication {
         // 是否重复请求
         VersioningCondition verCondition = VersioningCondition.from(input.getMessageCode());
         VersioningTarget versioning = facilityApp.loadVersioningTarget(verCondition);
-        boolean isVersion = VersioningTarget.invalidRandom(versioning, input.getMessageRandom());
+        boolean isVersion = VersioningTarget.valid(versioning, input.getMessageRandom());
         if (isVersion) {
             result.fail(AccountError.INVALID_VERSION);
             return result;
@@ -204,7 +202,7 @@ public class AuthorApplicationImpl implements AuthorApplication {
 
     @Override
     public PageResult loadMany(AuthorListInput input, PageModel page) {
-        List<AuthorListOutput> list = authorRep.selectMany(input, pageHelper.<PageRowBounds>fromModel(page));
+        List<AuthorListOutput> list = authorRep.selectMany(input, page);
         return pageHelper.toResult(list);
     }
 }

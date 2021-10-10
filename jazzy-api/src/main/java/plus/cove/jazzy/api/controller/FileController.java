@@ -1,14 +1,13 @@
 package plus.cove.jazzy.api.controller;
 
+import cn.hutool.core.util.StrUtil;
 import io.swagger.annotations.Api;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import plus.cove.infrastructure.component.ActionResult;
-import plus.cove.infrastructure.file.UploadFileResult;
 import plus.cove.jazzy.api.component.BaseController;
 
 import java.io.IOException;
@@ -27,13 +26,7 @@ public class FileController extends BaseController {
     public ActionResult upload(@RequestParam(value = "file", required = false) MultipartFile file,
                                @RequestParam(value = "name", required = false) String name) throws IOException {
 
-        String fileName = StringUtils.isEmpty(name) ? file.getOriginalFilename() : name;
-        UploadFileResult result = new UploadFileResult();
-
-        result.setName(fileName);
-        result.setSize(file.getSize());
-        result.setType(file.getContentType());
-
-        return success(result);
+        String fileName = StrUtil.isEmpty(name) ? file.getOriginalFilename() : name;
+        return ActionResult.success();
     }
 }

@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
  * 限流条件
  * <p>
  * 对象在相应维度的汇总以及限制
+ * 适用于非大量并发的情况
  *
  * @author jimmy.zhang
  * @since 1.0

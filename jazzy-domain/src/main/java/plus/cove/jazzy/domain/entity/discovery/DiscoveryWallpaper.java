@@ -7,8 +7,8 @@ package plus.cove.jazzy.domain.entity.discovery;
  * @since 1.0
  */
 
+import cn.hutool.core.util.StrUtil;
 import lombok.Data;
-import org.apache.commons.lang3.StringUtils;
 
 @Data
 public class DiscoveryWallpaper {
@@ -22,13 +22,13 @@ public class DiscoveryWallpaper {
     private String title;
 
     public void with(String image, String title) {
-        if (StringUtils.isNotEmpty(image)) {
+        if (StrUtil.isNotEmpty(image)) {
             this.image = image;
         } else {
             this.image = "https://api.dujin.org/bing/1920.php";
         }
 
-        if (StringUtils.isNotEmpty(title)) {
+        if (StrUtil.isNotEmpty(title)) {
             this.title = title;
         } else {
             this.title = "今日无事发生";

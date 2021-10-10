@@ -2,7 +2,6 @@ package plus.cove.infrastructure.generator;
 
 
 import lombok.SneakyThrows;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * 序列号生成器
@@ -12,7 +11,7 @@ import org.apache.commons.lang3.StringUtils;
  * worker       4位，支持16台机器，默认位为0
  * timestamp    秒时间戳
  * sequence     8位，支持单位时间内256个序列码，即每秒256个
- *
+ * <p>
  * 适用于没有递增要求，每天生成不重复序号，长度在9位以内
  *
  * @author jimmy.zhang
@@ -37,14 +36,10 @@ public final class DailyNumberGenerator {
 
     private DailyNumberGenerator() {
         // 获取环境变量
-        String workId = System.getProperty("summer.generator.worker-id");
-        if (StringUtils.isEmpty(workId)) {
-            workId = "0";
-        }
-
+        String workId = System.getProperty("summer.generator.worker-id", "0");
         this.workerId = Integer.valueOf(workId).intValue();
         if (this.workerId < 0 || this.workerId >= MAX_WORKER_ID) {
-            throw new IllegalArgumentException("Invalid workerId");
+            throw new IllegalArgumentException("invalid workerId");
         }
     }
 
@@ -69,10 +64,14 @@ public final class DailyNumberGenerator {
         }
         long differenceSeconds = lastSeconds - currentSeconds;
         if (differenceSeconds < MAX_TOLERATE_SECONDS) {
-            throw new IllegalStateException("Clock is moving backwards");
+            throw new IllegalStateException("clock is moving backwards");
+        }
+        try {
+            Thread.sleep(differenceSeconds);
+        } catch (InterruptedException ex) {
+            throw new IllegalStateException("generator can not wait different seconds");
         }
 
-        Thread.sleep(differenceSeconds);
         return true;
     }
 

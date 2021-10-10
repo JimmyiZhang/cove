@@ -1,12 +1,12 @@
 package plus.cove.infrastructure.test.http;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.client.RestTemplateAutoConfiguration;
-import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer;
+import org.springframework.boot.test.context.ConfigDataApplicationContextInitializer;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.util.Assert;
 import plus.cove.infrastructure.component.ActionResult;
 import plus.cove.infrastructure.http.RestUtils;
@@ -17,13 +17,13 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
         UniteHttpConfig.class,
         UniteJsonConfig.class,
         RestUtils.class,
         RestTemplateAutoConfiguration.class},
-        initializers = ConfigFileApplicationContextInitializer.class)
+        initializers = ConfigDataApplicationContextInitializer.class)
 public class RestUtilsTest {
     @Autowired
     RestUtils restUtils;
