@@ -3,19 +3,19 @@
 <mapper namespace="plus.cove.jazzy.repository.FacilityVersioningRepository">
     <select id="selectVersioning" resultType="plus.cove.jazzy.domain.facility.Versioning">
         SELECT id, `target`, `state`, `random`, `expired_time`
-        FROM versioning
+        FROM facility_versioning
         WHERE target = #{cd.target}
         ORDER BY id DESC
         LIMIT 1
     </select>
 
     <insert id="insertVersioning">
-        INSERT INTO versioning (`target`, `state`, `random`, `create_time`, `expired_time`)
+        INSERT INTO facility_versioning (`target`, `state`, `random`, `create_time`, `expired_time`)
         VALUES (#{et.target}, #{et.state}, #{et.random}, #{et.createTime}, #{et.expiredTime})
     </insert>
 
     <insert id="updateVersioning">
-        UPDATE versioning SET `state` = 1
+        UPDATE facility_versioning SET `state` = 1
         WHERE target = #{et.target} AND `state` = 0
     </insert>
 </mapper>

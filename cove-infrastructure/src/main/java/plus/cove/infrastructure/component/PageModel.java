@@ -10,7 +10,7 @@ import lombok.Data;
  */
 @Data
 public class PageModel {
-    public final static PageModel DEFAULT = new PageModel(1, 10);
+    public final static PageModel DEFAULT = PageModel.of(1, 10);
 
     /**
      * 当前页码
@@ -22,11 +22,13 @@ public class PageModel {
      */
     private int size;
 
-    public PageModel() {
+    private PageModel() {
     }
 
-    public PageModel(int page, int size) {
-        this.page = page;
-        this.size = size;
+    public static PageModel of(Integer page, Integer size) {
+        PageModel model = new PageModel();
+        model.page = (page == null || page.intValue() < 1 ? 1 : page);
+        model.size = (size == null || size.intValue() < 1 ? 1 : size);
+        return model;
     }
 }

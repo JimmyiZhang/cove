@@ -1,4 +1,4 @@
-package plus.cove.jazzy.domain.entity.user;
+package plus.cove.jazzy.domain.entity.account;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

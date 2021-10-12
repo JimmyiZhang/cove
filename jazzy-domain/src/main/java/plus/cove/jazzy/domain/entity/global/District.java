@@ -1,9 +1,10 @@
-package plus.cove.jazzy.domain.entity.district;
+package plus.cove.jazzy.domain.entity.global;
 
 import lombok.Data;
 import plus.cove.jazzy.domain.entity.coordinate.Coordinate;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
@@ -15,11 +16,12 @@ import javax.persistence.Table;
  */
 @Data
 @Entity
-@Table(name = "district")
+@Table(name = "global_district")
 public class District {
     /**
      * 编码
      */
+    @Id
     private String code;
 
     /**

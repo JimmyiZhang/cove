@@ -1,15 +1,17 @@
 package plus.cove.jazzy.application.impl;
 
-import plus.cove.infrastructure.exception.BusinessException;
-import plus.cove.jazzy.application.UserApplication;
-import plus.cove.jazzy.domain.entity.user.Author;
-import plus.cove.jazzy.domain.exception.UserError;
-import plus.cove.jazzy.domain.principal.UserPrincipal;
-import plus.cove.jazzy.repository.AuthorRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import plus.cove.infrastructure.exception.BusinessException;
+import plus.cove.jazzy.application.UserApplication;
+import plus.cove.jazzy.domain.entity.author.Author;
+import plus.cove.jazzy.domain.exception.UserError;
+import plus.cove.jazzy.domain.principal.UserPrincipal;
+import plus.cove.jazzy.repository.AuthorRepository;
+
+import java.util.Optional;
 
 /**
  * 用户应用
@@ -28,12 +30,13 @@ public class UserApplicationImpl implements UserApplication {
     @Override
     @Cacheable(value = CACHE_USER)
     public UserPrincipal findPrincipal(Long id) {
-        Author author = authorRep.selectById(id);
-        if (author == null) {
+        Optional<Author> opAuthor = authorRep.selectById(id);
+        if (opAuthor.isEmpty()) {
             log.error("the user does not found, the id is: {}", id);
             throw new BusinessException(UserError.INVALID_USER);
         }
 
+        Author author = opAuthor.get();
         UserPrincipal user = UserPrincipal.init(
                 author.getId(),
                 author.getName());

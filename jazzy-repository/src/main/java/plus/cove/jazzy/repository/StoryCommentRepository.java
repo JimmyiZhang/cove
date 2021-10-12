@@ -1,9 +1,8 @@
 package plus.cove.jazzy.repository;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 import plus.cove.infrastructure.mybatis.MybatisRepository;
-import plus.cove.jazzy.domain.entity.comment.Comment;
+import plus.cove.jazzy.domain.entity.story.StoryComment;
 
 import java.util.List;
 
@@ -14,7 +13,6 @@ import java.util.List;
  * @date 2019-03-28
  */
 @Mapper
-@Repository
-public interface CommentRepository extends MybatisRepository<Comment> {
-    List<Comment> selectMany();
+public interface StoryCommentRepository extends MybatisRepository<StoryComment, Long> {
+    List<StoryComment> selectMany();
 }

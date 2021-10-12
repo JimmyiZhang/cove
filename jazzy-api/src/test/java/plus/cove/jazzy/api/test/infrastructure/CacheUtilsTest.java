@@ -8,8 +8,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Assert;
 import plus.cove.infrastructure.caching.CacheUtils;
 import plus.cove.jazzy.api.ApiApplication;
-import plus.cove.jazzy.domain.entity.district.District;
-import plus.cove.jazzy.domain.entity.district.DistrictType;
+import plus.cove.jazzy.domain.entity.global.District;
+import plus.cove.jazzy.domain.entity.global.DistrictType;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ApiApplication.class)

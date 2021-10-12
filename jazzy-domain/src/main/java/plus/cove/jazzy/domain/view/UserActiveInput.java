@@ -1,10 +1,9 @@
 package plus.cove.jazzy.domain.view;
 
 import lombok.Data;
-import lombok.experimental.Accessors;
+import plus.cove.jazzy.domain.entity.account.Account;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 
 /**
  * 用户激活输入
@@ -16,4 +15,11 @@ import javax.validation.constraints.Size;
 public class UserActiveInput {
     @NotEmpty(message = "激活码不能为空")
     private String authCode;
+
+    public Account toAccount(Long userId) {
+        Account entity = new Account();
+        entity.setId(userId);
+        entity.active();
+        return entity;
+    }
 }

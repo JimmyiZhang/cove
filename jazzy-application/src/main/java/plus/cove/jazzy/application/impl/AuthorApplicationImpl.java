@@ -6,7 +6,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import plus.cove.infrastructure.component.ActionResult;
-import plus.cove.infrastructure.component.PageHelper;
 import plus.cove.infrastructure.component.PageModel;
 import plus.cove.infrastructure.component.PageResult;
 import plus.cove.infrastructure.jwt.JwtResult;
@@ -14,10 +13,10 @@ import plus.cove.infrastructure.jwt.JwtUtils;
 import plus.cove.jazzy.application.AuthorApplication;
 import plus.cove.jazzy.application.FacilityApplication;
 import plus.cove.jazzy.domain.entity.account.Account;
-import plus.cove.jazzy.domain.entity.account.Activation;
-import plus.cove.jazzy.domain.entity.user.Author;
-import plus.cove.jazzy.domain.entity.user.UserEvent;
-import plus.cove.jazzy.domain.entity.user.UserStatus;
+import plus.cove.jazzy.domain.entity.account.UserEvent;
+import plus.cove.jazzy.domain.entity.account.UserStatus;
+import plus.cove.jazzy.domain.entity.author.Author;
+import plus.cove.jazzy.domain.entity.global.Activation;
 import plus.cove.jazzy.domain.exception.AccountError;
 import plus.cove.jazzy.domain.exception.TravellerError;
 import plus.cove.jazzy.domain.facility.LimitingCondition;
@@ -28,10 +27,11 @@ import plus.cove.jazzy.domain.principal.UserPrincipal;
 import plus.cove.jazzy.domain.principal.UserRequest;
 import plus.cove.jazzy.domain.view.*;
 import plus.cove.jazzy.repository.AccountRepository;
-import plus.cove.jazzy.repository.ActivationRepository;
 import plus.cove.jazzy.repository.AuthorRepository;
+import plus.cove.jazzy.repository.GlobalActivationRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -47,16 +47,13 @@ public class AuthorApplicationImpl implements AuthorApplication {
     @Autowired
     AccountRepository accountRep;
     @Autowired
-    ActivationRepository activationRep;
+    GlobalActivationRepository activationRep;
 
     @Autowired
     FacilityApplication facilityApp;
 
     @Autowired
-    PageHelper pageHelper;
-    @Autowired
     JwtUtils jwtUtils;
-
     @Autowired
     ApplicationContext appContext;
 
@@ -146,13 +143,14 @@ public class AuthorApplicationImpl implements AuthorApplication {
         }
 
         // 用户是否存在
-        Author author = authorRep.selectById(dbAccount.getId());
-        if (author == null) {
+        Optional<Author> isAuthor = authorRep.selectById(dbAccount.getId());
+        if (isAuthor.isEmpty()) {
             result.fail(TravellerError.INVALID_USER);
             facilityApp.saveLimitingTarget(limiting);
             return result;
         }
 
+        Author author = isAuthor.get();
         // 生成token
         JwtResult jwt = jwtUtils.create(author.getId().toString());
         UserLoginOutput output = new UserLoginOutput(jwt.getToken(), jwt.getExpire(), author.getAvatar());
@@ -166,43 +164,8 @@ public class AuthorApplicationImpl implements AuthorApplication {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public ActionResult active(UserActiveInput input) {
-        ActionResult result = ActionResult.success();
-
-        // 查询激活信息
-        Activation activation = activationRep.selectByAuth(input.getAuthCode());
-        // 无效
-        if (activation == null) {
-            result.fail(AccountError.INVALID_ACTIVATION);
-            return result;
-        }
-
-        // 过期
-        if (!activation.isValid()) {
-            result.fail(AccountError.EXPIRED_ACTIVATION);
-            return result;
-        }
-
-        // 查询是否激活
-        Long userId = Long.parseLong(activation.getUserCode());
-        Account account = accountRep.selectById(userId);
-        if (account != null && account.getStatus() == UserStatus.ACTIVE) {
-            result.fail(AccountError.USED_ACTIVATION);
-            return result;
-        }
-
-        // 激活用户
-        account = new Account();
-        account.setId(userId);
-        account.active();
-        accountRep.updateById(account);
-        return result;
-    }
-
-    @Override
     public PageResult loadMany(AuthorListInput input, PageModel page) {
         List<AuthorListOutput> list = authorRep.selectMany(input, page);
-        return pageHelper.toResult(list);
+        return PageResult.from(page, 1L, list);
     }
 }

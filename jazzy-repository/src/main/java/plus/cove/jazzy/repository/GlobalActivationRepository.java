@@ -2,9 +2,8 @@ package plus.cove.jazzy.repository;
 
 
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 import plus.cove.infrastructure.mybatis.MybatisRepository;
-import plus.cove.jazzy.domain.entity.account.Activation;
+import plus.cove.jazzy.domain.entity.global.Activation;
 
 
 /**
@@ -14,8 +13,7 @@ import plus.cove.jazzy.domain.entity.account.Activation;
  * @date 2019-03-28
  */
 @Mapper
-@Repository
-public interface ActivationRepository extends MybatisRepository<Activation> {
+public interface GlobalActivationRepository extends MybatisRepository<Activation, Long> {
     /**
      * 根据用户码获取信息
      *

@@ -3,7 +3,6 @@ package plus.cove.jazzy.repository;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 import plus.cove.infrastructure.mybatis.MybatisRepository;
 import plus.cove.jazzy.domain.entity.coordinate.CoordinateAround;
 import plus.cove.jazzy.domain.entity.story.Story;
@@ -17,8 +16,7 @@ import java.util.List;
  * @date 2019-03-28
  */
 @Mapper
-@Repository
-public interface StoryRepository extends MybatisRepository<Story> {
+public interface StoryRepository extends MybatisRepository<Story, Long> {
     /**
      * 插入数据
      * 原生支持

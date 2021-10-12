@@ -5,8 +5,9 @@ open module cove.infrastructure.mybatis {
 
     requires spring.core;
     requires java.sql;
-    requires cove.infrastructure;
     requires mybatis.mapper;
     requires mybatis.provider;
     requires org.mybatis;
+
+    requires cove.infrastructure;
 }

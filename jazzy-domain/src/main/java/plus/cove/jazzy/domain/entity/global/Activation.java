@@ -1,4 +1,4 @@
-package plus.cove.jazzy.domain.entity.account;
+package plus.cove.jazzy.domain.entity.global;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Entity
-@Table(name = "activation")
+@Table(name = "global_activation")
 @EqualsAndHashCode(callSuper = true)
 public class Activation extends DefaultEntity {
     private String userCode;

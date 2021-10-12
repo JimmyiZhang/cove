@@ -5,7 +5,6 @@ import plus.cove.infrastructure.component.ActionResult;
 import plus.cove.infrastructure.component.PageModel;
 import plus.cove.infrastructure.component.PageResult;
 import plus.cove.jazzy.domain.view.AuthorListInput;
-import plus.cove.jazzy.domain.view.UserActiveInput;
 import plus.cove.jazzy.domain.view.UserLoginInput;
 import plus.cove.jazzy.domain.view.UserSignupInput;
 
@@ -35,16 +34,6 @@ public interface AuthorApplication {
      * @date 2019-05-14
      */
     ActionResult login(UserLoginInput input);
-
-    /**
-     * 激活用户
-     *
-     * @param
-     * @return
-     * @author jimmy.zhang
-     * @date 2019-06-25
-     */
-    ActionResult active(UserActiveInput input);
 
     /**
      * 获取作者

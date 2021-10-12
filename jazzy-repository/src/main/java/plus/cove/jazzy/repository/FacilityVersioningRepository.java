@@ -3,7 +3,6 @@ package plus.cove.jazzy.repository;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 import plus.cove.infrastructure.mybatis.MybatisRepository;
 import plus.cove.jazzy.domain.facility.Versioning;
 import plus.cove.jazzy.domain.facility.VersioningCondition;
@@ -15,8 +14,7 @@ import plus.cove.jazzy.domain.facility.VersioningCondition;
  * @since 1.1
  */
 @Mapper
-@Repository
-public interface FacilityVersioningRepository extends MybatisRepository<Versioning> {
+public interface FacilityVersioningRepository extends MybatisRepository<Versioning, Long> {
     Versioning selectVersioning(@Param("cd") VersioningCondition condition);
 
     void insertVersioning(@Param("et") Versioning entity);

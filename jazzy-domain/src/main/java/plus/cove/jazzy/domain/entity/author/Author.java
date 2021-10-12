@@ -1,9 +1,10 @@
-package plus.cove.jazzy.domain.entity.user;
+package plus.cove.jazzy.domain.entity.author;
 
 import cn.hutool.core.util.StrUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import plus.cove.infrastructure.component.impl.DefaultTimeEntity;
+import plus.cove.jazzy.domain.entity.account.UserGender;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;

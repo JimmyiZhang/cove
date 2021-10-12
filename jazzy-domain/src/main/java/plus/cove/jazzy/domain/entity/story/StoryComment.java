@@ -1,12 +1,12 @@
-package plus.cove.jazzy.domain.entity.comment;
+package plus.cove.jazzy.domain.entity.story;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import plus.cove.infrastructure.component.impl.DefaultEntity;
-import plus.cove.jazzy.domain.entity.story.Story;
 import plus.cove.jazzy.domain.principal.UserPrincipal;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 /**
@@ -15,9 +15,10 @@ import java.time.LocalDateTime;
  * @author Jimmy.Zhang
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @Entity
-public class Comment extends DefaultEntity {
+@Table(name = "story_comment")
+@EqualsAndHashCode(callSuper = true)
+public class StoryComment extends DefaultEntity {
     private Long storyId;
     private Long userId;
     private String comment;
@@ -32,8 +33,8 @@ public class Comment extends DefaultEntity {
      * @author jimmy.zhang
      * @date 2019-04-19
      */
-    public static Comment create(Story story, UserPrincipal user, String content) {
-        Comment entity = new Comment();
+    public static StoryComment create(Story story, UserPrincipal user, String content) {
+        StoryComment entity = new StoryComment();
         entity.valueOf();
         entity.storyId = story.getId();
         entity.userId = user.getUserId();

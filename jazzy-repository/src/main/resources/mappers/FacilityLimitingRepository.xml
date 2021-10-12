@@ -3,12 +3,12 @@
 <mapper namespace="plus.cove.jazzy.repository.FacilityLimitingRepository">
     <select id="selectLimiting" resultType="integer">
         SELECT COUNT(1) total_value
-        FROM limiting lt
+        FROM facility_limiting lt
         WHERE lt.category = #{cd.category} AND lt.create_time &gt; #{cd.startTime} AND lt.target = #{cd.target}
     </select>
 
     <insert id="saveLimiting">
-        INSERT INTO limiting (`target`, `category`, create_time)
+        INSERT INTO facility_limiting (`target`, `category`, create_time)
         VALUES (#{tg.target}, #{tg.category}, #{tg.targetTime})
     </insert>
 </mapper>

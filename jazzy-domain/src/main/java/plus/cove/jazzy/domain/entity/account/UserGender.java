@@ -1,19 +1,19 @@
-package plus.cove.jazzy.domain.entity.district;
+package plus.cove.jazzy.domain.entity.account;
 
 import plus.cove.infrastructure.component.BaseEnum;
 
 /**
- * 城市类别
- * 分为：省 市 区
+ * 性别类别
  *
+ * @param
  * @author jimmy.zhang
- * @date 2019-07-24
+ * @return
+ * @date 2019-05-24
  */
-public enum DistrictType implements BaseEnum {
-    COUNTRY(0, "国"),
-    PROVINCE(1, "省"),
-    CITY(2, "市"),
-    DISTRICT(3, "区");
+public enum UserGender implements BaseEnum {
+    NONE(0, "未知"),
+    MALE(1, "男"),
+    FEMALE(2, "女");
 
     /**
      * 枚举值
@@ -33,7 +33,7 @@ public enum DistrictType implements BaseEnum {
      * @author jimmy.zhang
      * @date 2019-04-18
      */
-    DistrictType(final int value, final String desc) {
+    UserGender(final int value, final String desc) {
         this.value = value;
         this.desc = desc;
     }
@@ -48,4 +48,3 @@ public enum DistrictType implements BaseEnum {
         return desc;
     }
 }
-

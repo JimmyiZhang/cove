@@ -8,6 +8,7 @@ import plus.cove.jazzy.domain.entity.coordinate.Coordinate;
 import plus.cove.jazzy.domain.principal.UserPrincipal;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 /**
@@ -17,8 +18,9 @@ import java.time.LocalDateTime;
  * @date 2019-05-20
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @Entity
+@Table(name = "story")
+@EqualsAndHashCode(callSuper = true)
 public class Story extends DefaultEntity {
     private String name;
     private String image;

@@ -15,22 +15,22 @@ public class PageResult<E> {
     /**
      * 当前页码
      */
-    private Integer page;
+    private int page;
 
     /**
      * 页大小
      */
-    private Integer size;
+    private int size;
 
     /**
      * 总页数
      */
-    private Integer pages;
+    private int pages;
 
     /**
      * 总记录数
      */
-    private Long total;
+    private long total;
 
     /**
      * 数据
@@ -45,19 +45,24 @@ public class PageResult<E> {
      * @author jimmy.zhang
      * @since 1.0
      */
-    public static <E> PageResult<E> from(List<E> rows, Integer page, Integer size, Long total) {
+    public static <E> PageResult<E> from(int page, int size, long total, List<E> rows) {
         PageResult<E> result = new PageResult();
         result.page = page;
         result.size = size;
         result.total = total;
         result.rows = rows;
 
-        if (total != null && size != null) {
+        if (size > 0) {
             int more = (int) (total % size);
             int pages = (int) (total / size);
-
             result.pages = pages + (more == 0 ? 0 : 1);
+        } else {
+            result.pages = 1;
         }
         return result;
+    }
+
+    public static <E> PageResult<E> from(PageModel page, Long total, List<E> rows) {
+        return from(page.getPage(), page.getSize(), total, rows);
     }
 }

@@ -9,8 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import plus.cove.jazzy.api.ApiApplication;
 import plus.cove.jazzy.domain.entity.account.Account;
-import plus.cove.jazzy.domain.entity.user.UserStatus;
+import plus.cove.jazzy.domain.entity.account.UserStatus;
 import plus.cove.jazzy.repository.AccountRepository;
+
+import java.util.Optional;
 
 
 @RunWith(SpringRunner.class)
@@ -30,7 +32,7 @@ public class RepositoryTest {
 
     @Test
     public void select(){
-        Account account = accountRep.selectById(71473214508761088L);
+        Optional<Account> account = accountRep.selectById(71473214508761088L);
         Assert.assertNotNull(account);
     }
 

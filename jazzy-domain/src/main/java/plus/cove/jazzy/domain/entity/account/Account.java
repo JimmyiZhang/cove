@@ -5,7 +5,6 @@ import cn.hutool.crypto.digest.DigestUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import plus.cove.infrastructure.component.impl.DefaultEntity;
-import plus.cove.jazzy.domain.entity.user.UserStatus;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;

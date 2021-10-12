@@ -11,7 +11,6 @@ import plus.cove.jazzy.application.AuthorApplication;
 import plus.cove.jazzy.application.FacilityApplication;
 import plus.cove.jazzy.domain.facility.VersioningTarget;
 import plus.cove.jazzy.domain.principal.UserRequest;
-import plus.cove.jazzy.domain.view.UserActiveInput;
 import plus.cove.jazzy.domain.view.UserLoginInput;
 import plus.cove.jazzy.domain.view.UserSignupInput;
 
@@ -63,11 +62,5 @@ public class UserController extends BaseController {
         input.withRequest(request);
 
         return travellerApp.signup(input);
-    }
-
-    @ApiOperation(value = "激活", notes = "用户激活")
-    @GetMapping(value = "active")
-    public ActionResult active(@Valid UserActiveInput input) {
-        return travellerApp.active(input);
     }
 }

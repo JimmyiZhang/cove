@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import plus.cove.infrastructure.component.impl.DefaultEntity;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 /**
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Entity
+@Table(name = "facility_versioning")
 @EqualsAndHashCode(callSuper = true)
 public class Versioning extends DefaultEntity {
     /**

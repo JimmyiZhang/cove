@@ -1,7 +1,7 @@
 package plus.cove.jazzy.domain.view;
 
 import lombok.Data;
-import plus.cove.jazzy.domain.entity.comment.Comment;
+import plus.cove.jazzy.domain.entity.story.StoryComment;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -31,7 +31,7 @@ public class CommentCreateInput {
      * @author jimmy.zhang
      * @date 2019-05-24
      */
-    public Comment Convert() {
+    public StoryComment Convert() {
         return null;
     }
 }

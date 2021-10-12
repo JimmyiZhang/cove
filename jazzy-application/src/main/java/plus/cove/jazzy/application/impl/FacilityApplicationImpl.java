@@ -31,7 +31,6 @@ public class FacilityApplicationImpl implements FacilityApplication {
 
         LimitingTarget target = new LimitingTarget();
         target.setTotalValue(totalValue);
-
         target.setCategory(condition.getCategory());
         target.setTarget(condition.getTarget());
         target.setTargetTime(LocalDateTime.now());
@@ -48,10 +47,12 @@ public class FacilityApplicationImpl implements FacilityApplication {
     @Override
     public VersioningTarget loadVersioningTarget(VersioningCondition condition) {
         Versioning entity = versioningRep.selectVersioning(condition);
-        versioningRep.updateVersioning(entity);
+        if (entity != null) {
+            versioningRep.updateVersioning(entity);
+            return VersioningTarget.from(entity);
+        }
 
-        VersioningTarget target = VersioningTarget.from(entity);
-        return target;
+        return null;
     }
 
     @Override

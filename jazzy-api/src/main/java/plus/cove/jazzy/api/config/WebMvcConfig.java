@@ -72,7 +72,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .maxAge(httpConfig.getCorsMaxAge().toMillis() / 1000)
                 .allowedMethods(httpConfig.getCorsAllowedMethods())
-                .allowedOrigins(httpConfig.getCorsAllowedOrigins())
+                .allowedOriginPatterns(httpConfig.getCorsAllowedOrigins())
                 .allowedHeaders(httpConfig.getCorsAllowedHeaders())
                 .allowCredentials(true);
     }

@@ -3,7 +3,7 @@ package plus.cove.jazzy.domain.view;
 import lombok.Getter;
 import lombok.Setter;
 import plus.cove.jazzy.domain.entity.account.Account;
-import plus.cove.jazzy.domain.entity.user.Author;
+import plus.cove.jazzy.domain.entity.author.Author;
 import plus.cove.jazzy.domain.principal.UserRequest;
 
 import javax.validation.constraints.NotEmpty;

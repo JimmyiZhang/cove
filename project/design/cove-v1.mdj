@@ -10746,7 +10746,7 @@
 											"top": 509,
 											"width": 154.7648162841797,
 											"height": 13,
-											"text": "+comment: String",
+											"text": "+storyComment: String",
 											"horizontalAlignment": 0
 										},
 										{
@@ -12591,7 +12591,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFq5Bn1wwYkFGM="
 							},
-							"name": "comment",
+							"name": "storyComment",
 							"type": "String"
 						},
 						{

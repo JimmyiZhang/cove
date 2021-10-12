@@ -3,7 +3,7 @@ package plus.cove.jazzy.application.event;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionalEventListener;
-import plus.cove.jazzy.domain.entity.user.UserEvent;
+import plus.cove.jazzy.domain.entity.account.UserEvent;
 
 /**
  * 用户事件监听

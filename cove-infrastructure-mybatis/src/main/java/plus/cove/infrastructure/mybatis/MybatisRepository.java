@@ -7,7 +7,7 @@ import io.mybatis.mapper.list.ListProvider;
 import io.mybatis.provider.Caching;
 import org.apache.ibatis.annotations.*;
 
-import java.nio.channels.IllegalSelectorException;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +21,7 @@ import java.util.Optional;
  * @author jimmy.zhang
  * @date 2019-03-07
  */
-public interface MybatisRepository<T> {
+public interface MybatisRepository<T, K extends Serializable> {
     @Lang(Caching.class)
     @InsertProvider(type = EntityProvider.class, method = "insertSelective")
     int insert(T entity);
@@ -40,7 +40,7 @@ public interface MybatisRepository<T> {
 
     @Lang(Caching.class)
     @DeleteProvider(type = EntityProvider.class, method = "deleteByPrimaryKey")
-    int deleteById(Object id);
+    int deleteById(K id);
 
     @Lang(Caching.class)
     @DeleteProvider(type = ExampleProvider.class, method = "deleteByExample")
@@ -64,28 +64,11 @@ public interface MybatisRepository<T> {
 
     @Lang(Caching.class)
     @SelectProvider(type = EntityProvider.class, method = "selectByPrimaryKey")
-    Optional<T> selectOptionalById(Object id);
-
-    default T selectById(Object id) {
-        Optional<T> entity = this.selectOptionalById(id);
-        if (entity.isEmpty()) {
-            return null;
-        }
-        return entity.get();
-    }
+    Optional<T> selectById(K id);
 
     @Lang(Caching.class)
     @SelectProvider(type = EntityProvider.class, method = "select")
     List<T> selectList(T entity);
-
-    default T selectOneByExample(Example<T> example) {
-        List<T> entities = this.selectListByExample(example);
-        if (entities == null || entities.size() == 1) {
-            return entities.get(0);
-        }
-
-        throw new IllegalSelectorException();
-    }
 
     @Lang(Caching.class)
     @SelectProvider(type = ExampleProvider.class, method = "selectByExample")

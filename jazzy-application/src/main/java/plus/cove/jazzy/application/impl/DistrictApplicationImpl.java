@@ -5,9 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import plus.cove.infrastructure.caching.CacheUtils;
 import plus.cove.jazzy.application.DistrictApplication;
-import plus.cove.jazzy.domain.entity.district.DistrictCity;
-import plus.cove.jazzy.domain.entity.district.DistrictType;
-import plus.cove.jazzy.repository.DistrictRepository;
+import plus.cove.jazzy.domain.entity.global.DistrictCity;
+import plus.cove.jazzy.domain.entity.global.DistrictType;
+import plus.cove.jazzy.repository.GlobalDistrictRepository;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class DistrictApplicationImpl implements DistrictApplication {
     @Autowired
     CacheUtils cacheUtils;
     @Autowired
-    DistrictRepository districtRep;
+    GlobalDistrictRepository districtRep;
 
     @Override
     public List<DistrictCity> findAllCity() {

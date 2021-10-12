@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import plus.cove.jazzy.application.DiscoveryApplication;
 import plus.cove.jazzy.application.DistrictApplication;
 import plus.cove.jazzy.domain.entity.discovery.DiscoveryPlace;
-import plus.cove.jazzy.domain.entity.district.DistrictCity;
+import plus.cove.jazzy.domain.entity.global.DistrictCity;
 import plus.cove.jazzy.domain.view.DiscoveryInput;
 
 import java.util.List;

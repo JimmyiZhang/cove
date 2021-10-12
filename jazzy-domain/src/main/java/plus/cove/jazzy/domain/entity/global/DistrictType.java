@@ -1,29 +1,29 @@
-package plus.cove.jazzy.domain.entity.user;
+package plus.cove.jazzy.domain.entity.global;
 
 import plus.cove.infrastructure.component.BaseEnum;
 
 /**
- * 账号状态
+ * 城市类别
+ * 分为：省 市 区
  *
- * @param
  * @author jimmy.zhang
- * @return
- * @date 2019-05-24
+ * @date 2019-07-24
  */
-public enum UserStatus implements BaseEnum {
-    NONE(1, "未知的"),
-    ACTIVE(2, "激活的"),
-    DISABLED(3, "禁用的");
+public enum DistrictType implements BaseEnum {
+    COUNTRY(0, "国"),
+    PROVINCE(1, "省"),
+    CITY(2, "市"),
+    DISTRICT(3, "区");
 
     /**
      * 枚举值
      */
-    private final int value;
+    private int value;
 
     /**
      * 枚举描述
      */
-    private final String desc;
+    private String desc;
 
     /**
      * 构造函数
@@ -33,7 +33,7 @@ public enum UserStatus implements BaseEnum {
      * @author jimmy.zhang
      * @date 2019-04-18
      */
-    UserStatus(final int value, final String desc) {
+    DistrictType(final int value, final String desc) {
         this.value = value;
         this.desc = desc;
     }
@@ -48,3 +48,4 @@ public enum UserStatus implements BaseEnum {
         return desc;
     }
 }
+

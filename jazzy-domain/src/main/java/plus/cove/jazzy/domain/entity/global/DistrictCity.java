@@ -1,4 +1,4 @@
-package plus.cove.jazzy.domain.entity.district;
+package plus.cove.jazzy.domain.entity.global;
 
 import lombok.Data;
 import plus.cove.jazzy.domain.entity.coordinate.Coordinate;
