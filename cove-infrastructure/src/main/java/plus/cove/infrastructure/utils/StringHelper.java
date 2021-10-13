@@ -12,9 +12,10 @@ import java.util.regex.Pattern;
 public class StringHelper {
     private static final char FORMAT_BEGIN = '{';
     private static final char FORMAT_END = '}';
+    private static final char CHAR_UNDERLINE = '_';
 
-    private static Pattern casePattern = Pattern.compile("[A-Z]");
-    private static Pattern linePattern = Pattern.compile("-(\\w)");
+    private static final Pattern casePattern = Pattern.compile("[A-Z]");
+    private static final Pattern linePattern = Pattern.compile("-(\\w)");
 
     /**
      * 私有构造器
@@ -247,5 +248,41 @@ public class StringHelper {
         }
         matcher.appendTail(sb);
         return sb.toString();
+    }
+
+    /**
+     * 驼峰转下划线
+     *
+     * @param
+     * @return
+     * @author jimmy.zhang
+     * @since 1.0
+     */
+    public static String caseToUnderline(String str) {
+        int len = str.length();
+        char[] names = new char[len * 2];
+        names[0] = str.charAt(0);
+
+        // 需要转换的数量
+        int j = 0;
+        for (int i = 1; i < len; i++) {
+            char curr = str.charAt(i);
+
+            // 判断前一个是否小写
+            boolean provLower = Character.isLowerCase(str.charAt(i + j - 1));
+            // 当前是大写，前一个是小写
+            if (Character.isUpperCase(curr) && provLower) {
+                names[i + j] = CHAR_UNDERLINE;
+                j++;
+            }
+            names[i + j] = Character.toLowerCase(curr);
+        }
+
+        // 不需要转换
+        if (j == 0) {
+            return str;
+        }
+
+        return new String(names, 0, len + j);
     }
 }

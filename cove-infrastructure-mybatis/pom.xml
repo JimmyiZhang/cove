@@ -16,13 +16,10 @@
     <description>基础框架库之mybatis</description>
 
     <dependencies>
-        <!-- lombok -->
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>provided</scope>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
         </dependency>
-        <!-- lombok end -->
 
         <!-- mybatis -->
         <dependency>
@@ -30,6 +27,14 @@
             <artifactId>mybatis-mapper</artifactId>
         </dependency>
         <!-- mybatis end-->
+
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <!-- lombok end -->
 
         <dependency>
             <groupId>plus.cove</groupId>

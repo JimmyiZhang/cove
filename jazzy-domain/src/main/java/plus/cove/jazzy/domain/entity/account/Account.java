@@ -8,6 +8,7 @@ import plus.cove.infrastructure.component.impl.DefaultEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.time.LocalDateTime;
 
 /**
@@ -26,6 +27,7 @@ public class Account extends DefaultEntity {
     private String salt;
     private UserStatus status;
     private LocalDateTime createTime;
+    @Transient
     private LocalDateTime expiredTime;
 
     /**

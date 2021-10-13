@@ -66,4 +66,15 @@ public class StringHelperTest {
         System.out.println(actual);
         Assertions.assertEquals("{hello-world}", actual);
     }
+
+    @Test
+    public void caseToUnderline() {
+        String acutal = StringHelper.caseToUnderline("createTime");
+        String expectd = "create_time";
+        Assertions.assertEquals(expectd, acutal);
+
+        String acutal1 = StringHelper.caseToUnderline("createHTML");
+        String expectd1 = "create_html";
+        Assertions.assertEquals(expectd1, acutal1);
+    }
 }
