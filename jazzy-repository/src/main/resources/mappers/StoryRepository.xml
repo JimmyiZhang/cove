@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="plus.cove.jazzy.repository.StoryRepository">
-    <resultMap id="photoMap" type="plus.cove.jazzy.domain.entity.story.Story">
+    <resultMap id="baseMap" type="plus.cove.jazzy.domain.entity.story.Story">
         <id property="id" column="id"></id>
         <result property="name" column="name"></result>
         <result property="image" column="image"></result>
@@ -24,7 +24,7 @@
         (#{id},#{image},#{name},#{subject},#{description},#{takeTime},#{createTime},#{updateTime},#{location.latitude},#{location.longitude},#{userId});
     </insert>
 
-    <select id="selectByName" resultMap="photoMap">
+    <select id="selectByName" resultMap="baseMap">
         SELECT id,`image`,`name`,`subject`,description,take_time,latitude,longitude,user_id
         FROM story
         <if test="name!=null">
@@ -33,7 +33,7 @@
         LIMIT 0,#{size}
     </select>
 
-    <select id="selectByNear" resultMap="photoMap">
+    <select id="selectByNear" resultMap="baseMap">
         SELECT id,`image`,`name`,`subject`,description,take_time,latitude,longitude,user_id
         FROM story
         <if test="around!=null">
@@ -44,7 +44,7 @@
         LIMIT 0,#{size}
     </select>
 
-    <select id="selectBySubject" resultMap="photoMap">
+    <select id="selectBySubject" resultMap="baseMap">
         SELECT id,`image`,`name`,`subject`,description,take_time,latitude,longitude,user_id
         FROM story
         <if test="subjects!=null">

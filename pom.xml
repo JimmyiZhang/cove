@@ -180,6 +180,11 @@
                 <artifactId>mybatis-mapper</artifactId>
                 <version>${mybatis-mapper.version}</version>
             </dependency>
+            <dependency>
+                <groupId>io.mybatis</groupId>
+                <artifactId>mybatis-jpa</artifactId>
+                <version>${mybatis-mapper.version}</version>
+            </dependency>
             <!-- mybatis end-->
 
             <!-- mysql -->

@@ -1,6 +1,5 @@
 package plus.cove.jazzy.repository;
 
-
 import org.apache.ibatis.annotations.Mapper;
 import plus.cove.infrastructure.mybatis.MybatisRepository;
 import plus.cove.jazzy.domain.entity.account.Account;
