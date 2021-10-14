@@ -44,7 +44,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             // 认证配置
             .authorizeRequests()
             // 不需要验证
-            .anyRequest().permitAll()
+            .antMatchers(securityConfig.getPermitUrls()).permitAll()
+            .antMatchers(securityConfig.getActuatorUrl()).hasRole(securityConfig.getActuatorRole())
+            // 其他验证
+            .anyRequest().authenticated()
             .and()
             // 关闭X-Frame-Options
             .headers().frameOptions().disable()

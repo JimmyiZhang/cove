@@ -4,6 +4,10 @@ server:
 
 # spring config
 spring:
+  # profile config
+  profiles:
+    active: "@profile.active@"
+
   # cache config
   cache:
     type: SIMPLE

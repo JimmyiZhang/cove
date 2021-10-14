@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
@@ -21,6 +23,7 @@ import plus.cove.infrastructure.validator.CollectionValidator;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -106,6 +109,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
      */
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        // 统一plainText格式
+        StringHttpMessageConverter stringConverter = new StringHttpMessageConverter();
+        stringConverter.setSupportedMediaTypes(Arrays.asList(MediaType.TEXT_PLAIN));
+        converters.add(stringConverter);
+
         // 统一json格式化
         MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
         ObjectMapper objectMapper = jsonConfig.getJsonMapper();

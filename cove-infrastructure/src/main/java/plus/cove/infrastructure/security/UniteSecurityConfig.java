@@ -25,6 +25,16 @@ public class UniteSecurityConfig {
     private String[] permitUrls;
 
     /**
+     * 监控地址
+     */
+    private String actuatorUrl = "/actuator";
+
+    /**
+     * 监控角色
+     */
+    private String actuatorRole = "ACTUATOR";
+
+    /**
      * 幂等token名称
      */
     private String idempotentToken = "api-idempotent";

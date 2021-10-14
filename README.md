@@ -9,12 +9,12 @@
 ---
 
 # 技术选型
-- Spring Boot 2.3.x (HikariCP)
+- java17
+- Spring Boot 2.5.x (HikariCP)
 - lombok 1.18.x
 - ORO: orika 1.5.x
-- ORM: mybatis & tk.mybatis & pagehelper
-- jwt: java-jwt 3.4.x
-
+- ORM: io.mybatis
+- UTILS: hutool
 ---
 
 # 框架介绍
@@ -27,7 +27,7 @@
 ---
 
 # 分层介绍
-- domain 包括实体类（领域类entity),仓储接口(repository),应用接口(application),显示类(view)
+- domain 包括实体类（领域类entity),应用接口(application),显示类(view)
 - domain.converter 转换类，领域类与其他类的转化，仅包括特殊转化，同类型和字段名称使用默认转换即可
 - domain.exception 异常类，所有的业务异常继承自BusinessError, 所有的异常均有唯一的返回码
 - domain.view 显示类，用于接口统一的显示，原则上领域类不对外暴露，保证领域类不影响显示，以及领域类的安全
@@ -66,7 +66,7 @@ LogTracingInterceptor 日志跟踪拦截器
 - jwt jwt相关
 JwtUtils jwt生成，提供生成jwt创建（采用HMAC512加密方式），解密，校验，刷新操作
 - mybatis
-SqlStatement+SqlLike, 提供like过滤特殊符号及自动添加%（可配置）
+SqlStatement+SqlLike, 提供like过滤特殊符号及自动添加%（可配置）,提供日期自动处理（查询日期区间自动+1天）
 - system 系统配置
 提供各种环境，可以生成各种默认密码，默认随机码
 - utils 实用工具类
@@ -127,37 +127,6 @@ SqlStatement+SqlLike, 提供like过滤特殊符号及自动添加%（可配置�
 
 ---
 
-
-# 基本约定
-- 应用层Application:
-- findOneByXXX从缓存中获取单个实体
-- findManyByXXX从缓存中获取列表
-- loadOneByXXX从存储中获取单个实体
-- loadManyByXXX从存储中获取返回列表
-
-- 存储层Repository
-- selectOne[基类自带]查询实体对应的所有属性，一个结果
-- selectMany[基类自带]查询实体对应的所有属性，多个结果
-- selectPart[需要实现]查询部分，列出某些常用属性，一般为了性能（排除非必须大字段或较多字段）
-- selectFull[需要实现]查询全部，根据输出查询结果，一般需要联合查询，包括非本实体的字段
-
----
-
-# 编译方式(针对java15)
-- 通过Maven Tool生成war文件
-  在project setting中新建maven，command line中指定JAVA_HOME_15的参数，例如： install -D "JAVA_HOME_15=C:\Program Files\Java\jdk-15.0.2" -f pom.xml
-  在maven tools运行即可
-- 通过Build and run直接运行
-  在application中新建application，Environment variables中指定JAVA_HOME_15的参数，例如JAVA_HOME_15=C:\Program Files\Java\jdk-15.0.2
-  直接运行即可
-- 通过脚本develop.sh生成war文件
-  直接Java参数JAVA_HOME_15即可
-  
-# docker
-sh develop.sh
-docker build -t cove/jazzy:dev .
-docker run -p:8080:8080 cove-jazzy
-
 # 观察者模式-基于Spring的事件机制
 定义事件
 ```
@@ -184,6 +153,34 @@ docker run -p:8080:8080 cove-jazzy
       appContext.publishEvent(userRequest);
     }
 ```
+
+
+# 基本约定
+- 应用层Application:
+- findOneByXXX从缓存中获取单个实体
+- findListByXXX从缓存中获取列表
+- loadOneByXXX从存储中获取单个实体
+- loadListByXXX从存储中获取返回列表
+
+- 存储层Repository
+- selectOne[基类自带]查询实体对应的所有属性，一个结果
+- selectList[基类自带]查询实体对应的所有属性，多个结果
+- selectPart[需要实现]查询部分，列出某些常用属性，一般为了性能（排除非必须大字段或较多字段）
+- selectFull[需要实现]查询全部，根据输出查询结果，一般需要联合查询，包括非本实体的字段
+
+---
+
+# 编译方式
+- 针对java8与java17同时存在
+  java8设置为默认配置，在idea中Terminal-Settings-Project Setting-Environment variables中替换path即可，在此Terminal中可以执行java -version查看版本
+  
+# 部署方式
+- 脚本部署
+  project/build中develop.sh可实现脚本部署，修改相应的地址即可
+- docker方式
+  project/build中product.sh可实现镜像文件的创建，在服务端拉取，运行即可
+  如果增加参数需要修改Dockerfile文件
+  docker run -p:8080:8080 cove-jazzy:version
 
 
 # 参考资料

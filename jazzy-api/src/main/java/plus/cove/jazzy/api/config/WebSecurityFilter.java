@@ -74,8 +74,6 @@ public class WebSecurityFilter extends OncePerRequestFilter {
     private void logUserRequest(UserRequest ur) {
         log.info("Request Log ==> user-id: {}, source: {}, version: {}, device: {}, router: {}",
                 ur.getUserId(), ur.getSource(), ur.getVersion(), ur.getDevice(), ur.getRouter());
-
-        // 记录请求次数
     }
 
     @Override

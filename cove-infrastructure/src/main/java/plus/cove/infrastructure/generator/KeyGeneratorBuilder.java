@@ -40,6 +40,7 @@ public class KeyGeneratorBuilder {
             log.warn("cove.infrastructure.generator - [{}] is not configured", PROP_WORK_ID);
         } else {
             workId = Integer.valueOf(prop).intValue();
+            log.info("cove.infrastructure.generator - [{}] is {}", PROP_WORK_ID, workId);
         }
         this.generator = new SnowflakeKeyGenerator(workId);
     }

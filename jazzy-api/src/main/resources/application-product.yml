@@ -10,13 +10,14 @@ management:
 # spring config
 spring:
   port: 8080
+  shutdown: graceful
   error:
     include-stacktrace: NEVER
     include-exception: false
 
   datasource:
     url: jdbc:mysql://101.200.53.244:3306/jazzy?useSSL=false&allowMultiQueries=true&autoReconnect=true&failOverReadOnly=false&useUnicode=true&characterEncoding=utf-8
-    user-name: root
+    username: root
     password: Wu5%AVGr
     driver-class-name: com.mysql.jdbc.Driver
     hikari.maximum-pool-size: 2
@@ -34,7 +35,10 @@ spring:
 
   # cache config
   cache:
-    type: REDIS
+    # type: REDIS
+    type: CAFFEINE
+    caffeine:
+      spec: initialCapacity=2,maximumSize=200,expireAfterWrite=10m,recordStats
 
   # redis config
   redis:
@@ -57,5 +61,7 @@ summer:
     null-duration-time: 1
   redis-config:
     duration-time: 60
+  security-config:
+    permit-urls: /error,/user/**
   system-config:
     run-time: PRODUCTION

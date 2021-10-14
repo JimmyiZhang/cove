@@ -44,5 +44,7 @@ spring:
 
 # global config
 summer:
+  security-config:
+    permit-urls: /swagger-ui/**,/v3/api-docs,/swagger-resources/**,/error,/actuator/**,/user/**
   system-config:
     run-time: DEVELOPMENT
