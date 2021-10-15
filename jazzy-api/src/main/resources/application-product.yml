@@ -52,7 +52,7 @@ summer:
     cache-max-age: 3600
     cors-allowed-methods: GET,POST,PUT,DELETE,OPTIONS
   jwt-config:
-    token-expired: 10080
+    token-expired: 30D
     token-secret: 7p9izREdj3cAAQR7HyDCoMDv9dDDtzQLbJ1ScicADAclc
     token-subject: jazzy
     token-issue: cove

@@ -1,5 +1,7 @@
 package plus.cove.infrastructure.jwt;
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.jwt.JWT;
 import cn.hutool.jwt.JWTException;
@@ -13,9 +15,6 @@ import plus.cove.infrastructure.exception.BusinessException;
 import plus.cove.infrastructure.exception.JwtError;
 
 import javax.validation.constraints.NotNull;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.UUID;
 
 
 /**
@@ -61,10 +60,9 @@ public class JwtUtils {
             throw new BusinessException(JwtError.INVALID_SECRET);
         }
 
-        String jwtId = UUID.randomUUID().toString();
-        Instant now = Instant.now();
-        int expired = (int) config.getTokenExpired().toMinutes();
-        Instant exp = now.plus(expired, ChronoUnit.MINUTES);
+        String jwtId = RandomUtil.randomString(10);
+        Long now = DateUtil.currentSeconds();
+        Long exp = DateUtil.currentSeconds() + config.getTokenExpired().toSeconds();
 
         JwtResult result;
         try {
@@ -80,7 +78,7 @@ public class JwtUtils {
                     .setPayload(config.getTokenExtra(), extra)
                     .setSigner(signer)
                     .sign();
-            result = new JwtResult(token, expired);
+            result = new JwtResult(token, (int)config.getTokenExpired().toMinutes());
         } catch (JWTException ex) {
             throw new BusinessException(JwtError.CREATION_EXCEPTION, ex);
         }
@@ -103,12 +101,15 @@ public class JwtUtils {
 
         JwtClaim claim;
         try {
-            JWT jwt = JWT.of(token);
+            JWTSigner signer = JWTSignerUtil.hs512(tokenSecret.getBytes());
+            JWT jwt = JWT.of(token)
+                    .setSigner(signer);
 
             // 验证算法与过期时间
-            boolean verify = jwt.setKey(tokenSecret.getBytes()).validate(5);
+            boolean verify = jwt.validate(5);
             if (!verify) {
-                throw new BusinessException(JwtError.VERIFICATION_EXCEPTION);
+                claim = JwtClaim.failure(JwtError.VERIFICATION_EXCEPTION.getMessage());
+                return claim;
             }
 
             String id = jwt.getPayload(config.getTokenClaim()).toString();
@@ -120,7 +121,7 @@ public class JwtUtils {
 
             claim = JwtClaim.success(id, actor, extra);
         } catch (JWTException ex) {
-            log.debug("jwt解析失败：{}", token);
+            log.warn("jwt解析失败：{}", token);
             claim = JwtClaim.failure(JwtError.DECODE_EXCEPTION.getMessage());
         }
         return claim;

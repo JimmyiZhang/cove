@@ -107,9 +107,9 @@ public class WebSecurityFilter extends OncePerRequestFilter {
         JwtClaim claim = jwtUtils.decode(authToken);
         if (claim.getSuccess()) {
             String userId = claim.getClaim();
-            String category = claim.getExtra();
+            String actor = claim.getActor();
 
-            JwtAuthenticationToken jwtToken = new JwtAuthenticationToken(userId, category);
+            JwtAuthenticationToken jwtToken = new JwtAuthenticationToken(userId, actor);
             SecurityContextHolder.getContext().setAuthentication(jwtToken);
 
             // 记录日志

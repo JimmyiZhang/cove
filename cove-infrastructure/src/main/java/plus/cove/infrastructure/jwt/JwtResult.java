@@ -26,4 +26,9 @@ public class JwtResult {
         this.token = token;
         this.expire = expire;
     }
+
+    @Override
+    public String toString() {
+        return String.format("token: %s, expire: %sm", this.token, this.expire);
+    }
 }
