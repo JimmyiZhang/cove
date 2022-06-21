@@ -37,7 +37,7 @@
         <mybatis-version>3.5.7</mybatis-version>
         <mybatis-spring.version>2.2.0</mybatis-spring.version>
         <mybatis-mapper.version>1.0.1</mybatis-mapper.version>
-        <mysql-connector.version>8.0.21</mysql-connector.version>
+        <mysql-connector.version>8.0.28</mysql-connector.version>
         <orika-core.version>1.5.4</orika-core.version>
         <hutool.version>5.7.13</hutool.version>
         <lombok.version>1.18.22</lombok.version>
