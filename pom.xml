@@ -39,7 +39,7 @@
         <mybatis-mapper.version>1.0.1</mybatis-mapper.version>
         <mysql-connector.version>8.0.21</mysql-connector.version>
         <orika-core.version>1.5.4</orika-core.version>
-        <hutool.version>5.7.13</hutool.version>
+        <hutool.version>5.8.21</hutool.version>
         <lombok.version>1.18.22</lombok.version>
         <springfox-swagger.version>3.0.0</springfox-swagger.version>
         <micrometer.version>1.5.1</micrometer.version>
